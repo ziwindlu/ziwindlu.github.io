@@ -58,25 +58,17 @@ categories: 学习笔记
 
 #### lightdm
 
-- lightdm
-- lightdm-gtk-greeter
-- lightdm-gtk-greeter-settings
+lightdm,lightdm-gtk-greeter,lightdm-gtk-greeter-settings
 
 ### 窗口管理器
 
 #### i3
 
-- i3-gaps
-- i3blocks
-- i3lock
-- i3status
+i3-gaps,i3blocks,i3lock,i3status
 
 #### 字体
 
-- wqy-microhei-lite
-- wqy-zenhei
-- noto-fonts-cjk
-- noto-fonts-emoji
+wqy-microhei-lite,wqy-zenhei,noto-fonts-cjk,noto-fonts-emoji
 
 #### ranger
 
@@ -84,8 +76,7 @@ categories: 学习笔记
 
 #### 电源管理
 
-- tlp
-- xfce4-power-manager
+tlp,xfce4-power-manager
 
 #### 声音
 
@@ -96,7 +87,7 @@ categories: 学习笔记
 
 blueman
 
-[蓝牙耳机参考这个](http://blog.lujun9972.win/blog/2017/07/18/%E5%9C%A8archlinux%E4%B8%AD%E4%BD%BF%E7%94%A8%E8%93%9D%E7%89%99%E8%80%B3%E6%9C%BA/)
+[蓝牙耳机](http://blog.lujun9972.win/blog/2017/07/18/%E5%9C%A8archlinux%E4%B8%AD%E4%BD%BF%E7%94%A8%E8%93%9D%E7%89%99%E8%80%B3%E6%9C%BA/)
 
 #### 显示器
 
@@ -108,24 +99,17 @@ fcitx-libpinyin
 
 #### 网络
 
-- NetworkManager
-- v2raya
-- dhclient
+NetworkManager
+v2raya
+dhclient
 
 ### 办公
 
-#### 文本编辑器
+#### VIM
 
-vim
+#### libreoffice
 
-#### word,ppt,balaba
-
-libreoffice
-
-#### 笔记
-
-- vim
-- marktext
+中文支持
 
 ### 小工具
 
@@ -133,17 +117,13 @@ libreoffice
 
 axel
 
-#### 投屏软件
+#### 安卓投屏软件
 
 scrcpy
 
-#### 屏幕中显示输入字符
+#### screenkey
 
-screenkey
-
-#### 帅帅的显示系统版基本信息的东东
-
-screenfetch
+#### screenfetch
 
 #### 截图工具
 
@@ -157,8 +137,7 @@ calibre
 
 #### pdf阅读器
 
-- evince
-- xpdf
+evince,xpdf
 
 #### 音乐
 
@@ -166,8 +145,7 @@ netease\-cloud\-music
 
 #### 视频
 
-- bomi
-- vlc
+bomi,vlc
 
 #### 图片
 
@@ -175,8 +153,7 @@ feh
 
 ### 虚拟机
 
-- virtualbox
-- genymotion
+virtualbox,genymotion
 
 ## 小技巧
 
