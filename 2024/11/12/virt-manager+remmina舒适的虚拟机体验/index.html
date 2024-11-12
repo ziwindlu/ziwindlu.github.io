@@ -1,0 +1,176 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>virt-manager+remmina舒适的虚拟机体验 | ziWindlu的博客</title><meta name="author" content="ziWindlu"><meta name="copyright" content="ziWindlu"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="引子在使用virtualbox时，vbox打开的虚拟机窗口无法便捷得最小化和展开。于是俺用了remmina，在每台vbox虚拟机的系统中开启rdp或是vnc。后面越发约感觉鸡肋，每次安装虚拟机后都要重新安装一下远程桌面服务。这时俺想到之前使用的virt-manager可以使用spice直接连接，而且这是虚拟化软件提供的，并非操作系统提供的。一是无需对虚拟机安装多余的软件，二是即便虚拟机网络不通，也">
+<meta property="og:type" content="article">
+<meta property="og:title" content="virt-manager+remmina舒适的虚拟机体验">
+<meta property="og:url" content="https://ziwindlu.github.io/2024/11/12/virt-manager+remmina%E8%88%92%E9%80%82%E7%9A%84%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%BD%93%E9%AA%8C/">
+<meta property="og:site_name" content="ziWindlu的博客">
+<meta property="og:description" content="引子在使用virtualbox时，vbox打开的虚拟机窗口无法便捷得最小化和展开。于是俺用了remmina，在每台vbox虚拟机的系统中开启rdp或是vnc。后面越发约感觉鸡肋，每次安装虚拟机后都要重新安装一下远程桌面服务。这时俺想到之前使用的virt-manager可以使用spice直接连接，而且这是虚拟化软件提供的，并非操作系统提供的。一是无需对虚拟机安装多余的软件，二是即便虚拟机网络不通，也">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://images.pexels.com/photos/531713/pexels-photo-531713.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load">
+<meta property="article:published_time" content="2024-11-12T09:41:09.000Z">
+<meta property="article:modified_time" content="2024-11-12T09:43:32.000Z">
+<meta property="article:author" content="ziWindlu">
+<meta property="article:tag" content="blog">
+<meta property="article:tag" content="virt-manager">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images.pexels.com/photos/531713/pexels-photo-531713.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"><link rel="shortcut icon" href="https://img.icons8.com/bubbles/100/null/pig.png"><link rel="canonical" href="https://ziwindlu.github.io/2024/11/12/virt-manager+remmina%E8%88%92%E9%80%82%E7%9A%84%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%BD%93%E9%AA%8C/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'virt-manager+remmina舒适的虚拟机体验',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-11-12 17:43:32'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = url => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      link.onload = () => resolve()
+      link.onerror = () => reject()
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1699291028234088" crossorigin="anonymous"></script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://img.icons8.com/bubbles/100/null/pig.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">49</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">53</div></a><a href="/category/"><div class="headline">分类</div><div class="length-num">1</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/category/mylife/"><i class="fa-fw fas fa-heart"></i><span> 我的时间线</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://images.pexels.com/photos/531713/pexels-photo-531713.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=600&amp;lazy=load')"><nav id="nav"><span id="blog-info"><a href="/" title="ziWindlu的博客"><img class="site-icon" src="https://img.icons8.com/bubbles/100/null/pig.png"/><span class="site-name">ziWindlu的博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/category/mylife/"><i class="fa-fw fas fa-heart"></i><span> 我的时间线</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">virt-manager+remmina舒适的虚拟机体验</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-11-12T09:41:09.000Z" title="发表于 2024-11-12 17:41:09">2024-11-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-11-12T09:43:32.000Z" title="更新于 2024-11-12 17:43:32">2024-11-12</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">378</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>1分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="virt-manager+remmina舒适的虚拟机体验"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p>在使用virtualbox时，vbox打开的虚拟机窗口无法便捷得最小化和展开。于是俺用了remmina，在每台vbox虚拟机的系统中开启rdp或是vnc。后面越发约感觉鸡肋，每次安装虚拟机后都要重新安装一下远程桌面服务。这时俺想到之前使用的virt-manager可以使用spice直接连接，而且这是虚拟化软件提供的，并非操作系统提供的。一是无需对虚拟机安装多余的软件，二是即便虚拟机网络不通，也可以方便的管理。</p>
+<p>本文会展示一些关键的配置和一些注意事项。</p>
+<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><h3 id="virt-manager配置spice连接"><a href="#virt-manager配置spice连接" class="headerlink" title="virt-manager配置spice连接"></a>virt-manager配置spice连接</h3><p><img src="/../assets/image_1731372521093_0.png" alt="image.png"></p>
+<p>password可选，如果想要暴露连接可以将address改为”All interfaces“</p>
+<h3 id="配置remmina连接"><a href="#配置remmina连接" class="headerlink" title="配置remmina连接"></a>配置remmina连接</h3><p><img src="/../assets/image_1731372696484_0.png" alt="image.png"></p>
+<p>仅需填入ip+端口号。这里的ip为宿主机的ip并非客户机的ip</p>
+<h3 id="安装spice增强"><a href="#安装spice增强" class="headerlink" title="安装spice增强"></a>安装spice增强</h3><p><strong>windows</strong></p>
+<p>下载链接在这里找</p>
+<p><a target="_blank" rel="noopener" href="https://www.spice-space.org/download.html">spice-space download</a></p>
+<p><strong>linux</strong></p>
+<p>debian:</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 一般来说linux客户机安装后这个包是默认被安装的</span><br><span class="line">sudo apt install qemu-guest-agent</span><br><span class="line">sudo apt install spice-vdagent</span><br></pre></td></tr></table></figure>
+
+<h2 id="存在的问题"><a href="#存在的问题" class="headerlink" title="存在的问题"></a>存在的问题</h2><h3 id="使用xfce桌面环境的客户机无法自动调整屏幕大小"><a href="#使用xfce桌面环境的客户机无法自动调整屏幕大小" class="headerlink" title="使用xfce桌面环境的客户机无法自动调整屏幕大小"></a>使用xfce桌面环境的客户机无法自动调整屏幕大小</h3><p>目前xfce暂时没有办法自动调整屏幕大小，如有需求可以参考下面这个链接或者使用其他桌面环境，比如gnome。kde没有测试</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/seife/spice-autorandr">GitHub seife&#x2F;spice-autorandr: Automatically adjust the client window resolution in Linux KVM guests using the SPICE driver</a></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://www.spice-space.org/download.html">spice-space download</a></p>
+<p><a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Virt-manager">Virt-manager ArchWiki</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://ziwindlu.github.io">ziWindlu</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://ziwindlu.github.io/2024/11/12/virt-manager+remmina%E8%88%92%E9%80%82%E7%9A%84%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%BD%93%E9%AA%8C/">https://ziwindlu.github.io/2024/11/12/virt-manager+remmina%E8%88%92%E9%80%82%E7%9A%84%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%BD%93%E9%AA%8C/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://ziwindlu.github.io" target="_blank">ziWindlu的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/blog/">blog</a><a class="post-meta__tags" href="/tags/virt-manager/">virt-manager</a></div><div class="post_share"><div class="social-share" data-image="https://images.pexels.com/photos/531713/pexels-photo-531713.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=600&amp;lazy=load" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2024/11/12/%E8%AE%B0%E5%BD%95archlinux%E6%BB%9A%E6%8C%82/" title="记录archlinux滚挂"><img class="cover" src="https://images.pexels.com/photos/581222/pexels-photo-581222.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1260&amp;h=750&amp;dpr=1" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">记录archlinux滚挂</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://img.icons8.com/bubbles/100/null/pig.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">ziWindlu</div><div class="author-info__description">时不时写一些让自己开心的东西</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">49</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">53</div></a><a href="/category/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ziwindlu"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/ziwindlu" target="_blank" title="Github"><i class="fab fa-github"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E5%AD%90"><span class="toc-number">1.</span> <span class="toc-text">引子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A3%E6%96%87"><span class="toc-number">2.</span> <span class="toc-text">正文</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#virt-manager%E9%85%8D%E7%BD%AEspice%E8%BF%9E%E6%8E%A5"><span class="toc-number">2.1.</span> <span class="toc-text">virt-manager配置spice连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEremmina%E8%BF%9E%E6%8E%A5"><span class="toc-number">2.2.</span> <span class="toc-text">配置remmina连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85spice%E5%A2%9E%E5%BC%BA"><span class="toc-number">2.3.</span> <span class="toc-text">安装spice增强</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">3.</span> <span class="toc-text">存在的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8xfce%E6%A1%8C%E9%9D%A2%E7%8E%AF%E5%A2%83%E7%9A%84%E5%AE%A2%E6%88%B7%E6%9C%BA%E6%97%A0%E6%B3%95%E8%87%AA%E5%8A%A8%E8%B0%83%E6%95%B4%E5%B1%8F%E5%B9%95%E5%A4%A7%E5%B0%8F"><span class="toc-number">3.1.</span> <span class="toc-text">使用xfce桌面环境的客户机无法自动调整屏幕大小</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">4.</span> <span class="toc-text">参考</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/11/12/virt-manager+remmina%E8%88%92%E9%80%82%E7%9A%84%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%BD%93%E9%AA%8C/" title="virt-manager+remmina舒适的虚拟机体验"><img src="https://images.pexels.com/photos/531713/pexels-photo-531713.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=600&amp;lazy=load" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="virt-manager+remmina舒适的虚拟机体验"/></a><div class="content"><a class="title" href="/2024/11/12/virt-manager+remmina%E8%88%92%E9%80%82%E7%9A%84%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%BD%93%E9%AA%8C/" title="virt-manager+remmina舒适的虚拟机体验">virt-manager+remmina舒适的虚拟机体验</a><time datetime="2024-11-12T09:41:09.000Z" title="发表于 2024-11-12 17:41:09">2024-11-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/11/12/%E8%AE%B0%E5%BD%95archlinux%E6%BB%9A%E6%8C%82/" title="记录archlinux滚挂"><img src="https://images.pexels.com/photos/581222/pexels-photo-581222.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1260&amp;h=750&amp;dpr=1" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="记录archlinux滚挂"/></a><div class="content"><a class="title" href="/2024/11/12/%E8%AE%B0%E5%BD%95archlinux%E6%BB%9A%E6%8C%82/" title="记录archlinux滚挂">记录archlinux滚挂</a><time datetime="2024-11-12T01:55:30.000Z" title="发表于 2024-11-12 09:55:30">2024-11-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/11/12/virtualbox%E5%90%AF%E5%8A%A8%E6%9C%AC%E5%9C%B0%E7%A1%AC%E7%9B%98%E7%B3%BB%E7%BB%9F-%E5%8F%8C%E7%B3%BB%E7%BB%9F%E6%97%A0%E7%BC%9D%E5%88%87%E6%8D%A2/" title="virtualbox启动本地硬盘系统-双系统无缝切换"><img src="https://images.freejpg.com.ar/400/2301/object-nature-outdoors-forest-rock-green-color-tranquil-scene-mountain-river-F100036623.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="virtualbox启动本地硬盘系统-双系统无缝切换"/></a><div class="content"><a class="title" href="/2024/11/12/virtualbox%E5%90%AF%E5%8A%A8%E6%9C%AC%E5%9C%B0%E7%A1%AC%E7%9B%98%E7%B3%BB%E7%BB%9F-%E5%8F%8C%E7%B3%BB%E7%BB%9F%E6%97%A0%E7%BC%9D%E5%88%87%E6%8D%A2/" title="virtualbox启动本地硬盘系统-双系统无缝切换">virtualbox启动本地硬盘系统-双系统无缝切换</a><time datetime="2024-11-12T01:53:38.000Z" title="发表于 2024-11-12 09:53:38">2024-11-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/08/16/%E8%B7%B3%E8%BF%87%E8%8A%8B%E9%81%93%E6%96%87%E6%A1%A3%E7%9F%A5%E8%AF%86%E6%98%9F%E7%90%83%E8%AE%A4%E8%AF%81-tampermonkey/" title="跳过芋道文档知识星球认证-tampermonkey"><img src="https://images.freejpg.com.ar/400/2301/iris-close-up-human-eye-eyeball-green-human-eye-eyesight-looking-F100036626.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="跳过芋道文档知识星球认证-tampermonkey"/></a><div class="content"><a class="title" href="/2024/08/16/%E8%B7%B3%E8%BF%87%E8%8A%8B%E9%81%93%E6%96%87%E6%A1%A3%E7%9F%A5%E8%AF%86%E6%98%9F%E7%90%83%E8%AE%A4%E8%AF%81-tampermonkey/" title="跳过芋道文档知识星球认证-tampermonkey">跳过芋道文档知识星球认证-tampermonkey</a><time datetime="2024-08-16T03:06:25.000Z" title="发表于 2024-08-16 11:06:25">2024-08-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/08/16/vim%E4%BF%9D%E5%AD%98%E5%BD%95%E5%88%B6%E5%AE%8F/" title="vim保存录制宏"><img src="https://images.pexels.com/photos/531713/pexels-photo-531713.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=600&amp;lazy=load" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="vim保存录制宏"/></a><div class="content"><a class="title" href="/2024/08/16/vim%E4%BF%9D%E5%AD%98%E5%BD%95%E5%88%B6%E5%AE%8F/" title="vim保存录制宏">vim保存录制宏</a><time datetime="2024-08-16T02:54:10.000Z" title="发表于 2024-08-16 10:54:10">2024-08-16</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By ziWindlu</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
