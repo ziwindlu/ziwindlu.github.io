@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://ziwindlu.github.io/2024/11/13/linux%E4%BD%BF%E7%94%A8%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E9%85%8D%E7%BD%AE%E7%BD%91%E7%BB%9C/</loc>
+    
+    <lastmod>2024-11-13</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://ziwindlu.github.io/2024/11/13/linux%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE%E5%B7%A5%E5%85%B7ip/</loc>
     
     <lastmod>2024-11-13</lastmod>
@@ -748,20 +757,6 @@
   </url>
   
   <url>
-    <loc>https://ziwindlu.github.io/tags/logseq-plug/</loc>
-    <lastmod>2024-11-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://ziwindlu.github.io/tags/vim/</loc>
-    <lastmod>2024-11-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://ziwindlu.github.io/tags/mac/</loc>
     <lastmod>2024-11-13</lastmod>
     <changefreq>weekly</changefreq>
@@ -770,6 +765,20 @@
   
   <url>
     <loc>https://ziwindlu.github.io/tags/double-pin/</loc>
+    <lastmod>2024-11-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ziwindlu.github.io/tags/logseq-plug/</loc>
+    <lastmod>2024-11-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ziwindlu.github.io/tags/vim/</loc>
     <lastmod>2024-11-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -874,14 +883,14 @@
   </url>
   
   <url>
-    <loc>https://ziwindlu.github.io/tags/yadm/</loc>
+    <loc>https://ziwindlu.github.io/tags/virtualbox/</loc>
     <lastmod>2024-11-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://ziwindlu.github.io/tags/virtualbox/</loc>
+    <loc>https://ziwindlu.github.io/tags/yadm/</loc>
     <lastmod>2024-11-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -931,6 +940,13 @@
   
   <url>
     <loc>https://ziwindlu.github.io/tags/tampermonkey/</loc>
+    <lastmod>2024-11-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ziwindlu.github.io/tags/static-ip/</loc>
     <lastmod>2024-11-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

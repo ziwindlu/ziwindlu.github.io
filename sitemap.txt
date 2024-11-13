@@ -1,3 +1,4 @@
+https://ziwindlu.github.io/2024/11/13/linux%E4%BD%BF%E7%94%A8%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E9%85%8D%E7%BD%AE%E7%BD%91%E7%BB%9C/
 https://ziwindlu.github.io/2024/11/13/linux%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE%E5%B7%A5%E5%85%B7ip/
 https://ziwindlu.github.io/2024/11/13/linux%E7%89%B9%E6%AE%8A%E6%9D%83%E9%99%90suid,sgid,sbit/
 https://ziwindlu.github.io/2024/11/12/virt-manager+remmina%E8%88%92%E9%80%82%E7%9A%84%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%BD%93%E9%AA%8C/
@@ -88,10 +89,10 @@ https://ziwindlu.github.io/tags/sgid/
 https://ziwindlu.github.io/tags/sbit/
 https://ziwindlu.github.io/tags/ip/
 https://ziwindlu.github.io/tags/logseq/
-https://ziwindlu.github.io/tags/logseq-plug/
-https://ziwindlu.github.io/tags/vim/
 https://ziwindlu.github.io/tags/mac/
 https://ziwindlu.github.io/tags/double-pin/
+https://ziwindlu.github.io/tags/logseq-plug/
+https://ziwindlu.github.io/tags/vim/
 https://ziwindlu.github.io/tags/maven/
 https://ziwindlu.github.io/tags/java/
 https://ziwindlu.github.io/tags/nginx/
@@ -106,8 +107,8 @@ https://ziwindlu.github.io/tags/browser-extends/
 https://ziwindlu.github.io/tags/tips/
 https://ziwindlu.github.io/tags/vimplug/
 https://ziwindlu.github.io/tags/virt-manager/
-https://ziwindlu.github.io/tags/yadm/
 https://ziwindlu.github.io/tags/virtualbox/
+https://ziwindlu.github.io/tags/yadm/
 https://ziwindlu.github.io/tags/basic/
 https://ziwindlu.github.io/tags/vpn/
 https://ziwindlu.github.io/tags/shell-script/
@@ -115,3 +116,4 @@ https://ziwindlu.github.io/tags/ops/
 https://ziwindlu.github.io/tags/pacman/
 https://ziwindlu.github.io/tags/js/
 https://ziwindlu.github.io/tags/tampermonkey/
+https://ziwindlu.github.io/tags/static-ip/
