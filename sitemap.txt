@@ -68,15 +68,15 @@ https://ziwindlu.github.io/tags/asciinema/
 https://ziwindlu.github.io/tags/docker/
 https://ziwindlu.github.io/tags/docker-compose/
 https://ziwindlu.github.io/tags/fstab/
-https://ziwindlu.github.io/tags/grub/
 https://ziwindlu.github.io/tags/git/
 https://ziwindlu.github.io/tags/sec/
+https://ziwindlu.github.io/tags/grub/
 https://ziwindlu.github.io/tags/hackintosh/
+https://ziwindlu.github.io/tags/hedgedoc/
+https://ziwindlu.github.io/tags/service-deploy/
 https://ziwindlu.github.io/tags/cicd/
 https://ziwindlu.github.io/tags/devops/
 https://ziwindlu.github.io/tags/gitlab/
-https://ziwindlu.github.io/tags/hedgedoc/
-https://ziwindlu.github.io/tags/service-deploy/
 https://ziwindlu.github.io/tags/ssh/
 https://ziwindlu.github.io/tags/kitty/
 https://ziwindlu.github.io/tags/shortcut/
@@ -95,6 +95,7 @@ https://ziwindlu.github.io/tags/bug/
 https://ziwindlu.github.io/tags/python/
 https://ziwindlu.github.io/tags/rsync/
 https://ziwindlu.github.io/tags/samba/
+https://ziwindlu.github.io/tags/sudo/
 https://ziwindlu.github.io/tags/browser-extends/
 https://ziwindlu.github.io/tags/tips/
 https://ziwindlu.github.io/tags/vimplug/
@@ -108,4 +109,3 @@ https://ziwindlu.github.io/tags/ops/
 https://ziwindlu.github.io/tags/pacman/
 https://ziwindlu.github.io/tags/js/
 https://ziwindlu.github.io/tags/tampermonkey/
-https://ziwindlu.github.io/tags/sudo/
