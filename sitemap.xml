@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://ziwindlu.github.io/2024/11/13/linux%E7%89%B9%E6%AE%8A%E6%9D%83%E9%99%90suid,sgid,sbit/</loc>
+    
+    <lastmod>2024-11-13</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://ziwindlu.github.io/2024/11/12/virt-manager+remmina%E8%88%92%E9%80%82%E7%9A%84%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%BD%93%E9%AA%8C/</loc>
     
     <lastmod>2024-11-13</lastmod>
@@ -695,6 +704,27 @@
   </url>
   
   <url>
+    <loc>https://ziwindlu.github.io/tags/suid/</loc>
+    <lastmod>2024-11-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ziwindlu.github.io/tags/sgid/</loc>
+    <lastmod>2024-11-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ziwindlu.github.io/tags/sbit/</loc>
+    <lastmod>2024-11-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://ziwindlu.github.io/tags/logseq/</loc>
     <lastmod>2024-11-13</lastmod>
     <changefreq>weekly</changefreq>
@@ -744,20 +774,6 @@
   </url>
   
   <url>
-    <loc>https://ziwindlu.github.io/tags/nginx/</loc>
-    <lastmod>2024-11-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://ziwindlu.github.io/tags/proxy/</loc>
-    <lastmod>2024-11-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://ziwindlu.github.io/tags/pycharm/</loc>
     <lastmod>2024-11-13</lastmod>
     <changefreq>weekly</changefreq>
@@ -766,6 +782,20 @@
   
   <url>
     <loc>https://ziwindlu.github.io/tags/bug/</loc>
+    <lastmod>2024-11-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ziwindlu.github.io/tags/nginx/</loc>
+    <lastmod>2024-11-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ziwindlu.github.io/tags/proxy/</loc>
     <lastmod>2024-11-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
