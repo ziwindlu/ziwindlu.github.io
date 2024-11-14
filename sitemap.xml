@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://ziwindlu.github.io/2024/11/12/kitty+shell%E9%9B%86%E6%88%90%E6%89%93%E9%80%A0%E5%BC%BA%E5%8A%B2%E7%9A%84ssh%E5%B7%A5%E5%85%B7/</loc>
+    
+    <lastmod>2024-11-14</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://ziwindlu.github.io/2024/11/14/linux%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8/</loc>
     
     <lastmod>2024-11-14</lastmod>
@@ -77,15 +86,6 @@
     <loc>https://ziwindlu.github.io/about/</loc>
     
     <lastmod>2024-11-13</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://ziwindlu.github.io/2024/11/12/kitty+shell%E9%9B%86%E6%88%90%E6%89%93%E9%80%A0%E5%BC%BA%E5%8A%B2%E7%9A%84ssh%E5%B7%A5%E5%85%B7/</loc>
-    
-    <lastmod>2024-11-12</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
