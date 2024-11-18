@@ -41,7 +41,7 @@ https://ziwindlu.github.io/2024/04/23/asciinema-linux%E8%AE%B0%E5%BD%95%E5%91%BD
 https://ziwindlu.github.io/2024/04/22/git%E5%8E%86%E5%8F%B2%E6%8F%90%E4%BA%A4%E8%AE%B0%E5%BD%95%E8%84%B1%E6%95%8F/
 https://ziwindlu.github.io/2024/04/16/vim%E6%8F%92%E4%BB%B6%E6%8F%92%E4%BB%B6%E6%8E%A8%E8%8D%90/
 https://ziwindlu.github.io/category/
-https://ziwindlu.github.io/2024/04/11/samba/
+https://ziwindlu.github.io/2024/04/11/archlinux%E4%B8%8Bsamba%E6%9C%8D%E5%8A%A1%E6%90%AD%E5%BB%BA/
 https://ziwindlu.github.io/2024/04/10/yadm-%E4%BC%98%E9%9B%85%E5%9C%B0%E7%AE%A1%E7%90%86dotfile/
 https://ziwindlu.github.io/2024/04/10/hedgedoc%E6%90%AD%E5%BB%BA/
 https://ziwindlu.github.io/2024/04/10/mac%E4%B8%AD%E7%90%90%E7%A2%8E%E5%B0%8F%E4%BA%8B/
