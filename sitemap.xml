@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://ziwindlu.github.io/2024/11/22/%E4%BD%BF%E7%94%A8harbor%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BAdocker%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93/</loc>
+    
+    <lastmod>2024-11-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://ziwindlu.github.io/2024/04/10/centos%E5%AE%89%E8%A3%85docker%E4%BB%A5%E5%8F%8Adocker-compose/</loc>
     
     <lastmod>2024-11-20</lastmod>
@@ -1032,6 +1041,13 @@
   
   <url>
     <loc>https://ziwindlu.github.io/tags/dvwa/</loc>
+    <lastmod>2024-11-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ziwindlu.github.io/tags/harbor/</loc>
     <lastmod>2024-11-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

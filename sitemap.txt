@@ -1,3 +1,4 @@
+https://ziwindlu.github.io/2024/11/22/%E4%BD%BF%E7%94%A8harbor%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BAdocker%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93/
 https://ziwindlu.github.io/2024/04/10/centos%E5%AE%89%E8%A3%85docker%E4%BB%A5%E5%8F%8Adocker-compose/
 https://ziwindlu.github.io/2024/11/16/%E6%97%A0%E4%BB%A3%E7%A0%81%E9%BC%A0%E6%A0%87%E5%85%9A%E7%8B%82%E5%96%9C%E5%A5%B6%E5%A6%88%E7%BA%A7%E6%95%99%E5%AD%A6%E4%BB%8E0%E5%BC%80%E5%A7%8B%E6%89%8B%E6%8A%8A%E6%89%8B%E6%95%99%E4%BD%A0%E4%BD%BF%E7%94%A8centos%E6%90%AD%E5%BB%BAdvwa/
 https://ziwindlu.github.io/2024/11/12/kitty+shell%E9%9B%86%E6%88%90%E6%89%93%E9%80%A0%E5%BC%BA%E5%8A%B2%E7%9A%84ssh%E5%B7%A5%E5%85%B7/
@@ -128,3 +129,4 @@ https://ziwindlu.github.io/tags/ops/
 https://ziwindlu.github.io/tags/js/
 https://ziwindlu.github.io/tags/tampermonkey/
 https://ziwindlu.github.io/tags/dvwa/
+https://ziwindlu.github.io/tags/harbor/
