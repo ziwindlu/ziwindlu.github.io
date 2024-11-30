@@ -2,6 +2,24 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://ziwindlu.github.io/2024/11/30/zinit%E9%AB%98%E6%95%88%E7%9A%84zsh%E6%8F%92%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8/</loc>
+    
+    <lastmod>2024-11-30</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://ziwindlu.github.io/2024/11/30/%E8%AE%B0%E5%BD%95ranger%E4%B8%ADyank%E5%A4%B1%E6%95%88%E7%9A%84%E9%97%AE%E9%A2%98/</loc>
+    
+    <lastmod>2024-11-30</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://ziwindlu.github.io/2024/11/30/%E8%AE%B0%E5%BD%95docker%E7%BD%91%E7%BB%9C%E4%B8%8E%E5%BD%93%E5%89%8D%E7%BD%91%E7%BB%9C%E5%86%B2%E7%AA%81%E5%BD%A2%E6%88%90arp%E5%B9%BF%E6%92%AD%E9%A3%8E%E6%9A%B4%E9%80%A0%E6%88%90%E6%96%AD%E7%BD%91%E7%9A%84%E9%97%AE%E9%A2%98/</loc>
     
     <lastmod>2024-11-30</lastmod>
@@ -1071,6 +1089,34 @@
   
   <url>
     <loc>https://ziwindlu.github.io/tags/arp%E5%B9%BF%E6%92%AD%E9%A3%8E%E6%9A%B4/</loc>
+    <lastmod>2024-11-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ziwindlu.github.io/tags/zinit/</loc>
+    <lastmod>2024-11-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ziwindlu.github.io/tags/zsh/</loc>
+    <lastmod>2024-11-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ziwindlu.github.io/tags/x11/</loc>
+    <lastmod>2024-11-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ziwindlu.github.io/tags/ranger/</loc>
     <lastmod>2024-11-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
