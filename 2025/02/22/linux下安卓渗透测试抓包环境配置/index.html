@@ -1,0 +1,203 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>linux下安卓渗透测试抓包环境配置 | ziWindlu的博客</title><meta name="author" content="ziWindlu"><meta name="copyright" content="ziWindlu"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="引子学习安卓app渗透测试时，网上大部分教程对于linux用户不太友好。 本文会通过常见的抓包场景介绍一些linux下的软件和一些小技巧。 基础知识root：获取安卓系统最高权限 xposed、LSPosed、LSPatch：一类安卓系统的hook框架 准备工作adb shizuku GitHub RikkaApps&#x2F;Shizuku: Using system APIs directly">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux下安卓渗透测试抓包环境配置">
+<meta property="og:url" content="https://ziwindlu.github.io/2025/02/22/linux%E4%B8%8B%E5%AE%89%E5%8D%93%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E6%8A%93%E5%8C%85%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">
+<meta property="og:site_name" content="ziWindlu的博客">
+<meta property="og:description" content="引子学习安卓app渗透测试时，网上大部分教程对于linux用户不太友好。 本文会通过常见的抓包场景介绍一些linux下的软件和一些小技巧。 基础知识root：获取安卓系统最高权限 xposed、LSPosed、LSPatch：一类安卓系统的hook框架 准备工作adb shizuku GitHub RikkaApps&#x2F;Shizuku: Using system APIs directly">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://images.freejpg.com.ar/400/2301/iris-close-up-human-eye-eyeball-green-human-eye-eyesight-looking-F100036626.jpg">
+<meta property="article:published_time" content="2025-02-22T02:11:20.000Z">
+<meta property="article:modified_time" content="2025-02-22T02:11:20.000Z">
+<meta property="article:author" content="ziWindlu">
+<meta property="article:tag" content="Android">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images.freejpg.com.ar/400/2301/iris-close-up-human-eye-eyeball-green-human-eye-eyesight-looking-F100036626.jpg"><link rel="shortcut icon" href="https://img.icons8.com/bubbles/100/null/pig.png"><link rel="canonical" href="https://ziwindlu.github.io/2025/02/22/linux%E4%B8%8B%E5%AE%89%E5%8D%93%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E6%8A%93%E5%8C%85%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'linux下安卓渗透测试抓包环境配置',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-02-22 10:11:20'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = url => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      link.onload = () => resolve()
+      link.onerror = () => reject()
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://img.icons8.com/bubbles/100/null/pig.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">54</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">45</div></a><a href="/category/"><div class="headline">分类</div><div class="length-num">11</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/category/mylife/"><i class="fa-fw fas fa-heart"></i><span> 我的时间线</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://images.freejpg.com.ar/400/2301/iris-close-up-human-eye-eyeball-green-human-eye-eyesight-looking-F100036626.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="ziWindlu的博客"><img class="site-icon" src="https://img.icons8.com/bubbles/100/null/pig.png"/><span class="site-name">ziWindlu的博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/category/mylife/"><i class="fa-fw fas fa-heart"></i><span> 我的时间线</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">linux下安卓渗透测试抓包环境配置</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-02-22T02:11:20.000Z" title="发表于 2025-02-22 10:11:20">2025-02-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-02-22T02:11:20.000Z" title="更新于 2025-02-22 10:11:20">2025-02-22</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">752</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>2分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="linux下安卓渗透测试抓包环境配置"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p>学习安卓app渗透测试时，网上大部分教程对于linux用户不太友好。</p>
+<p>本文会通过常见的抓包场景介绍一些linux下的软件和一些小技巧。</p>
+<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><p>root：获取安卓系统最高权限</p>
+<p>xposed、LSPosed、LSPatch：一类安卓系统的hook框架</p>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>adb</p>
+<p>shizuku</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/RikkaApps/Shizuku">GitHub RikkaApps&#x2F;Shizuku: Using system APIs directly with adb&#x2F;root privileges from normal apps through a Java process started with app_process.</a></p>
+<p>LSPatch</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/LSPosed/LSPatch">GitHub LSPosed&#x2F;LSPatch: LSPatch: A non-root Xposed framework extending from LSPosed</a></p>
+<h2 id="Genymotion虚拟机-证书-附带脚本"><a href="#Genymotion虚拟机-证书-附带脚本" class="headerlink" title="Genymotion虚拟机+证书(附带脚本)"></a>Genymotion虚拟机+证书(附带脚本)</h2><p>Genymotion是一款跨平台的安卓虚拟机。功能强大</p>
+<blockquote>
+<p>注意，Genymotion并非自由软件</p>
+</blockquote>
+<h3 id="镜像选择"><a href="#镜像选择" class="headerlink" title="镜像选择"></a>镜像选择</h3><p>每个镜像后都标注了cpu、内存、硬盘参数，我们根据自己的宿主机性能进行选择。</p>
+<p>我们在渗透测试中有root需求，Genymotion官方提供了带有root的镜像请参考<a target="_blank" rel="noopener" href="https://docs.genymotion.com/paas/10_Using_root_access/">Root access Device image User Guide</a>选择合适的安卓版本</p>
+<p>结合以上两点，我们选择Pixel2安卓9</p>
+<h3 id="创建虚拟机"><a href="#创建虚拟机" class="headerlink" title="创建虚拟机"></a>创建虚拟机</h3><p><img src="/../assets/image_1739186775671_0.png" alt="image.png"></p>
+<p>这里直接无脑下一步下一步即可。</p>
+<h3 id="虚拟机的配置"><a href="#虚拟机的配置" class="headerlink" title="虚拟机的配置"></a>虚拟机的配置</h3><p>arm转义<a target="_blank" rel="noopener" href="https://github.com/m9rco/Genymotion_ARM_Translation">GitHub m9rco&#x2F;Genymotion_ARM_Translation: 👾👾 Genymotion_ARM_Translation Please enjoy！</a></p>
+<p>下载对应版本的arm转义包</p>
+<p>运行以下命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">改为你下载的文件名</span></span><br><span class="line">fileName=arm_translation.zip</span><br><span class="line">adb push $fileName /sdcard/Download/$fileName</span><br><span class="line">adb shell &quot;sh /system/bin/flash-archive.sh /sdcard/Download/$fileName&quot;</span><br><span class="line">adb reboot</span><br></pre></td></tr></table></figure>
+
+<h3 id="shizuku-LSPatch"><a href="#shizuku-LSPatch" class="headerlink" title="shizuku+LSPatch"></a>shizuku+LSPatch</h3><p>我们有root，直接使用shizuku的root模式即可。LSPatch授权后即可使用</p>
+<h3 id="burp证书导入"><a href="#burp证书导入" class="headerlink" title="burp证书导入"></a>burp证书导入</h3><p>这里我们导入系统证书，系统证书需要将证书改名为<code>hash.0</code></p>
+<p>运行以下命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">转换证书并推送</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">burp.der为从burp中生成的证书</span></span><br><span class="line">openssl x509 -inform DER -in burp.der -out burp.pem</span><br><span class="line">hash=$(openssl x509 -inform PEM -subject_hash_old -in burp.pem | head -1)</span><br><span class="line">mv burp.pem $&#123;hash&#125;.0</span><br><span class="line">adb remount</span><br><span class="line">adb push $&#123;hash&#125;.0 /system/etc/security/cacerts/</span><br><span class="line">adb shell chmod 644 /system/etc/security/cacerts/$&#123;hash&#125;.0</span><br><span class="line">adb reboot</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用代理"><a href="#使用代理" class="headerlink" title="使用代理"></a>使用代理</h3><p>直接在wifi中配置代理即可</p>
+<p><img src="/../assets/image_1739153112046_0.png" alt="image.png"></p>
+<h2 id="实体机-证书"><a href="#实体机-证书" class="headerlink" title="实体机+证书"></a>实体机+证书</h2><p>实际上linux下的虚拟机体验并不好，很多时候还是使用实体机比较友好</p>
+<h3 id="证书配置"><a href="#证书配置" class="headerlink" title="证书配置"></a>证书配置</h3><h4 id="可root的机器"><a href="#可root的机器" class="headerlink" title="可root的机器"></a>可root的机器</h4><p>这里请参考上面Genymotion导入证书的方法</p>
+<h4 id="不可root的机器"><a href="#不可root的机器" class="headerlink" title="不可root的机器"></a>不可root的机器</h4><p>写在前面：</p>
+<p>理论上在安卓7.0以后非系统证书是不可用做中间人攻击的。不过这是前半句，实际上”安卓7.0后引入了网络安全配置，默认情况下应用不再信任用户添加的CA证书，除非应用明确配置为信任它们。”</p>
+<p>所以用户添加的证书在一定程度上是可用的。</p>
+<p>通过设置中的添加用户级别证书即可配置证书。</p>
+<p>burp导出证书时后缀需要改为cer，这样用户才可在手动添加时选中。</p>
+<p>具体操作步骤请参考百度。</p>
+<h3 id="shizuku-LSPatch-1"><a href="#shizuku-LSPatch-1" class="headerlink" title="shizuku+LSPatch"></a>shizuku+LSPatch</h3><h4 id="可root的机器-1"><a href="#可root的机器-1" class="headerlink" title="可root的机器"></a>可root的机器</h4><p>参考Genymotion</p>
+<h4 id="不可root的机器-1"><a href="#不可root的机器-1" class="headerlink" title="不可root的机器"></a>不可root的机器</h4><h5 id="通过adb激活shizuku"><a href="#通过adb激活shizuku" class="headerlink" title="通过adb激活shizuku"></a>通过adb激活shizuku</h5><p>安装shizuku后运行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/start.sh</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://docs.genymotion.com/paas/10_Using_root_access/">Root access Device image User Guide</a></p>
+<p><a target="_blank" rel="noopener" href="https://shizuku.rikka.app/guide/setup/">User manual | Shizuku</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/m9rco/Genymotion_ARM_Translation">GitHub m9rco&#x2F;Genymotion_ARM_Translation: 👾👾 Genymotion_ARM_Translation Please enjoy！</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://ziwindlu.github.io">ziWindlu</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://ziwindlu.github.io/2025/02/22/linux%E4%B8%8B%E5%AE%89%E5%8D%93%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E6%8A%93%E5%8C%85%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">https://ziwindlu.github.io/2025/02/22/linux%E4%B8%8B%E5%AE%89%E5%8D%93%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E6%8A%93%E5%8C%85%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://ziwindlu.github.io" target="_blank">ziWindlu的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Android/">Android</a></div><div class="post_share"><div class="social-share" data-image="https://images.freejpg.com.ar/400/2301/iris-close-up-human-eye-eyeball-green-human-eye-eyesight-looking-F100036626.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2025/02/22/linux%E4%B8%8B%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%8A%93%E5%8C%85/" title="linux下微信小程序抓包"><img class="cover" src="https://images.pexels.com/photos/1333840/pexels-photo-1333840.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=600&amp;lazy=load" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">linux下微信小程序抓包</div></div></a></div><div class="next-post pull-right"><a href="/2025/01/13/CVE-2016-4437/" title="CVE-2016-4437"><img class="cover" src="https://images.pexels.com/photos/1479710/pexels-photo-1479710.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=600&amp;lazy=load" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CVE-2016-4437</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://img.icons8.com/bubbles/100/null/pig.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">ziWindlu</div><div class="author-info__description">时不时写一些让自己开心的东西</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">54</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">45</div></a><a href="/category/"><div class="headline">分类</div><div class="length-num">11</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ziwindlu"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/ziwindlu" target="_blank" title="Github"><i class="fab fa-github"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E5%AD%90"><span class="toc-number">1.</span> <span class="toc-text">引子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-number">2.</span> <span class="toc-text">基础知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">3.</span> <span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Genymotion%E8%99%9A%E6%8B%9F%E6%9C%BA-%E8%AF%81%E4%B9%A6-%E9%99%84%E5%B8%A6%E8%84%9A%E6%9C%AC"><span class="toc-number">4.</span> <span class="toc-text">Genymotion虚拟机+证书(附带脚本)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%95%9C%E5%83%8F%E9%80%89%E6%8B%A9"><span class="toc-number">4.1.</span> <span class="toc-text">镜像选择</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="toc-number">4.2.</span> <span class="toc-text">创建虚拟机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="toc-number">4.3.</span> <span class="toc-text">虚拟机的配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#shizuku-LSPatch"><span class="toc-number">4.4.</span> <span class="toc-text">shizuku+LSPatch</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#burp%E8%AF%81%E4%B9%A6%E5%AF%BC%E5%85%A5"><span class="toc-number">4.5.</span> <span class="toc-text">burp证书导入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E4%BB%A3%E7%90%86"><span class="toc-number">4.6.</span> <span class="toc-text">使用代理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E4%BD%93%E6%9C%BA-%E8%AF%81%E4%B9%A6"><span class="toc-number">5.</span> <span class="toc-text">实体机+证书</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%81%E4%B9%A6%E9%85%8D%E7%BD%AE"><span class="toc-number">5.1.</span> <span class="toc-text">证书配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AFroot%E7%9A%84%E6%9C%BA%E5%99%A8"><span class="toc-number">5.1.1.</span> <span class="toc-text">可root的机器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8D%E5%8F%AFroot%E7%9A%84%E6%9C%BA%E5%99%A8"><span class="toc-number">5.1.2.</span> <span class="toc-text">不可root的机器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#shizuku-LSPatch-1"><span class="toc-number">5.2.</span> <span class="toc-text">shizuku+LSPatch</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AFroot%E7%9A%84%E6%9C%BA%E5%99%A8-1"><span class="toc-number">5.2.1.</span> <span class="toc-text">可root的机器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8D%E5%8F%AFroot%E7%9A%84%E6%9C%BA%E5%99%A8-1"><span class="toc-number">5.2.2.</span> <span class="toc-text">不可root的机器</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%9A%E8%BF%87adb%E6%BF%80%E6%B4%BBshizuku"><span class="toc-number">5.2.2.1.</span> <span class="toc-text">通过adb激活shizuku</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">6.</span> <span class="toc-text">参考</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/02/22/linux%E4%B8%8B%E4%BC%98%E9%9B%85%E5%9C%B0%E4%BD%BF%E7%94%A8CobaltStrike/" title="linux下优雅地使用CobaltStrike"><img src="https://images.pexels.com/photos/1055163/pexels-photo-1055163.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1260&amp;h=750&amp;dpr=1" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="linux下优雅地使用CobaltStrike"/></a><div class="content"><a class="title" href="/2025/02/22/linux%E4%B8%8B%E4%BC%98%E9%9B%85%E5%9C%B0%E4%BD%BF%E7%94%A8CobaltStrike/" title="linux下优雅地使用CobaltStrike">linux下优雅地使用CobaltStrike</a><time datetime="2025-02-22T02:36:22.000Z" title="发表于 2025-02-22 10:36:22">2025-02-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/02/22/logseq%E8%81%94%E5%8A%A8anki/" title="logseq联动anki"><img src="https://images.freejpg.com.ar/400/2301/object-nature-outdoors-forest-rock-green-color-tranquil-scene-mountain-river-F100036623.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="logseq联动anki"/></a><div class="content"><a class="title" href="/2025/02/22/logseq%E8%81%94%E5%8A%A8anki/" title="logseq联动anki">logseq联动anki</a><time datetime="2025-02-22T02:14:58.000Z" title="发表于 2025-02-22 10:14:58">2025-02-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/02/22/linux%E4%B8%8B%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%8A%93%E5%8C%85/" title="linux下微信小程序抓包"><img src="https://images.pexels.com/photos/1333840/pexels-photo-1333840.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=600&amp;lazy=load" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="linux下微信小程序抓包"/></a><div class="content"><a class="title" href="/2025/02/22/linux%E4%B8%8B%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%8A%93%E5%8C%85/" title="linux下微信小程序抓包">linux下微信小程序抓包</a><time datetime="2025-02-22T02:12:14.000Z" title="发表于 2025-02-22 10:12:14">2025-02-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/02/22/linux%E4%B8%8B%E5%AE%89%E5%8D%93%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E6%8A%93%E5%8C%85%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" title="linux下安卓渗透测试抓包环境配置"><img src="https://images.freejpg.com.ar/400/2301/iris-close-up-human-eye-eyeball-green-human-eye-eyesight-looking-F100036626.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="linux下安卓渗透测试抓包环境配置"/></a><div class="content"><a class="title" href="/2025/02/22/linux%E4%B8%8B%E5%AE%89%E5%8D%93%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E6%8A%93%E5%8C%85%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" title="linux下安卓渗透测试抓包环境配置">linux下安卓渗透测试抓包环境配置</a><time datetime="2025-02-22T02:11:20.000Z" title="发表于 2025-02-22 10:11:20">2025-02-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/01/13/CVE-2016-4437/" title="CVE-2016-4437"><img src="https://images.pexels.com/photos/1479710/pexels-photo-1479710.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=600&amp;lazy=load" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CVE-2016-4437"/></a><div class="content"><a class="title" href="/2025/01/13/CVE-2016-4437/" title="CVE-2016-4437">CVE-2016-4437</a><time datetime="2025-01-13T14:42:14.000Z" title="发表于 2025-01-13 22:42:14">2025-01-13</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By ziWindlu</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
