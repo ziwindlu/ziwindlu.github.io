@@ -1,0 +1,19 @@
+baseURL = 'https://example.org/'
+locale = 'zh-cn'
+title = '我的博客'
+theme = 'paper'
+
+[params]
+  color = 'linen'
+
+[menu]
+  [[menu.main]]
+    identifier = 'home'
+    name = '首页'
+    url = '/'
+    weight = 1
+  [[menu.main]]
+    identifier = 'about'
+    name = '关于'
+    url = '/about/'
+    weight = 2
