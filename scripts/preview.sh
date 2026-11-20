@@ -39,12 +39,13 @@ start() {
   done
   URL="http://127.0.0.1:${PORT}/"
 
-  # nohup + 独立进程组，脱离调用方生命周期
-  nohup hugo server \
-    --bind 127.0.0.1 --port "$PORT" --appendPort=false \
-    --renderToMemory --disableFastRender --logLevel warn >>"$LOG" 2>&1 &
-  echo $! >"$PIDFILE"
-  echo "启动中：pid=$(cat "$PIDFILE") port=$PORT log=$PWD/$LOG"
+  # 双 fork + setsid：脱离调用方的会话/进程组，调用方退出不会把它带走
+  rm -f "$PIDFILE"
+  python3 scripts/daemonize.py --pidfile "$PIDFILE" --log "$LOG" -- \
+    hugo server \
+      --bind 127.0.0.1 --port "$PORT" --appendPort=false \
+      --renderToMemory --disableFastRender --logLevel warn
+  echo "启动中：pid=$(cat "$PIDFILE" 2>/dev/null || echo '?') port=$PORT log=$PWD/$LOG"
 
   local code="000"
   for _ in $(seq 1 60); do

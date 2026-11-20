@@ -36,10 +36,13 @@ make stop             # 停止
 
 等价的手动命令：
 
+`scripts/preview.sh` 内部通过 `scripts/daemonize.py`（双 fork + setsid）启动，服务跑在
+独立会话里，调用方的 shell / agent run 退出不会把它一起带走。手写等价命令：
+
 ```bash
-nohup hugo server --bind 127.0.0.1 --port 1313 --appendPort=false \
-  --renderToMemory --disableFastRender --logLevel warn > .preview/hugo.log 2>&1 &
-echo $! > .preview/hugo.pid
+python3 scripts/daemonize.py --pidfile .preview/hugo.pid --log .preview/hugo.log -- \
+  hugo server --bind 127.0.0.1 --port 1313 --appendPort=false \
+    --renderToMemory --disableFastRender --logLevel warn
 ```
 
 - 日志：`.preview/hugo.log`，PID：`.preview/hugo.pid`
