@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://ziwindlu.github.io/sitemap.xml
