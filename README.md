@@ -6,22 +6,27 @@
 - **框架**：Hugo **v0.168.0**（extended）。选它是因为单二进制、不依赖 Node、
   markdown 丢进 `content/posts/` 就能发一篇，构建 100 篇以内只要几百毫秒，
   GitHub Pages 原生支持。
-- **主题**：本仓库自带的极简模板（`layouts/` + `assets/css/`），不用外部主题、
-  不用 git submodule，克隆下来就能构建；代码高亮是构建期 Chroma，不依赖前端 JS。
+- **主题**：[PaperMod](https://github.com/adityatelange/hugo-PaperMod)（MIT），
+  固定在 commit `1181196`（2026-10-25），**已 vendored 到 `themes/PaperMod/`**——
+  不用 submodule，克隆下来不联网也能构建。自带深色/浅色跟随系统、文章目录（TOC）、
+  代码复制按钮、站内搜索、标签页、RSS、sitemap。
 - **语言/时区**：`zh-CN`，`Asia/Shanghai`。
 
 ## 目录结构
 
 ```
-hugo.toml              站点配置（baseURL / 菜单 / 高亮 / 时区）
+hugo.toml              站点配置（baseURL / 菜单 / PaperMod 参数 / 高亮 / 时区）
+themes/PaperMod/       vendored 主题（MIT，含 LICENSE，直接提交在仓库里）
+layouts/_partials/post_meta.html  唯一一处主题覆盖：文章页显示「源笔记」路径
 content/posts/*.md     文章（一篇一个 markdown，由导入脚本生成）
 content/about.md       关于页
+content/search.md      站内搜索页（layout: search）
 content/posts/_index.md 文章列表页
-layouts/               模板（baseof / single / list / terms / taxonomy / 404）
-assets/css/            main.css + chroma.css（高亮，含深色模式）
 static/images/         从 Obsidian 附件目录复制过来的图片
+static/favicon.svg     站点图标（16/32/apple-touch 都指向它）
 scripts/import_posts.py 文章导入 + wikilink/图片处理
 scripts/preview.sh     本地常驻预览的 start/stop/restart/status
+scripts/daemonize.py   双 fork + setsid，让预览脱离调用方会话
 Makefile               常用命令入口
 content-in/            原始导出包（不提交，换源重建用）
 ```
@@ -41,9 +46,12 @@ make stop             # 停止
 
 ```bash
 python3 scripts/daemonize.py --pidfile .preview/hugo.pid --log .preview/hugo.log -- \
-  hugo server --bind 127.0.0.1 --port 1313 --appendPort=false \
-    --renderToMemory --disableFastRender --logLevel warn
+  hugo server --bind 127.0.0.1 --port 1313 --baseURL http://127.0.0.1:1313/ \
+    --appendPort=false --renderToMemory --disableFastRender --logLevel warn
 ```
+
+> `--baseURL` 必须显式给：PaperMod 的菜单/文章链接是绝对地址，不指定的话
+> 本地预览会链到 `http://localhost/`（没有端口），点了会打不开。
 
 - 日志：`.preview/hugo.log`，PID：`.preview/hugo.pid`
 - 端口被占用时 `scripts/preview.sh` 会自动往上找空闲端口（1314、1315…），
@@ -56,7 +64,7 @@ python3 scripts/daemonize.py --pidfile .preview/hugo.pid --log .preview/hugo.log
 make build            # 等价于 hugo --minify --gc --cleanDestinationDir
 ```
 
-- 产物目录：`public/`（约 3.8 MB，22 篇文章时）
+- 产物目录：`public/`（96 篇文章时约 24 MB，其中图片 20 MB）
 - 检查点：`public/index.html` 存在，`public/posts/<slug>/index.html` 每篇一个。
 
 ## 新增一篇文章
@@ -104,6 +112,21 @@ make refresh TARBALL="$PWD/content-in/blog-posts.tar.gz"
 - `![](...)` 图片：从 Obsidian 库的附件目录取同名文件复制到 `static/images/`，
   正文里改写成 `/images/<文件名>`；库里也找不到时降级为一行文字说明，不留死链；
 - 只改路径和链接，不改写正文。
+
+## 升级 / 换主题
+
+主题是 vendored 的一份拷贝，升级就是替换目录再重建：
+
+```bash
+git clone --depth 1 https://github.com/adityatelange/hugo-PaperMod.git /tmp/pm
+rsync -a --exclude '.git' /tmp/pm/ themes/PaperMod/
+make build && make preview
+```
+
+注意：`layouts/_partials/post_meta.html` 是按当前主题版本抄下来改的（只多了一行
+「源笔记」），主题升级后如果这个 partial 有改动，需要重新同步一次。
+想彻底换主题：把 `themes/` 换成新主题、`hugo.toml` 里的 `theme` 和 `[params]`
+按新主题的文档改，其余（content / static / scripts / Makefile）不用动。
 
 ## 回滚
 

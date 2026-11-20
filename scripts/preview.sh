@@ -43,8 +43,8 @@ start() {
   rm -f "$PIDFILE"
   python3 scripts/daemonize.py --pidfile "$PIDFILE" --log "$LOG" -- \
     hugo server \
-      --bind 127.0.0.1 --port "$PORT" --appendPort=false \
-      --renderToMemory --disableFastRender --logLevel warn
+      --bind 127.0.0.1 --port "$PORT" --baseURL "http://127.0.0.1:$PORT/" \
+      --appendPort=false --renderToMemory --disableFastRender --logLevel warn
   echo "启动中：pid=$(cat "$PIDFILE" 2>/dev/null || echo '?') port=$PORT log=$PWD/$LOG"
 
   local code="000"

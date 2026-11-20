@@ -1,0 +1,29 @@
+{{- /* 覆盖 PaperMod 的 post_meta.html：在元信息末尾追加「源笔记」路径，
+       方便和 Obsidian 原文对照；其余逻辑与主题一致。 */ -}}
+{{- $meta := slice }}
+
+{{- if not .Date.IsZero -}}
+    {{- $meta = $meta | append (printf "<span title='%s'>%s</span>" (.Date | time.Format "2006-01-02T15:04:05-07:00") (.Date | time.Format (default ":date_long" site.Params.DateFormat))) }}
+{{- end }}
+
+{{- if (.Param "ShowReadingTime") -}}
+    {{- $meta = $meta | append (printf "<span>%s</span>" (i18n "read_time" .ReadingTime | default (printf "%d min" .ReadingTime))) }}
+{{- end }}
+
+{{- if (.Param "ShowWordCount") -}}
+    {{- $meta = $meta | append (printf "<span>%s</span>" (i18n "words" .WordCount | default (printf "%d words" .WordCount))) }}
+{{- end }}
+
+{{- if not (.Param "hideAuthor") -}}
+    {{- with (partial "author.html" .) }}
+        {{- $meta = $meta | append (printf "<span>%s</span>" .) }}
+    {{- end }}
+{{- end }}
+
+{{- if and (site.Params.showSource | default true) .Params.source -}}
+    {{- $meta = $meta | append (printf "<span class='post-source'>源笔记：<code>%s</code></span>" .Params.source) }}
+{{- end }}
+
+{{- with $meta }}
+    {{- delimit . "&nbsp;·&nbsp;" | safeHTML -}}
+{{- end -}}

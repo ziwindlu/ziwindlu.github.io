@@ -1,29 +1,61 @@
 # Hugo 站点配置 —— ziwindlu.github.io（GitHub Pages 用户站点）
-# 框架：Hugo v0.168.0 (extended)，主题模板内置在本仓库 layouts/ 下，无外部主题、无 submodule。
+# 主题：PaperMod v8.0（MIT，已 vendored 到 themes/PaperMod，不依赖 submodule / 网络）
 baseURL = "https://ziwindlu.github.io/"
 title = "ziwindlu 的博客"
 locale = "zh-CN"
 defaultContentLanguage = "zh"
+theme = "PaperMod"
 timeZone = "Asia/Shanghai"
 enableRobotsTXT = true
+enableEmoji = true
 summaryLength = 120
-# 生成 .html 之外的目录式 URL：/posts/<slug>/
 uglyURLs = false
 capitalizeListTitles = false
 enableGitInfo = false
 
 [pagination]
-  pagerSize = 20
+  pagerSize = 10
 
 [params]
-  author = "ziwindlu"
+  env = "production"
   description = "lzf 的技术笔记：Python / Linux / Shell / 数据库 / 折腾记录"
-  # 首页最多列出多少篇最新文章
-  homePostLimit = 12
-  # 页脚
-  footer = "本站文章来自个人 Obsidian 笔记，保留所有权利。"
-  # 是否在文章页展示源笔记路径（便于和 Obsidian 原文对照）
+  author = "ziwindlu"
+  DateFormat = "2006-01-02"
+  defaultTheme = "auto"          # 跟随系统：light / dark / auto
+  disableThemeToggle = false
+  ShowReadingTime = true
+  ShowWordCount = false
+  ShowShareButtons = false
+  ShowCodeCopyButtons = true
+  ShowToc = true                 # 文章页自动生成目录
+  TocOpen = false
+  ShowBreadCrumbs = false
+  ShowPostNavLinks = true
+  ShowRssButtonInSectionTermList = true
+  ShowFullTextinRSS = false
+  hideSummary = false
+  # 文章页保留源笔记路径（由 layouts/partials/post_meta.html 覆盖实现）
   showSource = true
+
+  [params.assets]
+    disableHLJS = true
+    # 所有图标位都指向同一个 SVG（仓库里不额外放大 PNG，少一份体积）
+    favicon = "/favicon.svg"
+    favicon16x16 = "/favicon.svg"
+    favicon32x32 = "/favicon.svg"
+    apple_touch_icon = "/favicon.svg"
+    safari_pinned_tab = "/favicon.svg"
+
+  [params.homeInfoParams]
+    Title = "ziwindlu 的博客"
+    Content = "Python / Linux / Shell / 数据库 的折腾笔记，正文来自我的 Obsidian。"
+
+  [[params.socialIcons]]
+    name = "github"
+    url = "https://github.com/ziwindlu"
+  [[params.socialIcons]]
+    name = "rss"
+    url = "index.xml"
 
 [taxonomies]
   tag = "tags"
@@ -38,7 +70,7 @@ enableGitInfo = false
       block = true
       title = true
   [markup.highlight]
-    # 服务端高亮，不依赖前端 JS
+    # 交给 PaperMod 自带的 Chroma 样式（CSS class 模式，跟随深浅色）
     style = "github"
     noClasses = false
     lineNos = false
@@ -49,7 +81,7 @@ enableGitInfo = false
     ordered = false
 
 [outputs]
-  home = ["HTML", "RSS"]
+  home = ["HTML", "RSS", "JSON"]     # JSON 是 PaperMod 站内搜索的索引
   section = ["HTML", "RSS"]
   taxonomy = ["HTML", "RSS"]
 
@@ -60,13 +92,17 @@ enableGitInfo = false
     weight = 10
   [[menus.main]]
     name = "文章"
-    pageRef = "/posts"
+    url = "/posts/"
     weight = 20
   [[menus.main]]
     name = "标签"
-    pageRef = "/tags"
+    url = "/tags/"
     weight = 30
   [[menus.main]]
-    name = "关于"
-    pageRef = "/about"
+    name = "搜索"
+    url = "/search/"
     weight = 40
+  [[menus.main]]
+    name = "关于"
+    url = "/about/"
+    weight = 50
