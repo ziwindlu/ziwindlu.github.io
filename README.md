@@ -104,8 +104,7 @@ make refresh TARBALL="$PWD/content-in/blog-posts.tar.gz"
 
 ## 回滚
 
-`blog/setup` 分支上是两个提交：`搭建 Hugo 静态博客站点…`（配置 + 模板 + 文章）
-和 `接入文章配图…`（`static/images/`）。按情况选：
+`blog/setup` 分支新增的就是这套站点（配置 + 模板 + 96 篇文章 + 配图），没有改动 `main`。按情况选：
 
 ```bash
 # 只是本地想回到改动前（分支和改动都还在远端，随时能回来）
