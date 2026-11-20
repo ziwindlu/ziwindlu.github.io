@@ -149,13 +149,69 @@ git checkout <旧的 commit> -- content/ static/images/ && make build && make pr
 git push origin --delete blog/setup && git branch -D blog/setup
 ```
 
-## 部署（不在本分支的职责范围）
+## 发布到 GitHub Pages
 
-本仓库只负责产出可部署的站点源码与 `public/`。真正发布到 GitHub Pages（合并到
-`main`、配置 Pages 源、验证线上 200）由部署任务执行，见 issue LZFW-32。
-要做线上发布时，从 `main` 构建再发布即可：
+线上地址 <https://ziwindlu.github.io/>。这是 GitHub Pages **用户站点**，发布方式是
+**`main` 分支根目录直接放构建产物**（Settings → Pages → Source: Deploy from a branch,
+Branch: `main` / `/ (root)`）。没有 `CNAME`、不绑域名、也不用 GitHub Actions。
+
+`blog/setup` 只放源码，`main` 只放 `public/` 的产物——**不要把 `content/`、`themes/`、
+`hugo.toml` 合进 `main`**，否则它们会作为静态文件公开。
 
 ```bash
-git checkout main
-hugo --minify --gc --cleanDestinationDir     # 产物在 public/
+# 0) 前提：hugo v0.168.0 extended
+hugo version
+
+# 1) 源码分支构建
+cd <blog/setup 工作副本>
+git checkout blog/setup && git pull --ff-only
+make build                       # 产物在 public/
+rm -rf ../site-out && cp -R public ../site-out
+
+# 2) 在 main 的独立工作副本里整目录替换（不要直接 git checkout main 后删文件，
+#    源码分支的 public/ 会被 .gitignore 挡住）
+git fetch origin
+git worktree add ../deploy-main -B deploy-main origin/main
+cd ../deploy-main
+git rm -rq .
+cp -R ../site-out/. .
+git add -A
+git commit -m "Deploy: Hugo + PaperMod 站点，96 篇文章"
+
+# 3) 推送。本机到 github.com:22 的大包会被重置，走 443 更稳
+GIT_SSH_COMMAND='ssh -o HostName=ssh.github.com -p 443' git push origin HEAD:main
+
+# 4) 清理工作副本
+cd .. && git worktree remove deploy-main
 ```
+
+首次部署实测 Pages 重新发布约 **5 分钟**（一般 30–60 秒），期间线上还是旧版本。
+
+### 验证
+
+```bash
+curl -sS -o /dev/null -w '%{http_code}\n' https://ziwindlu.github.io/                     # 200
+curl -sS https://ziwindlu.github.io/ | grep -o '<title>[^<]*</title>'                     # ziwindlu 的博客
+curl -sS -o /dev/null -w '%{http_code}\n' https://ziwindlu.github.io/posts/               # 200
+curl -sS -o /dev/null -w '%{http_code}\n' https://ziwindlu.github.io/posts/python/        # 200
+curl -sS -o /dev/null -w '%{http_code}\n' https://ziwindlu.github.io/posts/archlinux-samba/ # 200
+curl -sS -o /dev/null -w '%{http_code}\n' https://ziwindlu.github.io/index.xml            # 200
+```
+
+### 回滚
+
+每次发布在 `main` 上是一个（或几个）只改产物的提交，回滚就是回到发布前的 `main`：
+
+```bash
+# 方式一：revert 本次发布提交（保留历史，推荐）
+git checkout main && git pull --ff-only
+git revert 886a2651bdcda18620f7c13ef40bf534c5448ab2
+GIT_SSH_COMMAND='ssh -o HostName=ssh.github.com -p 443' git push origin main
+
+# 方式二：main 直接回到发布前（2026-11-20 的旧站 51eb375），需要强推
+git reset --hard 51eb375 && git push --force origin main
+```
+
+等 Pages 重新发布后再跑一遍上面的验证命令。源码分支 `blog/setup` 不受影响，
+想彻底关站就到 **Settings → Pages** 把 Source 改成 `None`（这一步属于仓库设置，
+先和仓库所有者确认）。
