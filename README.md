@@ -104,20 +104,24 @@ make refresh TARBALL="$PWD/content-in/blog-posts.tar.gz"
 
 ## 回滚
 
-本分支的改动都在一个 commit 里，按情况选：
+`blog/setup` 分支上是两个提交：`搭建 Hugo 静态博客站点…`（配置 + 模板 + 文章）
+和 `接入文章配图…`（`static/images/`）。按情况选：
 
 ```bash
-# 只是本地想回到改动前
+# 只是本地想回到改动前（分支和改动都还在远端，随时能回来）
 git checkout main
 
-# 撤销本分支的那次提交（保留工作区）
+# 撤销本分支最后一次提交（保留工作区改动）
 git reset --soft HEAD~1
 
-# 已经在主线上想撤销
-git revert <commit-sha>
+# 已经合到主线上想撤销整个上线
+git revert -m 1 <merge-commit-sha>
 
-# 本地预览想回到旧产物
-git checkout <旧的 commit> -- content/ && make build && make preview
+# 只把内容退回到某个旧版本再重建
+git checkout <旧的 commit> -- content/ static/images/ && make build && make preview
+
+# 彻底丢掉这个分支
+git push origin --delete blog/setup && git branch -D blog/setup
 ```
 
 ## 部署（不在本分支的职责范围）
