@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>服务配置 on ziwindlu 的博客</title><link>https://ziwindlu.github.io/tags/%E6%9C%8D%E5%8A%A1%E9%85%8D%E7%BD%AE/</link><description>Recent content in 服务配置 on ziwindlu 的博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Fri, 03 Apr 2026 00:00:00 +0800</lastBuildDate><atom:link href="https://ziwindlu.github.io/tags/%E6%9C%8D%E5%8A%A1%E9%85%8D%E7%BD%AE/index.xml" rel="self" type="application/rss+xml"/><item><title>nginx</title><link>https://ziwindlu.github.io/posts/nginx/</link><pubDate>Fri, 03 Apr 2026 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/nginx/</guid><description>&lt;h2 id="一个示例配置"&gt;一个示例配置&lt;/h2&gt;
+&lt;p&gt;基本配置介绍&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code class="language-conf" data-lang="conf"&gt;# 全局块
+user nginx;
+worker_processes auto;
+# 事件块
+events {
+worker_connections 1024;
+}
+# http 块
+http {
+include mime.types;
+default_type application/octet-stream;
+# 日志配置
+access_log /var/log/nginx/access.log;
+error_log /var/log/nginx/error.log;
+# 服务器块
+server {
+listen 80;
+server_name example.com;
+# 位置块
+location / {
+root /usr/share/nginx/html;
+index index.html index.htm;
+}
+}
+# 还可以有多个 server 块
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="server块"&gt;server块&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;listen&lt;/code&gt;: 监听的端口
+&lt;code&gt;server_name&lt;/code&gt;: 绑定的域名
+&lt;code&gt;location&lt;/code&gt;: 处理不同请求路径的规则&lt;/p&gt;
+&lt;h2 id="场景"&gt;场景&lt;/h2&gt;
+&lt;h3 id="反向代理"&gt;反向代理&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code class="language-conf" data-lang="conf"&gt;server {
+listen 80;
+server_name example.com;
+location / {
+proxy_pass http://localhost:3000;
+# 这些是推荐加上的可选配置
+proxy_set_header Host $host;
+proxy_set_header X-Real-IP $remote_addr;
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header X-Forwarded-Proto $scheme;
+}
+}
+&lt;/code&gt;&lt;/pre&gt;</description></item></channel></rss>

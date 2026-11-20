@@ -1,0 +1,355 @@
+<!doctype html><html lang=zh dir=auto data-theme=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>HTTP基础 | ziwindlu 的博客</title><meta name=keywords content="网络,HTTP"><meta name=description content="url&&amp;uri&&amp;urn
+
+url编码
+常见的编码
+%20 空格
+%21 !
+%22 &#34;
+%23 #
+%25 %
+%27 '
+%2b +
+%3d =
+HTML URL 编码参考手册 | 菜鸟教程
+请求头
+
+	
+			
+					请求头
+					含义
+			
+	
+	
+			
+					User-Agent
+					标识客户端发送请求的用户代理（User Agent），通常是浏览器或其他应用程序的标识。
+			
+			
+					Accept
+					指定客户端可接受的响应媒体类型。服务器可以根据该头部信息返回适合客户端的响应。
+			
+			
+					Content-Type
+					指定请求体的媒体类型。
+			
+			
+					Authorization
+					包含了用于进行身份验证的凭证信息。通常用于向服务器提供身份验证令牌或用户名密码。
+			
+			
+					Cookie
+					包含了之前由服务器通过Set-Cookie头发送的Cookie信息。
+			
+			
+					Referer
+					标识了发送请求的页面的URL地址。服务器可以根据该头部信息判断请求的来源。
+			
+			
+					Content-Length
+					请求体的字节长度。
+			
+			
+					Host
+					指定请求的目标服务器的主机名和端口号。
+			
+			
+					If-Modified-Since
+					指定一个日期时间，表示如果资源自指定日期时间之后未被修改，才执行请求的操作。用于缓存控制和条件请求。
+			
+			
+					Cache-Control
+					控制缓存行为，包含了一系列指令，如max-age、no-cache等。
+			
+			
+					X-Requested-With
+					标识请求是通过Ajax发送的。
+			
+	
+
+请求方法
+get、post、delete、option、update
+get与post的区别 #card #forward
+id:: 67bddeec-75a0-49cf-bc1e-977cd9e1d76b
+请求参数位置不同，get在请求行，post在请求体
+请求参数大小不同，get请求参数有大小限制，post没有
+get不安全，post安全
+post有content-type请求头，如x-www-from-urlencoded
+渗透测试常关注的请求头 #card #forward
+id:: 67bddfab-ea61-4778-b98d-bfdc333846d3
+篡改 Host 或 X-Forwarded-For。
+如在 User-Agent 或 Referer 中注入 SQL/XSS 代码。
+通过 Cookie 或 Authorization 劫持会话。
+相应码
+
+	
+			
+					状态码
+					含义
+					说明
+			
+	
+	
+			
+					100
+					Continue
+					服务器已接收到请求的首部，客户端应继续发送请求主体部分
+			
+			
+					101
+					Switching Protocols
+					服务器已根据请求要求切换协议
+			
+			
+					200
+					OK
+					请求成功完成
+			
+			
+					201
+					Created
+					请求成功并创建了新资源
+			
+			
+					202
+					Accepted
+					请求已被接受，但处理尚未完成
+			
+			
+					203
+					Non-Authoritative Information
+					请求成功，但返回的信息来自第三方，非官方来源
+			
+			
+					204
+					No Content
+					服务器成功处理了请求，但响应中不包含返回的实体内容。
+			
+			
+					205
+					Reset Content
+					请求成功完成，客户端应重置当前页面
+			
+			
+					206
+					Partial Content
+					客户端只请求资源的一部分，服务器成功地响应了该部分
+			
+			
+					300
+					Multiple Choices
+					请求的资源存在多个选择，用户或代理可以选择其一进行重定向
+			
+			
+					301
+					Moved Permanently
+					资源的URL已永久移动到新位置
+			
+			
+					302
+					Found
+					资源的URL已临时移动到新位置
+			
+			
+					303
+					See Other
+					对应当前请求的响应可以在另一个URL下找到
+			
+			
+					304
+					Not Modified
+					资源未修改，客户端可以使用缓存的版本
+			
+			
+					307
+					Temporary Redirect
+					对应当前请求的响应可以在另一个URL下找到，但请继续使用原始请求URL进行访问
+			
+			
+					308
+					Permanent Redirect
+					对应当前请求的响应可以在另一个URL下找到，客户端应使用新的URL进行访问
+			
+			
+					400
+					Bad Request
+					请求无效或无法被服务器理解
+			
+			
+					401
+					Unauthorized
+					请求需要身份验证
+			
+			
+					402
+					Payment Required
+					预留状态码，表示需要付款才能访问请求的资源
+			
+			
+					403
+					Forbidden
+					请求被服务器拒绝访问
+			
+			
+					404
+					Not Found
+					请求的资源不存在
+			
+			
+					405
+					Method Not Allowed
+					请求方法不被允许
+			
+			
+					406
+					Not Acceptable
+					服务器无法根据请求的内容特性完成请求
+			
+			
+					407
+					Proxy Authentication Required
+					请求要求代理身份验证
+			
+			
+					408
+					Request Timeout
+					服务器在等待请求时超时
+			
+			
+					409
+					Conflict
+					请求存在冲突，服务器无法处理
+			
+			
+					410
+					Gone
+					请求的资源已永久消失
+			
+			
+					411
+					Length Required
+					服务器要求在请求中包含Content-Length首部
+			
+			
+					412
+					Precondition Failed
+					请求条件失败，例如请求头中指定的一些前提条件未满足
+			
+			
+					413
+					Payload Too Large
+					请求实体过大，超出服务器的处理能力
+			
+			
+					414
+					URI Too Long
+					请求的URI过长，服务器无法处理
+			
+			
+					415
+					Unsupported Media Type
+					请求的媒体类型不受支持
+			
+			
+					416
+					Range Not Satisfiable
+					服务器无法满足请求中的Range头字段指定的范围
+			
+			
+					417
+					Expectation Failed
+					服务器无法满足Expect请求头字段指定的期望值
+			
+			
+					429
+					Too Many Requests
+					客户端在给定的时间内发送了太多请求
+			
+			
+					500
+					Internal Server Error
+					服务器内部错误
+			
+			
+					501
+					Not Implemented
+					服务器不支持当前请求的功能或未能实现
+			
+			
+					502
+					Bad Gateway
+					服务器作为网关或代理，从上游服务器接收到无效的响应
+			
+			
+					503
+					Service Unavailable
+					服务器暂时无法处理请求
+			
+			
+					504
+					Gateway Timeout
+					服务器作为网关或代理，未能及时从上游服务器接收到响应
+			
+			
+					505
+					HTTP Version Not Supported
+					服务器不支持请求中所用的HTTP协议版本
+			
+	
+
+状态管理
+cookie #card #forward
+id:: 67bddc60-82ee-4773-b1a0-db11ed46e0b8
+存在于客户端的身份认证，每次在发送请求时请求中都会携带cookie。
+存在的安全隐患
+劫持、伪造
+特点
+大小受限，安全性较低，影响性能(每次请求都要携带)"><meta name=author content="ziwindlu"><link rel=canonical href=https://ziwindlu.github.io/posts/http-basics/><link crossorigin=anonymous href=/assets/css/stylesheet.95ae6e9689bd0037456375629f411acbf8ed76e0e9a7599900ad281f9526dee6.css integrity="sha256-la5ulom9ADdFY3Vin0Eay/jtduDpp1mZAK0oH5Um3uY=" rel="preload stylesheet" as=style><link rel=icon href=https://ziwindlu.github.io/favicon.svg><link rel=icon type=image/png sizes=16x16 href=https://ziwindlu.github.io/favicon.svg><link rel=icon type=image/png sizes=32x32 href=https://ziwindlu.github.io/favicon.svg><link rel=apple-touch-icon href=https://ziwindlu.github.io/favicon.svg><link rel=mask-icon href=https://ziwindlu.github.io/favicon.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=zh href=https://ziwindlu.github.io/posts/http-basics/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51);color-scheme:dark}.list{background:var(--theme)}.toc{background:var(--entry)}}</style></noscript><script>localStorage.getItem("pref-theme")==="dark"?document.querySelector("html").dataset.theme="dark":localStorage.getItem("pref-theme")==="light"?document.querySelector("html").dataset.theme="light":window.matchMedia("(prefers-color-scheme: dark)").matches?document.querySelector("html").dataset.theme="dark":document.querySelector("html").dataset.theme="light"</script><meta property="og:url" content="https://ziwindlu.github.io/posts/http-basics/"><meta property="og:site_name" content="ziwindlu 的博客"><meta property="og:title" content="HTTP基础"><meta property="og:description" content="url&&amp;uri&&amp;urn url编码 常见的编码 %20 空格 %21 ! %22 &#34; %23 # %25 % %27 ' %2b + %3d = HTML URL 编码参考手册 | 菜鸟教程
+请求头 请求头 含义 User-Agent 标识客户端发送请求的用户代理（User Agent），通常是浏览器或其他应用程序的标识。 Accept 指定客户端可接受的响应媒体类型。服务器可以根据该头部信息返回适合客户端的响应。 Content-Type 指定请求体的媒体类型。 Authorization 包含了用于进行身份验证的凭证信息。通常用于向服务器提供身份验证令牌或用户名密码。 Cookie 包含了之前由服务器通过Set-Cookie头发送的Cookie信息。 Referer 标识了发送请求的页面的URL地址。服务器可以根据该头部信息判断请求的来源。 Content-Length 请求体的字节长度。 Host 指定请求的目标服务器的主机名和端口号。 If-Modified-Since 指定一个日期时间，表示如果资源自指定日期时间之后未被修改，才执行请求的操作。用于缓存控制和条件请求。 Cache-Control 控制缓存行为，包含了一系列指令，如max-age、no-cache等。 X-Requested-With 标识请求是通过Ajax发送的。 请求方法 get、post、delete、option、update
+get与post的区别 #card #forward id:: 67bddeec-75a0-49cf-bc1e-977cd9e1d76b 请求参数位置不同，get在请求行，post在请求体 请求参数大小不同，get请求参数有大小限制，post没有 get不安全，post安全 post有content-type请求头，如x-www-from-urlencoded
+渗透测试常关注的请求头 #card #forward id:: 67bddfab-ea61-4778-b98d-bfdc333846d3 篡改 Host 或 X-Forwarded-For。 如在 User-Agent 或 Referer 中注入 SQL/XSS 代码。 通过 Cookie 或 Authorization 劫持会话。
+相应码 状态码 含义 说明 100 Continue 服务器已接收到请求的首部，客户端应继续发送请求主体部分 101 Switching Protocols 服务器已根据请求要求切换协议 200 OK 请求成功完成 201 Created 请求成功并创建了新资源 202 Accepted 请求已被接受，但处理尚未完成 203 Non-Authoritative Information 请求成功，但返回的信息来自第三方，非官方来源 204 No Content 服务器成功处理了请求，但响应中不包含返回的实体内容。 205 Reset Content 请求成功完成，客户端应重置当前页面 206 Partial Content 客户端只请求资源的一部分，服务器成功地响应了该部分 300 Multiple Choices 请求的资源存在多个选择，用户或代理可以选择其一进行重定向 301 Moved Permanently 资源的URL已永久移动到新位置 302 Found 资源的URL已临时移动到新位置 303 See Other 对应当前请求的响应可以在另一个URL下找到 304 Not Modified 资源未修改，客户端可以使用缓存的版本 307 Temporary Redirect 对应当前请求的响应可以在另一个URL下找到，但请继续使用原始请求URL进行访问 308 Permanent Redirect 对应当前请求的响应可以在另一个URL下找到，客户端应使用新的URL进行访问 400 Bad Request 请求无效或无法被服务器理解 401 Unauthorized 请求需要身份验证 402 Payment Required 预留状态码，表示需要付款才能访问请求的资源 403 Forbidden 请求被服务器拒绝访问 404 Not Found 请求的资源不存在 405 Method Not Allowed 请求方法不被允许 406 Not Acceptable 服务器无法根据请求的内容特性完成请求 407 Proxy Authentication Required 请求要求代理身份验证 408 Request Timeout 服务器在等待请求时超时 409 Conflict 请求存在冲突，服务器无法处理 410 Gone 请求的资源已永久消失 411 Length Required 服务器要求在请求中包含Content-Length首部 412 Precondition Failed 请求条件失败，例如请求头中指定的一些前提条件未满足 413 Payload Too Large 请求实体过大，超出服务器的处理能力 414 URI Too Long 请求的URI过长，服务器无法处理 415 Unsupported Media Type 请求的媒体类型不受支持 416 Range Not Satisfiable 服务器无法满足请求中的Range头字段指定的范围 417 Expectation Failed 服务器无法满足Expect请求头字段指定的期望值 429 Too Many Requests 客户端在给定的时间内发送了太多请求 500 Internal Server Error 服务器内部错误 501 Not Implemented 服务器不支持当前请求的功能或未能实现 502 Bad Gateway 服务器作为网关或代理，从上游服务器接收到无效的响应 503 Service Unavailable 服务器暂时无法处理请求 504 Gateway Timeout 服务器作为网关或代理，未能及时从上游服务器接收到响应 505 HTTP Version Not Supported 服务器不支持请求中所用的HTTP协议版本 状态管理 cookie #card #forward id:: 67bddc60-82ee-4773-b1a0-db11ed46e0b8 存在于客户端的身份认证，每次在发送请求时请求中都会携带cookie。 存在的安全隐患 劫持、伪造 特点 大小受限，安全性较低，影响性能(每次请求都要携带)"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2026-04-03T00:00:00+08:00"><meta property="article:modified_time" content="2026-04-03T00:00:00+08:00"><meta property="article:tag" content="网络"><meta property="article:tag" content="HTTP"><meta name=twitter:card content="summary"><meta name=twitter:title content="HTTP基础"><meta name=twitter:description content="url&&amp;uri&&amp;urn url编码 常见的编码 %20 空格 %21 ! %22 &#34; %23 # %25 % %27 ' %2b + %3d = HTML URL 编码参考手册 | 菜鸟教程
+请求头 请求头 含义 User-Agent 标识客户端发送请求的用户代理（User Agent），通常是浏览器或其他应用程序的标识。 Accept 指定客户端可接受的响应媒体类型。服务器可以根据该头部信息返回适合客户端的响应。 Content-Type 指定请求体的媒体类型。 Authorization 包含了用于进行身份验证的凭证信息。通常用于向服务器提供身份验证令牌或用户名密码。 Cookie 包含了之前由服务器通过Set-Cookie头发送的Cookie信息。 Referer 标识了发送请求的页面的URL地址。服务器可以根据该头部信息判断请求的来源。 Content-Length 请求体的字节长度。 Host 指定请求的目标服务器的主机名和端口号。 If-Modified-Since 指定一个日期时间，表示如果资源自指定日期时间之后未被修改，才执行请求的操作。用于缓存控制和条件请求。 Cache-Control 控制缓存行为，包含了一系列指令，如max-age、no-cache等。 X-Requested-With 标识请求是通过Ajax发送的。 请求方法 get、post、delete、option、update
+get与post的区别 #card #forward id:: 67bddeec-75a0-49cf-bc1e-977cd9e1d76b 请求参数位置不同，get在请求行，post在请求体 请求参数大小不同，get请求参数有大小限制，post没有 get不安全，post安全 post有content-type请求头，如x-www-from-urlencoded
+渗透测试常关注的请求头 #card #forward id:: 67bddfab-ea61-4778-b98d-bfdc333846d3 篡改 Host 或 X-Forwarded-For。 如在 User-Agent 或 Referer 中注入 SQL/XSS 代码。 通过 Cookie 或 Authorization 劫持会话。
+相应码 状态码 含义 说明 100 Continue 服务器已接收到请求的首部，客户端应继续发送请求主体部分 101 Switching Protocols 服务器已根据请求要求切换协议 200 OK 请求成功完成 201 Created 请求成功并创建了新资源 202 Accepted 请求已被接受，但处理尚未完成 203 Non-Authoritative Information 请求成功，但返回的信息来自第三方，非官方来源 204 No Content 服务器成功处理了请求，但响应中不包含返回的实体内容。 205 Reset Content 请求成功完成，客户端应重置当前页面 206 Partial Content 客户端只请求资源的一部分，服务器成功地响应了该部分 300 Multiple Choices 请求的资源存在多个选择，用户或代理可以选择其一进行重定向 301 Moved Permanently 资源的URL已永久移动到新位置 302 Found 资源的URL已临时移动到新位置 303 See Other 对应当前请求的响应可以在另一个URL下找到 304 Not Modified 资源未修改，客户端可以使用缓存的版本 307 Temporary Redirect 对应当前请求的响应可以在另一个URL下找到，但请继续使用原始请求URL进行访问 308 Permanent Redirect 对应当前请求的响应可以在另一个URL下找到，客户端应使用新的URL进行访问 400 Bad Request 请求无效或无法被服务器理解 401 Unauthorized 请求需要身份验证 402 Payment Required 预留状态码，表示需要付款才能访问请求的资源 403 Forbidden 请求被服务器拒绝访问 404 Not Found 请求的资源不存在 405 Method Not Allowed 请求方法不被允许 406 Not Acceptable 服务器无法根据请求的内容特性完成请求 407 Proxy Authentication Required 请求要求代理身份验证 408 Request Timeout 服务器在等待请求时超时 409 Conflict 请求存在冲突，服务器无法处理 410 Gone 请求的资源已永久消失 411 Length Required 服务器要求在请求中包含Content-Length首部 412 Precondition Failed 请求条件失败，例如请求头中指定的一些前提条件未满足 413 Payload Too Large 请求实体过大，超出服务器的处理能力 414 URI Too Long 请求的URI过长，服务器无法处理 415 Unsupported Media Type 请求的媒体类型不受支持 416 Range Not Satisfiable 服务器无法满足请求中的Range头字段指定的范围 417 Expectation Failed 服务器无法满足Expect请求头字段指定的期望值 429 Too Many Requests 客户端在给定的时间内发送了太多请求 500 Internal Server Error 服务器内部错误 501 Not Implemented 服务器不支持当前请求的功能或未能实现 502 Bad Gateway 服务器作为网关或代理，从上游服务器接收到无效的响应 503 Service Unavailable 服务器暂时无法处理请求 504 Gateway Timeout 服务器作为网关或代理，未能及时从上游服务器接收到响应 505 HTTP Version Not Supported 服务器不支持请求中所用的HTTP协议版本 状态管理 cookie #card #forward id:: 67bddc60-82ee-4773-b1a0-db11ed46e0b8 存在于客户端的身份认证，每次在发送请求时请求中都会携带cookie。 存在的安全隐患 劫持、伪造 特点 大小受限，安全性较低，影响性能(每次请求都要携带)"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"文章","item":"https://ziwindlu.github.io/posts/"},{"@type":"ListItem","position":2,"name":"HTTP基础","item":"https://ziwindlu.github.io/posts/http-basics/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"HTTP基础","name":"HTTP基础","description":"url\u0026amp;\u0026amp;uri\u0026amp;\u0026amp;urn url编码 常见的编码 %20 空格 %21 ! %22 \u0026quot; %23 # %25 % %27 ' %2b + %3d = HTML URL 编码参考手册 | 菜鸟教程\n请求头 请求头 含义 User-Agent 标识客户端发送请求的用户代理（User Agent），通常是浏览器或其他应用程序的标识。 Accept 指定客户端可接受的响应媒体类型。服务器可以根据该头部信息返回适合客户端的响应。 Content-Type 指定请求体的媒体类型。 Authorization 包含了用于进行身份验证的凭证信息。通常用于向服务器提供身份验证令牌或用户名密码。 Cookie 包含了之前由服务器通过Set-Cookie头发送的Cookie信息。 Referer 标识了发送请求的页面的URL地址。服务器可以根据该头部信息判断请求的来源。 Content-Length 请求体的字节长度。 Host 指定请求的目标服务器的主机名和端口号。 If-Modified-Since 指定一个日期时间，表示如果资源自指定日期时间之后未被修改，才执行请求的操作。用于缓存控制和条件请求。 Cache-Control 控制缓存行为，包含了一系列指令，如max-age、no-cache等。 X-Requested-With 标识请求是通过Ajax发送的。 请求方法 get、post、delete、option、update\nget与post的区别 #card #forward id:: 67bddeec-75a0-49cf-bc1e-977cd9e1d76b 请求参数位置不同，get在请求行，post在请求体 请求参数大小不同，get请求参数有大小限制，post没有 get不安全，post安全 post有content-type请求头，如x-www-from-urlencoded\n渗透测试常关注的请求头 #card #forward id:: 67bddfab-ea61-4778-b98d-bfdc333846d3 篡改 Host 或 X-Forwarded-For。 如在 User-Agent 或 Referer 中注入 SQL/XSS 代码。 通过 Cookie 或 Authorization 劫持会话。\n相应码 状态码 含义 说明 100 Continue 服务器已接收到请求的首部，客户端应继续发送请求主体部分 101 Switching Protocols 服务器已根据请求要求切换协议 200 OK 请求成功完成 201 Created 请求成功并创建了新资源 202 Accepted 请求已被接受，但处理尚未完成 203 Non-Authoritative Information 请求成功，但返回的信息来自第三方，非官方来源 204 No Content 服务器成功处理了请求，但响应中不包含返回的实体内容。 205 Reset Content 请求成功完成，客户端应重置当前页面 206 Partial Content 客户端只请求资源的一部分，服务器成功地响应了该部分 300 Multiple Choices 请求的资源存在多个选择，用户或代理可以选择其一进行重定向 301 Moved Permanently 资源的URL已永久移动到新位置 302 Found 资源的URL已临时移动到新位置 303 See Other 对应当前请求的响应可以在另一个URL下找到 304 Not Modified 资源未修改，客户端可以使用缓存的版本 307 Temporary Redirect 对应当前请求的响应可以在另一个URL下找到，但请继续使用原始请求URL进行访问 308 Permanent Redirect 对应当前请求的响应可以在另一个URL下找到，客户端应使用新的URL进行访问 400 Bad Request 请求无效或无法被服务器理解 401 Unauthorized 请求需要身份验证 402 Payment Required 预留状态码，表示需要付款才能访问请求的资源 403 Forbidden 请求被服务器拒绝访问 404 Not Found 请求的资源不存在 405 Method Not Allowed 请求方法不被允许 406 Not Acceptable 服务器无法根据请求的内容特性完成请求 407 Proxy Authentication Required 请求要求代理身份验证 408 Request Timeout 服务器在等待请求时超时 409 Conflict 请求存在冲突，服务器无法处理 410 Gone 请求的资源已永久消失 411 Length Required 服务器要求在请求中包含Content-Length首部 412 Precondition Failed 请求条件失败，例如请求头中指定的一些前提条件未满足 413 Payload Too Large 请求实体过大，超出服务器的处理能力 414 URI Too Long 请求的URI过长，服务器无法处理 415 Unsupported Media Type 请求的媒体类型不受支持 416 Range Not Satisfiable 服务器无法满足请求中的Range头字段指定的范围 417 Expectation Failed 服务器无法满足Expect请求头字段指定的期望值 429 Too Many Requests 客户端在给定的时间内发送了太多请求 500 Internal Server Error 服务器内部错误 501 Not Implemented 服务器不支持当前请求的功能或未能实现 502 Bad Gateway 服务器作为网关或代理，从上游服务器接收到无效的响应 503 Service Unavailable 服务器暂时无法处理请求 504 Gateway Timeout 服务器作为网关或代理，未能及时从上游服务器接收到响应 505 HTTP Version Not Supported 服务器不支持请求中所用的HTTP协议版本 状态管理 cookie #card #forward id:: 67bddc60-82ee-4773-b1a0-db11ed46e0b8 存在于客户端的身份认证，每次在发送请求时请求中都会携带cookie。 存在的安全隐患 劫持、伪造 特点 大小受限，安全性较低，影响性能(每次请求都要携带)\n","keywords":["网络","HTTP"],"articleBody":"url\u0026\u0026uri\u0026\u0026urn url编码 常见的编码 %20 空格 %21 ! %22 \" %23 # %25 % %27 ' %2b + %3d = HTML URL 编码参考手册 | 菜鸟教程\n请求头 请求头 含义 User-Agent 标识客户端发送请求的用户代理（User Agent），通常是浏览器或其他应用程序的标识。 Accept 指定客户端可接受的响应媒体类型。服务器可以根据该头部信息返回适合客户端的响应。 Content-Type 指定请求体的媒体类型。 Authorization 包含了用于进行身份验证的凭证信息。通常用于向服务器提供身份验证令牌或用户名密码。 Cookie 包含了之前由服务器通过Set-Cookie头发送的Cookie信息。 Referer 标识了发送请求的页面的URL地址。服务器可以根据该头部信息判断请求的来源。 Content-Length 请求体的字节长度。 Host 指定请求的目标服务器的主机名和端口号。 If-Modified-Since 指定一个日期时间，表示如果资源自指定日期时间之后未被修改，才执行请求的操作。用于缓存控制和条件请求。 Cache-Control 控制缓存行为，包含了一系列指令，如max-age、no-cache等。 X-Requested-With 标识请求是通过Ajax发送的。 请求方法 get、post、delete、option、update\nget与post的区别 #card #forward id:: 67bddeec-75a0-49cf-bc1e-977cd9e1d76b 请求参数位置不同，get在请求行，post在请求体 请求参数大小不同，get请求参数有大小限制，post没有 get不安全，post安全 post有content-type请求头，如x-www-from-urlencoded\n渗透测试常关注的请求头 #card #forward id:: 67bddfab-ea61-4778-b98d-bfdc333846d3 篡改 Host 或 X-Forwarded-For。 如在 User-Agent 或 Referer 中注入 SQL/XSS 代码。 通过 Cookie 或 Authorization 劫持会话。\n相应码 状态码 含义 说明 100 Continue 服务器已接收到请求的首部，客户端应继续发送请求主体部分 101 Switching Protocols 服务器已根据请求要求切换协议 200 OK 请求成功完成 201 Created 请求成功并创建了新资源 202 Accepted 请求已被接受，但处理尚未完成 203 Non-Authoritative Information 请求成功，但返回的信息来自第三方，非官方来源 204 No Content 服务器成功处理了请求，但响应中不包含返回的实体内容。 205 Reset Content 请求成功完成，客户端应重置当前页面 206 Partial Content 客户端只请求资源的一部分，服务器成功地响应了该部分 300 Multiple Choices 请求的资源存在多个选择，用户或代理可以选择其一进行重定向 301 Moved Permanently 资源的URL已永久移动到新位置 302 Found 资源的URL已临时移动到新位置 303 See Other 对应当前请求的响应可以在另一个URL下找到 304 Not Modified 资源未修改，客户端可以使用缓存的版本 307 Temporary Redirect 对应当前请求的响应可以在另一个URL下找到，但请继续使用原始请求URL进行访问 308 Permanent Redirect 对应当前请求的响应可以在另一个URL下找到，客户端应使用新的URL进行访问 400 Bad Request 请求无效或无法被服务器理解 401 Unauthorized 请求需要身份验证 402 Payment Required 预留状态码，表示需要付款才能访问请求的资源 403 Forbidden 请求被服务器拒绝访问 404 Not Found 请求的资源不存在 405 Method Not Allowed 请求方法不被允许 406 Not Acceptable 服务器无法根据请求的内容特性完成请求 407 Proxy Authentication Required 请求要求代理身份验证 408 Request Timeout 服务器在等待请求时超时 409 Conflict 请求存在冲突，服务器无法处理 410 Gone 请求的资源已永久消失 411 Length Required 服务器要求在请求中包含Content-Length首部 412 Precondition Failed 请求条件失败，例如请求头中指定的一些前提条件未满足 413 Payload Too Large 请求实体过大，超出服务器的处理能力 414 URI Too Long 请求的URI过长，服务器无法处理 415 Unsupported Media Type 请求的媒体类型不受支持 416 Range Not Satisfiable 服务器无法满足请求中的Range头字段指定的范围 417 Expectation Failed 服务器无法满足Expect请求头字段指定的期望值 429 Too Many Requests 客户端在给定的时间内发送了太多请求 500 Internal Server Error 服务器内部错误 501 Not Implemented 服务器不支持当前请求的功能或未能实现 502 Bad Gateway 服务器作为网关或代理，从上游服务器接收到无效的响应 503 Service Unavailable 服务器暂时无法处理请求 504 Gateway Timeout 服务器作为网关或代理，未能及时从上游服务器接收到响应 505 HTTP Version Not Supported 服务器不支持请求中所用的HTTP协议版本 状态管理 cookie #card #forward id:: 67bddc60-82ee-4773-b1a0-db11ed46e0b8 存在于客户端的身份认证，每次在发送请求时请求中都会携带cookie。 存在的安全隐患 劫持、伪造 特点 大小受限，安全性较低，影响性能(每次请求都要携带)\nsession #card #forward id:: 67bddc63-8527-42a3-8171-b1e97a7ccad2 存在于服务器的身份认证。客户端会存储一个session_id用于鉴定session的有效性。 存在的安全隐患 劫持 特点 存在于服务器，消耗服务器资源，相对而言安全性较高\nsession与cookie存在的安全隐患与加固 #card #forward id:: 67bddcac-5e53-48fd-a9f2-50031bb011b2\ncookie加固 强制使用https，防止cookie在传输时被窃取 设置httponly，让cookie避免被js解析导致出现xss漏洞 启用 SameSite 属性，限制第三方网站使用用户的 Cookie，防止 CSRF 攻击。 加密cookie，防止cookie被篡改\nsession加固 使用强随机生成的 Session ID，防止 Session ID 被预测或暴力破解。 限制 Session 的有效期，防止长时间未操作导致的风险。\nsession与cookie的区别 #card #forward id:: 67bddcba-d066-4a96-b677-a76055bb089a 位置不同，session在服务端，cookie在客户端 长度不同，cookie有大小限制\n","wordCount":"304","inLanguage":"zh","datePublished":"2026-04-03T00:00:00+08:00","dateModified":"2026-04-03T00:00:00+08:00","author":{"@type":"Person","name":"ziwindlu"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://ziwindlu.github.io/posts/http-basics/"},"publisher":{"@type":"Organization","name":"ziwindlu 的博客","logo":{"@type":"ImageObject","url":"https://ziwindlu.github.io/favicon.svg"}}}</script></head><body id=top><header class=header><nav class=header-nav><div class=logo><a href=https://ziwindlu.github.io/ accesskey=h title="ziwindlu 的博客 (Alt + H)">ziwindlu 的博客</a><div class=logo-switches><button id=theme-toggle class=theme-toggle accesskey=t title="(Alt + T)" aria-label="Toggle theme">
+<svg class="moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+<svg class="sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu class=menu><li><a href=https://ziwindlu.github.io/ title=首页><span>首页</span></a></li><li><a href=https://ziwindlu.github.io/posts/ title=文章><span>文章</span></a></li><li><a href=https://ziwindlu.github.io/tags/ title=标签><span>标签</span></a></li><li><a href=https://ziwindlu.github.io/search/ title=搜索><span>搜索</span></a></li><li><a href=https://ziwindlu.github.io/about/ title=关于><span>关于</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><h1 class="post-title entry-hint-parent">HTTP基础</h1><div class=post-meta><span title=2026-04-03T00:00:00+08:00>2026-04-03</span>&nbsp;·&nbsp;<span>2 分钟</span>&nbsp;·&nbsp;<span>ziwindlu</span>&nbsp;·&nbsp;<span class=post-source>源笔记：<code>07-Learning/笔记/HTTP基础.md</code></span></div></header><details class=toc><summary accesskey=c title="(Alt + C)"><span class=title>目录</span></summary><div class=inner><ul><li><a href=#urluriurn aria-label=url&&amp;uri&&amp;urn>url&&amp;uri&&amp;urn</a><ul><li><a href=#url%e7%bc%96%e7%a0%81 aria-label=url编码>url编码</a></li></ul></li><li><a href=#%e8%af%b7%e6%b1%82%e5%a4%b4 aria-label=请求头>请求头</a></li><li><a href=#%e8%af%b7%e6%b1%82%e6%96%b9%e6%b3%95 aria-label=请求方法>请求方法</a><ul><li><a href=#get%e4%b8%8epost%e7%9a%84%e5%8c%ba%e5%88%ab-card-forward aria-label="get与post的区别 #card #forward">get与post的区别 #card #forward</a></li><li><a href=#%e6%b8%97%e9%80%8f%e6%b5%8b%e8%af%95%e5%b8%b8%e5%85%b3%e6%b3%a8%e7%9a%84%e8%af%b7%e6%b1%82%e5%a4%b4-card-forward aria-label="渗透测试常关注的请求头 #card #forward">渗透测试常关注的请求头 #card #forward</a></li></ul></li><li><a href=#%e7%9b%b8%e5%ba%94%e7%a0%81 aria-label=相应码>相应码</a></li><li><a href=#%e7%8a%b6%e6%80%81%e7%ae%a1%e7%90%86 aria-label=状态管理>状态管理</a><ul><li><a href=#cookie-card-forward aria-label="cookie #card #forward">cookie #card #forward</a></li><li><a href=#session-card-forward aria-label="session #card #forward">session #card #forward</a></li><li><a href=#session%e4%b8%8ecookie%e5%ad%98%e5%9c%a8%e7%9a%84%e5%ae%89%e5%85%a8%e9%9a%90%e6%82%a3%e4%b8%8e%e5%8a%a0%e5%9b%ba-card-forward aria-label="session与cookie存在的安全隐患与加固 #card #forward">session与cookie存在的安全隐患与加固 #card #forward</a><ul><li><a href=#cookie%e5%8a%a0%e5%9b%ba aria-label=cookie加固>cookie加固</a></li><li><a href=#session%e5%8a%a0%e5%9b%ba aria-label=session加固>session加固</a></li><li><a href=#session%e4%b8%8ecookie%e7%9a%84%e5%8c%ba%e5%88%ab-card-forward aria-label="session与cookie的区别 #card #forward">session与cookie的区别 #card #forward</a></li></ul></li></ul></li></ul></div></details><div class="post-content md-content"><h2 id=urluriurn>url&&amp;uri&&amp;urn<a hidden class=anchor aria-hidden=true href=#urluriurn>#</a></h2><p><img alt=image.png loading=lazy src=/images/image_1709692126096_0.png></p><h3 id=url编码>url编码<a hidden class=anchor aria-hidden=true href=#url编码>#</a></h3><p>常见的编码
+<code>%20</code> 空格
+<code>%21</code> <code>!</code>
+<code>%22</code> <code>"</code>
+<code>%23</code> <code>#</code>
+<code>%25</code> <code>%</code>
+<code>%27</code> <code>'</code>
+<code>%2b</code> <code>+</code>
+<code>%3d</code> <code>=</code>
+<a href=https://www.runoob.com/tags/html-urlencode.html>HTML URL 编码参考手册 | 菜鸟教程</a></p><h2 id=请求头>请求头<a hidden class=anchor aria-hidden=true href=#请求头>#</a></h2><table><thead><tr><th>请求头</th><th>含义</th></tr></thead><tbody><tr><td>User-Agent</td><td>标识客户端发送请求的用户代理（User Agent），通常是浏览器或其他应用程序的标识。</td></tr><tr><td>Accept</td><td>指定客户端可接受的响应媒体类型。服务器可以根据该头部信息返回适合客户端的响应。</td></tr><tr><td>Content-Type</td><td>指定请求体的媒体类型。</td></tr><tr><td>Authorization</td><td>包含了用于进行身份验证的凭证信息。通常用于向服务器提供身份验证令牌或用户名密码。</td></tr><tr><td>Cookie</td><td>包含了之前由服务器通过Set-Cookie头发送的Cookie信息。</td></tr><tr><td>Referer</td><td>标识了发送请求的页面的URL地址。服务器可以根据该头部信息判断请求的来源。</td></tr><tr><td>Content-Length</td><td>请求体的字节长度。</td></tr><tr><td>Host</td><td>指定请求的目标服务器的主机名和端口号。</td></tr><tr><td>If-Modified-Since</td><td>指定一个日期时间，表示如果资源自指定日期时间之后未被修改，才执行请求的操作。用于缓存控制和条件请求。</td></tr><tr><td>Cache-Control</td><td>控制缓存行为，包含了一系列指令，如max-age、no-cache等。</td></tr><tr><td>X-Requested-With</td><td>标识请求是通过Ajax发送的。</td></tr></tbody></table><h2 id=请求方法>请求方法<a hidden class=anchor aria-hidden=true href=#请求方法>#</a></h2><p>get、post、delete、option、update</p><h3 id=get与post的区别-card-forward>get与post的区别 #card #forward<a hidden class=anchor aria-hidden=true href=#get与post的区别-card-forward>#</a></h3><p>id:: 67bddeec-75a0-49cf-bc1e-977cd9e1d76b
+请求参数位置不同，get在请求行，post在请求体
+请求参数大小不同，get请求参数有大小限制，post没有
+get不安全，post安全
+post有content-type请求头，如<code>x-www-from-urlencoded</code></p><h3 id=渗透测试常关注的请求头-card-forward>渗透测试常关注的请求头 #card #forward<a hidden class=anchor aria-hidden=true href=#渗透测试常关注的请求头-card-forward>#</a></h3><p>id:: 67bddfab-ea61-4778-b98d-bfdc333846d3
+篡改 <code>Host</code> 或 <code>X-Forwarded-For</code>。
+如在 <code>User-Agent</code> 或 <code>Referer</code> 中注入 SQL/XSS 代码。
+通过 <code>Cookie</code> 或 <code>Authorization</code> 劫持会话。</p><h2 id=相应码>相应码<a hidden class=anchor aria-hidden=true href=#相应码>#</a></h2><table><thead><tr><th>状态码</th><th>含义</th><th>说明</th></tr></thead><tbody><tr><td>100</td><td>Continue</td><td>服务器已接收到请求的首部，客户端应继续发送请求主体部分</td></tr><tr><td>101</td><td>Switching Protocols</td><td>服务器已根据请求要求切换协议</td></tr><tr><td>200</td><td>OK</td><td>请求成功完成</td></tr><tr><td>201</td><td>Created</td><td>请求成功并创建了新资源</td></tr><tr><td>202</td><td>Accepted</td><td>请求已被接受，但处理尚未完成</td></tr><tr><td>203</td><td>Non-Authoritative Information</td><td>请求成功，但返回的信息来自第三方，非官方来源</td></tr><tr><td>204</td><td>No Content</td><td>服务器成功处理了请求，但响应中不包含返回的实体内容。</td></tr><tr><td>205</td><td>Reset Content</td><td>请求成功完成，客户端应重置当前页面</td></tr><tr><td>206</td><td>Partial Content</td><td>客户端只请求资源的一部分，服务器成功地响应了该部分</td></tr><tr><td>300</td><td>Multiple Choices</td><td>请求的资源存在多个选择，用户或代理可以选择其一进行重定向</td></tr><tr><td>301</td><td>Moved Permanently</td><td>资源的URL已永久移动到新位置</td></tr><tr><td>302</td><td>Found</td><td>资源的URL已临时移动到新位置</td></tr><tr><td>303</td><td>See Other</td><td>对应当前请求的响应可以在另一个URL下找到</td></tr><tr><td>304</td><td>Not Modified</td><td>资源未修改，客户端可以使用缓存的版本</td></tr><tr><td>307</td><td>Temporary Redirect</td><td>对应当前请求的响应可以在另一个URL下找到，但请继续使用原始请求URL进行访问</td></tr><tr><td>308</td><td>Permanent Redirect</td><td>对应当前请求的响应可以在另一个URL下找到，客户端应使用新的URL进行访问</td></tr><tr><td>400</td><td>Bad Request</td><td>请求无效或无法被服务器理解</td></tr><tr><td>401</td><td>Unauthorized</td><td>请求需要身份验证</td></tr><tr><td>402</td><td>Payment Required</td><td>预留状态码，表示需要付款才能访问请求的资源</td></tr><tr><td>403</td><td>Forbidden</td><td>请求被服务器拒绝访问</td></tr><tr><td>404</td><td>Not Found</td><td>请求的资源不存在</td></tr><tr><td>405</td><td>Method Not Allowed</td><td>请求方法不被允许</td></tr><tr><td>406</td><td>Not Acceptable</td><td>服务器无法根据请求的内容特性完成请求</td></tr><tr><td>407</td><td>Proxy Authentication Required</td><td>请求要求代理身份验证</td></tr><tr><td>408</td><td>Request Timeout</td><td>服务器在等待请求时超时</td></tr><tr><td>409</td><td>Conflict</td><td>请求存在冲突，服务器无法处理</td></tr><tr><td>410</td><td>Gone</td><td>请求的资源已永久消失</td></tr><tr><td>411</td><td>Length Required</td><td>服务器要求在请求中包含Content-Length首部</td></tr><tr><td>412</td><td>Precondition Failed</td><td>请求条件失败，例如请求头中指定的一些前提条件未满足</td></tr><tr><td>413</td><td>Payload Too Large</td><td>请求实体过大，超出服务器的处理能力</td></tr><tr><td>414</td><td>URI Too Long</td><td>请求的URI过长，服务器无法处理</td></tr><tr><td>415</td><td>Unsupported Media Type</td><td>请求的媒体类型不受支持</td></tr><tr><td>416</td><td>Range Not Satisfiable</td><td>服务器无法满足请求中的Range头字段指定的范围</td></tr><tr><td>417</td><td>Expectation Failed</td><td>服务器无法满足Expect请求头字段指定的期望值</td></tr><tr><td>429</td><td>Too Many Requests</td><td>客户端在给定的时间内发送了太多请求</td></tr><tr><td>500</td><td>Internal Server Error</td><td>服务器内部错误</td></tr><tr><td>501</td><td>Not Implemented</td><td>服务器不支持当前请求的功能或未能实现</td></tr><tr><td>502</td><td>Bad Gateway</td><td>服务器作为网关或代理，从上游服务器接收到无效的响应</td></tr><tr><td>503</td><td>Service Unavailable</td><td>服务器暂时无法处理请求</td></tr><tr><td>504</td><td>Gateway Timeout</td><td>服务器作为网关或代理，未能及时从上游服务器接收到响应</td></tr><tr><td>505</td><td>HTTP Version Not Supported</td><td>服务器不支持请求中所用的HTTP协议版本</td></tr></tbody></table><h2 id=状态管理>状态管理<a hidden class=anchor aria-hidden=true href=#状态管理>#</a></h2><h3 id=cookie-card-forward>cookie #card #forward<a hidden class=anchor aria-hidden=true href=#cookie-card-forward>#</a></h3><p>id:: 67bddc60-82ee-4773-b1a0-db11ed46e0b8
+存在于客户端的身份认证，每次在发送请求时请求中都会携带cookie。
+<strong>存在的安全隐患</strong>
+劫持、伪造
+<strong>特点</strong>
+大小受限，安全性较低，影响性能(每次请求都要携带)</p><h3 id=session-card-forward>session #card #forward<a hidden class=anchor aria-hidden=true href=#session-card-forward>#</a></h3><p>id:: 67bddc63-8527-42a3-8171-b1e97a7ccad2
+存在于服务器的身份认证。客户端会存储一个<code>session_id</code>用于鉴定session的有效性。
+<strong>存在的安全隐患</strong>
+劫持
+<strong>特点</strong>
+存在于服务器，消耗服务器资源，相对而言安全性较高</p><h3 id=session与cookie存在的安全隐患与加固-card-forward>session与cookie存在的安全隐患与加固 #card #forward<a hidden class=anchor aria-hidden=true href=#session与cookie存在的安全隐患与加固-card-forward>#</a></h3><p>id:: 67bddcac-5e53-48fd-a9f2-50031bb011b2</p><h4 id=cookie加固>cookie加固<a hidden class=anchor aria-hidden=true href=#cookie加固>#</a></h4><p>强制使用https，防止cookie在传输时被窃取
+设置httponly，让cookie避免被js解析导致出现xss漏洞
+启用 SameSite 属性，限制第三方网站使用用户的 Cookie，防止 CSRF 攻击。
+加密cookie，防止cookie被篡改</p><h4 id=session加固>session加固<a hidden class=anchor aria-hidden=true href=#session加固>#</a></h4><p>使用强随机生成的 Session ID，防止 Session ID 被预测或暴力破解。
+限制 Session 的有效期，防止长时间未操作导致的风险。</p><h4 id=session与cookie的区别-card-forward>session与cookie的区别 #card #forward<a hidden class=anchor aria-hidden=true href=#session与cookie的区别-card-forward>#</a></h4><p>id:: 67bddcba-d066-4a96-b677-a76055bb089a
+位置不同，session在服务端，cookie在客户端
+长度不同，cookie有大小限制</p></div><footer class=post-footer><ul class=post-tags><li><a href=https://ziwindlu.github.io/tags/%E7%BD%91%E7%BB%9C/>网络</a></li><li><a href=https://ziwindlu.github.io/tags/http/>HTTP</a></li></ul><nav class=paginav><a class=prev href=https://ziwindlu.github.io/posts/go-tour/><span class=title>« 上一页</span>
+<span>gotour</span>
+</a><a class=next href=https://ziwindlu.github.io/posts/linux-common-services/><span class=title>下一页 »</span>
+<span>Linux常用服务</span></a></nav></footer></article></main><footer class=footer><span>&copy; 2026 <a href=https://ziwindlu.github.io/>ziwindlu 的博客</a></span> ·
+<span>Powered by
+<a href="https://gohugo.io/?utm_source=papermod" rel=noopener target=_blank>Hugo</a> &
+<a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top id=top-link class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey=g><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up"><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg>
+</a><script>let menu=document.getElementById("menu");if(menu){const e=localStorage.getItem("menu-scroll-position");e&&(menu.scrollLeft=parseInt(e,10));let t;menu.addEventListener("scroll",function(){clearTimeout(t),t=setTimeout(function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)},150)},{passive:!0})}document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var n=this.getAttribute("href").substr(1);const t=document.querySelector(`[id='${decodeURIComponent(n)}']`);window.matchMedia("(prefers-reduced-motion: reduce)").matches?t.scrollIntoView():t.scrollIntoView({behavior:"smooth"}),t.tabIndex<0&&!t.hasAttribute("tabindex")&&t.setAttribute("tabindex","-1"),t.focus({preventScroll:!0}),n==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${n}`)})})</script><script>var toplink=document.getElementById("top-link"),scrollTicking=!1;window.addEventListener("scroll",function(){if(scrollTicking)return;scrollTicking=!0,requestAnimationFrame(function(){const e=window.innerHeight,t=document.body.scrollTop>e||document.documentElement.scrollTop>e;toplink.classList.toggle("hidden",!t),scrollTicking=!1})},{passive:!0})</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{const e=document.querySelector("html");e.dataset.theme==="dark"?(e.dataset.theme="light",localStorage.setItem("pref-theme","light")):(e.dataset.theme="dark",localStorage.setItem("pref-theme","dark"))})</script><script>document.querySelectorAll("pre > code").forEach(e=>{const n=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="复制";function s(){t.innerHTML="已复制！",setTimeout(()=>{t.innerHTML="复制"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),s();return}const n=document.createRange();n.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(n);try{document.execCommand("copy"),s()}catch{}o.removeRange(n)}),n.classList.contains("highlight")?n.appendChild(t):n.parentNode.firstChild==n||(e.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?e.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(t):e.parentNode.appendChild(t))})</script></body></html>

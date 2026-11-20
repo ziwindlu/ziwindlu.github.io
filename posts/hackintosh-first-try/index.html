@@ -1,0 +1,192 @@
+<!doctype html><html lang=zh dir=auto data-theme=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>hackintosh初体验 | ziwindlu 的博客</title><meta name=keywords content="macos"><meta name=description content="引子
+入了手一个古老的笔记本，发现配置可以黑苹果。加上人在隔离，无趣，想起之前手撸OC的悲惨经历，决定重来一次。
+前言
+此文章不是专业安装教程，仅为记录搞机日常。
+在繁琐的黑苹果过程中，需要摆正心态，善用搜索引擎。降低预期，容忍他的一些小问题。
+主机配置和驱动问题
+戴尔灵越5570
+CPU:i5 8250U
+GPU:核显(独显无法驱动)
+硬盘:
+无线网卡:不可用(其实后面俺换了一个可驱动的无线网卡，隔空投送啥的都能用了，但是俺不想写了)
+蓝牙: 可用
+有线网卡:需加载驱动
+
+相信了解黑苹果的朋友都知道硬件的重要性，这里不多赘述
+
+收集文件
+经历了手撸OC的痛，痛定思痛决定直接使用别人的efi
+github中找到的
+stayboogy&rsquo;s efi
+Mateo1234454545‘s efi
+两个efi都使用过，第二个efi基本完美，可以直接使用，仅需要将OC中的CFGLock相关选项设置为true，甚至bios都不需要修改
+生命在于折腾，所以我用了第一个，以下内容基于第一个efi(其实是装了n此最后停留在了1中，不想换了才这样滴)
+后续需要2中ACPI，Kexts中文件
+制作安装u盘
+镜像下载
+需要python环境，使用pyton3
+Making the installer in Linux | OpenCore Install Guide
+根据efi中的描述，下载对应版本
+分区
+win下使用DiskGenius进行分区
+Linux下使用gdisk(OC官方推荐)
+镜像的使用和写入
+Linux下使用工具dmg2img
+arch下安装yay -S dmg2img
+
+如果你的u盘速度堪忧，可能需要多等一会儿
+
+BIOS设置
+STAT控制器相关
+为了防止进入安装程序后找不到硬盘，需要将此项改为AHCI
+
+如果更改后你的Windows无法启动，原因是windows没有安装AHCI驱动。
+解决:
+将此选项更改为原来的模式，msconfig中启用安全启动并应用
+开机前将此选项再次更改为AHCI
+进入Windows，查看设备管理器是否更改成功
+
+安全启动
+禁用此项
+CPU虚拟化
+禁用此项
+
+安装后可重新开启，以满足使用虚拟机的需求，但是不太好用
+
+BIOS中无法更改的内容
+解决卡logo和卡进度条无限重启问题
+注意，此更改可能会使你的电脑变砖，以下内容仅适合戴尔灵越5570，其他型号主板慎用。且这一步是必须的，修改前请备份BIOS文件。
+
+DVMV PRE-ALLOCATED set to 64MB: setup_var 0x795 0x2
+DVMT TOTAL GFX MEM set to MAX: setup_var 0x796 0x3
+CFG Lock set to Disabled: setup_var 0x4ED 0x0
+I2CO INTERUPT MODE set to GPIO Interrupt : setup_var 0x272 0x0
+以上内容为完美黑苹果做准备，至少需要设置1。
+如果你只设置了1，需要在OC配置文件中将CFGLOCK相关选项修改为true。
+如果不在OC配置文件中将CFGLOCK相关选项修改为true，则需要配置3
+
+
+如果修改后仍无法进入安装界面，请全部修改
+
+修改步骤
+修改前请备份BIOS文件
+选择/EFI/Boot/BOOTx64.efi启动。
+启动后你会看到熟悉的grub
+setup_var 0x795查看该值并记录下来
+setup_var 0x795 0x2将该值更改
+重复以上两步，将你需要的内容修改完毕即可重启
+将u盘设置为启动盘 😁
+这是最后一步，也是最重要的一步。
+安装macOS
+磁盘分区
+可在PE或Windows中分出供mac使用的分区，类型随意，只需规定大小
+进入mac安装界面使用磁盘工具将上一步分出的分区格式化为APPLE类型即可
+系统安装
+随便点点就行"><meta name=author content="ziwindlu"><link rel=canonical href=https://ziwindlu.github.io/posts/hackintosh-first-try/><link crossorigin=anonymous href=/assets/css/stylesheet.95ae6e9689bd0037456375629f411acbf8ed76e0e9a7599900ad281f9526dee6.css integrity="sha256-la5ulom9ADdFY3Vin0Eay/jtduDpp1mZAK0oH5Um3uY=" rel="preload stylesheet" as=style><link rel=icon href=https://ziwindlu.github.io/favicon.svg><link rel=icon type=image/png sizes=16x16 href=https://ziwindlu.github.io/favicon.svg><link rel=icon type=image/png sizes=32x32 href=https://ziwindlu.github.io/favicon.svg><link rel=apple-touch-icon href=https://ziwindlu.github.io/favicon.svg><link rel=mask-icon href=https://ziwindlu.github.io/favicon.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=zh href=https://ziwindlu.github.io/posts/hackintosh-first-try/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51);color-scheme:dark}.list{background:var(--theme)}.toc{background:var(--entry)}}</style></noscript><script>localStorage.getItem("pref-theme")==="dark"?document.querySelector("html").dataset.theme="dark":localStorage.getItem("pref-theme")==="light"?document.querySelector("html").dataset.theme="light":window.matchMedia("(prefers-color-scheme: dark)").matches?document.querySelector("html").dataset.theme="dark":document.querySelector("html").dataset.theme="light"</script><meta property="og:url" content="https://ziwindlu.github.io/posts/hackintosh-first-try/"><meta property="og:site_name" content="ziwindlu 的博客"><meta property="og:title" content="hackintosh初体验"><meta property="og:description" content="引子 入了手一个古老的笔记本，发现配置可以黑苹果。加上人在隔离，无趣，想起之前手撸OC的悲惨经历，决定重来一次。
+前言 此文章不是专业安装教程，仅为记录搞机日常。 在繁琐的黑苹果过程中，需要摆正心态，善用搜索引擎。降低预期，容忍他的一些小问题。
+主机配置和驱动问题 戴尔灵越5570 CPU:i5 8250U GPU:核显(独显无法驱动) 硬盘: 无线网卡:不可用(其实后面俺换了一个可驱动的无线网卡，隔空投送啥的都能用了，但是俺不想写了) 蓝牙: 可用 有线网卡:需加载驱动
+相信了解黑苹果的朋友都知道硬件的重要性，这里不多赘述
+收集文件 经历了手撸OC的痛，痛定思痛决定直接使用别人的efi github中找到的 stayboogy’s efi Mateo1234454545‘s efi 两个efi都使用过，第二个efi基本完美，可以直接使用，仅需要将OC中的CFGLock相关选项设置为true，甚至bios都不需要修改 生命在于折腾，所以我用了第一个，以下内容基于第一个efi(其实是装了n此最后停留在了1中，不想换了才这样滴) 后续需要2中ACPI，Kexts中文件
+制作安装u盘 镜像下载 需要python环境，使用pyton3 Making the installer in Linux | OpenCore Install Guide 根据efi中的描述，下载对应版本
+分区 win下使用DiskGenius进行分区 Linux下使用gdisk(OC官方推荐)
+镜像的使用和写入 Linux下使用工具dmg2img arch下安装yay -S dmg2img
+如果你的u盘速度堪忧，可能需要多等一会儿
+BIOS设置 STAT控制器相关 为了防止进入安装程序后找不到硬盘，需要将此项改为AHCI
+如果更改后你的Windows无法启动，原因是windows没有安装AHCI驱动。 解决: 将此选项更改为原来的模式，msconfig中启用安全启动并应用 开机前将此选项再次更改为AHCI 进入Windows，查看设备管理器是否更改成功
+安全启动 禁用此项
+CPU虚拟化 禁用此项
+安装后可重新开启，以满足使用虚拟机的需求，但是不太好用
+BIOS中无法更改的内容 解决卡logo和卡进度条无限重启问题 注意，此更改可能会使你的电脑变砖，以下内容仅适合戴尔灵越5570，其他型号主板慎用。且这一步是必须的，修改前请备份BIOS文件。
+DVMV PRE-ALLOCATED set to 64MB: setup_var 0x795 0x2 DVMT TOTAL GFX MEM set to MAX: setup_var 0x796 0x3 CFG Lock set to Disabled: setup_var 0x4ED 0x0 I2CO INTERUPT MODE set to GPIO Interrupt : setup_var 0x272 0x0 以上内容为完美黑苹果做准备，至少需要设置1。 如果你只设置了1，需要在OC配置文件中将CFGLOCK相关选项修改为true。 如果不在OC配置文件中将CFGLOCK相关选项修改为true，则需要配置3 如果修改后仍无法进入安装界面，请全部修改
+修改步骤 修改前请备份BIOS文件 选择/EFI/Boot/BOOTx64.efi启动。 启动后你会看到熟悉的grub setup_var 0x795查看该值并记录下来 setup_var 0x795 0x2将该值更改 重复以上两步，将你需要的内容修改完毕即可重启
+将u盘设置为启动盘 😁 这是最后一步，也是最重要的一步。
+安装macOS 磁盘分区 可在PE或Windows中分出供mac使用的分区，类型随意，只需规定大小 进入mac安装界面使用磁盘工具将上一步分出的分区格式化为APPLE类型即可
+系统安装 随便点点就行"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2024-04-10T00:00:00+08:00"><meta property="article:modified_time" content="2024-04-10T00:00:00+08:00"><meta property="article:tag" content="macos"><meta name=twitter:card content="summary"><meta name=twitter:title content="hackintosh初体验"><meta name=twitter:description content="引子 入了手一个古老的笔记本，发现配置可以黑苹果。加上人在隔离，无趣，想起之前手撸OC的悲惨经历，决定重来一次。
+前言 此文章不是专业安装教程，仅为记录搞机日常。 在繁琐的黑苹果过程中，需要摆正心态，善用搜索引擎。降低预期，容忍他的一些小问题。
+主机配置和驱动问题 戴尔灵越5570 CPU:i5 8250U GPU:核显(独显无法驱动) 硬盘: 无线网卡:不可用(其实后面俺换了一个可驱动的无线网卡，隔空投送啥的都能用了，但是俺不想写了) 蓝牙: 可用 有线网卡:需加载驱动
+相信了解黑苹果的朋友都知道硬件的重要性，这里不多赘述
+收集文件 经历了手撸OC的痛，痛定思痛决定直接使用别人的efi github中找到的 stayboogy’s efi Mateo1234454545‘s efi 两个efi都使用过，第二个efi基本完美，可以直接使用，仅需要将OC中的CFGLock相关选项设置为true，甚至bios都不需要修改 生命在于折腾，所以我用了第一个，以下内容基于第一个efi(其实是装了n此最后停留在了1中，不想换了才这样滴) 后续需要2中ACPI，Kexts中文件
+制作安装u盘 镜像下载 需要python环境，使用pyton3 Making the installer in Linux | OpenCore Install Guide 根据efi中的描述，下载对应版本
+分区 win下使用DiskGenius进行分区 Linux下使用gdisk(OC官方推荐)
+镜像的使用和写入 Linux下使用工具dmg2img arch下安装yay -S dmg2img
+如果你的u盘速度堪忧，可能需要多等一会儿
+BIOS设置 STAT控制器相关 为了防止进入安装程序后找不到硬盘，需要将此项改为AHCI
+如果更改后你的Windows无法启动，原因是windows没有安装AHCI驱动。 解决: 将此选项更改为原来的模式，msconfig中启用安全启动并应用 开机前将此选项再次更改为AHCI 进入Windows，查看设备管理器是否更改成功
+安全启动 禁用此项
+CPU虚拟化 禁用此项
+安装后可重新开启，以满足使用虚拟机的需求，但是不太好用
+BIOS中无法更改的内容 解决卡logo和卡进度条无限重启问题 注意，此更改可能会使你的电脑变砖，以下内容仅适合戴尔灵越5570，其他型号主板慎用。且这一步是必须的，修改前请备份BIOS文件。
+DVMV PRE-ALLOCATED set to 64MB: setup_var 0x795 0x2 DVMT TOTAL GFX MEM set to MAX: setup_var 0x796 0x3 CFG Lock set to Disabled: setup_var 0x4ED 0x0 I2CO INTERUPT MODE set to GPIO Interrupt : setup_var 0x272 0x0 以上内容为完美黑苹果做准备，至少需要设置1。 如果你只设置了1，需要在OC配置文件中将CFGLOCK相关选项修改为true。 如果不在OC配置文件中将CFGLOCK相关选项修改为true，则需要配置3 如果修改后仍无法进入安装界面，请全部修改
+修改步骤 修改前请备份BIOS文件 选择/EFI/Boot/BOOTx64.efi启动。 启动后你会看到熟悉的grub setup_var 0x795查看该值并记录下来 setup_var 0x795 0x2将该值更改 重复以上两步，将你需要的内容修改完毕即可重启
+将u盘设置为启动盘 😁 这是最后一步，也是最重要的一步。
+安装macOS 磁盘分区 可在PE或Windows中分出供mac使用的分区，类型随意，只需规定大小 进入mac安装界面使用磁盘工具将上一步分出的分区格式化为APPLE类型即可
+系统安装 随便点点就行"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"文章","item":"https://ziwindlu.github.io/posts/"},{"@type":"ListItem","position":2,"name":"hackintosh初体验","item":"https://ziwindlu.github.io/posts/hackintosh-first-try/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"hackintosh初体验","name":"hackintosh初体验","description":"引子 入了手一个古老的笔记本，发现配置可以黑苹果。加上人在隔离，无趣，想起之前手撸OC的悲惨经历，决定重来一次。\n前言 此文章不是专业安装教程，仅为记录搞机日常。 在繁琐的黑苹果过程中，需要摆正心态，善用搜索引擎。降低预期，容忍他的一些小问题。\n主机配置和驱动问题 戴尔灵越5570 CPU:i5 8250U GPU:核显(独显无法驱动) 硬盘: 无线网卡:不可用(其实后面俺换了一个可驱动的无线网卡，隔空投送啥的都能用了，但是俺不想写了) 蓝牙: 可用 有线网卡:需加载驱动\n相信了解黑苹果的朋友都知道硬件的重要性，这里不多赘述\n收集文件 经历了手撸OC的痛，痛定思痛决定直接使用别人的efi github中找到的 stayboogy\u0026rsquo;s efi Mateo1234454545‘s efi 两个efi都使用过，第二个efi基本完美，可以直接使用，仅需要将OC中的CFGLock相关选项设置为true，甚至bios都不需要修改 生命在于折腾，所以我用了第一个，以下内容基于第一个efi(其实是装了n此最后停留在了1中，不想换了才这样滴) 后续需要2中\bACPI，Kexts中文件\n制作安装u盘 镜像下载 需要python环境，使用pyton3 Making the installer in Linux | OpenCore Install Guide 根据efi中的描述，下载对应版本\n分区 win下使用DiskGenius进行分区 Linux下使用gdisk(OC官方推荐)\n镜像的使用和写入 Linux下使用工具dmg2img arch下安装yay -S dmg2img\n如果你的u盘速度堪忧，可能需要多等一会儿\nBIOS设置 STAT控制器相关 为了防止进入安装程序后找不到硬盘，需要将此项改为AHCI\n如果更改后你的Windows无法启动，原因是windows没有安装AHCI驱动。 解决: 将此选项更改为原来的模式，msconfig中启用安全启动并应用 开机前将此选项再次更改为AHCI 进入Windows，查看设备管理器是否更改成功\n安全启动 禁用此项\nCPU虚拟化 禁用此项\n安装后可重新开启，以满足使用虚拟机的需求，但是不太好用\nBIOS中无法更改的内容 解决卡logo和卡进度条无限重启问题 注意，此更改可能会使你的电脑变砖，以下内容仅适合戴尔灵越5570，其他型号主板慎用。且这一步是必须的，修改前请备份BIOS文件。\nDVMV PRE-ALLOCATED set to 64MB: setup_var 0x795 0x2 DVMT TOTAL GFX MEM set to MAX: setup_var 0x796 0x3 CFG Lock set to Disabled: setup_var 0x4ED 0x0 I2CO INTERUPT MODE set to GPIO Interrupt : setup_var 0x272 0x0 以上内容为完美黑苹果做准备，至少需要设置1。 如果你只设置了1，需要在OC配置文件中将CFGLOCK相关选项修改为true。 如果不在OC配置文件中将CFGLOCK相关选项修改为true，则需要配置3 如果修改后仍无法进入安装界面，请全部修改\n修改步骤 修改前请备份BIOS文件 选择/EFI/Boot/BOOTx64.efi启动。 启动后你会看到熟悉的grub setup_var 0x795查看该值并记录下来 setup_var 0x795 0x2将该值更改 重复以上两步，将你需要的内容修改完毕即可重启\n将u盘设置为启动盘 😁 这是最后一步，也是最重要的一步。\n安装macOS 磁盘分区 可在PE或Windows中分出供mac使用的分区，类型随意，只需规定大小 进入mac安装界面使用磁盘工具将上一步分出的分区格式化为APPLE类型即可\n系统安装 随便点点就行\n","keywords":["macos"],"articleBody":"引子 入了手一个古老的笔记本，发现配置可以黑苹果。加上人在隔离，无趣，想起之前手撸OC的悲惨经历，决定重来一次。\n前言 此文章不是专业安装教程，仅为记录搞机日常。 在繁琐的黑苹果过程中，需要摆正心态，善用搜索引擎。降低预期，容忍他的一些小问题。\n主机配置和驱动问题 戴尔灵越5570 CPU:i5 8250U GPU:核显(独显无法驱动) 硬盘: 无线网卡:不可用(其实后面俺换了一个可驱动的无线网卡，隔空投送啥的都能用了，但是俺不想写了) 蓝牙: 可用 有线网卡:需加载驱动\n相信了解黑苹果的朋友都知道硬件的重要性，这里不多赘述\n收集文件 经历了手撸OC的痛，痛定思痛决定直接使用别人的efi github中找到的 stayboogy’s efi Mateo1234454545‘s efi 两个efi都使用过，第二个efi基本完美，可以直接使用，仅需要将OC中的CFGLock相关选项设置为true，甚至bios都不需要修改 生命在于折腾，所以我用了第一个，以下内容基于第一个efi(其实是装了n此最后停留在了1中，不想换了才这样滴) 后续需要2中\bACPI，Kexts中文件\n制作安装u盘 镜像下载 需要python环境，使用pyton3 Making the installer in Linux | OpenCore Install Guide 根据efi中的描述，下载对应版本\n分区 win下使用DiskGenius进行分区 Linux下使用gdisk(OC官方推荐)\n镜像的使用和写入 Linux下使用工具dmg2img arch下安装yay -S dmg2img\n如果你的u盘速度堪忧，可能需要多等一会儿\nBIOS设置 STAT控制器相关 为了防止进入安装程序后找不到硬盘，需要将此项改为AHCI\n如果更改后你的Windows无法启动，原因是windows没有安装AHCI驱动。 解决: 将此选项更改为原来的模式，msconfig中启用安全启动并应用 开机前将此选项再次更改为AHCI 进入Windows，查看设备管理器是否更改成功\n安全启动 禁用此项\nCPU虚拟化 禁用此项\n安装后可重新开启，以满足使用虚拟机的需求，但是不太好用\nBIOS中无法更改的内容 解决卡logo和卡进度条无限重启问题 注意，此更改可能会使你的电脑变砖，以下内容仅适合戴尔灵越5570，其他型号主板慎用。且这一步是必须的，修改前请备份BIOS文件。\nDVMV PRE-ALLOCATED set to 64MB: setup_var 0x795 0x2 DVMT TOTAL GFX MEM set to MAX: setup_var 0x796 0x3 CFG Lock set to Disabled: setup_var 0x4ED 0x0 I2CO INTERUPT MODE set to GPIO Interrupt : setup_var 0x272 0x0 以上内容为完美黑苹果做准备，至少需要设置1。 如果你只设置了1，需要在OC配置文件中将CFGLOCK相关选项修改为true。 如果不在OC配置文件中将CFGLOCK相关选项修改为true，则需要配置3 如果修改后仍无法进入安装界面，请全部修改\n修改步骤 修改前请备份BIOS文件 选择/EFI/Boot/BOOTx64.efi启动。 启动后你会看到熟悉的grub setup_var 0x795查看该值并记录下来 setup_var 0x795 0x2将该值更改 重复以上两步，将你需要的内容修改完毕即可重启\n将u盘设置为启动盘 😁 这是最后一步，也是最重要的一步。\n安装macOS 磁盘分区 可在PE或Windows中分出供mac使用的分区，类型随意，只需规定大小 进入mac安装界面使用磁盘工具将上一步分出的分区格式化为APPLE类型即可\n系统安装 随便点点就行\n这一步是需要网络的，安装时间根据网络环境而定\n引导 将u盘中OC，Boot文件夹复制到WindowsESP分区中的EFI中即可，开机可以检测到windows\n这步结束后，你就获得了一个黑苹果系统，可黑苹果才刚刚开始，你还需要处理驱动等问题\n关于OC编辑器 上面的某些步骤可能涉及到OCconfig的编辑，均需要OC编辑器进行修改，足够硬也可以用眼解析文件 常用的OC编辑器 OCC(版本不一致会损毁OCconfig) OCAT(升级OC方便，不怎么用) ProperTree(官方推荐) OCC的版本选择 更新日志(非官方) 根据日志选择版本，这里我们选择支持OC0.6.1的版本\n遇到的问题 大部分问题都写在具体的步骤中了，剩下的就是一些完美黑苹果的问题了\n亮度无法调节 原因 efi1中\b\\ACPI\\SSDT-PNLF.aml文件缺失 可以使用efi2中的\\ACPI\\SSDT-PNLF-CFL.aml 解决 将.aml 文件复制到\\EFI\\OC\\ACPI文件夹中 打开OC编辑器将其拖入ACPI中 保存OCconfig文件\n笔记本风扇无法转动 原因 SMCSuperIO.kext驱动未加载 解决 将缺少的驱动复制到\\EFI\\OC\\Kexts文件夹中 打开OC编辑器将其拖入Kernel中 调整.kext顺序 保存OCconfig文件\nlinux下.kext文件可能是一个文件夹，请将其当作文件看待 关于.kext的顺序请参照Kexts 微调 - 国光的黑苹果安装教程：手把手教你配置 OpenCore\nCPU温度无法读取 原因 SMCProcessor.kext驱动未加载 解决 同上\ntypec口无法使用 原因 USBInjectAll.kext驱动未加载\n该驱动已经过时，但仍可使用\n参考 国光的黑苹果安装教程 OpenCore Install Guide 黑苹果安装教程OC引导「建议收藏」 腾讯云开发者社区-腾讯云 stayboogy’s efi Mateo1234454545‘s efi cfglock解锁教程 bilibili阿风\n","wordCount":"184","inLanguage":"zh","datePublished":"2024-04-10T00:00:00+08:00","dateModified":"2024-04-10T00:00:00+08:00","author":{"@type":"Person","name":"ziwindlu"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://ziwindlu.github.io/posts/hackintosh-first-try/"},"publisher":{"@type":"Organization","name":"ziwindlu 的博客","logo":{"@type":"ImageObject","url":"https://ziwindlu.github.io/favicon.svg"}}}</script></head><body id=top><header class=header><nav class=header-nav><div class=logo><a href=https://ziwindlu.github.io/ accesskey=h title="ziwindlu 的博客 (Alt + H)">ziwindlu 的博客</a><div class=logo-switches><button id=theme-toggle class=theme-toggle accesskey=t title="(Alt + T)" aria-label="Toggle theme">
+<svg class="moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+<svg class="sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu class=menu><li><a href=https://ziwindlu.github.io/ title=首页><span>首页</span></a></li><li><a href=https://ziwindlu.github.io/posts/ title=文章><span>文章</span></a></li><li><a href=https://ziwindlu.github.io/tags/ title=标签><span>标签</span></a></li><li><a href=https://ziwindlu.github.io/search/ title=搜索><span>搜索</span></a></li><li><a href=https://ziwindlu.github.io/about/ title=关于><span>关于</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><h1 class="post-title entry-hint-parent">hackintosh初体验</h1><div class=post-meta><span title=2024-04-10T00:00:00+08:00>2024-04-10</span>&nbsp;·&nbsp;<span>1 分钟</span>&nbsp;·&nbsp;<span>ziwindlu</span>&nbsp;·&nbsp;<span class=post-source>源笔记：<code>06-Life/hackintosh初体验.md</code></span></div></header><details class=toc><summary accesskey=c title="(Alt + C)"><span class=title>目录</span></summary><div class=inner><ul><li><a href=#%e5%bc%95%e5%ad%90 aria-label=引子>引子</a></li><li><a href=#%e5%89%8d%e8%a8%80 aria-label=前言>前言</a></li><li><a href=#%e4%b8%bb%e6%9c%ba%e9%85%8d%e7%bd%ae%e5%92%8c%e9%a9%b1%e5%8a%a8%e9%97%ae%e9%a2%98 aria-label=主机配置和驱动问题>主机配置和驱动问题</a></li><li><a href=#%e6%94%b6%e9%9b%86%e6%96%87%e4%bb%b6 aria-label=收集文件>收集文件</a></li><li><a href=#%e5%88%b6%e4%bd%9c%e5%ae%89%e8%a3%85u%e7%9b%98 aria-label=制作安装u盘>制作安装u盘</a><ul><li><a href=#%e9%95%9c%e5%83%8f%e4%b8%8b%e8%bd%bd aria-label=镜像下载>镜像下载</a></li><li><a href=#%e5%88%86%e5%8c%ba aria-label=分区>分区</a></li><li><a href=#%e9%95%9c%e5%83%8f%e7%9a%84%e4%bd%bf%e7%94%a8%e5%92%8c%e5%86%99%e5%85%a5 aria-label=镜像的使用和写入>镜像的使用和写入</a></li></ul></li><li><a href=#bios%e8%ae%be%e7%bd%ae aria-label=BIOS设置>BIOS设置</a><ul><li><a href=#stat%e6%8e%a7%e5%88%b6%e5%99%a8%e7%9b%b8%e5%85%b3 aria-label=STAT控制器相关>STAT控制器相关</a></li><li><a href=#%e5%ae%89%e5%85%a8%e5%90%af%e5%8a%a8 aria-label=安全启动>安全启动</a></li><li><a href=#cpu%e8%99%9a%e6%8b%9f%e5%8c%96 aria-label=CPU虚拟化>CPU虚拟化</a></li><li><a href=#bios%e4%b8%ad%e6%97%a0%e6%b3%95%e6%9b%b4%e6%94%b9%e7%9a%84%e5%86%85%e5%ae%b9 aria-label=BIOS中无法更改的内容>BIOS中无法更改的内容</a><ul><li><a href=#%e4%bf%ae%e6%94%b9%e6%ad%a5%e9%aa%a4 aria-label=修改步骤>修改步骤</a></li></ul></li><li><a href=#%e5%b0%86u%e7%9b%98%e8%ae%be%e7%bd%ae%e4%b8%ba%e5%90%af%e5%8a%a8%e7%9b%98- aria-label="将u盘设置为启动盘 😁">将u盘设置为启动盘 😁</a></li></ul></li><li><a href=#%e5%ae%89%e8%a3%85macos aria-label=安装macOS>安装macOS</a><ul><li><a href=#%e7%a3%81%e7%9b%98%e5%88%86%e5%8c%ba aria-label=磁盘分区>磁盘分区</a></li></ul></li><li><a href=#%e7%b3%bb%e7%bb%9f%e5%ae%89%e8%a3%85 aria-label=系统安装>系统安装</a></li><li><a href=#%e5%bc%95%e5%af%bc aria-label=引导>引导</a></li><li><a href=#%e5%85%b3%e4%ba%8eoc%e7%bc%96%e8%be%91%e5%99%a8 aria-label=关于OC编辑器>关于OC编辑器</a></li><li><a href=#%e9%81%87%e5%88%b0%e7%9a%84%e9%97%ae%e9%a2%98 aria-label=遇到的问题>遇到的问题</a><ul><li><a href=#%e4%ba%ae%e5%ba%a6%e6%97%a0%e6%b3%95%e8%b0%83%e8%8a%82 aria-label=亮度无法调节>亮度无法调节</a></li><li><a href=#%e7%ac%94%e8%ae%b0%e6%9c%ac%e9%a3%8e%e6%89%87%e6%97%a0%e6%b3%95%e8%bd%ac%e5%8a%a8 aria-label=笔记本风扇无法转动>笔记本风扇无法转动</a></li><li><a href=#cpu%e6%b8%a9%e5%ba%a6%e6%97%a0%e6%b3%95%e8%af%bb%e5%8f%96 aria-label=CPU温度无法读取>CPU温度无法读取</a></li><li><a href=#typec%e5%8f%a3%e6%97%a0%e6%b3%95%e4%bd%bf%e7%94%a8 aria-label=typec口无法使用>typec口无法使用</a></li></ul></li><li><a href=#%e5%8f%82%e8%80%83 aria-label=参考>参考</a></li></ul></div></details><div class="post-content md-content"><h2 id=引子>引子<a hidden class=anchor aria-hidden=true href=#引子>#</a></h2><p>入了手一个古老的笔记本，发现配置可以黑苹果。加上人在隔离，无趣，想起之前手撸OC的悲惨经历，决定重来一次。</p><h2 id=前言>前言<a hidden class=anchor aria-hidden=true href=#前言>#</a></h2><p>此文章不是专业安装教程，仅为记录搞机日常。
+在繁琐的黑苹果过程中，需要摆正心态，善用搜索引擎。降低预期，容忍他的一些小问题。</p><h2 id=主机配置和驱动问题>主机配置和驱动问题<a hidden class=anchor aria-hidden=true href=#主机配置和驱动问题>#</a></h2><p>戴尔灵越5570
+CPU:i5 8250U
+GPU:核显(独显无法驱动)
+硬盘:
+无线网卡:不可用(其实后面俺换了一个可驱动的无线网卡，隔空投送啥的都能用了，但是俺不想写了)
+蓝牙: 可用
+有线网卡:需加载驱动</p><blockquote><p>相信了解黑苹果的朋友都知道硬件的重要性，这里不多赘述</p></blockquote><h2 id=收集文件>收集文件<a hidden class=anchor aria-hidden=true href=#收集文件>#</a></h2><p>经历了手撸OC的痛，痛定思痛决定直接使用别人的efi
+github中找到的
+<a href=https://github.com/stayboogy/Hackintosh_Dell-Inspiron-5570_Catalina>stayboogy&rsquo;s efi</a>
+<a href=https://github.com/Mateo1234454545/DELL-5570-Hackintosh>Mateo1234454545‘s efi</a>
+两个efi都使用过，第二个efi基本完美，可以直接使用，仅需要将OC中的CFGLock相关选项设置为true，甚至bios都不需要修改
+生命在于折腾，所以我用了第一个，以下内容基于第一个efi(其实是装了n此最后停留在了1中，不想换了才这样滴)
+后续需要2中ACPI，Kexts中文件</p><h2 id=制作安装u盘>制作安装u盘<a hidden class=anchor aria-hidden=true href=#制作安装u盘>#</a></h2><h3 id=镜像下载>镜像下载<a hidden class=anchor aria-hidden=true href=#镜像下载>#</a></h3><p>需要python环境，使用pyton3
+<a href=https://dortania.github.io/OpenCore-Install-Guide/installer-guide/linux-install.html#downloading-macos>Making the installer in Linux | OpenCore Install Guide</a>
+根据efi中的描述，下载对应版本</p><h3 id=分区>分区<a hidden class=anchor aria-hidden=true href=#分区>#</a></h3><p>win下使用<code>DiskGenius</code>进行分区
+Linux下使用<code>gdisk</code>(OC官方推荐)</p><h3 id=镜像的使用和写入>镜像的使用和写入<a hidden class=anchor aria-hidden=true href=#镜像的使用和写入>#</a></h3><p>Linux下使用工具<code>dmg2img</code>
+arch下安装<code>yay -S dmg2img</code></p><blockquote><p>如果你的u盘速度堪忧，可能需要多等一会儿</p></blockquote><h2 id=bios设置>BIOS设置<a hidden class=anchor aria-hidden=true href=#bios设置>#</a></h2><h3 id=stat控制器相关>STAT控制器相关<a hidden class=anchor aria-hidden=true href=#stat控制器相关>#</a></h3><p>为了防止进入安装程序后找不到硬盘，需要将此项改为AHCI</p><blockquote><p>如果更改后你的Windows无法启动，原因是windows没有安装AHCI驱动。
+解决:
+将此选项更改为原来的模式，<code>msconfig</code>中启用安全启动并应用
+开机前将此选项再次更改为AHCI
+进入Windows，查看设备管理器是否更改成功</p></blockquote><h3 id=安全启动>安全启动<a hidden class=anchor aria-hidden=true href=#安全启动>#</a></h3><p>禁用此项</p><h3 id=cpu虚拟化>CPU虚拟化<a hidden class=anchor aria-hidden=true href=#cpu虚拟化>#</a></h3><p>禁用此项</p><blockquote><p>安装后可重新开启，以满足使用虚拟机的需求，但是不太好用</p></blockquote><h3 id=bios中无法更改的内容>BIOS中无法更改的内容<a hidden class=anchor aria-hidden=true href=#bios中无法更改的内容>#</a></h3><p>解决卡logo和卡进度条无限重启问题
+<strong>注意，此更改可能会使你的电脑变砖，以下内容仅适合戴尔灵越5570，其他型号主板慎用。且这一步是必须的，修改前请备份BIOS文件。</strong></p><ol><li>DVMV PRE-ALLOCATED set to 64MB: setup_var 0x795 0x2</li><li>DVMT TOTAL GFX MEM set to MAX: setup_var 0x796 0x3</li><li>CFG Lock set to Disabled: setup_var 0x4ED 0x0</li><li>I2CO INTERUPT MODE set to GPIO Interrupt : setup_var 0x272 0x0
+以上内容为完美黑苹果做准备，至少需要设置1。
+如果你只设置了1，需要在OC配置文件中将CFGLOCK相关选项修改为true。
+如果不在OC配置文件中将CFGLOCK相关选项修改为true，则需要配置3</li></ol><blockquote><p>如果修改后仍无法进入安装界面，请全部修改</p></blockquote><h4 id=修改步骤>修改步骤<a hidden class=anchor aria-hidden=true href=#修改步骤>#</a></h4><p><strong>修改前请备份BIOS文件</strong>
+选择<code>/EFI/Boot/BOOTx64.efi</code>启动。
+启动后你会看到熟悉的grub
+<code>setup_var 0x795</code>查看该值并记录下来
+<code>setup_var 0x795 0x2</code>将该值更改
+重复以上两步，将你需要的内容修改完毕即可重启</p><h3 id=将u盘设置为启动盘->将u盘设置为启动盘 😁<a hidden class=anchor aria-hidden=true href=#将u盘设置为启动盘->#</a></h3><p>这是最后一步，也是最重要的一步。</p><h2 id=安装macos>安装macOS<a hidden class=anchor aria-hidden=true href=#安装macos>#</a></h2><h3 id=磁盘分区>磁盘分区<a hidden class=anchor aria-hidden=true href=#磁盘分区>#</a></h3><p>可在PE或Windows中分出供mac使用的分区，类型随意，只需规定大小
+进入mac安装界面使用磁盘工具将上一步分出的分区格式化为APPLE类型即可</p><h2 id=系统安装>系统安装<a hidden class=anchor aria-hidden=true href=#系统安装>#</a></h2><p>随便点点就行</p><blockquote><p>这一步是需要网络的，安装时间根据网络环境而定</p></blockquote><h2 id=引导>引导<a hidden class=anchor aria-hidden=true href=#引导>#</a></h2><p>将u盘中OC，Boot文件夹复制到WindowsESP分区中的EFI中即可，开机可以检测到windows</p><blockquote><p>这步结束后，你就获得了一个黑苹果系统，可黑苹果才刚刚开始，你还需要处理驱动等问题</p></blockquote><h2 id=关于oc编辑器>关于OC编辑器<a hidden class=anchor aria-hidden=true href=#关于oc编辑器>#</a></h2><p>上面的某些步骤可能涉及到OCconfig的编辑，均需要OC编辑器进行修改，足够硬也可以用眼解析文件
+常用的OC编辑器
+OCC(版本不一致会损毁OCconfig)
+OCAT(升级OC方便，不怎么用)
+ProperTree(官方推荐)
+OCC的版本选择
+<a href=https://macoshome.com/hackintosh/htools/2100.html>更新日志(非官方)</a>
+根据日志选择版本，这里我们选择支持OC0.6.1的版本</p><h2 id=遇到的问题>遇到的问题<a hidden class=anchor aria-hidden=true href=#遇到的问题>#</a></h2><p>大部分问题都写在具体的步骤中了，剩下的就是一些完美黑苹果的问题了</p><h3 id=亮度无法调节>亮度无法调节<a hidden class=anchor aria-hidden=true href=#亮度无法调节>#</a></h3><p><strong>原因</strong>
+efi1中<code>\ACPI\SSDT-PNLF.aml</code>文件缺失
+可以使用efi2中的<code>\ACPI\SSDT-PNLF-CFL.aml</code>
+<strong>解决</strong>
+将<code>.aml</code> 文件复制到<code>\EFI\OC\ACPI</code>文件夹中
+打开OC编辑器将其拖入ACPI中
+保存OCconfig文件</p><h3 id=笔记本风扇无法转动>笔记本风扇无法转动<a hidden class=anchor aria-hidden=true href=#笔记本风扇无法转动>#</a></h3><p><strong>原因</strong>
+<code>SMCSuperIO.kext</code>驱动未加载
+<strong>解决</strong>
+将缺少的驱动复制到<code>\EFI\OC\Kexts</code>文件夹中
+打开OC编辑器将其拖入Kernel中
+调整<code>.kext</code>顺序
+保存OCconfig文件</p><blockquote><p>linux下<code>.kext</code>文件可能是一个文件夹，请将其当作文件看待
+关于<code>.kext</code>的顺序请参照<a href=https://apple.sqlsec.com/3-%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C/3-8/>Kexts 微调 - 国光的黑苹果安装教程：手把手教你配置 OpenCore</a></p></blockquote><h3 id=cpu温度无法读取>CPU温度无法读取<a hidden class=anchor aria-hidden=true href=#cpu温度无法读取>#</a></h3><p><strong>原因</strong>
+<code>SMCProcessor.kext</code>驱动未加载
+<strong>解决</strong>
+同上</p><h3 id=typec口无法使用>typec口无法使用<a hidden class=anchor aria-hidden=true href=#typec口无法使用>#</a></h3><p><strong>原因</strong>
+<code>USBInjectAll.kext</code>驱动未加载</p><blockquote><p>该驱动已经过时，但仍可使用</p></blockquote><h2 id=参考>参考<a hidden class=anchor aria-hidden=true href=#参考>#</a></h2><p><a href=https://apple.sqlsec.com/>国光的黑苹果安装教程</a>
+<a href=https://dortania.github.io/OpenCore-Install-Guide/>OpenCore Install Guide</a>
+<a href=https://cloud.tencent.com/developer/article/2032334>黑苹果安装教程OC引导「建议收藏」 腾讯云开发者社区-腾讯云</a>
+<a href=https://github.com/stayboogy/Hackintosh_Dell-Inspiron-5570_Catalina>stayboogy&rsquo;s efi</a>
+<a href=https://github.com/Mateo1234454545/DELL-5570-Hackintosh>Mateo1234454545‘s efi</a>
+<a href="https://www.bilibili.com/video/BV1gb4y117FK/?spm_id_from=333.788.recommend_more_video.4">cfglock解锁教程 bilibili阿风</a></p></div><footer class=post-footer><ul class=post-tags><li><a href=https://ziwindlu.github.io/tags/macos/>macos</a></li></ul><nav class=paginav><a class=prev href=https://ziwindlu.github.io/posts/centos-install-docker-compose/><span class=title>« 上一页</span>
+<span>centos安装docker以及docker-compose</span>
+</a><a class=next href=https://ziwindlu.github.io/posts/hedgedoc-setup/><span class=title>下一页 »</span>
+<span>hedgedoc搭建</span></a></nav></footer></article></main><footer class=footer><span>&copy; 2026 <a href=https://ziwindlu.github.io/>ziwindlu 的博客</a></span> ·
+<span>Powered by
+<a href="https://gohugo.io/?utm_source=papermod" rel=noopener target=_blank>Hugo</a> &
+<a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top id=top-link class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey=g><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up"><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg>
+</a><script>let menu=document.getElementById("menu");if(menu){const e=localStorage.getItem("menu-scroll-position");e&&(menu.scrollLeft=parseInt(e,10));let t;menu.addEventListener("scroll",function(){clearTimeout(t),t=setTimeout(function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)},150)},{passive:!0})}document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var n=this.getAttribute("href").substr(1);const t=document.querySelector(`[id='${decodeURIComponent(n)}']`);window.matchMedia("(prefers-reduced-motion: reduce)").matches?t.scrollIntoView():t.scrollIntoView({behavior:"smooth"}),t.tabIndex<0&&!t.hasAttribute("tabindex")&&t.setAttribute("tabindex","-1"),t.focus({preventScroll:!0}),n==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${n}`)})})</script><script>var toplink=document.getElementById("top-link"),scrollTicking=!1;window.addEventListener("scroll",function(){if(scrollTicking)return;scrollTicking=!0,requestAnimationFrame(function(){const e=window.innerHeight,t=document.body.scrollTop>e||document.documentElement.scrollTop>e;toplink.classList.toggle("hidden",!t),scrollTicking=!1})},{passive:!0})</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{const e=document.querySelector("html");e.dataset.theme==="dark"?(e.dataset.theme="light",localStorage.setItem("pref-theme","light")):(e.dataset.theme="dark",localStorage.setItem("pref-theme","dark"))})</script><script>document.querySelectorAll("pre > code").forEach(e=>{const n=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="复制";function s(){t.innerHTML="已复制！",setTimeout(()=>{t.innerHTML="复制"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),s();return}const n=document.createRange();n.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(n);try{document.execCommand("copy"),s()}catch{}o.removeRange(n)}),n.classList.contains("highlight")?n.appendChild(t):n.parentNode.firstChild==n||(e.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?e.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(t):e.parentNode.appendChild(t))})</script></body></html>

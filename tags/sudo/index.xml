@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>sudo on ziwindlu 的博客</title><link>https://ziwindlu.github.io/tags/sudo/</link><description>Recent content in sudo on ziwindlu 的博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Wed, 13 Nov 2024 00:00:00 +0800</lastBuildDate><atom:link href="https://ziwindlu.github.io/tags/sudo/index.xml" rel="self" type="application/rss+xml"/><item><title>sudo命令使用sudoer配置文件解析与实例</title><link>https://ziwindlu.github.io/posts/sudo-config/</link><pubDate>Wed, 13 Nov 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/sudo-config/</guid><description>&lt;h2 id="引子"&gt;引子&lt;/h2&gt;
+&lt;p&gt;经常使用sudo命令，但仅限于使用，并没有学习其配置。本文会介绍&lt;code&gt;/etc/sudoer&lt;/code&gt;文件，和一些常用的配置。&lt;/p&gt;
+&lt;h2 id="sudo使用"&gt;sudo使用&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;sudo -ll&lt;/code&gt;查看当前sudo的配置
+&lt;code&gt;sudo -u username cmd&lt;/code&gt;用户使用username的用户权限运行cmd命令，如果没有&lt;code&gt;-u&lt;/code&gt;参数会使用root
+&lt;code&gt;sudo -g groupname cmd&lt;/code&gt;用户使用groupname的用户组权限运行cmd命令&lt;/p&gt;
+&lt;h2 id="visudo使用"&gt;visudo使用&lt;/h2&gt;
+&lt;p&gt;不建议手动修改&lt;code&gt;/etc/sudoers&lt;/code&gt;文件，建议使用visudo，该命令会在退出时检查&lt;code&gt;/etc/sudoers&lt;/code&gt;的有效性
+visudo默认使用vi编辑器，如果需要使用其他编辑器编辑，需先指定EDITOR变量
+&lt;code&gt;EDITOR=nano visudo&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="配置"&gt;配置&lt;/h3&gt;
+&lt;h3 id="较为常用的配置解析"&gt;较为常用的配置解析&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;root &lt;span class="nv"&gt;ALL&lt;/span&gt;&lt;span class="o"&gt;=(&lt;/span&gt;ALL:ALL&lt;span class="o"&gt;)&lt;/span&gt; ALL
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;root:用户名或用户组名，当该值为用户组名时，应在前面添加&lt;code&gt;%&lt;/code&gt;
+第一个ALL：该值意味着允许在所有主机上使用sudo命令，在单机环境下这个值无需在意。如果多个主机共享一个sudoers文件，那么这个值可以替换成，ip或hostname
+等号后面的(ALL:ALL)：第一个ALL为允许用户或用户组以那个用户权限运行，第二个ALL为允许用户或用户组以那个用户组的权限运行
+最后一个ALL：意味可以运行的程序&lt;/p&gt;
+&lt;h3 id="alias"&gt;alias&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Cmnd_Alias &lt;span class="nv"&gt;alias_name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;cmd1,cmd2,cmd3
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;不同的用户可能会有相同的命令配置，使用alias可以简化配置文件&lt;/p&gt;
+&lt;h3 id="加载其他配置文件"&gt;加载其他配置文件&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;@includedir /etc/sudoers.d
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;请注意该文件夹的加载顺序是依靠字母排序的
+建议使用&lt;code&gt;00_filename&lt;/code&gt;此类的文件名&lt;/p&gt;
+&lt;h2 id="常见使用场景"&gt;常见使用场景&lt;/h2&gt;
+&lt;h3 id="允许用户使用sudo时以root权限不输入密码运行一些程序"&gt;允许用户使用sudo时以root权限不输入密码运行一些程序&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code class="language-sudoers" data-lang="sudoers"&gt;Cmnd_Alias NET_CMD=/bin/route,/bin/ip,/usr/bin/ethtool
+Cmnd_Alias VIRT_CMD=/bin/route
+Cmnd_Alias POWER_CMD=/bin/poweroff,/bin/reboot
+username localhost=(root:root) NOPASSWD: NET_CMD,POWER_CMD,VIRT_CMD
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="仅允许用户使用sudo运行某些程序"&gt;仅允许用户使用sudo运行某些程序&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;username &lt;span class="nv"&gt;localhost&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/sbin/halt,/sbin/poweroff,/sbin/reboot,/usr/bin/pacman -Syu
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="参考"&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://wiki.archlinuxcn.org/wiki/Sudo"&gt;sudo archwiki&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

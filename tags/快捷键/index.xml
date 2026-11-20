@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>快捷键 on ziwindlu 的博客</title><link>https://ziwindlu.github.io/tags/%E5%BF%AB%E6%8D%B7%E9%94%AE/</link><description>Recent content in 快捷键 on ziwindlu 的博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Wed, 10 Apr 2024 00:00:00 +0800</lastBuildDate><atom:link href="https://ziwindlu.github.io/tags/%E5%BF%AB%E6%8D%B7%E9%94%AE/index.xml" rel="self" type="application/rss+xml"/><item><title>kitty</title><link>https://ziwindlu.github.io/posts/kitty/</link><pubDate>Wed, 10 Apr 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/kitty/</guid><description>&lt;h2 id="引子"&gt;引子&lt;/h2&gt;
+&lt;p&gt;一直以来都在使用xfce4的终端，偶然发现了tmux，才有了换终端的想法
+经过一系列对比，最后选择了kitty
+为什么选择kitty:
+高度定制化
+gpu渲染
+linux,mac双端使用
+shell集成
+本文记录了一些kitty的配置、快捷键、使用方法、插件。
+下面的快捷键大部分只是将&lt;code&gt;ctrl+shift&lt;/code&gt;替换为了&lt;code&gt;alt&lt;/code&gt;，使用&lt;code&gt;~&lt;/code&gt;来代表相同项
+配置在conf或config代码块中
+功能太多暂时探索这么多&lt;/p&gt;
+&lt;h2 id="快捷键"&gt;快捷键&lt;/h2&gt;
+&lt;h3 id="经常用到的"&gt;经常用到的&lt;/h3&gt;
+&lt;p&gt;复制粘贴&lt;code&gt;c-s-c&lt;/code&gt;,&lt;code&gt;c-s-v&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="屏幕滚动"&gt;屏幕滚动&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;orgin shortcut&lt;/th&gt;
+&lt;th&gt;my shortcut&lt;/th&gt;
+&lt;th&gt;action&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;~&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;mod+up&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;向上一行&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;~&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;mod+down&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;向下一行&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mod+page_up&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;mod+u&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;向上一页&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mod+page_down&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;mod+d&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;向下一页&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mod+home&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;mod+shift+u&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;移动到顶端&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mod+end&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;mod+shift+d&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;移动到结尾&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;~&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;mod+z&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;到上一个命令输入的地方&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;~&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;mod+x&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;到下一个要输入命令的地方&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mod+h&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;mod+shift+h&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;使用less浏览历史(已经使用alias vimhis代替)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;~&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;mod+g&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;使用less浏览上一个命令的输出&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="tab相关"&gt;tab相关&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;shortcut&lt;/th&gt;
+&lt;th&gt;action&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mod-t&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;新建tab&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mod+q&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;关闭tab&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mod-right/left&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;移动tab&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;c-s-,/.&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;将tab往前往后移动&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mod+shift-t&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;命名tab&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mod+0-9&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;跳转到对应的tab&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="window相关"&gt;window相关&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;shortcut&lt;/th&gt;
+&lt;th&gt;action&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mod+enter&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;新建一个窗口&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mod+shift+enter&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;新建一个窗口并复制环境变量&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mod+w&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;关闭窗口&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mod+r&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;调整窗口大小(比较反人类)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mod+[/]&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;窗口间移动(emmm,勉强能用)已经调整为hjkl&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mod+h/l/j/k&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;窗口移动like i3&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mod+n&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;切换布局，kitty默认将所有布局都开启了详情请见&lt;code&gt;kitty layouts&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mod+shift+up/down/left/right&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;调整窗口大小&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mod+s&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;可视化交换窗口&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="自定义配置"&gt;自定义配置&lt;/h3&gt;
+&lt;h4 id="鼠标右键选中命令输出"&gt;鼠标右键选中命令输出&lt;/h4&gt;
+&lt;pre tabindex="0"&gt;&lt;code class="language-conf" data-lang="conf"&gt;mouse_map right press ungrabbed mouse_select_command_output
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="shell集成"&gt;shell集成&lt;/h2&gt;
+&lt;h3 id="打开shell集成"&gt;打开shell集成&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code class="language-conf" data-lang="conf"&gt;shell_integration enabled
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="特性以及用法"&gt;特性以及用法&lt;/h3&gt;
+&lt;p&gt;在pager中打开最后一个命令的输出 &lt;code&gt;mod+g&lt;/code&gt;
+跳转到上一个或下一个命令输入的地方 &lt;code&gt;mod+z,mod+x&lt;/code&gt;
+在pager中打开鼠标停留处的命令输出 &lt;code&gt;ctrl+shift+right_click&lt;/code&gt;
+新窗口复制当前窗口的环境变量 &lt;code&gt;mod+enter&lt;/code&gt;
+在kitty中编辑文件&lt;code&gt;edit-in-kitty&lt;/code&gt;将远程的文件copy到本地使用本地的编辑器进行编辑&lt;/p&gt;
+&lt;h3 id="在子shell或docker中使用shell集成"&gt;在子shell或docker中使用shell集成&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;kitten run-shell
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="插件"&gt;插件&lt;/h2&gt;
+&lt;p&gt;这里仅介绍了一些俺感兴趣的插件，和一些以后可能用到的插件&lt;/p&gt;
+&lt;h3 id="远程编辑"&gt;远程编辑&lt;/h3&gt;
+&lt;p&gt;在本地编辑器编辑远程文件,再也不用给服务器配置&lt;code&gt;.vimrc&lt;/code&gt;辣
+&lt;code&gt;kitten edit-in-kitty file&lt;/code&gt;运行这个命令后kitty会自动下载kitten二进制文件&lt;/p&gt;</description></item><item><title>vim编辑器的使用</title><link>https://ziwindlu.github.io/posts/vim-usage/</link><pubDate>Wed, 10 Apr 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/vim-usage/</guid><description>&lt;h2 id="一张图记住vim快捷键"&gt;一张图记住vim快捷键&lt;/h2&gt;
+&lt;p&gt;&lt;img alt="vi-vim-cheat-sheet-sch1.gif" loading="lazy" src="https://ziwindlu.github.io/images/vi-vim-cheat-sheet-sch1_1739447948530_0.gif"&gt;&lt;/p&gt;
+&lt;h2 id="vim的几种模式"&gt;vim的几种模式&lt;/h2&gt;
+&lt;p&gt;普通模式
+插入模式
+可视模式
+搜索模式
+命令模式
+替换模式
+增强模式&lt;/p&gt;
+&lt;h3 id="普通模式"&gt;普通模式&lt;/h3&gt;
+&lt;p&gt;此模式中你可以进行跳转、修改文本内容等操作，当然最重要的的还是在此模式下进入其他模式XD
+在任何模式下按&lt;code&gt;&amp;lt;ESC&amp;gt;&amp;lt;ESC&amp;gt;&lt;/code&gt;即可进入普通模式
+在此模式下可以进入其他模式
+&lt;code&gt;i&lt;/code&gt;,&lt;code&gt;INSERT&lt;/code&gt;进入插入模式
+&lt;code&gt;v&lt;/code&gt;,&lt;code&gt;&amp;lt;S-V&amp;gt;&lt;/code&gt;,&lt;code&gt;&amp;lt;C-V&amp;gt;&lt;/code&gt;可分别进入可视模式，可视行模式，可视块模式
+&lt;code&gt;/&lt;/code&gt;,&lt;code&gt;?&lt;/code&gt;进入搜索模式
+&lt;code&gt;:&lt;/code&gt;进入命令模式
+&lt;code&gt;R&lt;/code&gt;进入替换模式
+&lt;code&gt;Q&lt;/code&gt;进入增强模式&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;/&lt;/code&gt;和&lt;code&gt;?&lt;/code&gt;均为搜索，前者为向后搜索，后者为向前搜索。搜索后，&lt;code&gt;n&lt;/code&gt;向下一个搜索结果跳转，&lt;code&gt;N&lt;/code&gt;向前一个搜索结果跳转&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id="插入模式"&gt;插入模式&lt;/h3&gt;
+&lt;p&gt;此模式下可以插入文本内容&lt;/p&gt;
+&lt;h3 id="可视模式"&gt;可视模式&lt;/h3&gt;
+&lt;p&gt;此模式下可以对文本进行范围修改&lt;/p&gt;
+&lt;h3 id="命令模式"&gt;命令模式&lt;/h3&gt;
+&lt;p&gt;此模式可以执行各种命令，&lt;code&gt;:!command&lt;/code&gt;可执行外部命令
+&lt;strong&gt;一些简单命令的介绍&lt;/strong&gt;
+&lt;code&gt;wirte fileName&lt;/code&gt;将文件保存为fileName，如果没有fileName，则仅保存。可简写为&lt;code&gt;w fileName&lt;/code&gt;
+&lt;code&gt;quit&lt;/code&gt; 退出vim，&lt;code&gt;quit!&lt;/code&gt;为强制退出，即不保存退出。可简写为&lt;code&gt;q&lt;/code&gt;
+&lt;code&gt;edit fileName&lt;/code&gt; 编辑fileName的文件。
+&lt;code&gt;help&lt;/code&gt; 获取帮助，可简写为&lt;code&gt;h&lt;/code&gt;
+&lt;code&gt;.&lt;/code&gt; 重复上一次操作
+&lt;code&gt;[range]s/old/new/[option]&lt;/code&gt;将old替换为new
+&lt;code&gt;[range]&lt;/code&gt;为范围，&lt;code&gt;x,y&lt;/code&gt;代表从第x行到第y行
+特别的：&lt;code&gt;.&lt;/code&gt;为当前行
+&lt;code&gt;[option]&lt;/code&gt;为选项，&lt;code&gt;/g&lt;/code&gt;表示全部替换；&lt;code&gt;/c&lt;/code&gt;表示需要确认；&lt;code&gt;/p&lt;/code&gt;表示替换结果逐行显示
+如要组合使用，应这样写&lt;code&gt;/cgp&lt;/code&gt;，并非这样&lt;code&gt;/g/c&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="替换模式"&gt;替换模式&lt;/h3&gt;
+&lt;p&gt;插入模式下按&lt;code&gt;INSERT&lt;/code&gt;可进入替换模式
+此模式下可将已输入的内容替换为将要输入的内容&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;example:
+将&lt;em&gt;wrod&lt;/em&gt;改为&lt;em&gt;word&lt;/em&gt;
+仅需将光标跳到&lt;em&gt;wrod&lt;/em&gt;上,进入&lt;strong&gt;替换模式&lt;/strong&gt;来重新打一遍&lt;em&gt;word&lt;/em&gt;即可&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="在vim中移动"&gt;在vim中移动&lt;/h2&gt;
+&lt;h3 id="常规移动"&gt;常规移动&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;j&lt;/code&gt;;&lt;code&gt;k&lt;/code&gt;;&lt;code&gt;h&lt;/code&gt;;&lt;code&gt;l&lt;/code&gt;或&lt;code&gt;&amp;lt;UP&amp;gt;&lt;/code&gt;;&lt;code&gt;&amp;lt;DOWN&amp;gt;&lt;/code&gt;;&lt;code&gt;&amp;lt;LEFT&amp;gt;&lt;/code&gt;;&lt;code&gt;&amp;lt;RIGHT&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="滚屏"&gt;滚屏&lt;/h3&gt;
+&lt;p&gt;单行
+&lt;code&gt;&amp;lt;C-E&amp;gt;&lt;/code&gt; &lt;code&gt;&amp;lt;C-Y&amp;gt;&lt;/code&gt;
+半屏
+&lt;code&gt;&amp;lt;C-U&amp;gt;&lt;/code&gt; &lt;code&gt;&amp;lt;C-D&amp;gt;&lt;/code&gt;
+整屏
+&lt;code&gt;&amp;lt;C-F&amp;gt;&lt;/code&gt; &lt;code&gt;&amp;lt;C-B&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="单词间"&gt;单词间&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;w&lt;/code&gt;跳到下一个单词的后
+&lt;code&gt;e&lt;/code&gt;调到单词最后一个字母
+&lt;code&gt;b&lt;/code&gt;前一个单词的首字母&lt;/p&gt;
+&lt;h3 id="行中"&gt;行中&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;0&lt;/code&gt;行首
+&lt;code&gt;$&lt;/code&gt;行尾
+&lt;code&gt;f{char}&lt;/code&gt;快速跳转到当前光标到下一个&lt;code&gt;char&lt;/code&gt;出现的光标
+&lt;code&gt;F{char}&lt;/code&gt;快速跳转到当前光标到前一个&lt;code&gt;char&lt;/code&gt;出现的光标&lt;/p&gt;
+&lt;h3 id="段落间"&gt;段落间&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;}&lt;/code&gt;跳转到下一个空行，即下一段喽
+&lt;code&gt;{&lt;/code&gt;跳转到上一个空行&lt;/p&gt;
+&lt;h3 id="文件中"&gt;文件中&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;]]&lt;/code&gt;;&lt;code&gt;G&lt;/code&gt;跳到文件底部
+&lt;code&gt;[[&lt;/code&gt;;&lt;code&gt;gg&lt;/code&gt;跳到文件顶部
+&lt;code&gt;m{a-zA-Z}&lt;/code&gt;把当前光标位置设置标记
+&lt;code&gt;'{a-zA-Z}&lt;/code&gt;跳到标记处
+&lt;code&gt;''&lt;/code&gt;;``跳到跳转前的位置
+&lt;strong&gt;相关命令:&lt;/strong&gt;
+&lt;code&gt;:marks&lt;/code&gt; 查看已设置的标记
+&lt;code&gt;:delmarks &amp;lt;marks&amp;gt;&lt;/code&gt; 删除&lt;code&gt;marks&lt;/code&gt;标记
+&lt;code&gt;:delmarks!&lt;/code&gt; 删除所有标记&lt;/p&gt;
+&lt;h2 id="在vim中进行改动"&gt;在vim中进行改动&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;:read &amp;lt;file&amp;gt;&lt;/code&gt; 插入文件，将文件内容插入到光标所在位置
+example:
+将外部命令的返回值插入到所编辑文件中
+:read !ls
+&lt;code&gt;I&lt;/code&gt;跳到当前行的最前面并进入插入模式
+&lt;code&gt;a&lt;/code&gt;在当前光标后进入插入模式
+&lt;code&gt;A&lt;/code&gt;跳到当前行的最后面并进入插入模式
+&lt;code&gt;x&lt;/code&gt;删除光标所在字符
+&lt;code&gt;d[move]&lt;/code&gt;删除(delate)
+example:
+dd #删除当前行
+d5w #删除后5个单词
+&lt;code&gt;c[move]&lt;/code&gt;修改(change)
+example:
+&lt;code&gt;cc&lt;/code&gt;删除当前行所有内容并进入插入模式
+&lt;code&gt;c$&lt;/code&gt;删除当前行所在光标后所有内容并进入插入模式
+&lt;code&gt;r&lt;/code&gt;将当前光标内容替换为将要输入的内容&lt;/p&gt;
+&lt;h2 id="打造属于你自己的vim配置vimrc"&gt;打造属于你自己的vim，配置vimrc&lt;/h2&gt;
+&lt;p&gt;每个人的vim都是独一无二的，动手打造属于你自己的vim吧&lt;/p&gt;
+&lt;h2 id="vim插件推荐"&gt;vim插件推荐&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;文件管理&lt;/strong&gt;
+preservim/NERDTree
+&lt;strong&gt;vim主题&lt;/strong&gt;
+tomasr/molokai
+&lt;strong&gt;代码注释&lt;/strong&gt;
+scrooloose/nerdcommenter
+&lt;strong&gt;代码查错&lt;/strong&gt;
+w0rp/ale
+&lt;strong&gt;自动括号&lt;/strong&gt;
+jiangmiao/auto-pairs
+&lt;strong&gt;surround插件&lt;/strong&gt;
+tpope/vim-surround
+&lt;strong&gt;回车选中块&lt;/strong&gt;
+gcmt/wildfire.vim
+&lt;strong&gt;vim中文文档&lt;/strong&gt;
+yianwillis/vimcdoc
+&lt;strong&gt;代码补全&lt;/strong&gt;
+neoclide/coc.nvim
+&lt;strong&gt;markdown-preview&lt;/strong&gt;
+iamcco/markdown-preview.vim
+&lt;strong&gt;markdown画表插件&lt;/strong&gt;
+dhruvasagar/vim-table-mode
+&lt;strong&gt;markdown列表插件&lt;/strong&gt;
+dkarter/bullets.vim&lt;/p&gt;</description></item></channel></rss>

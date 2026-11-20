@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>blog on ziwindlu 的博客</title><link>https://ziwindlu.github.io/tags/blog/</link><description>Recent content in blog on ziwindlu 的博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Fri, 16 Aug 2024 00:00:00 +0800</lastBuildDate><atom:link href="https://ziwindlu.github.io/tags/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>vim保存录制宏</title><link>https://ziwindlu.github.io/posts/vim-save-macro/</link><pubDate>Fri, 16 Aug 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/vim-save-macro/</guid><description>&lt;h2 id="引子"&gt;引子&lt;/h2&gt;
+&lt;p&gt;在使用vim处理文本时会录制很多宏，有时候这些宏可以重复使用，俺决定将这些宏录制并保存下来，方便下次调用&lt;/p&gt;
+&lt;h2 id="正文"&gt;正文&lt;/h2&gt;
+&lt;h3 id="保存录制宏"&gt;保存录制宏&lt;/h3&gt;
+&lt;p&gt;使用vim的内置函数将寄存器保存下来&lt;code&gt;:call writefile([@x],'file')&lt;/code&gt;
+&lt;code&gt;@x&lt;/code&gt;为寄存器名字，&lt;code&gt;file&lt;/code&gt;为你要保存到的位置
+这样只是简单的将寄存器内容保存下来了。&lt;/p&gt;
+&lt;h3 id="使用保存的宏"&gt;使用保存的宏&lt;/h3&gt;
+&lt;p&gt;编辑上一步保存的文件&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-vim" data-lang="vim"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;let&lt;/span&gt; @&lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;content&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;content&lt;/code&gt;为寄存器内容
+然后加载该文件即可。就可以使用&lt;code&gt;@a&lt;/code&gt;调用啦&lt;/p&gt;
+&lt;h3 id="更方便的方法"&gt;更方便的方法&lt;/h3&gt;
+&lt;p&gt;上面的方法存在一些问题，每次都得去修改宏文件内容。于是俺写了个这&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-vim" data-lang="vim"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;&amp;#34; 将寄存器内容保存下来&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;function&lt;/span&gt;&lt;span class="p"&gt;!&lt;/span&gt; &lt;span class="nx"&gt;SaveRegisterToFile&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;&amp;#34; 获取用户输入的寄存器名和文件名&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;reg&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;input&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;Enter the register name: &amp;#34;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;&amp;#34; 如果reg为空则退出&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nx"&gt;reg&lt;/span&gt; &lt;span class="p"&gt;==&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;||&lt;/span&gt; &lt;span class="nx"&gt;empty&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;getreg&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;reg&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Register is empty&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;return&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;endif&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;file&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;input&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;Enter the output file name(default: ~/.vim/script/default.vim): &amp;#34;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nx"&gt;file&lt;/span&gt; &lt;span class="p"&gt;==&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;file&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;~/.vim/script/default.vim&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;endif&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;content&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;let @%s = &amp;#39;%s&amp;#39;&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;reg&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;getreg&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;reg&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;call&lt;/span&gt; &lt;span class="nx"&gt;writefile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;[&lt;span class="nx"&gt;content&lt;/span&gt;]&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;expand&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;file&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;a&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;&amp;#34; 提示用户操作成功&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Register content saved to &amp;#34;&lt;/span&gt; . &lt;span class="nx"&gt;file&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;endfunction&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用&lt;code&gt;SaveRegisterToFile&lt;/code&gt;即可进行交互式保存寄存器，提供了一个默认文件用于保存，并且添加了&lt;code&gt;let @x = 'xxx'&lt;/code&gt;方便直接加载。
+这里并没有对输入的文件做校验。&lt;/p&gt;</description></item></channel></rss>

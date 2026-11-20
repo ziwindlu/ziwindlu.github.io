@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>basic on ziwindlu 的博客</title><link>https://ziwindlu.github.io/tags/basic/</link><description>Recent content in basic on ziwindlu 的博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Wed, 10 Apr 2024 00:00:00 +0800</lastBuildDate><atom:link href="https://ziwindlu.github.io/tags/basic/index.xml" rel="self" type="application/rss+xml"/><item><title>使用nginx做简单服务器认证</title><link>https://ziwindlu.github.io/posts/nginx-basic-auth/</link><pubDate>Wed, 10 Apr 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/nginx-basic-auth/</guid><description>&lt;h2 id="引子"&gt;引子&lt;/h2&gt;
+&lt;p&gt;学习过程中需要用到基本认证的站点进行测试，这里选择自己搭建一个&lt;/p&gt;
+&lt;h2 id="配置nginx"&gt;配置nginx&lt;/h2&gt;
+&lt;p&gt;配置认证账号密码&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;user:&amp;#34;&lt;/span&gt; &amp;gt; /opt/www/auth
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;openssl passwd -apr1 &amp;gt;&amp;gt; /opt/www/auth
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;nginx配置文件中找一个server块&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code class="language-conf" data-lang="conf"&gt;location /myauth {
+auth_basic &amp;#34;need auth&amp;#34;;
+auth_basic_user_file /opt/www/auth;
+alias /opt/www/html;
+index index.html;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;重启nginx访问对应路径即可看到要求认证的窗口啦&lt;/p&gt;</description></item></channel></rss>

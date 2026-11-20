@@ -1,0 +1,167 @@
+<!doctype html><html lang=zh dir=auto data-theme=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>grub的使用及使用场景 | ziwindlu 的博客</title><meta name=keywords content="grub"><meta name=description content="安装软件
+一般来说，grub或grub2会存在于你的系统，如果没有，自行搜索
+以arch为例
+sudo pacman -S grub efibootmgr
+安装到硬盘中
+MBR
+grub-install /dev/sda
+
+这里的sda指硬盘名，而非分区名
+MBR的第一个扇区为引导扇区，所以这里的操作只是把相关代码写到第一个扇区而已
+
+GPT
+grub-install --target=x86_64-efi --efi-directory=yourEFI --bootloader-id=grub
+
+yourEFI为你当前系统中挂载的efi分区的位置
+
+更新引导
+grub-mkconfig -o /grub/grub.cfg
+
+关于windows：某些发行版可能不识别ntfs分区，需要自行安装软件，方可识别出windows
+
+题外话
+windows安装时会把所选的efi清空，丝毫不顾及其他系统
+grub主题
+grub不一定是黑乎乎的，也是有主题的
+通用安装步骤
+找主题
+下载
+根据readme安装
+重新生成grub.cfg
+找主题的渠道
+github
+GRUB Themes Gnome-look.org
+主题推荐
+dedsec
+minegrub
+minegrub自定义Mincraft上的字符串
+修改/path/to/minegrub/assets/splashes.txt这个文件
+运行/path/to/minegrub/splashes.txt这个文件
+你就会发现/path/to/minegrub/log.png发生了变化
+场景:新系统装grub
+一般而言，周到的发行版会在安装操作系统时自动进行grub安装，一般不需要用户操作
+
+判断自己硬盘是什么类型(mbr or gpt)
+安装软件
+根据硬盘的类型选择上面两种装法
+更新一下引导
+重启
+
+场景:grub无了被银币windows顶掉了
+在确定是grub被顶掉的情况下按照以下步骤
+
+找到当初装linux的u盘或光盘，插入～
+进入发行版提供的体验模式或救援模式
+挂载装linux的分区
+chroot进入挂载的分区
+重复场景1
+
+
+进不到grub还有一种可能是直接选择的win启动
+
+场景:多系统引导项不全
+
+更新引导
+重启
+缺少windows:
+排查是否为系统无法识别ntfs
+黑苹果
+1.使用oc引导linux，较新版本的oc已经支持linux引导了
+2.grub套娃oc进行引导，需要手动编辑grub.cfg
+
+场景:grub g了，进入grub rescue模式 🥵
+不要慌，小问题
+windows安装时会把所选的efi清空
+grub rescue命令
+set查看/设置变量
+ls列出分区
+insmod
+grub rescue变量
+root根目录
+prefixgrub.cfg所在的路径
+修复
+
+查看那一个分区是linux系统的分区(使用ls进行查看,ls (hdx,xxx)可以显示分区类型）
+设置变量,root=(hdx,xxx),prefix=(hdx,xxx)/boot/grub
+insmod normal
+normal
+进入系统
+重复场景2
+
+其他命令
+update-grub(一些发行版方便用户使用推出的脚本)
+踩坑
+没事别去PE用DG去分区辣，进系统grub会崩的，老老实实用fdisk吧，图形化工具推荐gparted
+参考
+自定义GRUB主题zhihu
+GRUB (简体中文) ArchWiki
+如何使用 GRUB Rescue 修复 Linux"><meta name=author content="ziwindlu"><link rel=canonical href=https://ziwindlu.github.io/posts/grub-usage/><link crossorigin=anonymous href=/assets/css/stylesheet.95ae6e9689bd0037456375629f411acbf8ed76e0e9a7599900ad281f9526dee6.css integrity="sha256-la5ulom9ADdFY3Vin0Eay/jtduDpp1mZAK0oH5Um3uY=" rel="preload stylesheet" as=style><link rel=icon href=https://ziwindlu.github.io/favicon.svg><link rel=icon type=image/png sizes=16x16 href=https://ziwindlu.github.io/favicon.svg><link rel=icon type=image/png sizes=32x32 href=https://ziwindlu.github.io/favicon.svg><link rel=apple-touch-icon href=https://ziwindlu.github.io/favicon.svg><link rel=mask-icon href=https://ziwindlu.github.io/favicon.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=zh href=https://ziwindlu.github.io/posts/grub-usage/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51);color-scheme:dark}.list{background:var(--theme)}.toc{background:var(--entry)}}</style></noscript><script>localStorage.getItem("pref-theme")==="dark"?document.querySelector("html").dataset.theme="dark":localStorage.getItem("pref-theme")==="light"?document.querySelector("html").dataset.theme="light":window.matchMedia("(prefers-color-scheme: dark)").matches?document.querySelector("html").dataset.theme="dark":document.querySelector("html").dataset.theme="light"</script><meta property="og:url" content="https://ziwindlu.github.io/posts/grub-usage/"><meta property="og:site_name" content="ziwindlu 的博客"><meta property="og:title" content="grub的使用及使用场景"><meta property="og:description" content="安装软件 一般来说，grub或grub2会存在于你的系统，如果没有，自行搜索 以arch为例
+sudo pacman -S grub efibootmgr 安装到硬盘中 MBR grub-install /dev/sda 这里的sda指硬盘名，而非分区名 MBR的第一个扇区为引导扇区，所以这里的操作只是把相关代码写到第一个扇区而已
+GPT grub-install --target=x86_64-efi --efi-directory=yourEFI --bootloader-id=grub yourEFI为你当前系统中挂载的efi分区的位置
+更新引导 grub-mkconfig -o /grub/grub.cfg 关于windows：某些发行版可能不识别ntfs分区，需要自行安装软件，方可识别出windows
+题外话 windows安装时会把所选的efi清空，丝毫不顾及其他系统
+grub主题 grub不一定是黑乎乎的，也是有主题的
+通用安装步骤 找主题 下载 根据readme安装 重新生成grub.cfg
+找主题的渠道 github GRUB Themes Gnome-look.org
+主题推荐 dedsec minegrub minegrub自定义Mincraft上的字符串 修改/path/to/minegrub/assets/splashes.txt这个文件 运行/path/to/minegrub/splashes.txt这个文件 你就会发现/path/to/minegrub/log.png发生了变化
+场景:新系统装grub 一般而言，周到的发行版会在安装操作系统时自动进行grub安装，一般不需要用户操作
+判断自己硬盘是什么类型(mbr or gpt) 安装软件 根据硬盘的类型选择上面两种装法 更新一下引导 重启 场景:grub无了被银币windows顶掉了 在确定是grub被顶掉的情况下按照以下步骤
+找到当初装linux的u盘或光盘，插入～ 进入发行版提供的体验模式或救援模式 挂载装linux的分区 chroot进入挂载的分区 重复场景1 进不到grub还有一种可能是直接选择的win启动
+场景:多系统引导项不全 更新引导 重启 缺少windows: 排查是否为系统无法识别ntfs 黑苹果 1.使用oc引导linux，较新版本的oc已经支持linux引导了 2.grub套娃oc进行引导，需要手动编辑grub.cfg 场景:grub g了，进入grub rescue模式 🥵 不要慌，小问题 windows安装时会把所选的efi清空
+grub rescue命令 set查看/设置变量 ls列出分区 insmod
+grub rescue变量 root根目录 prefixgrub.cfg所在的路径
+修复 查看那一个分区是linux系统的分区(使用ls进行查看,ls (hdx,xxx)可以显示分区类型） 设置变量,root=(hdx,xxx),prefix=(hdx,xxx)/boot/grub insmod normal normal 进入系统 重复场景2 其他命令 update-grub(一些发行版方便用户使用推出的脚本)
+踩坑 没事别去PE用DG去分区辣，进系统grub会崩的，老老实实用fdisk吧，图形化工具推荐gparted
+参考 自定义GRUB主题zhihu GRUB (简体中文) ArchWiki 如何使用 GRUB Rescue 修复 Linux"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2024-04-23T00:00:00+08:00"><meta property="article:modified_time" content="2024-04-23T00:00:00+08:00"><meta property="article:tag" content="grub"><meta name=twitter:card content="summary"><meta name=twitter:title content="grub的使用及使用场景"><meta name=twitter:description content="安装软件 一般来说，grub或grub2会存在于你的系统，如果没有，自行搜索 以arch为例
+sudo pacman -S grub efibootmgr 安装到硬盘中 MBR grub-install /dev/sda 这里的sda指硬盘名，而非分区名 MBR的第一个扇区为引导扇区，所以这里的操作只是把相关代码写到第一个扇区而已
+GPT grub-install --target=x86_64-efi --efi-directory=yourEFI --bootloader-id=grub yourEFI为你当前系统中挂载的efi分区的位置
+更新引导 grub-mkconfig -o /grub/grub.cfg 关于windows：某些发行版可能不识别ntfs分区，需要自行安装软件，方可识别出windows
+题外话 windows安装时会把所选的efi清空，丝毫不顾及其他系统
+grub主题 grub不一定是黑乎乎的，也是有主题的
+通用安装步骤 找主题 下载 根据readme安装 重新生成grub.cfg
+找主题的渠道 github GRUB Themes Gnome-look.org
+主题推荐 dedsec minegrub minegrub自定义Mincraft上的字符串 修改/path/to/minegrub/assets/splashes.txt这个文件 运行/path/to/minegrub/splashes.txt这个文件 你就会发现/path/to/minegrub/log.png发生了变化
+场景:新系统装grub 一般而言，周到的发行版会在安装操作系统时自动进行grub安装，一般不需要用户操作
+判断自己硬盘是什么类型(mbr or gpt) 安装软件 根据硬盘的类型选择上面两种装法 更新一下引导 重启 场景:grub无了被银币windows顶掉了 在确定是grub被顶掉的情况下按照以下步骤
+找到当初装linux的u盘或光盘，插入～ 进入发行版提供的体验模式或救援模式 挂载装linux的分区 chroot进入挂载的分区 重复场景1 进不到grub还有一种可能是直接选择的win启动
+场景:多系统引导项不全 更新引导 重启 缺少windows: 排查是否为系统无法识别ntfs 黑苹果 1.使用oc引导linux，较新版本的oc已经支持linux引导了 2.grub套娃oc进行引导，需要手动编辑grub.cfg 场景:grub g了，进入grub rescue模式 🥵 不要慌，小问题 windows安装时会把所选的efi清空
+grub rescue命令 set查看/设置变量 ls列出分区 insmod
+grub rescue变量 root根目录 prefixgrub.cfg所在的路径
+修复 查看那一个分区是linux系统的分区(使用ls进行查看,ls (hdx,xxx)可以显示分区类型） 设置变量,root=(hdx,xxx),prefix=(hdx,xxx)/boot/grub insmod normal normal 进入系统 重复场景2 其他命令 update-grub(一些发行版方便用户使用推出的脚本)
+踩坑 没事别去PE用DG去分区辣，进系统grub会崩的，老老实实用fdisk吧，图形化工具推荐gparted
+参考 自定义GRUB主题zhihu GRUB (简体中文) ArchWiki 如何使用 GRUB Rescue 修复 Linux"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"文章","item":"https://ziwindlu.github.io/posts/"},{"@type":"ListItem","position":2,"name":"grub的使用及使用场景","item":"https://ziwindlu.github.io/posts/grub-usage/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"grub的使用及使用场景","name":"grub的使用及使用场景","description":"安装软件 一般来说，grub或grub2会存在于你的系统，如果没有，自行搜索 以arch为例\nsudo pacman -S grub efibootmgr 安装到硬盘中 MBR grub-install /dev/sda 这里的sda指硬盘名，而非分区名 MBR的第一个扇区为引导扇区，所以这里的操作只是把相关代码写到第一个扇区而已\nGPT grub-install --target=x86_64-efi --efi-directory=yourEFI --bootloader-id=grub yourEFI为你当前系统中挂载的efi分区的位置\n更新引导 grub-mkconfig -o /grub/grub.cfg 关于windows：某些发行版可能不识别ntfs分区，需要自行安装软件，方可识别出windows\n题外话 windows安装时会把所选的efi清空，丝毫不顾及其他系统\ngrub主题 grub不一定是黑乎乎的，也是有主题的\n通用安装步骤 找主题 下载 根据readme安装 重新生成grub.cfg\n找主题的渠道 github GRUB Themes Gnome-look.org\n主题推荐 dedsec minegrub minegrub自定义Mincraft上的字符串 修改/path/to/minegrub/assets/splashes.txt这个文件 运行/path/to/minegrub/splashes.txt这个文件 你就会发现/path/to/minegrub/log.png发生了变化\n场景:新系统装grub 一般而言，周到的发行版会在安装操作系统时自动进行grub安装，一般不需要用户操作\n判断自己硬盘是什么类型(mbr or gpt) 安装软件 根据硬盘的类型选择上面两种装法 更新一下引导 重启 场景:grub无了被银币windows顶掉了 在确定是grub被顶掉的情况下按照以下步骤\n找到当初装linux的u盘或光盘，插入～ 进入发行版提供的体验模式或救援模式 挂载装linux的分区 chroot进入挂载的分区 重复场景1 进不到grub还有一种可能是直接选择的win启动\n场景:多系统引导项不全 更新引导 重启 缺少windows: 排查是否为系统无法识别ntfs 黑苹果 1.使用oc引导linux，较新版本的oc已经支持linux引导了 2.grub套娃oc进行引导，需要手动编辑grub.cfg 场景:grub g了，进入grub rescue模式 🥵 不要慌，小问题 windows安装时会把所选的efi清空\ngrub rescue命令 set查看/设置变量 ls列出分区 insmod\ngrub rescue变量 root根目录 prefixgrub.cfg所在的路径\n修复 查看那一个分区是linux系统的分区(使用ls进行查看,ls (hdx,xxx)可以显示分区类型） 设置变量,root=(hdx,xxx),prefix=(hdx,xxx)/boot/grub insmod normal normal 进入系统 重复场景2 其他命令 update-grub(一些发行版方便用户使用推出的脚本)\n踩坑 没事别去PE用DG去分区辣，进系统grub会崩的，老老实实用fdisk吧，图形化工具推荐gparted\n参考 自定义GRUB主题zhihu GRUB (简体中文) ArchWiki 如何使用 GRUB Rescue 修复 Linux\n","keywords":["grub"],"articleBody":"安装软件 一般来说，grub或grub2会存在于你的系统，如果没有，自行搜索 以arch为例\nsudo pacman -S grub efibootmgr 安装到硬盘中 MBR grub-install /dev/sda 这里的sda指硬盘名，而非分区名 MBR的第一个扇区为引导扇区，所以这里的操作只是把相关代码写到第一个扇区而已\nGPT grub-install --target=x86_64-efi --efi-directory=yourEFI --bootloader-id=grub yourEFI为你当前系统中挂载的efi分区的位置\n更新引导 grub-mkconfig -o /grub/grub.cfg 关于windows：某些发行版可能不识别ntfs分区，需要自行安装软件，方可识别出windows\n题外话 windows安装时会把所选的efi清空，丝毫不顾及其他系统\ngrub主题 grub不一定是黑乎乎的，也是有主题的\n通用安装步骤 找主题 下载 根据readme安装 重新生成grub.cfg\n找主题的渠道 github GRUB Themes Gnome-look.org\n主题推荐 dedsec minegrub minegrub自定义Mincraft上的字符串 修改/path/to/minegrub/assets/splashes.txt这个文件 运行/path/to/minegrub/splashes.txt这个文件 你就会发现/path/to/minegrub/log.png发生了变化\n场景:新系统装grub 一般而言，周到的发行版会在安装操作系统时自动进行grub安装，一般不需要用户操作\n判断自己硬盘是什么类型(mbr or gpt) 安装软件 根据硬盘的类型选择上面两种装法 更新一下引导 重启 场景:grub无了被银币windows顶掉了 在确定是grub被顶掉的情况下按照以下步骤\n找到当初装linux的u盘或光盘，插入～ 进入发行版提供的体验模式或救援模式 挂载装linux的分区 chroot进入挂载的分区 重复场景1 进不到grub还有一种可能是直接选择的win启动\n场景:多系统引导项不全 更新引导 重启 缺少windows: 排查是否为系统无法识别ntfs 黑苹果 1.使用oc引导linux，较新版本的oc已经支持linux引导了 2.grub套娃oc进行引导，需要手动编辑grub.cfg 场景:grub g了，进入grub rescue模式 🥵 不要慌，小问题 windows安装时会把所选的efi清空\ngrub rescue命令 set查看/设置变量 ls列出分区 insmod\ngrub rescue变量 root根目录 prefixgrub.cfg所在的路径\n修复 查看那一个分区是linux系统的分区(使用ls进行查看,ls (hdx,xxx)可以显示分区类型） 设置变量,root=(hdx,xxx),prefix=(hdx,xxx)/boot/grub insmod normal normal 进入系统 重复场景2 其他命令 update-grub(一些发行版方便用户使用推出的脚本)\n踩坑 没事别去PE用DG去分区辣，进系统grub会崩的，老老实实用fdisk吧，图形化工具推荐gparted\n参考 自定义GRUB主题zhihu GRUB (简体中文) ArchWiki 如何使用 GRUB Rescue 修复 Linux\n","wordCount":"109","inLanguage":"zh","datePublished":"2024-04-23T00:00:00+08:00","dateModified":"2024-04-23T00:00:00+08:00","author":{"@type":"Person","name":"ziwindlu"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://ziwindlu.github.io/posts/grub-usage/"},"publisher":{"@type":"Organization","name":"ziwindlu 的博客","logo":{"@type":"ImageObject","url":"https://ziwindlu.github.io/favicon.svg"}}}</script></head><body id=top><header class=header><nav class=header-nav><div class=logo><a href=https://ziwindlu.github.io/ accesskey=h title="ziwindlu 的博客 (Alt + H)">ziwindlu 的博客</a><div class=logo-switches><button id=theme-toggle class=theme-toggle accesskey=t title="(Alt + T)" aria-label="Toggle theme">
+<svg class="moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+<svg class="sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu class=menu><li><a href=https://ziwindlu.github.io/ title=首页><span>首页</span></a></li><li><a href=https://ziwindlu.github.io/posts/ title=文章><span>文章</span></a></li><li><a href=https://ziwindlu.github.io/tags/ title=标签><span>标签</span></a></li><li><a href=https://ziwindlu.github.io/search/ title=搜索><span>搜索</span></a></li><li><a href=https://ziwindlu.github.io/about/ title=关于><span>关于</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><h1 class="post-title entry-hint-parent">grub的使用及使用场景</h1><div class=post-meta><span title=2024-04-23T00:00:00+08:00>2024-04-23</span>&nbsp;·&nbsp;<span>1 分钟</span>&nbsp;·&nbsp;<span>ziwindlu</span>&nbsp;·&nbsp;<span class=post-source>源笔记：<code>02-Knowledge/Linux/grub的使用及使用场景.md</code></span></div></header><details class=toc><summary accesskey=c title="(Alt + C)"><span class=title>目录</span></summary><div class=inner><ul><li><a href=#%e5%ae%89%e8%a3%85%e8%bd%af%e4%bb%b6 aria-label=安装软件>安装软件</a></li><li><a href=#%e5%ae%89%e8%a3%85%e5%88%b0%e7%a1%ac%e7%9b%98%e4%b8%ad aria-label=安装到硬盘中>安装到硬盘中</a><ul><li><a href=#mbr aria-label=MBR>MBR</a></li><li><a href=#gpt aria-label=GPT>GPT</a></li></ul></li><li><a href=#%e6%9b%b4%e6%96%b0%e5%bc%95%e5%af%bc aria-label=更新引导>更新引导</a></li><li><a href=#%e9%a2%98%e5%a4%96%e8%af%9d aria-label=题外话>题外话</a></li><li><a href=#grub%e4%b8%bb%e9%a2%98 aria-label=grub主题>grub主题</a><ul><li><a href=#%e9%80%9a%e7%94%a8%e5%ae%89%e8%a3%85%e6%ad%a5%e9%aa%a4 aria-label=通用安装步骤>通用安装步骤</a></li><li><a href=#%e6%89%be%e4%b8%bb%e9%a2%98%e7%9a%84%e6%b8%a0%e9%81%93 aria-label=找主题的渠道>找主题的渠道</a></li><li><a href=#%e4%b8%bb%e9%a2%98%e6%8e%a8%e8%8d%90 aria-label=主题推荐>主题推荐</a></li></ul></li><li><a href=#%e5%9c%ba%e6%99%af%e6%96%b0%e7%b3%bb%e7%bb%9f%e8%a3%85grub aria-label=场景:新系统装grub>场景:新系统装grub</a></li><li><a href=#%e5%9c%ba%e6%99%afgrub%e6%97%a0%e4%ba%86%e8%a2%ab%e9%93%b6%e5%b8%81windows%e9%a1%b6%e6%8e%89%e4%ba%86 aria-label=场景:grub无了被银币windows顶掉了>场景:grub无了被银币windows顶掉了</a></li><li><a href=#%e5%9c%ba%e6%99%af%e5%a4%9a%e7%b3%bb%e7%bb%9f%e5%bc%95%e5%af%bc%e9%a1%b9%e4%b8%8d%e5%85%a8 aria-label=场景:多系统引导项不全>场景:多系统引导项不全</a></li><li><a href=#%e5%9c%ba%e6%99%afgrub-g%e4%ba%86%e8%bf%9b%e5%85%a5grub-rescue%e6%a8%a1%e5%bc%8f- aria-label="场景:grub g了，进入grub rescue模式 🥵">场景:grub g了，进入grub rescue模式 🥵</a><ul><li><a href=#grub-rescue%e5%91%bd%e4%bb%a4 aria-label="grub rescue命令">grub rescue命令</a></li><li><a href=#grub-rescue%e5%8f%98%e9%87%8f aria-label="grub rescue变量">grub rescue变量</a></li><li><a href=#%e4%bf%ae%e5%a4%8d aria-label=修复>修复</a></li></ul></li><li><a href=#%e5%85%b6%e4%bb%96%e5%91%bd%e4%bb%a4 aria-label=其他命令>其他命令</a></li><li><a href=#%e8%b8%a9%e5%9d%91 aria-label=踩坑>踩坑</a></li><li><a href=#%e5%8f%82%e8%80%83 aria-label=参考>参考</a></li></ul></div></details><div class="post-content md-content"><h2 id=安装软件>安装软件<a hidden class=anchor aria-hidden=true href=#安装软件>#</a></h2><p>一般来说，<code>grub</code>或<code>grub2</code>会存在于你的系统，如果没有，自行搜索
+以arch为例</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo pacman -S grub efibootmgr
+</span></span></code></pre></div><h2 id=安装到硬盘中>安装到硬盘中<a hidden class=anchor aria-hidden=true href=#安装到硬盘中>#</a></h2><h3 id=mbr>MBR<a hidden class=anchor aria-hidden=true href=#mbr>#</a></h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>grub-install /dev/sda
+</span></span></code></pre></div><blockquote><p>这里的sda指硬盘名，而非分区名
+MBR的第一个扇区为引导扇区，所以这里的操作只是把相关代码写到第一个扇区而已</p></blockquote><h3 id=gpt>GPT<a hidden class=anchor aria-hidden=true href=#gpt>#</a></h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>grub-install --target<span class=o>=</span>x86_64-efi --efi-directory<span class=o>=</span>yourEFI --bootloader-id<span class=o>=</span>grub
+</span></span></code></pre></div><blockquote><p>yourEFI为你当前系统中挂载的efi分区的位置</p></blockquote><h2 id=更新引导>更新引导<a hidden class=anchor aria-hidden=true href=#更新引导>#</a></h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>grub-mkconfig -o /grub/grub.cfg
+</span></span></code></pre></div><blockquote><p>关于windows：某些发行版可能不识别ntfs分区，需要自行安装软件，方可识别出windows</p></blockquote><h2 id=题外话>题外话<a hidden class=anchor aria-hidden=true href=#题外话>#</a></h2><p>windows安装时会把所选的efi清空，丝毫不顾及其他系统</p><h2 id=grub主题>grub主题<a hidden class=anchor aria-hidden=true href=#grub主题>#</a></h2><p>grub不一定是黑乎乎的，也是有主题的</p><h3 id=通用安装步骤>通用安装步骤<a hidden class=anchor aria-hidden=true href=#通用安装步骤>#</a></h3><p>找主题
+下载
+根据readme安装
+重新生成grub.cfg</p><h3 id=找主题的渠道>找主题的渠道<a hidden class=anchor aria-hidden=true href=#找主题的渠道>#</a></h3><p>github
+<a href="https://www.gnome-look.org/browse?cat=109&amp;ord=latest">GRUB Themes Gnome-look.org</a></p><h3 id=主题推荐>主题推荐<a hidden class=anchor aria-hidden=true href=#主题推荐>#</a></h3><p><a href=https://github.com/VandalByte/dedsec-grub2-theme>dedsec</a>
+<a href=https://github.com/Lxtharia/minegrub-theme.git>minegrub</a>
+minegrub自定义Mincraft上的字符串
+修改<code>/path/to/minegrub/assets/splashes.txt</code>这个文件
+运行<code>/path/to/minegrub/splashes.txt</code>这个文件
+你就会发现<code>/path/to/minegrub/log.png</code>发生了变化</p><h2 id=场景新系统装grub>场景:新系统装grub<a hidden class=anchor aria-hidden=true href=#场景新系统装grub>#</a></h2><p>一般而言，周到的发行版会在安装操作系统时自动进行grub安装，一般不需要用户操作</p><ol><li>判断自己硬盘是什么类型(mbr or gpt)</li><li>安装软件</li><li>根据硬盘的类型选择上面两种装法</li><li>更新一下引导</li><li>重启</li></ol><h2 id=场景grub无了被银币windows顶掉了>场景:grub无了被银币windows顶掉了<a hidden class=anchor aria-hidden=true href=#场景grub无了被银币windows顶掉了>#</a></h2><p>在确定是grub被顶掉的情况下按照以下步骤</p><ol><li>找到当初装linux的u盘或光盘，插入～</li><li>进入发行版提供的体验模式或救援模式</li><li>挂载装linux的分区</li><li>chroot进入挂载的分区</li><li>重复场景1</li></ol><blockquote><p>进不到grub还有一种可能是直接选择的win启动</p></blockquote><h2 id=场景多系统引导项不全>场景:多系统引导项不全<a hidden class=anchor aria-hidden=true href=#场景多系统引导项不全>#</a></h2><ol><li>更新引导</li><li>重启
+缺少windows:
+排查是否为系统无法识别ntfs
+黑苹果
+1.使用oc引导linux，较新版本的oc已经支持linux引导了
+2.grub套娃oc进行引导，需要手动编辑grub.cfg</li></ol><h2 id=场景grub-g了进入grub-rescue模式->场景:grub g了，进入grub rescue模式 🥵<a hidden class=anchor aria-hidden=true href=#场景grub-g了进入grub-rescue模式->#</a></h2><p>不要慌，小问题
+windows安装时会把所选的efi清空</p><h3 id=grub-rescue命令>grub rescue命令<a hidden class=anchor aria-hidden=true href=#grub-rescue命令>#</a></h3><p>set查看/设置变量
+ls列出分区
+insmod</p><h3 id=grub-rescue变量>grub rescue变量<a hidden class=anchor aria-hidden=true href=#grub-rescue变量>#</a></h3><p>root根目录
+prefix<code>grub.cfg</code>所在的路径</p><h3 id=修复>修复<a hidden class=anchor aria-hidden=true href=#修复>#</a></h3><ol><li>查看那一个分区是linux系统的分区(使用ls进行查看,<code>ls (hdx,xxx)</code>可以显示分区类型）</li><li>设置变量,<code>root=(hdx,xxx)</code>,<code>prefix=(hdx,xxx)/boot/grub</code></li><li><code>insmod normal</code></li><li><code>normal</code></li><li>进入系统</li><li>重复场景2</li></ol><h2 id=其他命令>其他命令<a hidden class=anchor aria-hidden=true href=#其他命令>#</a></h2><p><code>update-grub</code>(一些发行版方便用户使用推出的脚本)</p><h2 id=踩坑>踩坑<a hidden class=anchor aria-hidden=true href=#踩坑>#</a></h2><p>没事别去PE用DG去分区辣，进系统grub会崩的，老老实实用fdisk吧，图形化工具推荐gparted</p><h2 id=参考>参考<a hidden class=anchor aria-hidden=true href=#参考>#</a></h2><p><a href=https://zhuanlan.zhihu.com/p/103866090>自定义GRUB主题zhihu</a>
+<a href=https://wiki.archlinux.org/title/GRUB_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#UEFI_%E7%B3%BB%E7%BB%9F>GRUB (简体中文) ArchWiki</a>
+<a href="https://cn.linux-console.net/?p=8018">如何使用 GRUB Rescue 修复 Linux</a></p></div><footer class=post-footer><ul class=post-tags><li><a href=https://ziwindlu.github.io/tags/grub/>grub</a></li></ul><nav class=paginav><a class=prev href=https://ziwindlu.github.io/posts/docker-compose-upgrade-mysql/><span class=title>« 上一页</span>
+<span>dockercompose升级mysql并保留数据</span>
+</a><a class=next href=https://ziwindlu.github.io/posts/linux-vm-disk-expand/><span class=title>下一页 »</span>
+<span>记录一次linux虚拟机硬盘空间不足扩展硬盘内含docker文件迁移</span></a></nav></footer></article></main><footer class=footer><span>&copy; 2026 <a href=https://ziwindlu.github.io/>ziwindlu 的博客</a></span> ·
+<span>Powered by
+<a href="https://gohugo.io/?utm_source=papermod" rel=noopener target=_blank>Hugo</a> &
+<a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top id=top-link class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey=g><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up"><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg>
+</a><script>let menu=document.getElementById("menu");if(menu){const e=localStorage.getItem("menu-scroll-position");e&&(menu.scrollLeft=parseInt(e,10));let t;menu.addEventListener("scroll",function(){clearTimeout(t),t=setTimeout(function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)},150)},{passive:!0})}document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var n=this.getAttribute("href").substr(1);const t=document.querySelector(`[id='${decodeURIComponent(n)}']`);window.matchMedia("(prefers-reduced-motion: reduce)").matches?t.scrollIntoView():t.scrollIntoView({behavior:"smooth"}),t.tabIndex<0&&!t.hasAttribute("tabindex")&&t.setAttribute("tabindex","-1"),t.focus({preventScroll:!0}),n==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${n}`)})})</script><script>var toplink=document.getElementById("top-link"),scrollTicking=!1;window.addEventListener("scroll",function(){if(scrollTicking)return;scrollTicking=!0,requestAnimationFrame(function(){const e=window.innerHeight,t=document.body.scrollTop>e||document.documentElement.scrollTop>e;toplink.classList.toggle("hidden",!t),scrollTicking=!1})},{passive:!0})</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{const e=document.querySelector("html");e.dataset.theme==="dark"?(e.dataset.theme="light",localStorage.setItem("pref-theme","light")):(e.dataset.theme="dark",localStorage.setItem("pref-theme","dark"))})</script><script>document.querySelectorAll("pre > code").forEach(e=>{const n=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="复制";function s(){t.innerHTML="已复制！",setTimeout(()=>{t.innerHTML="复制"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),s();return}const n=document.createRange();n.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(n);try{document.execCommand("copy"),s()}catch{}o.removeRange(n)}),n.classList.contains("highlight")?n.appendChild(t):n.parentNode.firstChild==n||(e.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?e.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(t):e.parentNode.appendChild(t))})</script></body></html>

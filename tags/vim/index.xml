@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Vim on ziwindlu 的博客</title><link>https://ziwindlu.github.io/tags/vim/</link><description>Recent content in Vim on ziwindlu 的博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Fri, 16 Aug 2024 00:00:00 +0800</lastBuildDate><atom:link href="https://ziwindlu.github.io/tags/vim/index.xml" rel="self" type="application/rss+xml"/><item><title>vim保存录制宏</title><link>https://ziwindlu.github.io/posts/vim-save-macro/</link><pubDate>Fri, 16 Aug 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/vim-save-macro/</guid><description>&lt;h2 id="引子"&gt;引子&lt;/h2&gt;
+&lt;p&gt;在使用vim处理文本时会录制很多宏，有时候这些宏可以重复使用，俺决定将这些宏录制并保存下来，方便下次调用&lt;/p&gt;
+&lt;h2 id="正文"&gt;正文&lt;/h2&gt;
+&lt;h3 id="保存录制宏"&gt;保存录制宏&lt;/h3&gt;
+&lt;p&gt;使用vim的内置函数将寄存器保存下来&lt;code&gt;:call writefile([@x],'file')&lt;/code&gt;
+&lt;code&gt;@x&lt;/code&gt;为寄存器名字，&lt;code&gt;file&lt;/code&gt;为你要保存到的位置
+这样只是简单的将寄存器内容保存下来了。&lt;/p&gt;
+&lt;h3 id="使用保存的宏"&gt;使用保存的宏&lt;/h3&gt;
+&lt;p&gt;编辑上一步保存的文件&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-vim" data-lang="vim"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;let&lt;/span&gt; @&lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;content&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;content&lt;/code&gt;为寄存器内容
+然后加载该文件即可。就可以使用&lt;code&gt;@a&lt;/code&gt;调用啦&lt;/p&gt;
+&lt;h3 id="更方便的方法"&gt;更方便的方法&lt;/h3&gt;
+&lt;p&gt;上面的方法存在一些问题，每次都得去修改宏文件内容。于是俺写了个这&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-vim" data-lang="vim"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;&amp;#34; 将寄存器内容保存下来&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;function&lt;/span&gt;&lt;span class="p"&gt;!&lt;/span&gt; &lt;span class="nx"&gt;SaveRegisterToFile&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;&amp;#34; 获取用户输入的寄存器名和文件名&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;reg&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;input&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;Enter the register name: &amp;#34;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;&amp;#34; 如果reg为空则退出&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nx"&gt;reg&lt;/span&gt; &lt;span class="p"&gt;==&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;||&lt;/span&gt; &lt;span class="nx"&gt;empty&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;getreg&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;reg&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Register is empty&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;return&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;endif&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;file&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;input&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;Enter the output file name(default: ~/.vim/script/default.vim): &amp;#34;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nx"&gt;file&lt;/span&gt; &lt;span class="p"&gt;==&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;file&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;~/.vim/script/default.vim&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;endif&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;content&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;let @%s = &amp;#39;%s&amp;#39;&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;reg&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;getreg&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;reg&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;call&lt;/span&gt; &lt;span class="nx"&gt;writefile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;[&lt;span class="nx"&gt;content&lt;/span&gt;]&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;expand&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;file&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;a&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;&amp;#34; 提示用户操作成功&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Register content saved to &amp;#34;&lt;/span&gt; . &lt;span class="nx"&gt;file&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;endfunction&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用&lt;code&gt;SaveRegisterToFile&lt;/code&gt;即可进行交互式保存寄存器，提供了一个默认文件用于保存，并且添加了&lt;code&gt;let @x = 'xxx'&lt;/code&gt;方便直接加载。
+这里并没有对输入的文件做校验。&lt;/p&gt;</description></item><item><title>vim小技巧</title><link>https://ziwindlu.github.io/posts/vim-tips/</link><pubDate>Wed, 24 Apr 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/vim-tips/</guid><description>&lt;h2 id="折叠"&gt;折叠&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;h folding&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="折叠级别"&gt;折叠级别&lt;/h3&gt;
+&lt;p&gt;折叠级别可以理解为折叠深度&lt;/p&gt;
+&lt;h3 id="折叠方式"&gt;折叠方式&lt;/h3&gt;
+&lt;p&gt;manual 手工定义折叠
+indent 用缩进表示折叠
+expr 用表达式来定义折叠
+syntax 用语法高亮来定义折叠
+diff 对没有更改的文本进行折叠
+marker 用标志折叠&lt;/p&gt;
+&lt;h3 id="如何用"&gt;如何用&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;keymap&lt;/th&gt;
+&lt;th&gt;means&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;zA&lt;/td&gt;
+&lt;td&gt;递归打开/关闭一个折叠&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;za&lt;/td&gt;
+&lt;td&gt;打开/关闭一个折叠&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;zC&lt;/td&gt;
+&lt;td&gt;递归关闭折叠&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;zO&lt;/td&gt;
+&lt;td&gt;递归打开折叠&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;zF&lt;/td&gt;
+&lt;td&gt;建立折叠(NzF)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;zf&lt;/td&gt;
+&lt;td&gt;建立折叠(zf{motion})&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;zD&lt;/td&gt;
+&lt;td&gt;递归删除折叠&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;zR&lt;/td&gt;
+&lt;td&gt;设置折叠等级为最大&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;zr&lt;/td&gt;
+&lt;td&gt;增加折叠等级&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;zM&lt;/td&gt;
+&lt;td&gt;设置折叠等级为最小&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;zN&lt;/td&gt;
+&lt;td&gt;恢复预设折叠等级&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;blockquote&gt;
+&lt;p&gt;其中zc,zd,zo,zm未写出，对比zA和zR相信你应该也明白其中的意思啦&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id="配置"&gt;配置&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-vim" data-lang="vim"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="nx"&gt;foldenable&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="nx"&gt;foldmethod&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="nx"&gt;marker&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="nx"&gt;foldcolumn&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="vim在两个窗口中对两个缓冲区中进行比较"&gt;vim在两个窗口中对两个缓冲区中进行比较&lt;/h2&gt;
+&lt;p&gt;在两个窗口中打开两个缓冲区(同一vim进程)
+开启比较&lt;code&gt;:windo diffthis&lt;/code&gt;
+关闭比较&lt;code&gt;:diffoff&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="buffer"&gt;buffer&lt;/h2&gt;
+&lt;p&gt;新建一个buffer水平分屏,&lt;code&gt;:new&lt;/code&gt;
+新建一个buffer垂直分屏,&lt;code&gt;:vnew&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="vim中跳转"&gt;vim中跳转&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;ctrl-o&lt;/code&gt; 向前跳转
+&lt;code&gt;ctrl-i&lt;/code&gt; 向后跳转&lt;/p&gt;</description></item><item><title>vim插件插件推荐</title><link>https://ziwindlu.github.io/posts/vim-plugins/</link><pubDate>Tue, 16 Apr 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/vim-plugins/</guid><description>&lt;h2 id="引子"&gt;引子&lt;/h2&gt;
+&lt;p&gt;积累了很多vim插件，记录一下，部分重量级的插件俺会单独写一篇文章，vim,nvim通用&lt;/p&gt;
+&lt;h2 id="编辑相关"&gt;编辑相关&lt;/h2&gt;
+&lt;h3 id="auto-pairs"&gt;auto-pairs&lt;/h3&gt;
+&lt;p&gt;智能括号，括号补全
+&lt;a href="https://github.com/jiangmiao/auto-pairs"&gt;GitHub jiangmiao/auto-pairs: Vim plugin, insert or delete brackets, parens, quotes in pair&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id="安装"&gt;安装&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-vimrc" data-lang="vimrc"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;Plug&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;jiangmiao/auto-pairs&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id="使用"&gt;使用&lt;/h4&gt;
+&lt;p&gt;直接用&lt;/p&gt;
+&lt;h3 id="vim-surround"&gt;vim-surround&lt;/h3&gt;
+&lt;p&gt;包裹插件
+&lt;a href="https://github.com/tpope/vim-surround"&gt;GitHub tpope/vim-surround: surround.vim: Delete/change/add parentheses/quotes/XML-tags/much more with ease&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id="安装-1"&gt;安装&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-vimrc" data-lang="vimrc"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;Plug&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;tpope/vim-surround&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id="使用-1"&gt;使用&lt;/h4&gt;
+&lt;p&gt;支持&lt;code&gt;ys[move]&lt;/code&gt;这种操作
+&lt;img alt="Peek 2024-04-11 17-11.gif" loading="lazy" src="https://ziwindlu.github.io/images/Peek_2024-04-11_17-11_1712826790615_0.gif"&gt;&lt;/p&gt;
+&lt;h4 id="配置"&gt;配置&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-vimrc" data-lang="vimrc"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;&amp;#34; 不使用插件定义的任何快捷键从而使用自己定义的&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;g&lt;/span&gt;:&lt;span class="nx"&gt;surround_no_mappings&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;&amp;#34; delete surround&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;nmap&lt;/span&gt; &lt;span class="nx"&gt;ds&lt;/span&gt; &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;Plug&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;&lt;span class="nx"&gt;Dsurround&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;&amp;#34; change surround&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;nmap&lt;/span&gt; &lt;span class="nx"&gt;cs&lt;/span&gt; &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;Plug&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;&lt;span class="nx"&gt;Csurround&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;nmap&lt;/span&gt; &lt;span class="nx"&gt;cS&lt;/span&gt; &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;Plug&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;&lt;span class="nx"&gt;CSurround&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;nmap&lt;/span&gt; &lt;span class="nx"&gt;ys&lt;/span&gt; &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;Plug&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;&lt;span class="nx"&gt;Ysurround&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;nmap&lt;/span&gt; &lt;span class="nx"&gt;yS&lt;/span&gt; &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;Plug&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;&lt;span class="nx"&gt;YSurround&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;nmap&lt;/span&gt; &lt;span class="nx"&gt;yss&lt;/span&gt; &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;Plug&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;&lt;span class="nx"&gt;Yssurround&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;nmap&lt;/span&gt; &lt;span class="nx"&gt;ySs&lt;/span&gt; &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;Plug&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;&lt;span class="nx"&gt;YSsurround&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;&amp;#34; 提高容错&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;nmap&lt;/span&gt; &lt;span class="nx"&gt;ySS&lt;/span&gt; &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;Plug&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;&lt;span class="nx"&gt;YSsurround&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;xmap&lt;/span&gt; &lt;span class="nx"&gt;S&lt;/span&gt; &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;Plug&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;&lt;span class="nx"&gt;VSurround&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;&amp;#34; 并按需要进行修改&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;&amp;#34;Dsurround 删除包裹符号&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;&amp;#34;Csurround 改变包裹符号&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;&amp;#34;Ysurround 用符号包裹起来字符&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;&amp;#34;Yssurround 用符号包裹起来一行&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;&amp;#34;其中S大写时表示包裹符号单独占一行&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="vim-repeat"&gt;vim-repeat&lt;/h3&gt;
+&lt;p&gt;重复插件
+在vim中&lt;code&gt;.&lt;/code&gt;操作并不能重复某些插件的操作，使用了这个插件就可以啦
+&lt;a href="https://github.com/tpope/vim-repeat"&gt;GitHub tpope/vim-repeat: repeat.vim: enable repeating supported plugin maps with &amp;quot;.&amp;quot;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id="安装-2"&gt;安装&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-vimrc" data-lang="vimrc"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;Plug&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;tpope/vim-repeat&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id="使用-2"&gt;使用&lt;/h4&gt;
+&lt;p&gt;就是&lt;code&gt;.&lt;/code&gt;进行重复
+支持
+&lt;a href="https://github.com/tpope/vim-surround"&gt;surround.vim&lt;/a&gt;
+&lt;a href="https://github.com/tpope/vim-speeddating"&gt;speeddating.vim&lt;/a&gt;
+&lt;a href="https://github.com/tpope/vim-unimpaired"&gt;unimpaired.vim&lt;/a&gt;
+&lt;a href="https://github.com/svermeulen/vim-easyclip"&gt;vim-easyclip&lt;/a&gt;
+&lt;a href="https://github.com/glts/vim-radical"&gt;vim-radical&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id="配置-1"&gt;配置&lt;/h4&gt;
+&lt;p&gt;可以自定义重复插件的操作，但是俺没看&lt;/p&gt;
+&lt;h3 id="wildfire"&gt;wildfire&lt;/h3&gt;
+&lt;p&gt;快速选中块，配合surround非常爽
+&lt;a href="https://github.com/gcmt/wildfire.vim"&gt;GitHub gcmt/wildfire.vim: Smart selection of the closest text object&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id="安装-3"&gt;安装&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-vimrc" data-lang="vimrc"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;Plug&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;gcmt/wildfire.vim&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id="使用-3"&gt;使用&lt;/h4&gt;
+&lt;p&gt;默认快捷键是回车&lt;/p&gt;
+&lt;h4 id="配置-2"&gt;配置&lt;/h4&gt;
+&lt;p&gt;有一些其他的高级配置，暂时用不到&lt;/p&gt;
+&lt;h3 id="vim-visual-multi"&gt;vim-visual-multi&lt;/h3&gt;
+&lt;p&gt;多光标，快速重构一些小东西
+&lt;a href="https://github.com/mg979/vim-visual-multi"&gt;GitHub mg979/vim-visual-multi: Multiple cursors plugin for vim/neovim&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id="安装-4"&gt;安装&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-vimrc" data-lang="vimrc"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;Plug&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;mg979/vim-visual-multi&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id="使用-4"&gt;使用&lt;/h4&gt;
+&lt;p&gt;选择多光标
+&lt;code&gt;ctrl+n&lt;/code&gt;
+光标间移动
+&lt;code&gt;[/]&lt;/code&gt;
+取消当前光标并移动
+&lt;code&gt;q/Q&lt;/code&gt;
+&lt;img alt="Peek 2024-04-12 10-55.gif" loading="lazy" src="https://ziwindlu.github.io/images/Peek_2024-04-12_10-55_1712890583593_0.gif"&gt;&lt;/p&gt;</description></item><item><title>vimiumC-浏览器利器</title><link>https://ziwindlu.github.io/posts/vimiumc/</link><pubDate>Wed, 10 Apr 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/vimiumc/</guid><description>&lt;h2 id="引子"&gt;引子&lt;/h2&gt;
+&lt;p&gt;浏览网页时我那蹩脚的鼠标操作，令人窒息。找到了这个浏览器插件，让俺丢掉鼠标(bushi)，拥抱键盘
+俺仍然记忆了一些常用的浏览器快捷键(firefox)，一方面防止在没插件的电脑上使用变呆瓜，另一方面插件无法支持浏览器系统页面，比如设置之类的，防止摸瞎。&lt;/p&gt;
+&lt;h2 id="移动"&gt;移动&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;vimiumc快捷键&lt;/th&gt;
+&lt;th&gt;浏览器快捷键&lt;/th&gt;
+&lt;th&gt;含义&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;u&lt;/td&gt;
+&lt;td&gt;page up&lt;/td&gt;
+&lt;td&gt;向上滚半屏&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;d&lt;/td&gt;
+&lt;td&gt;page down&lt;/td&gt;
+&lt;td&gt;向下滚半屏&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;k&lt;/td&gt;
+&lt;td&gt;up&lt;/td&gt;
+&lt;td&gt;向上滚动&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;j&lt;/td&gt;
+&lt;td&gt;down&lt;/td&gt;
+&lt;td&gt;向下滚动&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;gg&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;滚动到最顶部&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;G&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;滚动到最底部&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;h&lt;/td&gt;
+&lt;td&gt;left&lt;/td&gt;
+&lt;td&gt;向左滚动&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;l&lt;/td&gt;
+&lt;td&gt;right&lt;/td&gt;
+&lt;td&gt;向右滚动&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;zH&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;滚动到最左边&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;zL&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;滚动到最右边&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="tab操作"&gt;tab操作&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;vimiumc快捷键&lt;/th&gt;
+&lt;th&gt;浏览器快捷键&lt;/th&gt;
+&lt;th&gt;含义&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;t&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;c-t&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;新建tab&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;x&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;c-w&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;关闭tab&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;X&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;c-s-t&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;恢复tab&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;T&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;在tab中导航&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;K&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;c-tab&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;跳转到下一个tab&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;J&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;c-s-tab&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;跳转到前一个tab&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="页面内搜索"&gt;页面内搜索&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;vimiumc快捷键&lt;/th&gt;
+&lt;th&gt;浏览器快捷键&lt;/th&gt;
+&lt;th&gt;含义&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;/&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;c-f&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;搜索&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;可视模式与光标模式下&lt;code&gt;f&lt;/code&gt;,&lt;code&gt;?&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;正相反向搜索&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;n&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;下一个搜索结果&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;N&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;上一个搜索结果&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="使用正则匹配"&gt;使用正则匹配&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;/abc.e\r&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="按钮和链接的点击"&gt;按钮和链接的点击&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;vimiumc快捷键&lt;/th&gt;
+&lt;th&gt;浏览器快捷键&lt;/th&gt;
+&lt;th&gt;含义&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;f&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;点击链接或按钮&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;F&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;新建tab点击链接或按钮&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;a-f&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;新建tab连续点击链接或按钮&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="向前向后"&gt;向前向后&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;vimiumc快捷键&lt;/th&gt;
+&lt;th&gt;浏览器快捷键&lt;/th&gt;
+&lt;th&gt;含义&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;H&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;a-left&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;向前&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;L&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;a-right&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;向后&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="搜索框"&gt;搜索框&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;vimiumc快捷键&lt;/th&gt;
+&lt;th&gt;浏览器快捷键&lt;/th&gt;
+&lt;th&gt;含义&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;o&lt;/code&gt;,&lt;code&gt;O&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;通用的搜索框&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;b&lt;/code&gt;,&lt;code&gt;B&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;书签栏中搜索&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;ge&lt;/code&gt;,&lt;code&gt;gE&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;编辑当前的url&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="通过文件夹查找书签"&gt;通过文件夹查找书签&lt;/h3&gt;
+&lt;p&gt;使用搜索框时搜索&lt;code&gt;/folder/ xxx&lt;/code&gt;会仅搜索&lt;code&gt;folder&lt;/code&gt;下的书签&lt;/p&gt;
+&lt;h3 id="查找时过滤掉某些关键词的结果防止小秘密被发现"&gt;查找时过滤掉某些关键词的结果，防止小秘密被发现&lt;/h3&gt;
+&lt;p&gt;设置里在这儿
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1739521057188_0.png"&gt;&lt;/p&gt;</description></item><item><title>vim编辑器的使用</title><link>https://ziwindlu.github.io/posts/vim-usage/</link><pubDate>Wed, 10 Apr 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/vim-usage/</guid><description>&lt;h2 id="一张图记住vim快捷键"&gt;一张图记住vim快捷键&lt;/h2&gt;
+&lt;p&gt;&lt;img alt="vi-vim-cheat-sheet-sch1.gif" loading="lazy" src="https://ziwindlu.github.io/images/vi-vim-cheat-sheet-sch1_1739447948530_0.gif"&gt;&lt;/p&gt;
+&lt;h2 id="vim的几种模式"&gt;vim的几种模式&lt;/h2&gt;
+&lt;p&gt;普通模式
+插入模式
+可视模式
+搜索模式
+命令模式
+替换模式
+增强模式&lt;/p&gt;
+&lt;h3 id="普通模式"&gt;普通模式&lt;/h3&gt;
+&lt;p&gt;此模式中你可以进行跳转、修改文本内容等操作，当然最重要的的还是在此模式下进入其他模式XD
+在任何模式下按&lt;code&gt;&amp;lt;ESC&amp;gt;&amp;lt;ESC&amp;gt;&lt;/code&gt;即可进入普通模式
+在此模式下可以进入其他模式
+&lt;code&gt;i&lt;/code&gt;,&lt;code&gt;INSERT&lt;/code&gt;进入插入模式
+&lt;code&gt;v&lt;/code&gt;,&lt;code&gt;&amp;lt;S-V&amp;gt;&lt;/code&gt;,&lt;code&gt;&amp;lt;C-V&amp;gt;&lt;/code&gt;可分别进入可视模式，可视行模式，可视块模式
+&lt;code&gt;/&lt;/code&gt;,&lt;code&gt;?&lt;/code&gt;进入搜索模式
+&lt;code&gt;:&lt;/code&gt;进入命令模式
+&lt;code&gt;R&lt;/code&gt;进入替换模式
+&lt;code&gt;Q&lt;/code&gt;进入增强模式&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;/&lt;/code&gt;和&lt;code&gt;?&lt;/code&gt;均为搜索，前者为向后搜索，后者为向前搜索。搜索后，&lt;code&gt;n&lt;/code&gt;向下一个搜索结果跳转，&lt;code&gt;N&lt;/code&gt;向前一个搜索结果跳转&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id="插入模式"&gt;插入模式&lt;/h3&gt;
+&lt;p&gt;此模式下可以插入文本内容&lt;/p&gt;
+&lt;h3 id="可视模式"&gt;可视模式&lt;/h3&gt;
+&lt;p&gt;此模式下可以对文本进行范围修改&lt;/p&gt;
+&lt;h3 id="命令模式"&gt;命令模式&lt;/h3&gt;
+&lt;p&gt;此模式可以执行各种命令，&lt;code&gt;:!command&lt;/code&gt;可执行外部命令
+&lt;strong&gt;一些简单命令的介绍&lt;/strong&gt;
+&lt;code&gt;wirte fileName&lt;/code&gt;将文件保存为fileName，如果没有fileName，则仅保存。可简写为&lt;code&gt;w fileName&lt;/code&gt;
+&lt;code&gt;quit&lt;/code&gt; 退出vim，&lt;code&gt;quit!&lt;/code&gt;为强制退出，即不保存退出。可简写为&lt;code&gt;q&lt;/code&gt;
+&lt;code&gt;edit fileName&lt;/code&gt; 编辑fileName的文件。
+&lt;code&gt;help&lt;/code&gt; 获取帮助，可简写为&lt;code&gt;h&lt;/code&gt;
+&lt;code&gt;.&lt;/code&gt; 重复上一次操作
+&lt;code&gt;[range]s/old/new/[option]&lt;/code&gt;将old替换为new
+&lt;code&gt;[range]&lt;/code&gt;为范围，&lt;code&gt;x,y&lt;/code&gt;代表从第x行到第y行
+特别的：&lt;code&gt;.&lt;/code&gt;为当前行
+&lt;code&gt;[option]&lt;/code&gt;为选项，&lt;code&gt;/g&lt;/code&gt;表示全部替换；&lt;code&gt;/c&lt;/code&gt;表示需要确认；&lt;code&gt;/p&lt;/code&gt;表示替换结果逐行显示
+如要组合使用，应这样写&lt;code&gt;/cgp&lt;/code&gt;，并非这样&lt;code&gt;/g/c&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="替换模式"&gt;替换模式&lt;/h3&gt;
+&lt;p&gt;插入模式下按&lt;code&gt;INSERT&lt;/code&gt;可进入替换模式
+此模式下可将已输入的内容替换为将要输入的内容&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;example:
+将&lt;em&gt;wrod&lt;/em&gt;改为&lt;em&gt;word&lt;/em&gt;
+仅需将光标跳到&lt;em&gt;wrod&lt;/em&gt;上,进入&lt;strong&gt;替换模式&lt;/strong&gt;来重新打一遍&lt;em&gt;word&lt;/em&gt;即可&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="在vim中移动"&gt;在vim中移动&lt;/h2&gt;
+&lt;h3 id="常规移动"&gt;常规移动&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;j&lt;/code&gt;;&lt;code&gt;k&lt;/code&gt;;&lt;code&gt;h&lt;/code&gt;;&lt;code&gt;l&lt;/code&gt;或&lt;code&gt;&amp;lt;UP&amp;gt;&lt;/code&gt;;&lt;code&gt;&amp;lt;DOWN&amp;gt;&lt;/code&gt;;&lt;code&gt;&amp;lt;LEFT&amp;gt;&lt;/code&gt;;&lt;code&gt;&amp;lt;RIGHT&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="滚屏"&gt;滚屏&lt;/h3&gt;
+&lt;p&gt;单行
+&lt;code&gt;&amp;lt;C-E&amp;gt;&lt;/code&gt; &lt;code&gt;&amp;lt;C-Y&amp;gt;&lt;/code&gt;
+半屏
+&lt;code&gt;&amp;lt;C-U&amp;gt;&lt;/code&gt; &lt;code&gt;&amp;lt;C-D&amp;gt;&lt;/code&gt;
+整屏
+&lt;code&gt;&amp;lt;C-F&amp;gt;&lt;/code&gt; &lt;code&gt;&amp;lt;C-B&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="单词间"&gt;单词间&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;w&lt;/code&gt;跳到下一个单词的后
+&lt;code&gt;e&lt;/code&gt;调到单词最后一个字母
+&lt;code&gt;b&lt;/code&gt;前一个单词的首字母&lt;/p&gt;
+&lt;h3 id="行中"&gt;行中&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;0&lt;/code&gt;行首
+&lt;code&gt;$&lt;/code&gt;行尾
+&lt;code&gt;f{char}&lt;/code&gt;快速跳转到当前光标到下一个&lt;code&gt;char&lt;/code&gt;出现的光标
+&lt;code&gt;F{char}&lt;/code&gt;快速跳转到当前光标到前一个&lt;code&gt;char&lt;/code&gt;出现的光标&lt;/p&gt;
+&lt;h3 id="段落间"&gt;段落间&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;}&lt;/code&gt;跳转到下一个空行，即下一段喽
+&lt;code&gt;{&lt;/code&gt;跳转到上一个空行&lt;/p&gt;
+&lt;h3 id="文件中"&gt;文件中&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;]]&lt;/code&gt;;&lt;code&gt;G&lt;/code&gt;跳到文件底部
+&lt;code&gt;[[&lt;/code&gt;;&lt;code&gt;gg&lt;/code&gt;跳到文件顶部
+&lt;code&gt;m{a-zA-Z}&lt;/code&gt;把当前光标位置设置标记
+&lt;code&gt;'{a-zA-Z}&lt;/code&gt;跳到标记处
+&lt;code&gt;''&lt;/code&gt;;``跳到跳转前的位置
+&lt;strong&gt;相关命令:&lt;/strong&gt;
+&lt;code&gt;:marks&lt;/code&gt; 查看已设置的标记
+&lt;code&gt;:delmarks &amp;lt;marks&amp;gt;&lt;/code&gt; 删除&lt;code&gt;marks&lt;/code&gt;标记
+&lt;code&gt;:delmarks!&lt;/code&gt; 删除所有标记&lt;/p&gt;
+&lt;h2 id="在vim中进行改动"&gt;在vim中进行改动&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;:read &amp;lt;file&amp;gt;&lt;/code&gt; 插入文件，将文件内容插入到光标所在位置
+example:
+将外部命令的返回值插入到所编辑文件中
+:read !ls
+&lt;code&gt;I&lt;/code&gt;跳到当前行的最前面并进入插入模式
+&lt;code&gt;a&lt;/code&gt;在当前光标后进入插入模式
+&lt;code&gt;A&lt;/code&gt;跳到当前行的最后面并进入插入模式
+&lt;code&gt;x&lt;/code&gt;删除光标所在字符
+&lt;code&gt;d[move]&lt;/code&gt;删除(delate)
+example:
+dd #删除当前行
+d5w #删除后5个单词
+&lt;code&gt;c[move]&lt;/code&gt;修改(change)
+example:
+&lt;code&gt;cc&lt;/code&gt;删除当前行所有内容并进入插入模式
+&lt;code&gt;c$&lt;/code&gt;删除当前行所在光标后所有内容并进入插入模式
+&lt;code&gt;r&lt;/code&gt;将当前光标内容替换为将要输入的内容&lt;/p&gt;
+&lt;h2 id="打造属于你自己的vim配置vimrc"&gt;打造属于你自己的vim，配置vimrc&lt;/h2&gt;
+&lt;p&gt;每个人的vim都是独一无二的，动手打造属于你自己的vim吧&lt;/p&gt;
+&lt;h2 id="vim插件推荐"&gt;vim插件推荐&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;文件管理&lt;/strong&gt;
+preservim/NERDTree
+&lt;strong&gt;vim主题&lt;/strong&gt;
+tomasr/molokai
+&lt;strong&gt;代码注释&lt;/strong&gt;
+scrooloose/nerdcommenter
+&lt;strong&gt;代码查错&lt;/strong&gt;
+w0rp/ale
+&lt;strong&gt;自动括号&lt;/strong&gt;
+jiangmiao/auto-pairs
+&lt;strong&gt;surround插件&lt;/strong&gt;
+tpope/vim-surround
+&lt;strong&gt;回车选中块&lt;/strong&gt;
+gcmt/wildfire.vim
+&lt;strong&gt;vim中文文档&lt;/strong&gt;
+yianwillis/vimcdoc
+&lt;strong&gt;代码补全&lt;/strong&gt;
+neoclide/coc.nvim
+&lt;strong&gt;markdown-preview&lt;/strong&gt;
+iamcco/markdown-preview.vim
+&lt;strong&gt;markdown画表插件&lt;/strong&gt;
+dhruvasagar/vim-table-mode
+&lt;strong&gt;markdown列表插件&lt;/strong&gt;
+dkarter/bullets.vim&lt;/p&gt;</description></item></channel></rss>

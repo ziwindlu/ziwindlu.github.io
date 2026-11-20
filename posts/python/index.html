@@ -1,0 +1,250 @@
+<!doctype html><html lang=zh dir=auto data-theme=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>Python | ziwindlu 的博客</title><meta name=keywords content="Python,编程语言"><meta name=description content="语言规范
+python之禅
+pythonic
+命名
+语法
+数据
+变量定义
+作用域
+数据结构
+运算
+流程控制
+条件
+循环
+函数
+定义
+调用
+常用函数
+map
+filter
+range
+enumerate
+导包
+import util as u
+from util.file_util import read_lines
+from util.log_util import *
+异常处理
+AOP
+python_aop
+多线程
+多线程&多进程
+由于GIL（全局解释器锁），Python多线程无法真正并行（仅并发）。
+多进程可绕过GIL，实现真正的并行（利用多核CPU）。
+多进程：
+import os
+from multiprocessing import Process
+def process_task(name):
+print(f&#34;子进程 {name} PID: {os.getpid()}，父进程 PID: {os.getppid()}&#34;)
+if __name__ == '__main__':
+p = Process(target=process_task, args=('child',))
+p.start()
+p.join()
+print(f&#34;主进程 PID: {os.getpid()}&#34;)
+进程池
+from mulitprocessing import Pool
+from multiprocessing import Process, Lock
+import time
+def process_task(lock, filepath):
+with lock:  # 进程间文件访问需要锁
+with open(filepath, 'a') as f:
+f.write(f&#34;Process {os.getpid()} wrote at {time.time()}\n&#34;)
+if __name__ == '__main__':
+lock = Lock()  # 跨进程锁
+filepath = 'shared.log'
+processes = [Process(target=process_task, args=(lock, filepath)) for _ in range(3)]
+for p in processes:
+p.start()
+for p in processes:
+p.join()
+多线程
+import threading
+def thread_task(name):
+print(f&#34;线程 {name} 正在执行&#34;)
+threads = []
+for i in range(3):
+t = threading.Thread(target=thread_task, args=(f'Thread-{i}',))
+threads.append(t)
+t.start()
+for t in threads:
+t.join()
+线程池
+from concurrent.futures import ThreadPoolExecutor
+import requests
+def fetch_url(url):
+response = requests.get(url)
+return f&#34;{url}: {len(response.content)} bytes&#34;
+urls = [&#34;https://www.python.org&#34;, &#34;https://www.google.com&#34;, &#34;https://www.github.com&#34;]
+# 使用线程池（适合I/O阻塞操作）
+with ThreadPoolExecutor(max_workers=3) as executor:
+results = list(executor.map(fetch_url, urls))
+print(results)
+锁仅针对于多线程
+import threading
+counter = 0
+lock = threading.Lock()
+def increment():
+global counter
+for _ in range(100000):
+with lock:  # 自动获取和释放锁
+counter += 1
+threads = [threading.Thread(target=increment) for _ in range(5)]
+for t in threads:
+t.start()
+for t in threads:
+t.join()
+print(f&#34;最终计数器值: {counter}&#34;)  # 应该是500000
+文件操作
+with open('.bashrc', 'r', encoding='utf-8') as f:
+f.readlines()
+f.wirtelines()
+网络编程
+数据库相关
+redis
+import redis
+# 连接
+pool = redis.ConnectionPool(host='localhost', port=6379, db=0)
+r = redis.Redis(connection_pool=pool)
+# 操作
+r.set('visits', 0)
+r.incr('visits')
+print(f&#34;Total visits: {r.get('visits').decode()}&#34;)
+mysql
+SQLAlchemy"><meta name=author content="ziwindlu"><link rel=canonical href=https://ziwindlu.github.io/posts/python/><link crossorigin=anonymous href=/assets/css/stylesheet.95ae6e9689bd0037456375629f411acbf8ed76e0e9a7599900ad281f9526dee6.css integrity="sha256-la5ulom9ADdFY3Vin0Eay/jtduDpp1mZAK0oH5Um3uY=" rel="preload stylesheet" as=style><link rel=icon href=https://ziwindlu.github.io/favicon.svg><link rel=icon type=image/png sizes=16x16 href=https://ziwindlu.github.io/favicon.svg><link rel=icon type=image/png sizes=32x32 href=https://ziwindlu.github.io/favicon.svg><link rel=apple-touch-icon href=https://ziwindlu.github.io/favicon.svg><link rel=mask-icon href=https://ziwindlu.github.io/favicon.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=zh href=https://ziwindlu.github.io/posts/python/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51);color-scheme:dark}.list{background:var(--theme)}.toc{background:var(--entry)}}</style></noscript><script>localStorage.getItem("pref-theme")==="dark"?document.querySelector("html").dataset.theme="dark":localStorage.getItem("pref-theme")==="light"?document.querySelector("html").dataset.theme="light":window.matchMedia("(prefers-color-scheme: dark)").matches?document.querySelector("html").dataset.theme="dark":document.querySelector("html").dataset.theme="light"</script><meta property="og:url" content="https://ziwindlu.github.io/posts/python/"><meta property="og:site_name" content="ziwindlu 的博客"><meta property="og:title" content="Python"><meta property="og:description" content="语言规范 python之禅 pythonic
+命名 语法 数据 变量定义 作用域 数据结构 运算 流程控制 条件 循环 函数 定义 调用 常用函数 map filter range enumerate
+导包 import util as u from util.file_util import read_lines from util.log_util import * 异常处理 AOP python_aop
+多线程 多线程&多进程 由于GIL（全局解释器锁），Python多线程无法真正并行（仅并发）。 多进程可绕过GIL，实现真正的并行（利用多核CPU）。 多进程：
+import os from multiprocessing import Process def process_task(name): print(f&#34;子进程 {name} PID: {os.getpid()}，父进程 PID: {os.getppid()}&#34;) if __name__ == '__main__': p = Process(target=process_task, args=('child',)) p.start() p.join() print(f&#34;主进程 PID: {os.getpid()}&#34;) 进程池 from mulitprocessing import Pool
+from multiprocessing import Process, Lock import time def process_task(lock, filepath): with lock: # 进程间文件访问需要锁 with open(filepath, 'a') as f: f.write(f&#34;Process {os.getpid()} wrote at {time.time()}\n&#34;) if __name__ == '__main__': lock = Lock() # 跨进程锁 filepath = 'shared.log' processes = [Process(target=process_task, args=(lock, filepath)) for _ in range(3)] for p in processes: p.start() for p in processes: p.join() 多线程
+import threading def thread_task(name): print(f&#34;线程 {name} 正在执行&#34;) threads = [] for i in range(3): t = threading.Thread(target=thread_task, args=(f'Thread-{i}',)) threads.append(t) t.start() for t in threads: t.join() 线程池
+from concurrent.futures import ThreadPoolExecutor import requests def fetch_url(url): response = requests.get(url) return f&#34;{url}: {len(response.content)} bytes&#34; urls = [&#34;https://www.python.org&#34;, &#34;https://www.google.com&#34;, &#34;https://www.github.com&#34;] # 使用线程池（适合I/O阻塞操作） with ThreadPoolExecutor(max_workers=3) as executor: results = list(executor.map(fetch_url, urls)) print(results) 锁仅针对于多线程
+import threading counter = 0 lock = threading.Lock() def increment(): global counter for _ in range(100000): with lock: # 自动获取和释放锁 counter += 1 threads = [threading.Thread(target=increment) for _ in range(5)] for t in threads: t.start() for t in threads: t.join() print(f&#34;最终计数器值: {counter}&#34;) # 应该是500000 文件操作 with open('.bashrc', 'r', encoding='utf-8') as f: f.readlines() f.wirtelines() 网络编程 数据库相关 redis import redis # 连接 pool = redis.ConnectionPool(host='localhost', port=6379, db=0) r = redis.Redis(connection_pool=pool) # 操作 r.set('visits', 0) r.incr('visits') print(f&#34;Total visits: {r.get('visits').decode()}&#34;) mysql SQLAlchemy"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2026-04-03T00:00:00+08:00"><meta property="article:modified_time" content="2026-04-03T00:00:00+08:00"><meta property="article:tag" content="Python"><meta property="article:tag" content="编程语言"><meta name=twitter:card content="summary"><meta name=twitter:title content="Python"><meta name=twitter:description content="语言规范 python之禅 pythonic
+命名 语法 数据 变量定义 作用域 数据结构 运算 流程控制 条件 循环 函数 定义 调用 常用函数 map filter range enumerate
+导包 import util as u from util.file_util import read_lines from util.log_util import * 异常处理 AOP python_aop
+多线程 多线程&多进程 由于GIL（全局解释器锁），Python多线程无法真正并行（仅并发）。 多进程可绕过GIL，实现真正的并行（利用多核CPU）。 多进程：
+import os from multiprocessing import Process def process_task(name): print(f&#34;子进程 {name} PID: {os.getpid()}，父进程 PID: {os.getppid()}&#34;) if __name__ == '__main__': p = Process(target=process_task, args=('child',)) p.start() p.join() print(f&#34;主进程 PID: {os.getpid()}&#34;) 进程池 from mulitprocessing import Pool
+from multiprocessing import Process, Lock import time def process_task(lock, filepath): with lock: # 进程间文件访问需要锁 with open(filepath, 'a') as f: f.write(f&#34;Process {os.getpid()} wrote at {time.time()}\n&#34;) if __name__ == '__main__': lock = Lock() # 跨进程锁 filepath = 'shared.log' processes = [Process(target=process_task, args=(lock, filepath)) for _ in range(3)] for p in processes: p.start() for p in processes: p.join() 多线程
+import threading def thread_task(name): print(f&#34;线程 {name} 正在执行&#34;) threads = [] for i in range(3): t = threading.Thread(target=thread_task, args=(f'Thread-{i}',)) threads.append(t) t.start() for t in threads: t.join() 线程池
+from concurrent.futures import ThreadPoolExecutor import requests def fetch_url(url): response = requests.get(url) return f&#34;{url}: {len(response.content)} bytes&#34; urls = [&#34;https://www.python.org&#34;, &#34;https://www.google.com&#34;, &#34;https://www.github.com&#34;] # 使用线程池（适合I/O阻塞操作） with ThreadPoolExecutor(max_workers=3) as executor: results = list(executor.map(fetch_url, urls)) print(results) 锁仅针对于多线程
+import threading counter = 0 lock = threading.Lock() def increment(): global counter for _ in range(100000): with lock: # 自动获取和释放锁 counter += 1 threads = [threading.Thread(target=increment) for _ in range(5)] for t in threads: t.start() for t in threads: t.join() print(f&#34;最终计数器值: {counter}&#34;) # 应该是500000 文件操作 with open('.bashrc', 'r', encoding='utf-8') as f: f.readlines() f.wirtelines() 网络编程 数据库相关 redis import redis # 连接 pool = redis.ConnectionPool(host='localhost', port=6379, db=0) r = redis.Redis(connection_pool=pool) # 操作 r.set('visits', 0) r.incr('visits') print(f&#34;Total visits: {r.get('visits').decode()}&#34;) mysql SQLAlchemy"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"文章","item":"https://ziwindlu.github.io/posts/"},{"@type":"ListItem","position":2,"name":"Python","item":"https://ziwindlu.github.io/posts/python/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"Python","name":"Python","description":"语言规范 python之禅 pythonic\n命名 语法 数据 变量定义 作用域 数据结构 运算 流程控制 条件 循环 函数 定义 调用 常用函数 map filter range enumerate\n导包 import util as u from util.file_util import read_lines from util.log_util import * 异常处理 AOP python_aop\n多线程 多线程\u0026amp;多进程 由于GIL（全局解释器锁），Python多线程无法真正并行（仅并发）。 多进程可绕过GIL，实现真正的并行（利用多核CPU）。 多进程：\nimport os from multiprocessing import Process def process_task(name): print(f\u0026#34;子进程 {name} PID: {os.getpid()}，父进程 PID: {os.getppid()}\u0026#34;) if __name__ == \u0026#39;__main__\u0026#39;: p = Process(target=process_task, args=(\u0026#39;child\u0026#39;,)) p.start() p.join() print(f\u0026#34;主进程 PID: {os.getpid()}\u0026#34;) 进程池 from mulitprocessing import Pool\nfrom multiprocessing import Process, Lock import time def process_task(lock, filepath): with lock: # 进程间文件访问需要锁 with open(filepath, \u0026#39;a\u0026#39;) as f: f.write(f\u0026#34;Process {os.getpid()} wrote at {time.time()}\\n\u0026#34;) if __name__ == \u0026#39;__main__\u0026#39;: lock = Lock() # 跨进程锁 filepath = \u0026#39;shared.log\u0026#39; processes = [Process(target=process_task, args=(lock, filepath)) for _ in range(3)] for p in processes: p.start() for p in processes: p.join() 多线程\nimport threading def thread_task(name): print(f\u0026#34;线程 {name} 正在执行\u0026#34;) threads = [] for i in range(3): t = threading.Thread(target=thread_task, args=(f\u0026#39;Thread-{i}\u0026#39;,)) threads.append(t) t.start() for t in threads: t.join() 线程池\nfrom concurrent.futures import ThreadPoolExecutor import requests def fetch_url(url): response = requests.get(url) return f\u0026#34;{url}: {len(response.content)} bytes\u0026#34; urls = [\u0026#34;https://www.python.org\u0026#34;, \u0026#34;https://www.google.com\u0026#34;, \u0026#34;https://www.github.com\u0026#34;] # 使用线程池（适合I/O阻塞操作） with ThreadPoolExecutor(max_workers=3) as executor: results = list(executor.map(fetch_url, urls)) print(results) 锁仅针对于多线程\nimport threading counter = 0 lock = threading.Lock() def increment(): global counter for _ in range(100000): with lock: # 自动获取和释放锁 counter += 1 threads = [threading.Thread(target=increment) for _ in range(5)] for t in threads: t.start() for t in threads: t.join() print(f\u0026#34;最终计数器值: {counter}\u0026#34;) # 应该是500000 文件操作 with open(\u0026#39;.bashrc\u0026#39;, \u0026#39;r\u0026#39;, encoding=\u0026#39;utf-8\u0026#39;) as f: f.readlines() f.wirtelines() 网络编程 数据库相关 redis import redis # 连接 pool = redis.ConnectionPool(host=\u0026#39;localhost\u0026#39;, port=6379, db=0) r = redis.Redis(connection_pool=pool) # 操作 r.set(\u0026#39;visits\u0026#39;, 0) r.incr(\u0026#39;visits\u0026#39;) print(f\u0026#34;Total visits: {r.get(\u0026#39;visits\u0026#39;).decode()}\u0026#34;) mysql SQLAlchemy\n","keywords":["Python","编程语言"],"articleBody":"语言规范 python之禅 pythonic\n命名 语法 数据 变量定义 作用域 数据结构 运算 流程控制 条件 循环 函数 定义 调用 常用函数 map filter range enumerate\n导包 import util as u from util.file_util import read_lines from util.log_util import * 异常处理 AOP python_aop\n多线程 多线程\u0026多进程 由于GIL（全局解释器锁），Python多线程无法真正并行（仅并发）。 多进程可绕过GIL，实现真正的并行（利用多核CPU）。 多进程：\nimport os from multiprocessing import Process def process_task(name): print(f\"子进程 {name} PID: {os.getpid()}，父进程 PID: {os.getppid()}\") if __name__ == '__main__': p = Process(target=process_task, args=('child',)) p.start() p.join() print(f\"主进程 PID: {os.getpid()}\") 进程池 from mulitprocessing import Pool\nfrom multiprocessing import Process, Lock import time def process_task(lock, filepath): with lock: # 进程间文件访问需要锁 with open(filepath, 'a') as f: f.write(f\"Process {os.getpid()} wrote at {time.time()}\\n\") if __name__ == '__main__': lock = Lock() # 跨进程锁 filepath = 'shared.log' processes = [Process(target=process_task, args=(lock, filepath)) for _ in range(3)] for p in processes: p.start() for p in processes: p.join() 多线程\nimport threading def thread_task(name): print(f\"线程 {name} 正在执行\") threads = [] for i in range(3): t = threading.Thread(target=thread_task, args=(f'Thread-{i}',)) threads.append(t) t.start() for t in threads: t.join() 线程池\nfrom concurrent.futures import ThreadPoolExecutor import requests def fetch_url(url): response = requests.get(url) return f\"{url}: {len(response.content)} bytes\" urls = [\"https://www.python.org\", \"https://www.google.com\", \"https://www.github.com\"] # 使用线程池（适合I/O阻塞操作） with ThreadPoolExecutor(max_workers=3) as executor: results = list(executor.map(fetch_url, urls)) print(results) 锁仅针对于多线程\nimport threading counter = 0 lock = threading.Lock() def increment(): global counter for _ in range(100000): with lock: # 自动获取和释放锁 counter += 1 threads = [threading.Thread(target=increment) for _ in range(5)] for t in threads: t.start() for t in threads: t.join() print(f\"最终计数器值: {counter}\") # 应该是500000 文件操作 with open('.bashrc', 'r', encoding='utf-8') as f: f.readlines() f.wirtelines() 网络编程 数据库相关 redis import redis # 连接 pool = redis.ConnectionPool(host='localhost', port=6379, db=0) r = redis.Redis(connection_pool=pool) # 操作 r.set('visits', 0) r.incr('visits') print(f\"Total visits: {r.get('visits').decode()}\") mysql SQLAlchemy\nimport pymysql # 连接 conn = pymysql.connect(host='localhost', user='root', database='test_db') try: with conn.cursor() as cursor: # 创建表 cursor.execute(\"\"\" CREATE TABLE IF NOT EXISTS users ( id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(80), age INT ) \"\"\") # 插入数据 cursor.execute(\"INSERT INTO users (name, age) VALUES (%s, %s)\", ('Bob', 30)) conn.commit() # 查询 cursor.execute(\"SELECT * FROM users\") print(cursor.fetchall()) finally: conn.close() mongodb from pymongo import MongoClient # 连接 client = MongoClient('mongodb://localhost:27017/') db = client['test_db'] users = db['users'] # 操作 users.insert_one({\"name\": \"Alice\", \"age\": 25}) print(list(users.find({\"age\": {\"$gt\": 20}}))) client.close() 小技巧 python使用requirements管理依赖\n类库 GitHub - Textualize/textual: The lean application framework for Python. Build sophisticated user interfaces with a simple Python API. Run your apps in the terminal and a web browser. GitHub - KimiNewt/pyshark: Python wrapper for tshark, allowing python packet parsing using wireshark dissectors bs4 re lxml selectsium\n","wordCount":"398","inLanguage":"zh","datePublished":"2026-04-03T00:00:00+08:00","dateModified":"2026-04-03T00:00:00+08:00","author":{"@type":"Person","name":"ziwindlu"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://ziwindlu.github.io/posts/python/"},"publisher":{"@type":"Organization","name":"ziwindlu 的博客","logo":{"@type":"ImageObject","url":"https://ziwindlu.github.io/favicon.svg"}}}</script></head><body id=top><header class=header><nav class=header-nav><div class=logo><a href=https://ziwindlu.github.io/ accesskey=h title="ziwindlu 的博客 (Alt + H)">ziwindlu 的博客</a><div class=logo-switches><button id=theme-toggle class=theme-toggle accesskey=t title="(Alt + T)" aria-label="Toggle theme">
+<svg class="moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+<svg class="sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu class=menu><li><a href=https://ziwindlu.github.io/ title=首页><span>首页</span></a></li><li><a href=https://ziwindlu.github.io/posts/ title=文章><span>文章</span></a></li><li><a href=https://ziwindlu.github.io/tags/ title=标签><span>标签</span></a></li><li><a href=https://ziwindlu.github.io/search/ title=搜索><span>搜索</span></a></li><li><a href=https://ziwindlu.github.io/about/ title=关于><span>关于</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><h1 class="post-title entry-hint-parent">Python</h1><div class=post-meta><span title=2026-04-03T00:00:00+08:00>2026-04-03</span>&nbsp;·&nbsp;<span>2 分钟</span>&nbsp;·&nbsp;<span>ziwindlu</span>&nbsp;·&nbsp;<span class=post-source>源笔记：<code>02-Knowledge/编程/Python.md</code></span></div></header><details class=toc><summary accesskey=c title="(Alt + C)"><span class=title>目录</span></summary><div class=inner><ul><li><a href=#%e8%af%ad%e8%a8%80%e8%a7%84%e8%8c%83 aria-label=语言规范>语言规范</a><ul><li><a href=#%e5%91%bd%e5%90%8d aria-label=命名>命名</a></li></ul></li><li><a href=#%e8%af%ad%e6%b3%95 aria-label=语法>语法</a><ul><li><a href=#%e6%95%b0%e6%8d%ae aria-label=数据>数据</a><ul><li><a href=#%e5%8f%98%e9%87%8f%e5%ae%9a%e4%b9%89 aria-label=变量定义>变量定义</a></li><li><a href=#%e4%bd%9c%e7%94%a8%e5%9f%9f aria-label=作用域>作用域</a></li><li><a href=#%e6%95%b0%e6%8d%ae%e7%bb%93%e6%9e%84 aria-label=数据结构>数据结构</a></li></ul></li><li><a href=#%e8%bf%90%e7%ae%97 aria-label=运算>运算</a></li><li><a href=#%e6%b5%81%e7%a8%8b%e6%8e%a7%e5%88%b6 aria-label=流程控制>流程控制</a><ul><li><a href=#%e6%9d%a1%e4%bb%b6 aria-label=条件>条件</a></li><li><a href=#%e5%be%aa%e7%8e%af aria-label=循环>循环</a></li></ul></li><li><a href=#%e5%87%bd%e6%95%b0 aria-label=函数>函数</a><ul><li><a href=#%e5%ae%9a%e4%b9%89 aria-label=定义>定义</a></li><li><a href=#%e8%b0%83%e7%94%a8 aria-label=调用>调用</a></li><li><a href=#%e5%b8%b8%e7%94%a8%e5%87%bd%e6%95%b0 aria-label=常用函数>常用函数</a></li></ul></li><li><a href=#%e5%af%bc%e5%8c%85 aria-label=导包>导包</a></li><li><a href=#%e5%bc%82%e5%b8%b8%e5%a4%84%e7%90%86 aria-label=异常处理>异常处理</a></li><li><a href=#aop aria-label=AOP>AOP</a></li><li><a href=#%e5%a4%9a%e7%ba%bf%e7%a8%8b aria-label=多线程>多线程</a></li><li><a href=#%e5%a4%9a%e7%ba%bf%e7%a8%8b%e5%a4%9a%e8%bf%9b%e7%a8%8b aria-label=多线程&多进程>多线程&多进程</a></li><li><a href=#%e6%96%87%e4%bb%b6%e6%93%8d%e4%bd%9c aria-label=文件操作>文件操作</a></li><li><a href=#%e7%bd%91%e7%bb%9c%e7%bc%96%e7%a8%8b aria-label=网络编程>网络编程</a></li><li><a href=#%e6%95%b0%e6%8d%ae%e5%ba%93%e7%9b%b8%e5%85%b3 aria-label=数据库相关>数据库相关</a><ul><li><a href=#redis aria-label=redis>redis</a></li><li><a href=#mysql aria-label=mysql>mysql</a></li><li><a href=#mongodb aria-label=mongodb>mongodb</a></li></ul></li></ul></li><li><a href=#%e5%b0%8f%e6%8a%80%e5%b7%a7 aria-label=小技巧>小技巧</a></li><li><a href=#%e7%b1%bb%e5%ba%93 aria-label=类库>类库</a></li></ul></div></details><div class="post-content md-content"><h2 id=语言规范>语言规范<a hidden class=anchor aria-hidden=true href=#语言规范>#</a></h2><p>python之禅
+pythonic</p><h3 id=命名>命名<a hidden class=anchor aria-hidden=true href=#命名>#</a></h3><h2 id=语法>语法<a hidden class=anchor aria-hidden=true href=#语法>#</a></h2><h3 id=数据>数据<a hidden class=anchor aria-hidden=true href=#数据>#</a></h3><h4 id=变量定义>变量定义<a hidden class=anchor aria-hidden=true href=#变量定义>#</a></h4><h4 id=作用域>作用域<a hidden class=anchor aria-hidden=true href=#作用域>#</a></h4><h4 id=数据结构>数据结构<a hidden class=anchor aria-hidden=true href=#数据结构>#</a></h4><h3 id=运算>运算<a hidden class=anchor aria-hidden=true href=#运算>#</a></h3><h3 id=流程控制>流程控制<a hidden class=anchor aria-hidden=true href=#流程控制>#</a></h3><h4 id=条件>条件<a hidden class=anchor aria-hidden=true href=#条件>#</a></h4><h4 id=循环>循环<a hidden class=anchor aria-hidden=true href=#循环>#</a></h4><h3 id=函数>函数<a hidden class=anchor aria-hidden=true href=#函数>#</a></h3><h4 id=定义>定义<a hidden class=anchor aria-hidden=true href=#定义>#</a></h4><h4 id=调用>调用<a hidden class=anchor aria-hidden=true href=#调用>#</a></h4><h4 id=常用函数>常用函数<a hidden class=anchor aria-hidden=true href=#常用函数>#</a></h4><p>map
+filter
+range
+enumerate</p><h3 id=导包>导包<a hidden class=anchor aria-hidden=true href=#导包>#</a></h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>util</span> <span class=k>as</span> <span class=nn>u</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>util.file_util</span> <span class=kn>import</span> <span class=n>read_lines</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>util.log_util</span> <span class=kn>import</span> <span class=o>*</span>
+</span></span></code></pre></div><h3 id=异常处理>异常处理<a hidden class=anchor aria-hidden=true href=#异常处理>#</a></h3><h3 id=aop>AOP<a hidden class=anchor aria-hidden=true href=#aop>#</a></h3><p><a href=/posts/python-aop/>python_aop</a></p><h3 id=多线程>多线程<a hidden class=anchor aria-hidden=true href=#多线程>#</a></h3><h3 id=多线程多进程>多线程&多进程<a hidden class=anchor aria-hidden=true href=#多线程多进程>#</a></h3><p>由于<strong>GIL（全局解释器锁）</strong>，Python多线程无法真正并行（仅并发）。
+多进程可绕过GIL，实现真正的并行（利用多核CPU）。
+多进程：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>os</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>multiprocessing</span> <span class=kn>import</span> <span class=n>Process</span>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>process_task</span><span class=p>(</span><span class=n>name</span><span class=p>):</span>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;子进程 </span><span class=si>{</span><span class=n>name</span><span class=si>}</span><span class=s2> PID: </span><span class=si>{</span><span class=n>os</span><span class=o>.</span><span class=n>getpid</span><span class=p>()</span><span class=si>}</span><span class=s2>，父进程 PID: </span><span class=si>{</span><span class=n>os</span><span class=o>.</span><span class=n>getppid</span><span class=p>()</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=vm>__name__</span> <span class=o>==</span> <span class=s1>&#39;__main__&#39;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl><span class=n>p</span> <span class=o>=</span> <span class=n>Process</span><span class=p>(</span><span class=n>target</span><span class=o>=</span><span class=n>process_task</span><span class=p>,</span> <span class=n>args</span><span class=o>=</span><span class=p>(</span><span class=s1>&#39;child&#39;</span><span class=p>,))</span>
+</span></span><span class=line><span class=cl><span class=n>p</span><span class=o>.</span><span class=n>start</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=n>p</span><span class=o>.</span><span class=n>join</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;主进程 PID: </span><span class=si>{</span><span class=n>os</span><span class=o>.</span><span class=n>getpid</span><span class=p>()</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span></code></pre></div><p>进程池
+<code>from mulitprocessing import Pool</code></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>multiprocessing</span> <span class=kn>import</span> <span class=n>Process</span><span class=p>,</span> <span class=n>Lock</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>time</span>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>process_task</span><span class=p>(</span><span class=n>lock</span><span class=p>,</span> <span class=n>filepath</span><span class=p>):</span>
+</span></span><span class=line><span class=cl><span class=k>with</span> <span class=n>lock</span><span class=p>:</span>  <span class=c1># 进程间文件访问需要锁</span>
+</span></span><span class=line><span class=cl><span class=k>with</span> <span class=nb>open</span><span class=p>(</span><span class=n>filepath</span><span class=p>,</span> <span class=s1>&#39;a&#39;</span><span class=p>)</span> <span class=k>as</span> <span class=n>f</span><span class=p>:</span>
+</span></span><span class=line><span class=cl><span class=n>f</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;Process </span><span class=si>{</span><span class=n>os</span><span class=o>.</span><span class=n>getpid</span><span class=p>()</span><span class=si>}</span><span class=s2> wrote at </span><span class=si>{</span><span class=n>time</span><span class=o>.</span><span class=n>time</span><span class=p>()</span><span class=si>}</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=vm>__name__</span> <span class=o>==</span> <span class=s1>&#39;__main__&#39;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl><span class=n>lock</span> <span class=o>=</span> <span class=n>Lock</span><span class=p>()</span>  <span class=c1># 跨进程锁</span>
+</span></span><span class=line><span class=cl><span class=n>filepath</span> <span class=o>=</span> <span class=s1>&#39;shared.log&#39;</span>
+</span></span><span class=line><span class=cl><span class=n>processes</span> <span class=o>=</span> <span class=p>[</span><span class=n>Process</span><span class=p>(</span><span class=n>target</span><span class=o>=</span><span class=n>process_task</span><span class=p>,</span> <span class=n>args</span><span class=o>=</span><span class=p>(</span><span class=n>lock</span><span class=p>,</span> <span class=n>filepath</span><span class=p>))</span> <span class=k>for</span> <span class=n>_</span> <span class=ow>in</span> <span class=nb>range</span><span class=p>(</span><span class=mi>3</span><span class=p>)]</span>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=n>p</span> <span class=ow>in</span> <span class=n>processes</span><span class=p>:</span>
+</span></span><span class=line><span class=cl><span class=n>p</span><span class=o>.</span><span class=n>start</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=n>p</span> <span class=ow>in</span> <span class=n>processes</span><span class=p>:</span>
+</span></span><span class=line><span class=cl><span class=n>p</span><span class=o>.</span><span class=n>join</span><span class=p>()</span>
+</span></span></code></pre></div><p>多线程</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>threading</span>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>thread_task</span><span class=p>(</span><span class=n>name</span><span class=p>):</span>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;线程 </span><span class=si>{</span><span class=n>name</span><span class=si>}</span><span class=s2> 正在执行&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>threads</span> <span class=o>=</span> <span class=p>[]</span>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=n>i</span> <span class=ow>in</span> <span class=nb>range</span><span class=p>(</span><span class=mi>3</span><span class=p>):</span>
+</span></span><span class=line><span class=cl><span class=n>t</span> <span class=o>=</span> <span class=n>threading</span><span class=o>.</span><span class=n>Thread</span><span class=p>(</span><span class=n>target</span><span class=o>=</span><span class=n>thread_task</span><span class=p>,</span> <span class=n>args</span><span class=o>=</span><span class=p>(</span><span class=sa>f</span><span class=s1>&#39;Thread-</span><span class=si>{</span><span class=n>i</span><span class=si>}</span><span class=s1>&#39;</span><span class=p>,))</span>
+</span></span><span class=line><span class=cl><span class=n>threads</span><span class=o>.</span><span class=n>append</span><span class=p>(</span><span class=n>t</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>t</span><span class=o>.</span><span class=n>start</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=n>t</span> <span class=ow>in</span> <span class=n>threads</span><span class=p>:</span>
+</span></span><span class=line><span class=cl><span class=n>t</span><span class=o>.</span><span class=n>join</span><span class=p>()</span>
+</span></span></code></pre></div><p>线程池</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>concurrent.futures</span> <span class=kn>import</span> <span class=n>ThreadPoolExecutor</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>requests</span>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>fetch_url</span><span class=p>(</span><span class=n>url</span><span class=p>):</span>
+</span></span><span class=line><span class=cl><span class=n>response</span> <span class=o>=</span> <span class=n>requests</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=n>url</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=k>return</span> <span class=sa>f</span><span class=s2>&#34;</span><span class=si>{</span><span class=n>url</span><span class=si>}</span><span class=s2>: </span><span class=si>{</span><span class=nb>len</span><span class=p>(</span><span class=n>response</span><span class=o>.</span><span class=n>content</span><span class=p>)</span><span class=si>}</span><span class=s2> bytes&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>urls</span> <span class=o>=</span> <span class=p>[</span><span class=s2>&#34;https://www.python.org&#34;</span><span class=p>,</span> <span class=s2>&#34;https://www.google.com&#34;</span><span class=p>,</span> <span class=s2>&#34;https://www.github.com&#34;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=c1># 使用线程池（适合I/O阻塞操作）</span>
+</span></span><span class=line><span class=cl><span class=k>with</span> <span class=n>ThreadPoolExecutor</span><span class=p>(</span><span class=n>max_workers</span><span class=o>=</span><span class=mi>3</span><span class=p>)</span> <span class=k>as</span> <span class=n>executor</span><span class=p>:</span>
+</span></span><span class=line><span class=cl><span class=n>results</span> <span class=o>=</span> <span class=nb>list</span><span class=p>(</span><span class=n>executor</span><span class=o>.</span><span class=n>map</span><span class=p>(</span><span class=n>fetch_url</span><span class=p>,</span> <span class=n>urls</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=n>results</span><span class=p>)</span>
+</span></span></code></pre></div><p>锁仅针对于多线程</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>threading</span>
+</span></span><span class=line><span class=cl><span class=n>counter</span> <span class=o>=</span> <span class=mi>0</span>
+</span></span><span class=line><span class=cl><span class=n>lock</span> <span class=o>=</span> <span class=n>threading</span><span class=o>.</span><span class=n>Lock</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>increment</span><span class=p>():</span>
+</span></span><span class=line><span class=cl><span class=k>global</span> <span class=n>counter</span>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=n>_</span> <span class=ow>in</span> <span class=nb>range</span><span class=p>(</span><span class=mi>100000</span><span class=p>):</span>
+</span></span><span class=line><span class=cl><span class=k>with</span> <span class=n>lock</span><span class=p>:</span>  <span class=c1># 自动获取和释放锁</span>
+</span></span><span class=line><span class=cl><span class=n>counter</span> <span class=o>+=</span> <span class=mi>1</span>
+</span></span><span class=line><span class=cl><span class=n>threads</span> <span class=o>=</span> <span class=p>[</span><span class=n>threading</span><span class=o>.</span><span class=n>Thread</span><span class=p>(</span><span class=n>target</span><span class=o>=</span><span class=n>increment</span><span class=p>)</span> <span class=k>for</span> <span class=n>_</span> <span class=ow>in</span> <span class=nb>range</span><span class=p>(</span><span class=mi>5</span><span class=p>)]</span>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=n>t</span> <span class=ow>in</span> <span class=n>threads</span><span class=p>:</span>
+</span></span><span class=line><span class=cl><span class=n>t</span><span class=o>.</span><span class=n>start</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=n>t</span> <span class=ow>in</span> <span class=n>threads</span><span class=p>:</span>
+</span></span><span class=line><span class=cl><span class=n>t</span><span class=o>.</span><span class=n>join</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;最终计数器值: </span><span class=si>{</span><span class=n>counter</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>  <span class=c1># 应该是500000</span>
+</span></span></code></pre></div><h3 id=文件操作>文件操作<a hidden class=anchor aria-hidden=true href=#文件操作>#</a></h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>with</span> <span class=nb>open</span><span class=p>(</span><span class=s1>&#39;.bashrc&#39;</span><span class=p>,</span> <span class=s1>&#39;r&#39;</span><span class=p>,</span> <span class=n>encoding</span><span class=o>=</span><span class=s1>&#39;utf-8&#39;</span><span class=p>)</span> <span class=k>as</span> <span class=n>f</span><span class=p>:</span>
+</span></span><span class=line><span class=cl><span class=n>f</span><span class=o>.</span><span class=n>readlines</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=n>f</span><span class=o>.</span><span class=n>wirtelines</span><span class=p>()</span>
+</span></span></code></pre></div><h3 id=网络编程>网络编程<a hidden class=anchor aria-hidden=true href=#网络编程>#</a></h3><h3 id=数据库相关>数据库相关<a hidden class=anchor aria-hidden=true href=#数据库相关>#</a></h3><h4 id=redis>redis<a hidden class=anchor aria-hidden=true href=#redis>#</a></h4><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>redis</span>
+</span></span><span class=line><span class=cl><span class=c1># 连接</span>
+</span></span><span class=line><span class=cl><span class=n>pool</span> <span class=o>=</span> <span class=n>redis</span><span class=o>.</span><span class=n>ConnectionPool</span><span class=p>(</span><span class=n>host</span><span class=o>=</span><span class=s1>&#39;localhost&#39;</span><span class=p>,</span> <span class=n>port</span><span class=o>=</span><span class=mi>6379</span><span class=p>,</span> <span class=n>db</span><span class=o>=</span><span class=mi>0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>r</span> <span class=o>=</span> <span class=n>redis</span><span class=o>.</span><span class=n>Redis</span><span class=p>(</span><span class=n>connection_pool</span><span class=o>=</span><span class=n>pool</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=c1># 操作</span>
+</span></span><span class=line><span class=cl><span class=n>r</span><span class=o>.</span><span class=n>set</span><span class=p>(</span><span class=s1>&#39;visits&#39;</span><span class=p>,</span> <span class=mi>0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>r</span><span class=o>.</span><span class=n>incr</span><span class=p>(</span><span class=s1>&#39;visits&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;Total visits: </span><span class=si>{</span><span class=n>r</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s1>&#39;visits&#39;</span><span class=p>)</span><span class=o>.</span><span class=n>decode</span><span class=p>()</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span></code></pre></div><h4 id=mysql>mysql<a hidden class=anchor aria-hidden=true href=#mysql>#</a></h4><p>SQLAlchemy</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>pymysql</span>
+</span></span><span class=line><span class=cl><span class=c1># 连接</span>
+</span></span><span class=line><span class=cl><span class=n>conn</span> <span class=o>=</span> <span class=n>pymysql</span><span class=o>.</span><span class=n>connect</span><span class=p>(</span><span class=n>host</span><span class=o>=</span><span class=s1>&#39;localhost&#39;</span><span class=p>,</span> <span class=n>user</span><span class=o>=</span><span class=s1>&#39;root&#39;</span><span class=p>,</span> <span class=n>database</span><span class=o>=</span><span class=s1>&#39;test_db&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=k>try</span><span class=p>:</span>
+</span></span><span class=line><span class=cl><span class=k>with</span> <span class=n>conn</span><span class=o>.</span><span class=n>cursor</span><span class=p>()</span> <span class=k>as</span> <span class=n>cursor</span><span class=p>:</span>
+</span></span><span class=line><span class=cl><span class=c1># 创建表</span>
+</span></span><span class=line><span class=cl><span class=n>cursor</span><span class=o>.</span><span class=n>execute</span><span class=p>(</span><span class=s2>&#34;&#34;&#34;
+</span></span></span><span class=line><span class=cl><span class=s2>CREATE TABLE IF NOT EXISTS users (
+</span></span></span><span class=line><span class=cl><span class=s2>id INT AUTO_INCREMENT PRIMARY KEY,
+</span></span></span><span class=line><span class=cl><span class=s2>name VARCHAR(80),
+</span></span></span><span class=line><span class=cl><span class=s2>age INT
+</span></span></span><span class=line><span class=cl><span class=s2>)
+</span></span></span><span class=line><span class=cl><span class=s2>&#34;&#34;&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=c1># 插入数据</span>
+</span></span><span class=line><span class=cl><span class=n>cursor</span><span class=o>.</span><span class=n>execute</span><span class=p>(</span><span class=s2>&#34;INSERT INTO users (name, age) VALUES (</span><span class=si>%s</span><span class=s2>, </span><span class=si>%s</span><span class=s2>)&#34;</span><span class=p>,</span> <span class=p>(</span><span class=s1>&#39;Bob&#39;</span><span class=p>,</span> <span class=mi>30</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=n>conn</span><span class=o>.</span><span class=n>commit</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=c1># 查询</span>
+</span></span><span class=line><span class=cl><span class=n>cursor</span><span class=o>.</span><span class=n>execute</span><span class=p>(</span><span class=s2>&#34;SELECT * FROM users&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=n>cursor</span><span class=o>.</span><span class=n>fetchall</span><span class=p>())</span>
+</span></span><span class=line><span class=cl><span class=k>finally</span><span class=p>:</span>
+</span></span><span class=line><span class=cl><span class=n>conn</span><span class=o>.</span><span class=n>close</span><span class=p>()</span>
+</span></span></code></pre></div><h4 id=mongodb>mongodb<a hidden class=anchor aria-hidden=true href=#mongodb>#</a></h4><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>pymongo</span> <span class=kn>import</span> <span class=n>MongoClient</span>
+</span></span><span class=line><span class=cl><span class=c1># 连接</span>
+</span></span><span class=line><span class=cl><span class=n>client</span> <span class=o>=</span> <span class=n>MongoClient</span><span class=p>(</span><span class=s1>&#39;mongodb://localhost:27017/&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>db</span> <span class=o>=</span> <span class=n>client</span><span class=p>[</span><span class=s1>&#39;test_db&#39;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=n>users</span> <span class=o>=</span> <span class=n>db</span><span class=p>[</span><span class=s1>&#39;users&#39;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=c1># 操作</span>
+</span></span><span class=line><span class=cl><span class=n>users</span><span class=o>.</span><span class=n>insert_one</span><span class=p>({</span><span class=s2>&#34;name&#34;</span><span class=p>:</span> <span class=s2>&#34;Alice&#34;</span><span class=p>,</span> <span class=s2>&#34;age&#34;</span><span class=p>:</span> <span class=mi>25</span><span class=p>})</span>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=nb>list</span><span class=p>(</span><span class=n>users</span><span class=o>.</span><span class=n>find</span><span class=p>({</span><span class=s2>&#34;age&#34;</span><span class=p>:</span> <span class=p>{</span><span class=s2>&#34;$gt&#34;</span><span class=p>:</span> <span class=mi>20</span><span class=p>}})))</span>
+</span></span><span class=line><span class=cl><span class=n>client</span><span class=o>.</span><span class=n>close</span><span class=p>()</span>
+</span></span></code></pre></div><h2 id=小技巧>小技巧<a hidden class=anchor aria-hidden=true href=#小技巧>#</a></h2><p><a href=/posts/python-requirements/>python使用requirements管理依赖</a></p><h2 id=类库>类库<a hidden class=anchor aria-hidden=true href=#类库>#</a></h2><p><a href=https://github.com/Textualize/textual>GitHub - Textualize/textual: The lean application framework for Python. Build sophisticated user interfaces with a simple Python API. Run your apps in the terminal and a web browser.</a>
+<a href=https://github.com/KimiNewt/pyshark>GitHub - KimiNewt/pyshark: Python wrapper for tshark, allowing python packet parsing using wireshark dissectors</a>
+bs4
+re
+lxml
+selectsium</p></div><footer class=post-footer><ul class=post-tags><li><a href=https://ziwindlu.github.io/tags/python/>Python</a></li><li><a href=https://ziwindlu.github.io/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/>编程语言</a></li></ul><nav class=paginav><a class=prev href=https://ziwindlu.github.io/posts/nginx/><span class=title>« 上一页</span>
+<span>nginx</span>
+</a><a class=next href=https://ziwindlu.github.io/posts/python-aop/><span class=title>下一页 »</span>
+<span>python_aop</span></a></nav></footer></article></main><footer class=footer><span>&copy; 2026 <a href=https://ziwindlu.github.io/>ziwindlu 的博客</a></span> ·
+<span>Powered by
+<a href="https://gohugo.io/?utm_source=papermod" rel=noopener target=_blank>Hugo</a> &
+<a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top id=top-link class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey=g><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up"><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg>
+</a><script>let menu=document.getElementById("menu");if(menu){const e=localStorage.getItem("menu-scroll-position");e&&(menu.scrollLeft=parseInt(e,10));let t;menu.addEventListener("scroll",function(){clearTimeout(t),t=setTimeout(function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)},150)},{passive:!0})}document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var n=this.getAttribute("href").substr(1);const t=document.querySelector(`[id='${decodeURIComponent(n)}']`);window.matchMedia("(prefers-reduced-motion: reduce)").matches?t.scrollIntoView():t.scrollIntoView({behavior:"smooth"}),t.tabIndex<0&&!t.hasAttribute("tabindex")&&t.setAttribute("tabindex","-1"),t.focus({preventScroll:!0}),n==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${n}`)})})</script><script>var toplink=document.getElementById("top-link"),scrollTicking=!1;window.addEventListener("scroll",function(){if(scrollTicking)return;scrollTicking=!0,requestAnimationFrame(function(){const e=window.innerHeight,t=document.body.scrollTop>e||document.documentElement.scrollTop>e;toplink.classList.toggle("hidden",!t),scrollTicking=!1})},{passive:!0})</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{const e=document.querySelector("html");e.dataset.theme==="dark"?(e.dataset.theme="light",localStorage.setItem("pref-theme","light")):(e.dataset.theme="dark",localStorage.setItem("pref-theme","dark"))})</script><script>document.querySelectorAll("pre > code").forEach(e=>{const n=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="复制";function s(){t.innerHTML="已复制！",setTimeout(()=>{t.innerHTML="复制"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),s();return}const n=document.createRange();n.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(n);try{document.execCommand("copy"),s()}catch{}o.removeRange(n)}),n.classList.contains("highlight")?n.appendChild(t):n.parentNode.firstChild==n||(e.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?e.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(t):e.parentNode.appendChild(t))})</script></body></html>

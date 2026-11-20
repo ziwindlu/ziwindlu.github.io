@@ -1,0 +1,267 @@
+<!doctype html><html lang=zh dir=auto data-theme=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>linux常用的系统信息查看命令 | ziwindlu 的博客</title><meta name=keywords content="sysinfo"><meta name=description content='引子
+俺经常需要查看某个linux操作系统的版本信息，硬件信息，等等，做个备忘
+版本信息
+查看操作系统版本
+cat /etc/os-release
+
+实际上对于不同的发行版，他们可能会有自己的专属版本信息文件，os-release很通用，其他的我们不多作介绍了
+
+查看内核版本架构等
+uname -a
+
+uname提供了一些查看某些内容的参数，我们这里仅介绍了使用-a查看所有的
+
+检查发行版和版本号
+lsb_release -a
+
+lsb_release也提供了一些查看某些内容的参数
+
+硬件信息
+硬件信息
+# list hardware
+lshw
+cpu
+lscpu
+硬盘(块设备)
+lsblk
+存储空间
+# disk use 慢
+du -h
+# disk free 快
+df -h
+内存
+free -h
+pci设备
+lspci
+主板信息
+dmidecode -t baseboard
+网络
+网卡信息
+ip a
+路由信息
+route -n
+arp表
+arp -a
+其他系统信息
+启动时间
+uptime
+系统日志
+dmesg
+登陆用户
+当前登陆用户
+w
+最后登陆用户
+last
+shell脚本
+为了方便查看，俺添加了vim的折叠
+#!/bin/bash
+echo "==============================="
+echo "       系统版本信息 {{{"
+echo "==============================="
+echo "操作系统版本："
+cat /etc/os-release
+echo
+echo "内核版本："
+uname -r
+echo
+echo "详细内核信息："
+uname -a
+echo
+echo "发行版信息："
+lsb_release -a 2>/dev/null || echo "lsb_release 命令未找到，请安装 lsb-release 包"
+echo
+echo "}}}"
+echo "==============================="
+echo "       硬件信息 {{{"
+echo "==============================="
+echo "CPU 信息："
+lscpu
+echo
+echo "内存信息："
+free -h
+echo
+echo "硬盘信息："
+lsblk
+echo
+echo "磁盘使用情况："
+df -h
+echo
+echo "显卡信息："
+lspci | grep -i vga
+echo
+echo "主板信息："
+sudo dmidecode -t baseboard 2>/dev/null || echo "请以 root 权限运行以查看主板信息"
+echo
+echo "硬件概览："
+sudo lshw -short 2>/dev/null || echo "请以 root 权限运行以查看硬件信息"
+echo
+echo "}}}"
+echo "==============================="
+echo "       网络信息 {{{"
+echo "==============================="
+echo "IP 地址："
+ip a
+echo
+echo "路由表信息："
+ip route
+echo
+echo "网络适配器信息："
+lspci | grep -i network
+echo
+echo "测试网络连通性（到 example.com）："
+ping -c 4 example.com
+echo
+echo "}}}"
+echo "==============================="
+echo "       其他系统信息 {{{"
+echo "==============================="
+echo "系统启动时间和负载："
+uptime
+echo
+echo "当前登录用户："
+w
+echo
+echo "系统日志（最近 10 行）："
+dmesg | tail -n 10
+echo
+echo "}}}"
+echo "==============================="
+echo "       驱动和模块信息 {{{"
+echo "==============================="
+echo "已加载的内核模块："
+lsmod
+echo
+echo "}}}"
+echo "==============================="
+echo "       脚本运行完成 {{{"
+echo "==============================="
+echo "完成所有信息收集"
+echo "}}}"
+'><meta name=author content="ziwindlu"><link rel=canonical href=https://ziwindlu.github.io/posts/linux-system-info-commands/><link crossorigin=anonymous href=/assets/css/stylesheet.95ae6e9689bd0037456375629f411acbf8ed76e0e9a7599900ad281f9526dee6.css integrity="sha256-la5ulom9ADdFY3Vin0Eay/jtduDpp1mZAK0oH5Um3uY=" rel="preload stylesheet" as=style><link rel=icon href=https://ziwindlu.github.io/favicon.svg><link rel=icon type=image/png sizes=16x16 href=https://ziwindlu.github.io/favicon.svg><link rel=icon type=image/png sizes=32x32 href=https://ziwindlu.github.io/favicon.svg><link rel=apple-touch-icon href=https://ziwindlu.github.io/favicon.svg><link rel=mask-icon href=https://ziwindlu.github.io/favicon.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=zh href=https://ziwindlu.github.io/posts/linux-system-info-commands/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51);color-scheme:dark}.list{background:var(--theme)}.toc{background:var(--entry)}}</style></noscript><script>localStorage.getItem("pref-theme")==="dark"?document.querySelector("html").dataset.theme="dark":localStorage.getItem("pref-theme")==="light"?document.querySelector("html").dataset.theme="light":window.matchMedia("(prefers-color-scheme: dark)").matches?document.querySelector("html").dataset.theme="dark":document.querySelector("html").dataset.theme="light"</script><meta property="og:url" content="https://ziwindlu.github.io/posts/linux-system-info-commands/"><meta property="og:site_name" content="ziwindlu 的博客"><meta property="og:title" content="linux常用的系统信息查看命令"><meta property="og:description" content='引子 俺经常需要查看某个linux操作系统的版本信息，硬件信息，等等，做个备忘
+版本信息 查看操作系统版本 cat /etc/os-release 实际上对于不同的发行版，他们可能会有自己的专属版本信息文件，os-release很通用，其他的我们不多作介绍了
+查看内核版本架构等 uname -a uname提供了一些查看某些内容的参数，我们这里仅介绍了使用-a查看所有的
+检查发行版和版本号 lsb_release -a lsb_release也提供了一些查看某些内容的参数
+硬件信息 硬件信息 # list hardware lshw cpu lscpu 硬盘(块设备) lsblk 存储空间 # disk use 慢 du -h # disk free 快 df -h 内存 free -h pci设备 lspci 主板信息 dmidecode -t baseboard 网络 网卡信息 ip a 路由信息 route -n arp表 arp -a 其他系统信息 启动时间 uptime 系统日志 dmesg 登陆用户 当前登陆用户
+w 最后登陆用户
+last shell脚本 为了方便查看，俺添加了vim的折叠
+#!/bin/bash echo "===============================" echo " 系统版本信息 {{{" echo "===============================" echo "操作系统版本：" cat /etc/os-release echo echo "内核版本：" uname -r echo echo "详细内核信息：" uname -a echo echo "发行版信息：" lsb_release -a 2>/dev/null || echo "lsb_release 命令未找到，请安装 lsb-release 包" echo echo "}}}" echo "===============================" echo " 硬件信息 {{{" echo "===============================" echo "CPU 信息：" lscpu echo echo "内存信息：" free -h echo echo "硬盘信息：" lsblk echo echo "磁盘使用情况：" df -h echo echo "显卡信息：" lspci | grep -i vga echo echo "主板信息：" sudo dmidecode -t baseboard 2>/dev/null || echo "请以 root 权限运行以查看主板信息" echo echo "硬件概览：" sudo lshw -short 2>/dev/null || echo "请以 root 权限运行以查看硬件信息" echo echo "}}}" echo "===============================" echo " 网络信息 {{{" echo "===============================" echo "IP 地址：" ip a echo echo "路由表信息：" ip route echo echo "网络适配器信息：" lspci | grep -i network echo echo "测试网络连通性（到 example.com）：" ping -c 4 example.com echo echo "}}}" echo "===============================" echo " 其他系统信息 {{{" echo "===============================" echo "系统启动时间和负载：" uptime echo echo "当前登录用户：" w echo echo "系统日志（最近 10 行）：" dmesg | tail -n 10 echo echo "}}}" echo "===============================" echo " 驱动和模块信息 {{{" echo "===============================" echo "已加载的内核模块：" lsmod echo echo "}}}" echo "===============================" echo " 脚本运行完成 {{{" echo "===============================" echo "完成所有信息收集" echo "}}}"'><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2024-11-30T00:00:00+08:00"><meta property="article:modified_time" content="2024-11-30T00:00:00+08:00"><meta property="article:tag" content="sysinfo"><meta name=twitter:card content="summary"><meta name=twitter:title content="linux常用的系统信息查看命令"><meta name=twitter:description content='引子 俺经常需要查看某个linux操作系统的版本信息，硬件信息，等等，做个备忘
+版本信息 查看操作系统版本 cat /etc/os-release 实际上对于不同的发行版，他们可能会有自己的专属版本信息文件，os-release很通用，其他的我们不多作介绍了
+查看内核版本架构等 uname -a uname提供了一些查看某些内容的参数，我们这里仅介绍了使用-a查看所有的
+检查发行版和版本号 lsb_release -a lsb_release也提供了一些查看某些内容的参数
+硬件信息 硬件信息 # list hardware lshw cpu lscpu 硬盘(块设备) lsblk 存储空间 # disk use 慢 du -h # disk free 快 df -h 内存 free -h pci设备 lspci 主板信息 dmidecode -t baseboard 网络 网卡信息 ip a 路由信息 route -n arp表 arp -a 其他系统信息 启动时间 uptime 系统日志 dmesg 登陆用户 当前登陆用户
+w 最后登陆用户
+last shell脚本 为了方便查看，俺添加了vim的折叠
+#!/bin/bash echo "===============================" echo " 系统版本信息 {{{" echo "===============================" echo "操作系统版本：" cat /etc/os-release echo echo "内核版本：" uname -r echo echo "详细内核信息：" uname -a echo echo "发行版信息：" lsb_release -a 2>/dev/null || echo "lsb_release 命令未找到，请安装 lsb-release 包" echo echo "}}}" echo "===============================" echo " 硬件信息 {{{" echo "===============================" echo "CPU 信息：" lscpu echo echo "内存信息：" free -h echo echo "硬盘信息：" lsblk echo echo "磁盘使用情况：" df -h echo echo "显卡信息：" lspci | grep -i vga echo echo "主板信息：" sudo dmidecode -t baseboard 2>/dev/null || echo "请以 root 权限运行以查看主板信息" echo echo "硬件概览：" sudo lshw -short 2>/dev/null || echo "请以 root 权限运行以查看硬件信息" echo echo "}}}" echo "===============================" echo " 网络信息 {{{" echo "===============================" echo "IP 地址：" ip a echo echo "路由表信息：" ip route echo echo "网络适配器信息：" lspci | grep -i network echo echo "测试网络连通性（到 example.com）：" ping -c 4 example.com echo echo "}}}" echo "===============================" echo " 其他系统信息 {{{" echo "===============================" echo "系统启动时间和负载：" uptime echo echo "当前登录用户：" w echo echo "系统日志（最近 10 行）：" dmesg | tail -n 10 echo echo "}}}" echo "===============================" echo " 驱动和模块信息 {{{" echo "===============================" echo "已加载的内核模块：" lsmod echo echo "}}}" echo "===============================" echo " 脚本运行完成 {{{" echo "===============================" echo "完成所有信息收集" echo "}}}"'><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"文章","item":"https://ziwindlu.github.io/posts/"},{"@type":"ListItem","position":2,"name":"linux常用的系统信息查看命令","item":"https://ziwindlu.github.io/posts/linux-system-info-commands/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"linux常用的系统信息查看命令","name":"linux常用的系统信息查看命令","description":"引子 俺经常需要查看某个linux操作系统的版本信息，硬件信息，等等，做个备忘\n版本信息 查看操作系统版本 cat /etc/os-release 实际上对于不同的发行版，他们可能会有自己的专属版本信息文件，os-release很通用，其他的我们不多作介绍了\n查看内核版本架构等 uname -a uname提供了一些查看某些内容的参数，我们这里仅介绍了使用-a查看所有的\n检查发行版和版本号 lsb_release -a lsb_release也提供了一些查看某些内容的参数\n硬件信息 硬件信息 # list hardware lshw cpu lscpu 硬盘(块设备) lsblk 存储空间 # disk use 慢 du -h # disk free 快 df -h 内存 free -h pci设备 lspci 主板信息 dmidecode -t baseboard 网络 网卡信息 ip a 路由信息 route -n arp表 arp -a 其他系统信息 启动时间 uptime 系统日志 dmesg 登陆用户 当前登陆用户\nw 最后登陆用户\nlast shell脚本 为了方便查看，俺添加了vim的折叠\n#!/bin/bash echo \u0026#34;===============================\u0026#34; echo \u0026#34; 系统版本信息 {{{\u0026#34; echo \u0026#34;===============================\u0026#34; echo \u0026#34;操作系统版本：\u0026#34; cat /etc/os-release echo echo \u0026#34;内核版本：\u0026#34; uname -r echo echo \u0026#34;详细内核信息：\u0026#34; uname -a echo echo \u0026#34;发行版信息：\u0026#34; lsb_release -a 2\u0026gt;/dev/null || echo \u0026#34;lsb_release 命令未找到，请安装 lsb-release 包\u0026#34; echo echo \u0026#34;}}}\u0026#34; echo \u0026#34;===============================\u0026#34; echo \u0026#34; 硬件信息 {{{\u0026#34; echo \u0026#34;===============================\u0026#34; echo \u0026#34;CPU 信息：\u0026#34; lscpu echo echo \u0026#34;内存信息：\u0026#34; free -h echo echo \u0026#34;硬盘信息：\u0026#34; lsblk echo echo \u0026#34;磁盘使用情况：\u0026#34; df -h echo echo \u0026#34;显卡信息：\u0026#34; lspci | grep -i vga echo echo \u0026#34;主板信息：\u0026#34; sudo dmidecode -t baseboard 2\u0026gt;/dev/null || echo \u0026#34;请以 root 权限运行以查看主板信息\u0026#34; echo echo \u0026#34;硬件概览：\u0026#34; sudo lshw -short 2\u0026gt;/dev/null || echo \u0026#34;请以 root 权限运行以查看硬件信息\u0026#34; echo echo \u0026#34;}}}\u0026#34; echo \u0026#34;===============================\u0026#34; echo \u0026#34; 网络信息 {{{\u0026#34; echo \u0026#34;===============================\u0026#34; echo \u0026#34;IP 地址：\u0026#34; ip a echo echo \u0026#34;路由表信息：\u0026#34; ip route echo echo \u0026#34;网络适配器信息：\u0026#34; lspci | grep -i network echo echo \u0026#34;测试网络连通性（到 example.com）：\u0026#34; ping -c 4 example.com echo echo \u0026#34;}}}\u0026#34; echo \u0026#34;===============================\u0026#34; echo \u0026#34; 其他系统信息 {{{\u0026#34; echo \u0026#34;===============================\u0026#34; echo \u0026#34;系统启动时间和负载：\u0026#34; uptime echo echo \u0026#34;当前登录用户：\u0026#34; w echo echo \u0026#34;系统日志（最近 10 行）：\u0026#34; dmesg | tail -n 10 echo echo \u0026#34;}}}\u0026#34; echo \u0026#34;===============================\u0026#34; echo \u0026#34; 驱动和模块信息 {{{\u0026#34; echo \u0026#34;===============================\u0026#34; echo \u0026#34;已加载的内核模块：\u0026#34; lsmod echo echo \u0026#34;}}}\u0026#34; echo \u0026#34;===============================\u0026#34; echo \u0026#34; 脚本运行完成 {{{\u0026#34; echo \u0026#34;===============================\u0026#34; echo \u0026#34;完成所有信息收集\u0026#34; echo \u0026#34;}}}\u0026#34; ","keywords":["sysinfo"],"articleBody":"引子 俺经常需要查看某个linux操作系统的版本信息，硬件信息，等等，做个备忘\n版本信息 查看操作系统版本 cat /etc/os-release 实际上对于不同的发行版，他们可能会有自己的专属版本信息文件，os-release很通用，其他的我们不多作介绍了\n查看内核版本架构等 uname -a uname提供了一些查看某些内容的参数，我们这里仅介绍了使用-a查看所有的\n检查发行版和版本号 lsb_release -a lsb_release也提供了一些查看某些内容的参数\n硬件信息 硬件信息 # list hardware lshw cpu lscpu 硬盘(块设备) lsblk 存储空间 # disk use 慢 du -h # disk free 快 df -h 内存 free -h pci设备 lspci 主板信息 dmidecode -t baseboard 网络 网卡信息 ip a 路由信息 route -n arp表 arp -a 其他系统信息 启动时间 uptime 系统日志 dmesg 登陆用户 当前登陆用户\nw 最后登陆用户\nlast shell脚本 为了方便查看，俺添加了vim的折叠\n#!/bin/bash echo \"===============================\" echo \" 系统版本信息 {{{\" echo \"===============================\" echo \"操作系统版本：\" cat /etc/os-release echo echo \"内核版本：\" uname -r echo echo \"详细内核信息：\" uname -a echo echo \"发行版信息：\" lsb_release -a 2\u003e/dev/null || echo \"lsb_release 命令未找到，请安装 lsb-release 包\" echo echo \"}}}\" echo \"===============================\" echo \" 硬件信息 {{{\" echo \"===============================\" echo \"CPU 信息：\" lscpu echo echo \"内存信息：\" free -h echo echo \"硬盘信息：\" lsblk echo echo \"磁盘使用情况：\" df -h echo echo \"显卡信息：\" lspci | grep -i vga echo echo \"主板信息：\" sudo dmidecode -t baseboard 2\u003e/dev/null || echo \"请以 root 权限运行以查看主板信息\" echo echo \"硬件概览：\" sudo lshw -short 2\u003e/dev/null || echo \"请以 root 权限运行以查看硬件信息\" echo echo \"}}}\" echo \"===============================\" echo \" 网络信息 {{{\" echo \"===============================\" echo \"IP 地址：\" ip a echo echo \"路由表信息：\" ip route echo echo \"网络适配器信息：\" lspci | grep -i network echo echo \"测试网络连通性（到 example.com）：\" ping -c 4 example.com echo echo \"}}}\" echo \"===============================\" echo \" 其他系统信息 {{{\" echo \"===============================\" echo \"系统启动时间和负载：\" uptime echo echo \"当前登录用户：\" w echo echo \"系统日志（最近 10 行）：\" dmesg | tail -n 10 echo echo \"}}}\" echo \"===============================\" echo \" 驱动和模块信息 {{{\" echo \"===============================\" echo \"已加载的内核模块：\" lsmod echo echo \"}}}\" echo \"===============================\" echo \" 脚本运行完成 {{{\" echo \"===============================\" echo \"完成所有信息收集\" echo \"}}}\" ","wordCount":"260","inLanguage":"zh","datePublished":"2024-11-30T00:00:00+08:00","dateModified":"2024-11-30T00:00:00+08:00","author":{"@type":"Person","name":"ziwindlu"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://ziwindlu.github.io/posts/linux-system-info-commands/"},"publisher":{"@type":"Organization","name":"ziwindlu 的博客","logo":{"@type":"ImageObject","url":"https://ziwindlu.github.io/favicon.svg"}}}</script></head><body id=top><header class=header><nav class=header-nav><div class=logo><a href=https://ziwindlu.github.io/ accesskey=h title="ziwindlu 的博客 (Alt + H)">ziwindlu 的博客</a><div class=logo-switches><button id=theme-toggle class=theme-toggle accesskey=t title="(Alt + T)" aria-label="Toggle theme">
+<svg class="moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+<svg class="sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu class=menu><li><a href=https://ziwindlu.github.io/ title=首页><span>首页</span></a></li><li><a href=https://ziwindlu.github.io/posts/ title=文章><span>文章</span></a></li><li><a href=https://ziwindlu.github.io/tags/ title=标签><span>标签</span></a></li><li><a href=https://ziwindlu.github.io/search/ title=搜索><span>搜索</span></a></li><li><a href=https://ziwindlu.github.io/about/ title=关于><span>关于</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><h1 class="post-title entry-hint-parent">linux常用的系统信息查看命令</h1><div class=post-meta><span title=2024-11-30T00:00:00+08:00>2024-11-30</span>&nbsp;·&nbsp;<span>2 分钟</span>&nbsp;·&nbsp;<span>ziwindlu</span>&nbsp;·&nbsp;<span class=post-source>源笔记：<code>02-Knowledge/Linux/linux常用的系统信息查看命令.md</code></span></div></header><details class=toc><summary accesskey=c title="(Alt + C)"><span class=title>目录</span></summary><div class=inner><ul><li><a href=#%e5%bc%95%e5%ad%90 aria-label=引子>引子</a></li><li><a href=#%e7%89%88%e6%9c%ac%e4%bf%a1%e6%81%af aria-label=版本信息>版本信息</a><ul><li><a href=#%e6%9f%a5%e7%9c%8b%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f%e7%89%88%e6%9c%ac aria-label=查看操作系统版本>查看操作系统版本</a></li><li><a href=#%e6%9f%a5%e7%9c%8b%e5%86%85%e6%a0%b8%e7%89%88%e6%9c%ac%e6%9e%b6%e6%9e%84%e7%ad%89 aria-label=查看内核版本架构等>查看内核版本架构等</a></li><li><a href=#%e6%a3%80%e6%9f%a5%e5%8f%91%e8%a1%8c%e7%89%88%e5%92%8c%e7%89%88%e6%9c%ac%e5%8f%b7 aria-label=检查发行版和版本号>检查发行版和版本号</a></li></ul></li><li><a href=#%e7%a1%ac%e4%bb%b6%e4%bf%a1%e6%81%af aria-label=硬件信息>硬件信息</a><ul><li><a href=#%e7%a1%ac%e4%bb%b6%e4%bf%a1%e6%81%af-1 aria-label=硬件信息>硬件信息</a></li><li><a href=#cpu aria-label=cpu>cpu</a></li><li><a href=#%e7%a1%ac%e7%9b%98%e5%9d%97%e8%ae%be%e5%a4%87 aria-label=硬盘(块设备)>硬盘(块设备)</a></li><li><a href=#%e5%ad%98%e5%82%a8%e7%a9%ba%e9%97%b4 aria-label=存储空间>存储空间</a></li><li><a href=#%e5%86%85%e5%ad%98 aria-label=内存>内存</a></li><li><a href=#pci%e8%ae%be%e5%a4%87 aria-label=pci设备>pci设备</a></li><li><a href=#%e4%b8%bb%e6%9d%bf%e4%bf%a1%e6%81%af aria-label=主板信息>主板信息</a></li></ul></li><li><a href=#%e7%bd%91%e7%bb%9c aria-label=网络>网络</a><ul><li><a href=#%e7%bd%91%e5%8d%a1%e4%bf%a1%e6%81%af aria-label=网卡信息>网卡信息</a></li><li><a href=#%e8%b7%af%e7%94%b1%e4%bf%a1%e6%81%af aria-label=路由信息>路由信息</a></li><li><a href=#arp%e8%a1%a8 aria-label=arp表>arp表</a></li></ul></li><li><a href=#%e5%85%b6%e4%bb%96%e7%b3%bb%e7%bb%9f%e4%bf%a1%e6%81%af aria-label=其他系统信息>其他系统信息</a><ul><li><a href=#%e5%90%af%e5%8a%a8%e6%97%b6%e9%97%b4 aria-label=启动时间>启动时间</a></li><li><a href=#%e7%b3%bb%e7%bb%9f%e6%97%a5%e5%bf%97 aria-label=系统日志>系统日志</a></li><li><a href=#%e7%99%bb%e9%99%86%e7%94%a8%e6%88%b7 aria-label=登陆用户>登陆用户</a></li></ul></li><li><a href=#shell%e8%84%9a%e6%9c%ac aria-label=shell脚本>shell脚本</a></li></ul></div></details><div class="post-content md-content"><h2 id=引子>引子<a hidden class=anchor aria-hidden=true href=#引子>#</a></h2><p>俺经常需要查看某个linux操作系统的版本信息，硬件信息，等等，做个备忘</p><h2 id=版本信息>版本信息<a hidden class=anchor aria-hidden=true href=#版本信息>#</a></h2><h3 id=查看操作系统版本>查看操作系统版本<a hidden class=anchor aria-hidden=true href=#查看操作系统版本>#</a></h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>cat /etc/os-release
+</span></span></code></pre></div><blockquote><p>实际上对于不同的发行版，他们可能会有自己的专属版本信息文件，<code>os-release</code>很通用，其他的我们不多作介绍了</p></blockquote><h3 id=查看内核版本架构等>查看内核版本架构等<a hidden class=anchor aria-hidden=true href=#查看内核版本架构等>#</a></h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>uname -a
+</span></span></code></pre></div><blockquote><p><code>uname</code>提供了一些查看某些内容的参数，我们这里仅介绍了使用<code>-a</code>查看所有的</p></blockquote><h3 id=检查发行版和版本号>检查发行版和版本号<a hidden class=anchor aria-hidden=true href=#检查发行版和版本号>#</a></h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>lsb_release -a
+</span></span></code></pre></div><blockquote><p><code>lsb_release</code>也提供了一些查看某些内容的参数</p></blockquote><h2 id=硬件信息>硬件信息<a hidden class=anchor aria-hidden=true href=#硬件信息>#</a></h2><h3 id=硬件信息-1>硬件信息<a hidden class=anchor aria-hidden=true href=#硬件信息-1>#</a></h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=c1># list hardware</span>
+</span></span><span class=line><span class=cl>lshw
+</span></span></code></pre></div><h3 id=cpu>cpu<a hidden class=anchor aria-hidden=true href=#cpu>#</a></h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>lscpu
+</span></span></code></pre></div><h3 id=硬盘块设备>硬盘(块设备)<a hidden class=anchor aria-hidden=true href=#硬盘块设备>#</a></h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>lsblk
+</span></span></code></pre></div><h3 id=存储空间>存储空间<a hidden class=anchor aria-hidden=true href=#存储空间>#</a></h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=c1># disk use 慢</span>
+</span></span><span class=line><span class=cl>du -h
+</span></span><span class=line><span class=cl><span class=c1># disk free 快</span>
+</span></span><span class=line><span class=cl>df -h
+</span></span></code></pre></div><h3 id=内存>内存<a hidden class=anchor aria-hidden=true href=#内存>#</a></h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>free -h
+</span></span></code></pre></div><h3 id=pci设备>pci设备<a hidden class=anchor aria-hidden=true href=#pci设备>#</a></h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>lspci
+</span></span></code></pre></div><h3 id=主板信息>主板信息<a hidden class=anchor aria-hidden=true href=#主板信息>#</a></h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>dmidecode -t baseboard
+</span></span></code></pre></div><h2 id=网络>网络<a hidden class=anchor aria-hidden=true href=#网络>#</a></h2><h3 id=网卡信息>网卡信息<a hidden class=anchor aria-hidden=true href=#网卡信息>#</a></h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>ip a
+</span></span></code></pre></div><h3 id=路由信息>路由信息<a hidden class=anchor aria-hidden=true href=#路由信息>#</a></h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>route -n
+</span></span></code></pre></div><h3 id=arp表>arp表<a hidden class=anchor aria-hidden=true href=#arp表>#</a></h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>arp -a
+</span></span></code></pre></div><h2 id=其他系统信息>其他系统信息<a hidden class=anchor aria-hidden=true href=#其他系统信息>#</a></h2><h3 id=启动时间>启动时间<a hidden class=anchor aria-hidden=true href=#启动时间>#</a></h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>uptime
+</span></span></code></pre></div><h3 id=系统日志>系统日志<a hidden class=anchor aria-hidden=true href=#系统日志>#</a></h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>dmesg
+</span></span></code></pre></div><h3 id=登陆用户>登陆用户<a hidden class=anchor aria-hidden=true href=#登陆用户>#</a></h3><p><strong>当前登陆用户</strong></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>w
+</span></span></code></pre></div><p><strong>最后登陆用户</strong></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>last
+</span></span></code></pre></div><h2 id=shell脚本>shell脚本<a hidden class=anchor aria-hidden=true href=#shell脚本>#</a></h2><p>为了方便查看，俺添加了vim的折叠</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=cp>#!/bin/bash
+</span></span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;===============================&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;       系统版本信息 {{{&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;===============================&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;操作系统版本：&#34;</span>
+</span></span><span class=line><span class=cl>cat /etc/os-release
+</span></span><span class=line><span class=cl><span class=nb>echo</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;内核版本：&#34;</span>
+</span></span><span class=line><span class=cl>uname -r
+</span></span><span class=line><span class=cl><span class=nb>echo</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;详细内核信息：&#34;</span>
+</span></span><span class=line><span class=cl>uname -a
+</span></span><span class=line><span class=cl><span class=nb>echo</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;发行版信息：&#34;</span>
+</span></span><span class=line><span class=cl>lsb_release -a 2&gt;/dev/null <span class=o>||</span> <span class=nb>echo</span> <span class=s2>&#34;lsb_release 命令未找到，请安装 lsb-release 包&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;}}}&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;===============================&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;       硬件信息 {{{&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;===============================&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;CPU 信息：&#34;</span>
+</span></span><span class=line><span class=cl>lscpu
+</span></span><span class=line><span class=cl><span class=nb>echo</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;内存信息：&#34;</span>
+</span></span><span class=line><span class=cl>free -h
+</span></span><span class=line><span class=cl><span class=nb>echo</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;硬盘信息：&#34;</span>
+</span></span><span class=line><span class=cl>lsblk
+</span></span><span class=line><span class=cl><span class=nb>echo</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;磁盘使用情况：&#34;</span>
+</span></span><span class=line><span class=cl>df -h
+</span></span><span class=line><span class=cl><span class=nb>echo</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;显卡信息：&#34;</span>
+</span></span><span class=line><span class=cl>lspci <span class=p>|</span> grep -i vga
+</span></span><span class=line><span class=cl><span class=nb>echo</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;主板信息：&#34;</span>
+</span></span><span class=line><span class=cl>sudo dmidecode -t baseboard 2&gt;/dev/null <span class=o>||</span> <span class=nb>echo</span> <span class=s2>&#34;请以 root 权限运行以查看主板信息&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;硬件概览：&#34;</span>
+</span></span><span class=line><span class=cl>sudo lshw -short 2&gt;/dev/null <span class=o>||</span> <span class=nb>echo</span> <span class=s2>&#34;请以 root 权限运行以查看硬件信息&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;}}}&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;===============================&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;       网络信息 {{{&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;===============================&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;IP 地址：&#34;</span>
+</span></span><span class=line><span class=cl>ip a
+</span></span><span class=line><span class=cl><span class=nb>echo</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;路由表信息：&#34;</span>
+</span></span><span class=line><span class=cl>ip route
+</span></span><span class=line><span class=cl><span class=nb>echo</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;网络适配器信息：&#34;</span>
+</span></span><span class=line><span class=cl>lspci <span class=p>|</span> grep -i network
+</span></span><span class=line><span class=cl><span class=nb>echo</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;测试网络连通性（到 example.com）：&#34;</span>
+</span></span><span class=line><span class=cl>ping -c <span class=m>4</span> example.com
+</span></span><span class=line><span class=cl><span class=nb>echo</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;}}}&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;===============================&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;       其他系统信息 {{{&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;===============================&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;系统启动时间和负载：&#34;</span>
+</span></span><span class=line><span class=cl>uptime
+</span></span><span class=line><span class=cl><span class=nb>echo</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;当前登录用户：&#34;</span>
+</span></span><span class=line><span class=cl>w
+</span></span><span class=line><span class=cl><span class=nb>echo</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;系统日志（最近 10 行）：&#34;</span>
+</span></span><span class=line><span class=cl>dmesg <span class=p>|</span> tail -n <span class=m>10</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;}}}&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;===============================&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;       驱动和模块信息 {{{&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;===============================&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;已加载的内核模块：&#34;</span>
+</span></span><span class=line><span class=cl>lsmod
+</span></span><span class=line><span class=cl><span class=nb>echo</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;}}}&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;===============================&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;       脚本运行完成 {{{&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;===============================&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;完成所有信息收集&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;}}}&#34;</span>
+</span></span></code></pre></div></div><footer class=post-footer><ul class=post-tags><li><a href=https://ziwindlu.github.io/tags/sysinfo/>sysinfo</a></li></ul><nav class=paginav><a class=prev href=https://ziwindlu.github.io/posts/burpsuite-setup/><span class=title>« 上一页</span>
+<span>奶妈级教学从0开始手把手教你使用开心版burpsuite</span>
+</a><a class=next href=https://ziwindlu.github.io/posts/zinit-zsh-plugin-manager/><span class=title>下一页 »</span>
+<span>zinit高效的zsh插件管理器</span></a></nav></footer></article></main><footer class=footer><span>&copy; 2026 <a href=https://ziwindlu.github.io/>ziwindlu 的博客</a></span> ·
+<span>Powered by
+<a href="https://gohugo.io/?utm_source=papermod" rel=noopener target=_blank>Hugo</a> &
+<a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top id=top-link class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey=g><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up"><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg>
+</a><script>let menu=document.getElementById("menu");if(menu){const e=localStorage.getItem("menu-scroll-position");e&&(menu.scrollLeft=parseInt(e,10));let t;menu.addEventListener("scroll",function(){clearTimeout(t),t=setTimeout(function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)},150)},{passive:!0})}document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var n=this.getAttribute("href").substr(1);const t=document.querySelector(`[id='${decodeURIComponent(n)}']`);window.matchMedia("(prefers-reduced-motion: reduce)").matches?t.scrollIntoView():t.scrollIntoView({behavior:"smooth"}),t.tabIndex<0&&!t.hasAttribute("tabindex")&&t.setAttribute("tabindex","-1"),t.focus({preventScroll:!0}),n==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${n}`)})})</script><script>var toplink=document.getElementById("top-link"),scrollTicking=!1;window.addEventListener("scroll",function(){if(scrollTicking)return;scrollTicking=!0,requestAnimationFrame(function(){const e=window.innerHeight,t=document.body.scrollTop>e||document.documentElement.scrollTop>e;toplink.classList.toggle("hidden",!t),scrollTicking=!1})},{passive:!0})</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{const e=document.querySelector("html");e.dataset.theme==="dark"?(e.dataset.theme="light",localStorage.setItem("pref-theme","light")):(e.dataset.theme="dark",localStorage.setItem("pref-theme","dark"))})</script><script>document.querySelectorAll("pre > code").forEach(e=>{const n=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="复制";function s(){t.innerHTML="已复制！",setTimeout(()=>{t.innerHTML="复制"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),s();return}const n=document.createRange();n.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(n);try{document.execCommand("copy"),s()}catch{}o.removeRange(n)}),n.classList.contains("highlight")?n.appendChild(t):n.parentNode.firstChild==n||(e.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?e.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(t):e.parentNode.appendChild(t))})</script></body></html>

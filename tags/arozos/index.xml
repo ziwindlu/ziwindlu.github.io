@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>arozos on ziwindlu 的博客</title><link>https://ziwindlu.github.io/tags/arozos/</link><description>Recent content in arozos on ziwindlu 的博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Sun, 08 Dec 2024 00:00:00 +0800</lastBuildDate><atom:link href="https://ziwindlu.github.io/tags/arozos/index.xml" rel="self" type="application/rss+xml"/><item><title>arozos初体验</title><link>https://ziwindlu.github.io/posts/arozos-first-look/</link><pubDate>Sun, 08 Dec 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/arozos-first-look/</guid><description>&lt;h2 id="引子"&gt;引子&lt;/h2&gt;
+&lt;p&gt;最近在看《自由软件，自由社会》一书。发现自己家里的群晖emmmm，然后着手去寻找一个替代品。俺找到了arozos&lt;/p&gt;
+&lt;h2 id="安装"&gt;安装&lt;/h2&gt;
+&lt;p&gt;俺从本想从一台centos安装，但是俺发现其安装脚本仅适用与debain系列的操作系统。于是俺又重新安装了一个ubuntu server
+安装很简单只需行命令即可&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;wget -O install.sh https://raw.githubusercontent.com/tobychui/arozos/master/installer/install.sh &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; bash install.sh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然后使用&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;systemctl start arozos
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;访问配置的端口号就能使用辣
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1715308409603_0.png"&gt;&lt;/p&gt;
+&lt;h3 id="踩坑"&gt;踩坑&lt;/h3&gt;
+&lt;p&gt;使用root用户安装后生成的service有问题，手动修改后可正常启动&lt;/p&gt;
+&lt;h2 id="后记"&gt;后记&lt;/h2&gt;
+&lt;p&gt;处理一些简单的文本倒是不错。处理起来office全家桶就不太行了。
+俺找了一圈，没有找到跨平台的照片同步功能，俺也不想折腾了。
+总结，把玩一下还是可以的，日用就算了。&lt;/p&gt;
+&lt;h2 id="参考"&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://github.com/tobychui/arozos"&gt;arozos&lt;/a&gt;
+id:: 663d80b6-07b9-417d-93e0-1ad02f07a292&lt;/p&gt;</description></item></channel></rss>

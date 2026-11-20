@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>grub on ziwindlu 的博客</title><link>https://ziwindlu.github.io/tags/grub/</link><description>Recent content in grub on ziwindlu 的博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Tue, 23 Apr 2024 00:00:00 +0800</lastBuildDate><atom:link href="https://ziwindlu.github.io/tags/grub/index.xml" rel="self" type="application/rss+xml"/><item><title>grub的使用及使用场景</title><link>https://ziwindlu.github.io/posts/grub-usage/</link><pubDate>Tue, 23 Apr 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/grub-usage/</guid><description>&lt;h2 id="安装软件"&gt;安装软件&lt;/h2&gt;
+&lt;p&gt;一般来说，&lt;code&gt;grub&lt;/code&gt;或&lt;code&gt;grub2&lt;/code&gt;会存在于你的系统，如果没有，自行搜索
+以arch为例&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo pacman -S grub efibootmgr
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="安装到硬盘中"&gt;安装到硬盘中&lt;/h2&gt;
+&lt;h3 id="mbr"&gt;MBR&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;grub-install /dev/sda
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;这里的sda指硬盘名，而非分区名
+MBR的第一个扇区为引导扇区，所以这里的操作只是把相关代码写到第一个扇区而已&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id="gpt"&gt;GPT&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;grub-install --target&lt;span class="o"&gt;=&lt;/span&gt;x86_64-efi --efi-directory&lt;span class="o"&gt;=&lt;/span&gt;yourEFI --bootloader-id&lt;span class="o"&gt;=&lt;/span&gt;grub
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;yourEFI为你当前系统中挂载的efi分区的位置&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="更新引导"&gt;更新引导&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;grub-mkconfig -o /grub/grub.cfg
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;关于windows：某些发行版可能不识别ntfs分区，需要自行安装软件，方可识别出windows&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="题外话"&gt;题外话&lt;/h2&gt;
+&lt;p&gt;windows安装时会把所选的efi清空，丝毫不顾及其他系统&lt;/p&gt;
+&lt;h2 id="grub主题"&gt;grub主题&lt;/h2&gt;
+&lt;p&gt;grub不一定是黑乎乎的，也是有主题的&lt;/p&gt;
+&lt;h3 id="通用安装步骤"&gt;通用安装步骤&lt;/h3&gt;
+&lt;p&gt;找主题
+下载
+根据readme安装
+重新生成grub.cfg&lt;/p&gt;
+&lt;h3 id="找主题的渠道"&gt;找主题的渠道&lt;/h3&gt;
+&lt;p&gt;github
+&lt;a href="https://www.gnome-look.org/browse?cat=109&amp;amp;ord=latest"&gt;GRUB Themes Gnome-look.org&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="主题推荐"&gt;主题推荐&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://github.com/VandalByte/dedsec-grub2-theme"&gt;dedsec&lt;/a&gt;
+&lt;a href="https://github.com/Lxtharia/minegrub-theme.git"&gt;minegrub&lt;/a&gt;
+minegrub自定义Mincraft上的字符串
+修改&lt;code&gt;/path/to/minegrub/assets/splashes.txt&lt;/code&gt;这个文件
+运行&lt;code&gt;/path/to/minegrub/splashes.txt&lt;/code&gt;这个文件
+你就会发现&lt;code&gt;/path/to/minegrub/log.png&lt;/code&gt;发生了变化&lt;/p&gt;
+&lt;h2 id="场景新系统装grub"&gt;场景:新系统装grub&lt;/h2&gt;
+&lt;p&gt;一般而言，周到的发行版会在安装操作系统时自动进行grub安装，一般不需要用户操作&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;判断自己硬盘是什么类型(mbr or gpt)&lt;/li&gt;
+&lt;li&gt;安装软件&lt;/li&gt;
+&lt;li&gt;根据硬盘的类型选择上面两种装法&lt;/li&gt;
+&lt;li&gt;更新一下引导&lt;/li&gt;
+&lt;li&gt;重启&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="场景grub无了被银币windows顶掉了"&gt;场景:grub无了被银币windows顶掉了&lt;/h2&gt;
+&lt;p&gt;在确定是grub被顶掉的情况下按照以下步骤&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;找到当初装linux的u盘或光盘，插入～&lt;/li&gt;
+&lt;li&gt;进入发行版提供的体验模式或救援模式&lt;/li&gt;
+&lt;li&gt;挂载装linux的分区&lt;/li&gt;
+&lt;li&gt;chroot进入挂载的分区&lt;/li&gt;
+&lt;li&gt;重复场景1&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;进不到grub还有一种可能是直接选择的win启动&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="场景多系统引导项不全"&gt;场景:多系统引导项不全&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;更新引导&lt;/li&gt;
+&lt;li&gt;重启
+缺少windows:
+排查是否为系统无法识别ntfs
+黑苹果
+1.使用oc引导linux，较新版本的oc已经支持linux引导了
+2.grub套娃oc进行引导，需要手动编辑grub.cfg&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="场景grub-g了进入grub-rescue模式-"&gt;场景:grub g了，进入grub rescue模式 🥵&lt;/h2&gt;
+&lt;p&gt;不要慌，小问题
+windows安装时会把所选的efi清空&lt;/p&gt;
+&lt;h3 id="grub-rescue命令"&gt;grub rescue命令&lt;/h3&gt;
+&lt;p&gt;set查看/设置变量
+ls列出分区
+insmod&lt;/p&gt;
+&lt;h3 id="grub-rescue变量"&gt;grub rescue变量&lt;/h3&gt;
+&lt;p&gt;root根目录
+prefix&lt;code&gt;grub.cfg&lt;/code&gt;所在的路径&lt;/p&gt;
+&lt;h3 id="修复"&gt;修复&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;查看那一个分区是linux系统的分区(使用ls进行查看,&lt;code&gt;ls (hdx,xxx)&lt;/code&gt;可以显示分区类型）&lt;/li&gt;
+&lt;li&gt;设置变量,&lt;code&gt;root=(hdx,xxx)&lt;/code&gt;,&lt;code&gt;prefix=(hdx,xxx)/boot/grub&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;insmod normal&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;normal&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;进入系统&lt;/li&gt;
+&lt;li&gt;重复场景2&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="其他命令"&gt;其他命令&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;update-grub&lt;/code&gt;(一些发行版方便用户使用推出的脚本)&lt;/p&gt;
+&lt;h2 id="踩坑"&gt;踩坑&lt;/h2&gt;
+&lt;p&gt;没事别去PE用DG去分区辣，进系统grub会崩的，老老实实用fdisk吧，图形化工具推荐gparted&lt;/p&gt;
+&lt;h2 id="参考"&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://zhuanlan.zhihu.com/p/103866090"&gt;自定义GRUB主题zhihu&lt;/a&gt;
+&lt;a href="https://wiki.archlinux.org/title/GRUB_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#UEFI_%E7%B3%BB%E7%BB%9F"&gt;GRUB (简体中文) ArchWiki&lt;/a&gt;
+&lt;a href="https://cn.linux-console.net/?p=8018"&gt;如何使用 GRUB Rescue 修复 Linux&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

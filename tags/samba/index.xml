@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>samba on ziwindlu 的博客</title><link>https://ziwindlu.github.io/tags/samba/</link><description>Recent content in samba on ziwindlu 的博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Thu, 11 Apr 2024 00:00:00 +0800</lastBuildDate><atom:link href="https://ziwindlu.github.io/tags/samba/index.xml" rel="self" type="application/rss+xml"/><item><title>archlinux下samba服务搭建</title><link>https://ziwindlu.github.io/posts/archlinux-samba/</link><pubDate>Thu, 11 Apr 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/archlinux-samba/</guid><description>&lt;h2 id="安装所需安装包"&gt;安装所需安装包&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;pacman -S samba&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="修改配置文件"&gt;修改配置文件&lt;/h2&gt;
+&lt;p&gt;samba没有提供配置文件，需要手动创建。
+创建&lt;code&gt;/etc/samba/smb.conf&lt;/code&gt;文件，内容如下&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code class="language-smb.conf" data-lang="smb.conf"&gt;# 文件夹名称
+[homes]
+# 注释
+comment = Home Directories
+# 共享的路径
+path = /home/smb_user/
+# 是否显示文件夹
+browseable = yes
+# 是否可写
+writable = yes
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;更多配置项&lt;a href="https://www.samba.org/samba/docs/current/man-html/smb.conf.5.html"&gt;samba.org&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="管理smb用户"&gt;管理smb用户&lt;/h2&gt;
+&lt;p&gt;samba需要linux用户才能使用
+修改samba密码
+&lt;code&gt;smbpasswd -a mysmb&lt;/code&gt;
+samba管理工具
+&lt;code&gt;pdbedit&lt;/code&gt;
+创建用户
+&lt;code&gt;pdbedit -a username&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;注意这个username是要已经在linux用户中存在的
+删除用户
+&lt;code&gt;pdbedit -x username&lt;/code&gt;
+查看用户
+&lt;code&gt;pdbedit -L -v&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="启动服务"&gt;启动服务&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;systemctl start smb.service nmb.service&lt;/code&gt;
+开机自启动
+&lt;code&gt;systemctl enable smb.service nmb.service&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="使smb服务可被发现"&gt;使smb服务可被发现&lt;/h2&gt;
+&lt;p&gt;使smb被linux、mac发现
+安装软件包&lt;code&gt;pacman -S avahi&lt;/code&gt;
+启动服务&lt;code&gt;systemctl start avahi-daemon.service&lt;/code&gt;
+使smb被windows发现
+安装软件包&lt;code&gt;yay -S wsdd&lt;/code&gt;
+启动服务&lt;code&gt;systemctl start wsdd.service&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="windows下连接"&gt;windows下连接&lt;/h2&gt;
+&lt;p&gt;网络-&amp;gt;映射网络驱动器-&amp;gt;文件夹框内填入&lt;code&gt;\\ipaddres\homes&lt;/code&gt;-&amp;gt;输入账号密码连接
+命令行挂载&lt;code&gt;net use \\host\share_name password /user:user_name&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="linux下连接"&gt;linux下连接&lt;/h2&gt;
+&lt;p&gt;smbclient连接smb&lt;code&gt;smbclient --user username //host/share_name&lt;/code&gt;
+挂载&lt;code&gt;mount -t cifs -o username=user_name,password=passwd //host/share_name /local_mount_point&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="参考"&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://zhuanlan.zhihu.com/p/397145106"&gt;Arch下的KVM win10客户机与宿主机使用samba共享文件的步骤&lt;/a&gt;
+&lt;a href="https://wiki.archlinuxcn.org/wiki/Samba"&gt;Samba Arch Linux 中文维基&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

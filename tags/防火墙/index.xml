@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>防火墙 on ziwindlu 的博客</title><link>https://ziwindlu.github.io/tags/%E9%98%B2%E7%81%AB%E5%A2%99/</link><description>Recent content in 防火墙 on ziwindlu 的博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Fri, 03 Apr 2026 00:00:00 +0800</lastBuildDate><atom:link href="https://ziwindlu.github.io/tags/%E9%98%B2%E7%81%AB%E5%A2%99/index.xml" rel="self" type="application/rss+xml"/><item><title>firewall</title><link>https://ziwindlu.github.io/posts/firewall/</link><pubDate>Fri, 03 Apr 2026 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/firewall/</guid><description>&lt;h2 id="what"&gt;what&lt;/h2&gt;
+&lt;p&gt;网络安全设备，通过规则控制进出网络的流量（硬件或软件实现）。&lt;/p&gt;
+&lt;h2 id="why"&gt;why&lt;/h2&gt;
+&lt;p&gt;防攻击：阻止DDoS、SQL注入等威胁。
+合规要求：企业网络需满足等保2.0标准。
+隐私保护：隐藏内网拓扑，防端口扫描。&lt;/p&gt;
+&lt;h2 id="how"&gt;how&lt;/h2&gt;
+&lt;p&gt;软件：
+firewalld,iptables,ufw
+硬件:
+略&lt;/p&gt;</description></item><item><title>Linux防火墙</title><link>https://ziwindlu.github.io/posts/linux-firewall/</link><pubDate>Fri, 03 Apr 2026 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/linux-firewall/</guid><description>&lt;h2 id="基本概念"&gt;基本概念&lt;/h2&gt;
+&lt;h3 id="四表table"&gt;四表table&lt;/h3&gt;
+&lt;p&gt;FILTER表
+NAT表
+MANGLE表
+RAW表&lt;/p&gt;
+&lt;h3 id="五链chain"&gt;五链chain&lt;/h3&gt;
+&lt;p&gt;PREROUTING链
+INPUT链
+FORWARD链
+OUTPUT链
+POSTROUTING链&lt;/p&gt;
+&lt;h2 id="iptables-card-forward"&gt;iptables #card #forward&lt;/h2&gt;
+&lt;p&gt;id:: 67b96abd-426c-46a3-b296-eefb563d0ed0
+iptables基于netfilter&lt;/p&gt;
+&lt;h3 id="查看规则"&gt;查看规则&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;iptables -t [table] -L [chain] [options]&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="添加规则"&gt;添加规则&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;iptables -t [table] -A [chain] [match] -j [action]&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="删除规则"&gt;删除规则&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;iptables -t [table] -D [chain]&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="配置永久规则"&gt;配置永久规则&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;iptables-save &amp;gt; file&lt;/code&gt;保存规则到文件
+一般来说iptables会加载&lt;code&gt;/etc/iptables/*.roules&lt;/code&gt;中的内容
+&lt;code&gt;iptables-restore &amp;lt; file&lt;/code&gt;手动加载规则&lt;/p&gt;
+&lt;h2 id="ufw-card-forward"&gt;ufw #card #forward&lt;/h2&gt;
+&lt;p&gt;id:: 67b96acf-5566-4be1-9e6a-134afd1b8ae7
+ufw基于iptables&lt;/p&gt;
+&lt;h3 id="查看规则-1"&gt;查看规则&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;ufw status [numberd,verbose]&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="添加规则-1"&gt;添加规则&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;ufw action args&lt;/code&gt;
+action:&lt;code&gt;allow&lt;/code&gt;,&lt;code&gt;reject&lt;/code&gt;,&lt;code&gt;deny&lt;/code&gt;,&lt;code&gt;limit&lt;/code&gt;
+简单的args：
+端口号/协议&lt;code&gt;port[/protocol]&lt;/code&gt;
+服务名&lt;code&gt;service&lt;/code&gt;，example:&lt;code&gt;samba&lt;/code&gt;,&lt;code&gt;ftp&lt;/code&gt;,&lt;code&gt;mysql&lt;/code&gt;
+默认状态下ufw添加的规则就是永久的&lt;/p&gt;
+&lt;h3 id="删除规则-1"&gt;删除规则&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;ufw delete add_thing&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;add_thing&lt;/code&gt;为你添加时输入的内容&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="firewalld-card-forward"&gt;firewalld #card #forward&lt;/h2&gt;
+&lt;p&gt;id:: 67b98493-7541-453f-9730-f3db80eb5f35
+firewalld是centos默认的防火墙&lt;/p&gt;
+&lt;h3 id="查看规则-2"&gt;查看规则&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;firewall-cmd --list-all&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="添加规则-2"&gt;添加规则&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;firewall-cmd --add-xx args&lt;/code&gt;
+example:
+添加http服务放行&lt;code&gt;firewall-cmd --add-service http&lt;/code&gt;
+添加tcp88端口放行&lt;code&gt;firewall-cmd --add-port 88/tcp&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;如果想要添加永久规则，需要添加参数&lt;code&gt;--permanent&lt;/code&gt;，例如&lt;code&gt;firewall-cmd --permanent --add-service http&lt;/code&gt;，让其生效需要执行&lt;code&gt;firewall-cmd --reload&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id="删除规则-2"&gt;删除规则&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;firewall-cmd --remove-xx args&lt;/code&gt;
+example:
+删除服务规则&lt;code&gt;firewall-cmd --remove-service service_name&lt;/code&gt;&lt;/p&gt;</description></item></channel></rss>

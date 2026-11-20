@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>macos on ziwindlu 的博客</title><link>https://ziwindlu.github.io/tags/macos/</link><description>Recent content in macos on ziwindlu 的博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Fri, 03 Apr 2026 00:00:00 +0800</lastBuildDate><atom:link href="https://ziwindlu.github.io/tags/macos/index.xml" rel="self" type="application/rss+xml"/><item><title>macmini局域网内远程桌面解决方案</title><link>https://ziwindlu.github.io/posts/macmini-lan-remote-desktop/</link><pubDate>Fri, 03 Apr 2026 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/macmini-lan-remote-desktop/</guid><description>&lt;h2 id="引子"&gt;引子&lt;/h2&gt;
+&lt;p&gt;macmini到手，临时没有显示器，迫切需要一个远程桌面方案。
+macos自带vnc，不过对非mac客户端不友好，不够快，非常卡顿。如果你是mac用户，那么读到这里就可以结束了，用mac自带的远程连接吧，体验极好。&lt;/p&gt;
+&lt;h2 id="效果不好的解决方案"&gt;效果不好的解决方案&lt;/h2&gt;
+&lt;h3 id="网线直连vnc"&gt;网线直连+vnc&lt;/h3&gt;
+&lt;p&gt;俺的mac连接的是无线网，空出来一个网口。vnc卡和网络有关系，于是俺就找了根网线进行直连。
+&lt;strong&gt;缺点：&lt;/strong&gt;
+连接网线太麻烦
+效果好了一点，但不多&lt;/p&gt;
+&lt;h3 id="rdp"&gt;rdp&lt;/h3&gt;
+&lt;p&gt;俺尝试安装xrdp，安装成功了，但是无法使用。理论上来说是可以，俺比较菜，怎么弄都不行。
+&lt;strong&gt;缺点&lt;/strong&gt;
+xrdp是运行在x11上的，mac用起来可能比较吃力，因为俺没用上，其他的不作评价&lt;/p&gt;
+&lt;h3 id="安卓平板airscreen做mac屏幕"&gt;安卓平板+airscreen做mac屏幕&lt;/h3&gt;
+&lt;p&gt;ariscreen是商业软件。但是很好用。
+非付费用户会在一段时间后断连。&lt;/p&gt;
+&lt;h2 id="最终解决方案"&gt;最终解决方案&lt;/h2&gt;
+&lt;p&gt;sunshine串流。&lt;/p&gt;
+&lt;h3 id="安装"&gt;安装&lt;/h3&gt;
+&lt;p&gt;使用brew直接安装的sunshine是有问题的，需要安装beta版。&lt;/p&gt;
+&lt;h3 id="开机自启"&gt;开机自启&lt;/h3&gt;
+&lt;p&gt;编辑&lt;code&gt;~/Library/LaunchAgents/sunshine.plist&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-xml" data-lang="xml"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;UTF-8&amp;#34;?&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;&amp;lt;!DOCTYPE plist PUBLIC &amp;#34;-/Apple/DTD PLIST 1.0/EN&amp;#34; &amp;#34;http://www.apple.com/DTDs/PropertyList-1.0.dtd&amp;#34;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;&amp;lt;plist&lt;/span&gt; &lt;span class="na"&gt;version=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;1.0&amp;#34;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;&amp;lt;dict&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;&amp;lt;key&amp;gt;&lt;/span&gt;Label&lt;span class="nt"&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;&amp;lt;string&amp;gt;&lt;/span&gt;home.sunshine&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;&amp;lt;key&amp;gt;&lt;/span&gt;ProgramArguments&lt;span class="nt"&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;&amp;lt;array&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;&amp;lt;string&amp;gt;&lt;/span&gt;/opt/homebrew/bin/sunshine&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;&amp;lt;/array&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;&amp;lt;key&amp;gt;&lt;/span&gt;RunAtLoad&lt;span class="nt"&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;&amp;lt;true/&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;&amp;lt;key&amp;gt;&lt;/span&gt;KeepAlive&lt;span class="nt"&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;&amp;lt;dict&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;&amp;lt;key&amp;gt;&lt;/span&gt;NetworkState&lt;span class="nt"&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;&amp;lt;true/&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;&amp;lt;/dict&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;&amp;lt;/dict&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;&amp;lt;/plist&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="缺点"&gt;缺点&lt;/h3&gt;
+&lt;p&gt;linux下moonlight连接时会出现鼠标时不时消失的问题。&lt;/p&gt;
+&lt;h2 id="参考"&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://github.com/LizardByte/Sunshine"&gt;GitHub - LizardByte/Sunshine: Self-hosted game stream host for Moonlight.&lt;/a&gt;&lt;/p&gt;</description></item><item><title>hackintosh初体验</title><link>https://ziwindlu.github.io/posts/hackintosh-first-try/</link><pubDate>Wed, 10 Apr 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/hackintosh-first-try/</guid><description>&lt;h2 id="引子"&gt;引子&lt;/h2&gt;
+&lt;p&gt;入了手一个古老的笔记本，发现配置可以黑苹果。加上人在隔离，无趣，想起之前手撸OC的悲惨经历，决定重来一次。&lt;/p&gt;
+&lt;h2 id="前言"&gt;前言&lt;/h2&gt;
+&lt;p&gt;此文章不是专业安装教程，仅为记录搞机日常。
+在繁琐的黑苹果过程中，需要摆正心态，善用搜索引擎。降低预期，容忍他的一些小问题。&lt;/p&gt;
+&lt;h2 id="主机配置和驱动问题"&gt;主机配置和驱动问题&lt;/h2&gt;
+&lt;p&gt;戴尔灵越5570
+CPU:i5 8250U
+GPU:核显(独显无法驱动)
+硬盘:
+无线网卡:不可用(其实后面俺换了一个可驱动的无线网卡，隔空投送啥的都能用了，但是俺不想写了)
+蓝牙: 可用
+有线网卡:需加载驱动&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;相信了解黑苹果的朋友都知道硬件的重要性，这里不多赘述&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="收集文件"&gt;收集文件&lt;/h2&gt;
+&lt;p&gt;经历了手撸OC的痛，痛定思痛决定直接使用别人的efi
+github中找到的
+&lt;a href="https://github.com/stayboogy/Hackintosh_Dell-Inspiron-5570_Catalina"&gt;stayboogy&amp;rsquo;s efi&lt;/a&gt;
+&lt;a href="https://github.com/Mateo1234454545/DELL-5570-Hackintosh"&gt;Mateo1234454545‘s efi&lt;/a&gt;
+两个efi都使用过，第二个efi基本完美，可以直接使用，仅需要将OC中的CFGLock相关选项设置为true，甚至bios都不需要修改
+生命在于折腾，所以我用了第一个，以下内容基于第一个efi(其实是装了n此最后停留在了1中，不想换了才这样滴)
+后续需要2中ACPI，Kexts中文件&lt;/p&gt;
+&lt;h2 id="制作安装u盘"&gt;制作安装u盘&lt;/h2&gt;
+&lt;h3 id="镜像下载"&gt;镜像下载&lt;/h3&gt;
+&lt;p&gt;需要python环境，使用pyton3
+&lt;a href="https://dortania.github.io/OpenCore-Install-Guide/installer-guide/linux-install.html#downloading-macos"&gt;Making the installer in Linux | OpenCore Install Guide&lt;/a&gt;
+根据efi中的描述，下载对应版本&lt;/p&gt;
+&lt;h3 id="分区"&gt;分区&lt;/h3&gt;
+&lt;p&gt;win下使用&lt;code&gt;DiskGenius&lt;/code&gt;进行分区
+Linux下使用&lt;code&gt;gdisk&lt;/code&gt;(OC官方推荐)&lt;/p&gt;
+&lt;h3 id="镜像的使用和写入"&gt;镜像的使用和写入&lt;/h3&gt;
+&lt;p&gt;Linux下使用工具&lt;code&gt;dmg2img&lt;/code&gt;
+arch下安装&lt;code&gt;yay -S dmg2img&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;如果你的u盘速度堪忧，可能需要多等一会儿&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="bios设置"&gt;BIOS设置&lt;/h2&gt;
+&lt;h3 id="stat控制器相关"&gt;STAT控制器相关&lt;/h3&gt;
+&lt;p&gt;为了防止进入安装程序后找不到硬盘，需要将此项改为AHCI&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;如果更改后你的Windows无法启动，原因是windows没有安装AHCI驱动。
+解决:
+将此选项更改为原来的模式，&lt;code&gt;msconfig&lt;/code&gt;中启用安全启动并应用
+开机前将此选项再次更改为AHCI
+进入Windows，查看设备管理器是否更改成功&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id="安全启动"&gt;安全启动&lt;/h3&gt;
+&lt;p&gt;禁用此项&lt;/p&gt;
+&lt;h3 id="cpu虚拟化"&gt;CPU虚拟化&lt;/h3&gt;
+&lt;p&gt;禁用此项&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;安装后可重新开启，以满足使用虚拟机的需求，但是不太好用&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id="bios中无法更改的内容"&gt;BIOS中无法更改的内容&lt;/h3&gt;
+&lt;p&gt;解决卡logo和卡进度条无限重启问题
+&lt;strong&gt;注意，此更改可能会使你的电脑变砖，以下内容仅适合戴尔灵越5570，其他型号主板慎用。且这一步是必须的，修改前请备份BIOS文件。&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;DVMV PRE-ALLOCATED set to 64MB: setup_var 0x795 0x2&lt;/li&gt;
+&lt;li&gt;DVMT TOTAL GFX MEM set to MAX: setup_var 0x796 0x3&lt;/li&gt;
+&lt;li&gt;CFG Lock set to Disabled: setup_var 0x4ED 0x0&lt;/li&gt;
+&lt;li&gt;I2CO INTERUPT MODE set to GPIO Interrupt : setup_var 0x272 0x0
+以上内容为完美黑苹果做准备，至少需要设置1。
+如果你只设置了1，需要在OC配置文件中将CFGLOCK相关选项修改为true。
+如果不在OC配置文件中将CFGLOCK相关选项修改为true，则需要配置3&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;如果修改后仍无法进入安装界面，请全部修改&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id="修改步骤"&gt;修改步骤&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;修改前请备份BIOS文件&lt;/strong&gt;
+选择&lt;code&gt;/EFI/Boot/BOOTx64.efi&lt;/code&gt;启动。
+启动后你会看到熟悉的grub
+&lt;code&gt;setup_var 0x795&lt;/code&gt;查看该值并记录下来
+&lt;code&gt;setup_var 0x795 0x2&lt;/code&gt;将该值更改
+重复以上两步，将你需要的内容修改完毕即可重启&lt;/p&gt;
+&lt;h3 id="将u盘设置为启动盘-"&gt;将u盘设置为启动盘 😁&lt;/h3&gt;
+&lt;p&gt;这是最后一步，也是最重要的一步。&lt;/p&gt;
+&lt;h2 id="安装macos"&gt;安装macOS&lt;/h2&gt;
+&lt;h3 id="磁盘分区"&gt;磁盘分区&lt;/h3&gt;
+&lt;p&gt;可在PE或Windows中分出供mac使用的分区，类型随意，只需规定大小
+进入mac安装界面使用磁盘工具将上一步分出的分区格式化为APPLE类型即可&lt;/p&gt;
+&lt;h2 id="系统安装"&gt;系统安装&lt;/h2&gt;
+&lt;p&gt;随便点点就行&lt;/p&gt;</description></item></channel></rss>

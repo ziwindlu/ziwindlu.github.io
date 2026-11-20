@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>virtualbox on ziwindlu 的博客</title><link>https://ziwindlu.github.io/tags/virtualbox/</link><description>Recent content in virtualbox on ziwindlu 的博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Tue, 12 Nov 2024 00:00:00 +0800</lastBuildDate><atom:link href="https://ziwindlu.github.io/tags/virtualbox/index.xml" rel="self" type="application/rss+xml"/><item><title>virtualbox启动本地硬盘系统双系统无缝切换</title><link>https://ziwindlu.github.io/posts/virtualbox-boot-local-disk/</link><pubDate>Tue, 12 Nov 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/virtualbox-boot-local-disk/</guid><description>&lt;h2 id="引子"&gt;引子&lt;/h2&gt;
+&lt;p&gt;在mac下使用&lt;code&gt;parallels desktop&lt;/code&gt;这个软件，他可以识别本地硬盘里面的windows。就不用每次都切换系统了，非常好用。俺在linux下也想这样干。&lt;/p&gt;
+&lt;h2 id="正文"&gt;正文&lt;/h2&gt;
+&lt;h3 id="创建一个虚拟机"&gt;创建一个虚拟机&lt;/h3&gt;
+&lt;p&gt;根据wiki描述创建
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1724157673495_0.png"&gt;
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1724157691624_0.png"&gt;
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1724157708664_0.png"&gt;&lt;/p&gt;
+&lt;h3 id="需要准备的东西"&gt;需要准备的东西&lt;/h3&gt;
+&lt;p&gt;windows原版镜像或pe镜像，本文选择使用wepe镜像，使用windows原版镜像的小伙伴可以跟着wiki一步一步走。
+windows虚拟硬盘
+一个新的efi虚拟磁盘&lt;/p&gt;
+&lt;h3 id="windows虚拟硬盘制备"&gt;windows虚拟硬盘制备&lt;/h3&gt;
+&lt;h4 id="硬盘访问权限问题"&gt;硬盘访问权限问题&lt;/h4&gt;
+&lt;p&gt;俺选择了一个简单但安全性较低的方法，将用户加入disk组和vboxusers组
+&lt;code&gt;usermod -aG disk,vboxusers $USER&lt;/code&gt;
+可以参照wiki使用udev来做更细粒度的控制&lt;/p&gt;
+&lt;h4 id="制备windows虚拟硬盘"&gt;制备windows虚拟硬盘&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;VBoxManage internalcommands createrawvmdk -filename &amp;quot;WINDOWS_VMDK_PATH&amp;quot; -rawdisk WINDOWS_DISK -partitions WINDOWS_RESERVED_PARTITION_NUMBER,WINDOWS_BASIC_DATA_PARTITION_NUMBER -relative&lt;/code&gt;
+变量解释：
+&lt;code&gt;WINDOWS_VMDK_PATH&lt;/code&gt;制备的vmdk文件路径
+&lt;code&gt;WINDOWS_DISK&lt;/code&gt;windows所在的硬盘(非某个分区)，长得应该这样&lt;code&gt;/dev/sda&lt;/code&gt;
+&lt;code&gt;WINDOWS_RESERVED_PARTITION_NUMBER&lt;/code&gt;
+&lt;code&gt;WINDOWS_BASIC_DATA_PARTITION_NUMBER&lt;/code&gt;windows恢复分区编号和数据硬盘编号
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1724158518406_0.png"&gt;
+对于俺这块硬盘这两个编号应该为4和3&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;请注意区分编号顺序
+对于俺这块硬盘制备虚拟硬盘的这个命令应该为
+&lt;code&gt;VBoxManage internalcommands createrawvmdk -filename &amp;quot;/path/to/file/new_windows.vmdk&amp;quot; -rawdisk /dev/nvme0n1 -partitions 4,3 -relative&lt;/code&gt;
+制作完成你应该会得到这两个文件。&lt;code&gt;-pt&lt;/code&gt;结尾的这个文件用不到，请忽视它
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1724158757962_0.png"&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id="制备efi硬盘"&gt;制备efi硬盘&lt;/h4&gt;
+&lt;p&gt;VBoxManage createmedium disk &amp;ndash;filename VM_FOLDER/esp.vmdk &amp;ndash;size 512 &amp;ndash;format VMDK`
+最后你应该得到这么多文件
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1724158897811_0.png"&gt;
+注意更改文件所有者和权限&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;不要在意efi硬盘为权限什么是777&amp;hellip;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id="为虚拟机添加硬盘"&gt;为虚拟机添加硬盘&lt;/h3&gt;
+&lt;p&gt;&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1724159001891_0.png"&gt;
+注意efi与windows硬盘的启动顺序&lt;/p&gt;
+&lt;h3 id="修复efi分区"&gt;修复efi分区&lt;/h3&gt;
+&lt;p&gt;强烈建议先备份一下原硬盘的efi分区
+&lt;code&gt;dd if=/dev/sdaX of=xx.iso&lt;/code&gt;
+进入pe后，首先要把efi硬盘改为gpt格式，然后使用分区工具为其创建一个esp分区，并格式化
+我们使用dism++进行修复，这里手把手教学(纯命令行修复也行，cmd下斜杠打自闭了，俺不用)
+第一步打开dism++然后选择你的windows硬盘打开会话
+第二步点恢复功能
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1724159883634_0.png"&gt;
+第三步点击更多
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1724159924797_0.png"&gt;
+第四步选择你创建的efi分区
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1724160002009_0.png"&gt;
+最后确定即可&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;千万不要选错了！
+最后重启就行啦&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="可能会遇到的问题"&gt;可能会遇到的问题&lt;/h2&gt;
+&lt;h3 id="腾讯系游戏无法正常游玩"&gt;腾讯系游戏无法正常游玩&lt;/h3&gt;
+&lt;p&gt;登陆lol时提示不支持虚拟机。emmmm，应该有解决方案，但是俺搜到的解决方案都是使用vm去搞的。俺电脑也没独显，性能估计也跟不上，俺就放弃了。&lt;/p&gt;
+&lt;h2 id="后续"&gt;后续&lt;/h2&gt;
+&lt;p&gt;windows自动更新了，切换到windows时蓝屏。&lt;/p&gt;
+&lt;h2 id="参考"&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://wiki.archlinuxcn.org/wiki/VirtualBox#Run_a_native_Windows_installation_inside_VirtualBox"&gt;VirtualBox Arch Linux 中文维基&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

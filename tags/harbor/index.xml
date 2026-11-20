@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>harbor on ziwindlu 的博客</title><link>https://ziwindlu.github.io/tags/harbor/</link><description>Recent content in harbor on ziwindlu 的博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Fri, 22 Nov 2024 00:00:00 +0800</lastBuildDate><atom:link href="https://ziwindlu.github.io/tags/harbor/index.xml" rel="self" type="application/rss+xml"/><item><title>使用harbor搭建个人docker镜像仓库</title><link>https://ziwindlu.github.io/posts/harbor-docker-registry/</link><pubDate>Fri, 22 Nov 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/harbor-docker-registry/</guid><description>&lt;h2 id="引子"&gt;引子&lt;/h2&gt;
+&lt;p&gt;多个主机每次拉取镜像的时候都需要访问dockerhub，每次都需要进行科学**，配置科学**时有些麻烦。索性自己搭建一个docker镜像仓库，自己个用。&lt;/p&gt;
+&lt;h2 id="代码下载"&gt;代码下载&lt;/h2&gt;
+&lt;p&gt;去到harbor的release页面下载。本文以离线版为例
+&lt;a href="https://github.com/goharbor/harbor"&gt;GitHub goharbor/harbor: An open source trusted cloud native registry project that stores, signs, and scans content.&lt;/a&gt;
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1732239994547_0.png"&gt;
+解压出来 😋&lt;/p&gt;
+&lt;h2 id="harbor配置以及docker-composeyml生成"&gt;harbor配置以及docker-compose.yml生成&lt;/h2&gt;
+&lt;h3 id="harbor配置文件"&gt;harbor配置文件&lt;/h3&gt;
+&lt;p&gt;在自定义配置之前，我们需要复制一份配置文件，在这基础上进行修改&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;cp harbor.yml.tmpl harbor.yml
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;小坑点，如果你的目录下没有&lt;code&gt;harbor.yml&lt;/code&gt;，在下一步生成&lt;code&gt;docker-compose.yml&lt;/code&gt;是会失败的
+然后根据你的需求修改配置文件吧
+注意: hostname是必须要修改的且不要修改为localhost或127.0.0.1&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id="让harbor使用代理"&gt;让harbor使用代理&lt;/h4&gt;
+&lt;p&gt;在&lt;code&gt;http_proxy&lt;/code&gt;和&lt;code&gt;https_proxy&lt;/code&gt;添加代理服务器即可
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1732240772267_0.png"&gt;&lt;/p&gt;
+&lt;h3 id="导入镜像并生成docker-composeyml"&gt;导入镜像并生成docker-compose.yml&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 这个脚本会帮你导入镜像并生成docker-compose.yml&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./install.sh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;静静等待其跑完，&lt;code&gt;docker-compose.yml&lt;/code&gt;就躺在当前目录里了，狠狠地运行他吧 🥵
+如果你已经导入了镜像，要重新生成&lt;code&gt;docker-compose.yml&lt;/code&gt;，这时不需要使用&lt;code&gt;./install.sh&lt;/code&gt;了，仅需使用&lt;code&gt;./prepare&lt;/code&gt;。&lt;/p&gt;
+&lt;h2 id="运行"&gt;运行&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;docker-compose.yml&lt;/code&gt;已经有了，请运行他吧&lt;/p&gt;
+&lt;h2 id="升级"&gt;升级&lt;/h2&gt;
+&lt;p&gt;每个版本的升级可能不同，请参考官方文档，这里不做介绍。不过还是要提醒一下，升级时请做好数据备份 😏&lt;/p&gt;
+&lt;h2 id="参考"&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://github.com/goharbor/harbor"&gt;GitHub goharbor/harbor: An open source trusted cloud native registry project that stores, signs, and scans content.&lt;/a&gt;
+&lt;a href="https://goharbor.io/"&gt;goharbor.io&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>渗透测试 on ziwindlu 的博客</title><link>https://ziwindlu.github.io/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/</link><description>Recent content in 渗透测试 on ziwindlu 的博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Fri, 03 Apr 2026 00:00:00 +0800</lastBuildDate><atom:link href="https://ziwindlu.github.io/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/index.xml" rel="self" type="application/rss+xml"/><item><title>内网渗透中的概念</title><link>https://ziwindlu.github.io/posts/intranet-pentest-concepts/</link><pubDate>Fri, 03 Apr 2026 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/intranet-pentest-concepts/</guid><description>&lt;hr&gt;
+&lt;h2 id="category-changeme"&gt;tags: #blog
+category: #changeme&lt;/h2&gt;
+&lt;h2 id="常见的内网网段-card-forward"&gt;常见的内网网段 #card #forward&lt;/h2&gt;
+&lt;p&gt;id:: 67b28b85-c702-4513-9ac7-bb1cea55840f
+&lt;code&gt;192.168.0.0/16&lt;/code&gt;地址范围&lt;code&gt;192.168.0.0-192.168.255.255&lt;/code&gt;
+&lt;code&gt;172.16.0.0/12&lt;/code&gt;地址范围&lt;code&gt;172.16.0.0-172.31.255.255&lt;/code&gt;
+&lt;code&gt;10.0.0.0/8&lt;/code&gt;地址范围&lt;code&gt;10.0.0.0-10.255.255.255&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="dmz-card-forward"&gt;dmz #card #forward&lt;/h2&gt;
+&lt;p&gt;id:: 67b28c79-0cc1-4984-88c5-c5d350ff5b65
+Demilitarized Zone隔离区，用于在&lt;strong&gt;可信内网&lt;/strong&gt;与&lt;strong&gt;不可信外网&lt;/strong&gt;之间建立缓冲区域。
+在内网渗透中，既是在出口网络和内网间的缓冲&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>logseq on ziwindlu 的博客</title><link>https://ziwindlu.github.io/tags/logseq/</link><description>Recent content in logseq on ziwindlu 的博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Fri, 03 Apr 2026 00:00:00 +0800</lastBuildDate><atom:link href="https://ziwindlu.github.io/tags/logseq/index.xml" rel="self" type="application/rss+xml"/><item><title>logseq联动anki</title><link>https://ziwindlu.github.io/posts/logseq-anki/</link><pubDate>Fri, 03 Apr 2026 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/logseq-anki/</guid><description>&lt;h2 id="引子"&gt;引子&lt;/h2&gt;
+&lt;p&gt;之前写过一个自动同步anki的脚本，用起来不是很理想。寻找更好的代替方案。于是找到了&lt;code&gt;logseq-anki-sync&lt;/code&gt;这个项目。这里浅浅记录一下，用作备忘。&lt;/p&gt;
+&lt;h2 id="安装"&gt;安装&lt;/h2&gt;
+&lt;p&gt;安装主要分两个步骤，logseq插件安装以及anki插件安装。
+官方仓库中提供了安装视频，这里不做演示。&lt;/p&gt;
+&lt;h2 id="卡片编写及同步"&gt;卡片编写及同步&lt;/h2&gt;
+&lt;p&gt;我们在logseq中使用&lt;code&gt;#card&lt;/code&gt;去标记记忆卡片。现在&lt;code&gt;#card&lt;/code&gt;被用作anki同步的标识，插件会将被card标识的块以及子块作为卡片同步到anki。
+一个实例：
+logseq内容
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1739365808812_0.png"&gt;
+点击进行同步
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1739365837319_0.png"&gt;
+查看anki中内容
+将将，你就会发现Default牌组中出现你的卡片啦
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1739366045406_0.png"&gt;
+预览长这样
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1739365900961_0.png"&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;你的可能会包含父块的内容，我进行了配置，想要修改请参考配置章节&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="复杂卡片的编写"&gt;复杂卡片的编写&lt;/h2&gt;
+&lt;h3 id="多行卡片的类型"&gt;多行卡片的类型&lt;/h3&gt;
+&lt;p&gt;一共分为以下几种类型
+forward(默认类型)
+incremental(随机隐藏一行)
+reversed(隐藏问题)
+bidirectional(incremental与reversed的结合)
+实际上当你尝试了这些类型后，他们只是在anki中的text存在一些小差异。观察这些差异可以让你在编写Cloze卡片时更得心应手。&lt;/p&gt;
+&lt;h3 id="卡片组"&gt;卡片组&lt;/h3&gt;
+&lt;p&gt;请看vcr
+&lt;img alt="208642258-3fea7b7f-38f6-4a36-ac68-e623e5892f23.gif" loading="lazy" src="https://ziwindlu.github.io/images/208642258-3fea7b7f-38f6-4a36-ac68-e623e5892f23_1739369577936_0.gif"&gt;
+对于这些卡片，多行卡片类型同样是适用的 只需在问题后添加类型即可&lt;/p&gt;
+&lt;h3 id="cloze卡片"&gt;Cloze卡片&lt;/h3&gt;
+&lt;p&gt;这个俺用不到，
+&lt;a href="https://github.com/debanjandhar12/logseq-anki-sync/discussions/89"&gt;Making cloze cards · debanjandhar12/logseq-anki-sync · Discussion #89 · GitHub&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="使用官方提供的命令进行编写"&gt;使用官方提供的命令进行编写&lt;/h3&gt;
+&lt;p&gt;使用&lt;code&gt;/Open Anki Feature Explorer&lt;/code&gt;命令，鼠标点点点就行啦
+不仅仅是写卡片 功能非常强大
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1739366538972_0.png"&gt;&lt;/p&gt;
+&lt;h2 id="指定deck"&gt;指定deck&lt;/h2&gt;
+&lt;p&gt;每次卡片生成在Default牌组中。你可能想去自定义卡片到那个牌组，等等。仅需指定deck即可。
+请参考官方文档。
+&lt;a href="https://github.com/debanjandhar12/logseq-anki-sync/discussions/117"&gt;Terminology &amp;amp; Specifying Deck · debanjandhar12/logseq-anki-sync · Discussion #117 · GitHub&lt;/a&gt;
+同样&lt;code&gt;/Open Anki Feature Explorer&lt;/code&gt;也可以帮助你完成&lt;/p&gt;
+&lt;h2 id="配置"&gt;配置&lt;/h2&gt;
+&lt;h3 id="禁止卡片显示父块内容"&gt;禁止卡片显示父块内容&lt;/h3&gt;
+&lt;p&gt;取消勾选这个选项
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1739365784044_0.png"&gt;&lt;/p&gt;
+&lt;h3 id="配置默认deck"&gt;配置默认deck&lt;/h3&gt;
+&lt;p&gt;看到上面那张图的Default了吗，改它&lt;/p&gt;
+&lt;h2 id="参考"&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://github.com/debanjandhar12/logseq-anki-sync"&gt;GitHub - debanjandhar12/logseq-anki-sync: An logseq to anki syncing plugin with superpowers - image occlusion, card direction, incremental cards, and a lot more.&lt;/a&gt;&lt;/p&gt;</description></item><item><title>记录一次logseq中vim插件快捷键冲突的奇葩事件</title><link>https://ziwindlu.github.io/posts/logseq-vim-keybinding-conflict/</link><pubDate>Fri, 03 Apr 2026 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/logseq-vim-keybinding-conflict/</guid><description>&lt;h2 id="引子"&gt;引子&lt;/h2&gt;
+&lt;p&gt;这一切的一切还要从面试官打不通俺的电话说起，最开始俺还以为俺的小破手机又出毛病了呢。俺尝试了n个人的手机给俺打电话，都能打通。俺又想是不是苹果勿扰模式的问题？勿扰模式也应该有通话记录的啊。难道是电话黑名单？？俺尝试把俺的所有电话黑名单删除掉，静候佳音。&lt;/p&gt;
+&lt;h2 id="调整思路"&gt;调整思路&lt;/h2&gt;
+&lt;p&gt;事实是，俺仍然没有收到电话。百思不得其解，直至俺打开了俺的简历。看到简历上竟赫然写着&lt;strong&gt;熟悉OWSP TOP11&lt;/strong&gt;、&lt;strong&gt;熟悉log5j2&lt;/strong&gt;，扭头看了下电话那一栏，俺的电话号码竟然&amp;quot;被&amp;quot;加了1。原因找到了，俺错怪了俺的老伙计(iphone se 2020 64G 战损版)，是简历写错了，这是个悲伤的故事。
+为什么数字会被加1呢？难道物理学真的不存在了？水滴为了阻止我找工作在偷偷陷害我？
+但是计算机里0就是0，1就是1，他没有问题，绝对是我的问题。&lt;/p&gt;
+&lt;h2 id="谁动了俺的简历"&gt;谁动了俺的简历！&lt;/h2&gt;
+&lt;p&gt;回归源头，俺回到了俺的logseq中，发现的确简历被莫名其妙的修改了，修改的很美，每一行的第一个数字都被加了1。
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1744715418342_0.png"&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;剧透一下，右上角的Normal模式，是他，他是罪魁祸首。
+找了很久也没有找到是谁的问题。很巧啊，俺用vim的时候在可视模式下按了一下&lt;code&gt;c-a&lt;/code&gt;(vim中数字自增的快捷键)，发现可视模式下选中的字符都增加了1，而不是光标处增加了1。这现象，和俺的简历竟然出奇的相似。于是乎俺杀到了logseq中进行测试。
+&lt;img alt="Peek 2025-04-15 19-49.gif" loading="lazy" src="https://ziwindlu.github.io/images/Peek_2025-04-15_19-49_1744717869909_0.gif"&gt;{:height 460, :width 749}
+为什么说Normal模式是罪魁祸首，logseq这vim插件只有按v或是&lt;code&gt;c-v&lt;/code&gt;才能进入可视模式，Normal这几个字符严重影响了俺的判断。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="总结"&gt;总结&lt;/h2&gt;
+&lt;p&gt;logseq中的vim插件快捷键&lt;code&gt;c-a&lt;/code&gt;(数字自增)与全选快捷键冲突。导致使用&lt;code&gt;c-a&lt;/code&gt;进行全选时文章中的数字也进行了自增。
+有了这次奇葩的事件之后，以后和别人发文件都要再确认n次是否有问题了。吃一堑长一智。最后附快捷键冲突解决方案。
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1744718150379_0.png"&gt;
+修改或删除这个条目&lt;/p&gt;</description></item><item><title>logseq快捷键</title><link>https://ziwindlu.github.io/posts/logseq-shortcuts/</link><pubDate>Wed, 24 Apr 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/logseq-shortcuts/</guid><description>&lt;h2 id="引子"&gt;引子&lt;/h2&gt;
+&lt;p&gt;初学logseq,对其操作都不大熟练，于是记一个快捷键写一个在里面&lt;/p&gt;
+&lt;h2 id="正文"&gt;正文&lt;/h2&gt;
+&lt;p&gt;id:: 65e185ab-8d66-4222-b68a-5bb5e4dde329
+markdown快捷语法&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;快捷键&lt;/th&gt;
+&lt;th&gt;自定义&lt;/th&gt;
+&lt;th&gt;说明&lt;/th&gt;
+&lt;th&gt;助记&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;ctrl+shift+s&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;ctrl+u&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;删除线&lt;/td&gt;
+&lt;td&gt;unused&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;ctrl+shift+h&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;ctrl+h&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;高亮&lt;/td&gt;
+&lt;td&gt;high light&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;编辑浏览相关&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;快捷键&lt;/td&gt;
+&lt;td&gt;自定义&lt;/td&gt;
+&lt;td&gt;描述&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;mdash;&lt;/td&gt;
+&lt;td&gt;&amp;mdash;&lt;/td&gt;
+&lt;td&gt;&amp;mdash;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;ctrl+k&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;全局搜索页面和块&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;ctrl+shift+k&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;vim:/&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;页面中搜索块&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;shift+click&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;打开&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;ctrl+up&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;vim:zc&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;关闭折叠&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;ctrl+down&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;vim:zo&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;打开折叠&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;tab/shift+tab&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;vim:H/L&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;缩进&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;vim:zO/C&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;递归打开关闭折叠&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;快速移动&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;快捷键&lt;/td&gt;
+&lt;td&gt;自定义&lt;/td&gt;
+&lt;td&gt;说明&lt;/td&gt;
+&lt;td&gt;助记&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;mdash;&lt;/td&gt;
+&lt;td&gt;&amp;mdash;&lt;/td&gt;
+&lt;td&gt;&amp;mdash;&lt;/td&gt;
+&lt;td&gt;&amp;mdash;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;ctrl+]&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;alt+right&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;前进&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;ctrl+[&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;alt+left&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;回退&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;快捷键&lt;/td&gt;
+&lt;td&gt;自定义&lt;/td&gt;
+&lt;td&gt;说明&lt;/td&gt;
+&lt;td&gt;助记&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;gs&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;快捷键设置&lt;/td&gt;
+&lt;td&gt;go shortcuts&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;del&gt;&lt;code&gt;gg&lt;/code&gt;&lt;/del&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;T&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;打开图谱&lt;/td&gt;
+&lt;td&gt;go graph&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;alt+shift+c&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;tt&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;打开/关闭目录&lt;/td&gt;
+&lt;td&gt;to topic&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="参考"&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://github.com/vipzhicheng/logseq-plugin-vim-shortcuts"&gt;GitHub vipzhicheng/logseq-plugin-vim-shortcuts: Add part of VIM key bindings experience to Logseq&lt;/a&gt;&lt;/p&gt;</description></item><item><title>logseq入门</title><link>https://ziwindlu.github.io/posts/logseq-basics/</link><pubDate>Wed, 24 Apr 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/logseq-basics/</guid><description>&lt;h2 id="引子"&gt;引子&lt;/h2&gt;
+&lt;p&gt;最近尝试了很多双向链接的笔记软件，最后选择了logseq，因为它开源，用着放心。从纯vim转过来使用起来还是有点不习惯的&lt;/p&gt;
+&lt;h2 id="一些概念"&gt;一些概念&lt;/h2&gt;
+&lt;p&gt;块 每个点后面的东西都叫块，无序列表
+tag跟在&lt;code&gt;#&lt;/code&gt;后的是tag
+文章使用&lt;code&gt;[[]]&lt;/code&gt;创建文章
+shift+click 在侧边栏打开
+每篇文章下面的两个东西
+第一个是被引用，第二个是未被引用
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1708653506356_0.png"&gt;&lt;/p&gt;
+&lt;h2 id="todo"&gt;todo&lt;/h2&gt;
+&lt;p&gt;快捷方式&lt;code&gt;/todo&lt;/code&gt;
+选择日期快捷方式&lt;code&gt;/Date picker&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="card"&gt;card&lt;/h2&gt;
+&lt;p&gt;写法
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1709172102535_0.png"&gt;
+效果
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1709172157668_0.png"&gt;&lt;/p&gt;
+&lt;h2 id="template"&gt;template&lt;/h2&gt;
+&lt;p&gt;创建模板
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1709100609781_0.png"&gt;
+给他起个名字就能用了
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1709189178252_0.png"&gt;
+复选框可以在生成模板时是否保留父块
+引用模板
+&lt;code&gt;/template&lt;/code&gt; + 模板名
+参考&lt;a href="https://zhuanlan.zhihu.com/p/545442427"&gt;【logseq】日记自动加载模板设置&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="插件"&gt;插件&lt;/h2&gt;
+&lt;p&gt;Get link title
+快速获取链接的标题
+Vim Shortcuts
+vim快捷键，让logseq和vim一样
+todo list
+todo列表
+Heatmap
+类似于github的提交记录表，绿色格子的那个
+Bullet Threading
+让你更清晰的看到当前块的父块
+TOC Generator
+目录插件&lt;/p&gt;
+&lt;h2 id="同步方案"&gt;同步方案&lt;/h2&gt;
+&lt;p&gt;手动同步：
+使用github等平台进行同步
+自动同步
+ResilioSync 同步
+syncthing 同步&lt;/p&gt;
+&lt;h2 id="参考"&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://sspai.com/post/69503#!"&gt;双链笔记软件推荐：Logseq 和它的五种用法 少数派&lt;/a&gt;
+&lt;a href="https://www.bilibili.com/video/BV1S3411i7Hs/?spm_id_from=333.788&amp;amp;vd_source=70e78dea06384e693b9aedb319a5589b"&gt;免费开源双链笔记应用 Logseq 特点介绍_哔哩哔哩_bilibili&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

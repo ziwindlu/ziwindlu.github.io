@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>yadm on ziwindlu 的博客</title><link>https://ziwindlu.github.io/tags/yadm/</link><description>Recent content in yadm on ziwindlu 的博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Wed, 10 Apr 2024 00:00:00 +0800</lastBuildDate><atom:link href="https://ziwindlu.github.io/tags/yadm/index.xml" rel="self" type="application/rss+xml"/><item><title>yadm优雅地管理dotfile</title><link>https://ziwindlu.github.io/posts/yadm-dotfiles/</link><pubDate>Wed, 10 Apr 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/yadm-dotfiles/</guid><description>&lt;h2 id="引子"&gt;引子&lt;/h2&gt;
+&lt;p&gt;配置文件管理起来非常麻烦，在之前写过一个shell脚本来管理配置文件，仅仅做了简单的复制粘贴，虽然用上了git，仍然感觉不够优雅，遂有此笔记&lt;/p&gt;
+&lt;h2 id="yadm的使用"&gt;yadm的使用&lt;/h2&gt;
+&lt;p&gt;使用起来与git相同&lt;code&gt;yadm init/push/pull/add/commit&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="新用户创建一个仓库"&gt;新用户创建一个仓库&lt;/h3&gt;
+&lt;p&gt;使用&lt;code&gt;yadm init&lt;/code&gt;创建一个仓库&lt;/p&gt;
+&lt;h3 id="克隆已有的仓库"&gt;克隆已有的仓库&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;yadm clone&lt;/code&gt;
+yadm的仓库存储在&lt;code&gt;~/.local/share/yadm/repo.git/&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="基本用法"&gt;基本用法&lt;/h2&gt;
+&lt;h3 id="另类文件"&gt;另类文件&lt;/h3&gt;
+&lt;p&gt;可能存在差异的文件&lt;/p&gt;
+&lt;h4 id="用法"&gt;用法&lt;/h4&gt;
+&lt;p&gt;在文件名后添加&lt;code&gt;file##&amp;lt;condition&amp;gt;[,&amp;lt;condition&amp;gt;,…]&lt;/code&gt;
+yadm会根据&lt;code&gt;condition&lt;/code&gt;自动生成生成该文件的软连接&lt;/p&gt;
+&lt;h4 id="举例"&gt;举例&lt;/h4&gt;
+&lt;p&gt;使用&lt;code&gt;yadm alt&lt;/code&gt;会生成软连接&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;application_display_rule.conf -&amp;gt; application_display_rule.conf##hostname.gee
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;application_display_rule.conf##default
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;application_display_rule.conf##hostname.gee
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;autostart.conf -&amp;gt; autostart.conf##hostname.gee
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;autostart.conf##cursor
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;autostart.conf##hostname.gee
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;autostart.conf##hostname.tkpde14
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id="可用参数"&gt;可用参数&lt;/h4&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;参数名&lt;/th&gt;
+&lt;th&gt;描述&lt;/th&gt;
+&lt;th&gt;用法&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;arch,a&lt;/td&gt;
+&lt;td&gt;架构&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;##arch.x86_64&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;class,c&lt;/td&gt;
+&lt;td&gt;在yadm中配置的类&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;##class.classname&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;default&lt;/td&gt;
+&lt;td&gt;默认的&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;##default&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;distro,d&lt;/td&gt;
+&lt;td&gt;发行版，&lt;code&gt;lsb_release ‑si&lt;/code&gt;的值&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;distro_family,f&lt;/td&gt;
+&lt;td&gt;发行版系列,使用的是&lt;code&gt;/etc/os-release&lt;/code&gt;中的&lt;code&gt;ID&lt;/code&gt;属性&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;##distro_family.rhel fedora&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;extension,e&lt;/td&gt;
+&lt;td&gt;无任何影响，可以理解为注释&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;##extension.unuse&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;hostname,h&lt;/td&gt;
+&lt;td&gt;主机名hostname&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;##hostname.xxx&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;os,o&lt;/td&gt;
+&lt;td&gt;系统类型 使用&lt;code&gt;uname -s&lt;/code&gt;中的值&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;##os.Linux&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;template,t&lt;/td&gt;
+&lt;td&gt;模板&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;##template.templateType&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;user,u&lt;/td&gt;
+&lt;td&gt;用户名&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;##user.username&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="类"&gt;类&lt;/h3&gt;
+&lt;p&gt;类可以作用于另类文件用作判断。&lt;/p&gt;
+&lt;h4 id="设置类"&gt;设置类&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;yadm config local.class classname&lt;/code&gt;
+删除/修改-&amp;gt; 使用方法和&lt;code&gt;git config&lt;/code&gt;相同&lt;/p&gt;
+&lt;h3 id="bootstrap"&gt;bootstrap&lt;/h3&gt;
+&lt;p&gt;yadm在克隆成功后会主动运行这个程序，默认位置在&lt;code&gt;~/.config/yadm/bootstrap&lt;/code&gt;，需要有可执行权限。
+可以做安装软件，初始化某些应用之类的操作&lt;/p&gt;
+&lt;h4 id="手动运行"&gt;手动运行&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;yadm bootstrap&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="模板"&gt;模板&lt;/h3&gt;
+&lt;p&gt;模板会让你在不同机器中使用不同的内容，避免在配置文件中频繁使用&lt;code&gt;include&lt;/code&gt;之类加载其他配置文件的方法&lt;/p&gt;
+&lt;h4 id="一个直观的例子"&gt;一个直观的例子&lt;/h4&gt;
+&lt;p&gt;&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1712627236237_0.png"&gt;
+使用类template后无需书写这个&lt;code&gt;if&lt;/code&gt;加载启动vim时会快一丢丢&lt;/p&gt;
+&lt;h4 id="用法-1"&gt;用法&lt;/h4&gt;
+&lt;p&gt;变量
+变量需要使用大括号和空格包裹，例如&lt;code&gt;{{ var }}&lt;/code&gt;
+使用yadm内置变量
+&lt;code&gt;yadm.var&lt;/code&gt;
+var: &lt;code&gt;arch,class,classes,distro,distro_family,hostname,os,source,user&lt;/code&gt;
+特别的变量&lt;code&gt;source&lt;/code&gt;该变量为当前模板的文件名
+使用环境变量
+&lt;code&gt;env.VAR&lt;/code&gt;
+判断&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code class="language-conf" data-lang="conf"&gt;{% if yadm.user == &amp;#34;root&amp;#34; %}
+# root user not use vimplug
+{% else %}
+source ~/.vim/include/plug
+{% endif %}
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;注意这里的判断仅支持&lt;code&gt;==&lt;/code&gt;，支持嵌套
+包含
+可在模板中包含其他文件&lt;/p&gt;
+&lt;/blockquote&gt;</description></item></channel></rss>

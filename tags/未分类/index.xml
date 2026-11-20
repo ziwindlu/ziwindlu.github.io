@@ -1,0 +1,795 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>未分类 on ziwindlu 的博客</title><link>https://ziwindlu.github.io/tags/%E6%9C%AA%E5%88%86%E7%B1%BB/</link><description>Recent content in 未分类 on ziwindlu 的博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Tue, 18 Aug 2026 00:00:00 +0800</lastBuildDate><atom:link href="https://ziwindlu.github.io/tags/%E6%9C%AA%E5%88%86%E7%B1%BB/index.xml" rel="self" type="application/rss+xml"/><item><title>Macos无法使用接力问题解决</title><link>https://ziwindlu.github.io/posts/macos-handoff-fix/</link><pubDate>Tue, 18 Aug 2026 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/macos-handoff-fix/</guid><description>&lt;p&gt;Macos中会出现一些奇奇怪怪的问题导致无法使用AirDrop、接力、剪切板等功能
+粗暴一点直接重启相关应用&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;killall pboard &lt;span class="c1"&gt;# 本机剪贴板&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;killall sharingd &lt;span class="c1"&gt;# AirDrop / 通用剪贴板 / 接力相关&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;killall useractivityd &lt;span class="c1"&gt;# Handoff 活动同步&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;killall rapportd &lt;span class="c1"&gt;# 附近 Apple 设备通信&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title>dws使用小技巧</title><link>https://ziwindlu.github.io/posts/dws-tips/</link><pubDate>Wed, 20 May 2026 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/dws-tips/</guid><description>&lt;p&gt;在没有桌面环境的机器上运行dws需要使用&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt; dws auth login --device
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;如果报错&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;▶ Step 4: 检查组织 CLI 授权状态...
+{
+&amp;#34;error&amp;#34;: {
+&amp;#34;category&amp;#34;: &amp;#34;auth&amp;#34;,
+&amp;#34;code&amp;#34;: 2,
+&amp;#34;message&amp;#34;: &amp;#34;device authorization failed: 保存 token 失败: save to keychain: exit status 36&amp;#34;
+}
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex="0"&gt;&lt;code&gt;# macos
+security unlock-keychain ~/Library/Keychains/login.keychain-db
+&lt;/code&gt;&lt;/pre&gt;</description></item><item><title>代码弱密码识别</title><link>https://ziwindlu.github.io/posts/weak-credential-detection/</link><pubDate>Wed, 22 Apr 2026 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/weak-credential-detection/</guid><description>&lt;h2 id="方案"&gt;方案&lt;/h2&gt;
+&lt;p&gt;纯AI：全盘扫描 消耗token不太合理
+工具+AI：需要讨论工具对于密码识别的准确性是否需要达到要求&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;弱密码可能存在的位置，如：config中、.py文件的变量中(如a=&amp;lsquo;1qaz@WSX&amp;rsquo; password=a)&lt;/li&gt;
+&lt;li&gt;弱密码如何识别？纯明文？加密后的也需要识别？key是否可以算弱密码?&lt;/li&gt;
+&lt;li&gt;预期是什么&lt;/li&gt;
+&lt;li&gt;是否可以安装第三方软件&lt;/li&gt;
+&lt;li&gt;如何通知到客户&lt;/li&gt;
+&lt;li&gt;增量检查实现方案
+对于传统弱密码，难点：如何识别变量是弱密码，该弱密码经过加密应该如何解。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;apikey泄漏&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;合规:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;哪些内容可以给模型&lt;/li&gt;
+&lt;li&gt;通信相关&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="讨论结果"&gt;讨论结果&lt;/h2&gt;
+&lt;p&gt;需要一个可单机运行的通&lt;/p&gt;</description></item><item><title>AI Agent 工具集成可行性分析矩阵 (AI-to-Tool Integration Matrix)</title><link>https://ziwindlu.github.io/posts/ai-friendly-tool-integration/</link><pubDate>Fri, 17 Apr 2026 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/ai-friendly-tool-integration/</guid><description>&lt;h1 id="ai-agent-工具集成可行性分析矩阵-ai-to-tool-integration-matrix"&gt;AI Agent 工具集成可行性分析矩阵 (AI-to-Tool Integration Matrix)&lt;/h1&gt;
+&lt;p&gt;针对 AI 调用外部工具的场景，根据“工具暴露程度”与“重构成本”，整理出以下 6 种典型情况及应对策略：&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="1-cli-命令行工具类"&gt;1. CLI 命令行工具类&lt;/h2&gt;
+&lt;h3 id="情况-1原生-ai-友好型-cli"&gt;情况 1：原生 AI 友好型 CLI&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;特征&lt;/strong&gt;：支持 JSON/CSV 格式化输出；有清晰的 &lt;code&gt;--help&lt;/code&gt; 文档；无交互式确认（或支持 &lt;code&gt;-y&lt;/code&gt;）；报错信息明确。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AI 集成策略&lt;/strong&gt;：&lt;strong&gt;直接映射&lt;/strong&gt;。编写 JSON Schema 直接定义工具参数，通过 &lt;code&gt;subprocess&lt;/code&gt; 获取输出并由 Agent 直接解析。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="情况-2ai-不友好型-cli"&gt;情况 2：AI 不友好型 CLI&lt;/h3&gt;
+&lt;h4 id="21-有源码开源"&gt;2.1 有源码（开源）&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;特征&lt;/strong&gt;：输出为非结构化文本（杂乱的 stdout）；存在强制交互（如提示输入密码/确认）；参数逻辑复杂。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AI 集成策略&lt;/strong&gt;：&lt;strong&gt;重构/包装 (Sidecar)&lt;/strong&gt;。在原代码基础上封装一层专门给 AI 用的接口，或通过 MCP (Model Context Protocol) 协议标准化。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="22-无源码闭源"&gt;2.2 无源码（闭源）&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;特征&lt;/strong&gt;：典型的黑盒工具，无法修改逻辑。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AI 集成策略&lt;/strong&gt;：&lt;strong&gt;解析器模式 (Wrapper)&lt;/strong&gt;。使用传统的正则表达式或利用 LLM 作为一个“结构化提取层”，将混乱的文本转为 Agent 可读的 JSON。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="2-非-cli接口类"&gt;2. 非 CLI/接口类&lt;/h2&gt;
+&lt;h3 id="情况-3无-cli-界面"&gt;情况 3：无 CLI 界面&lt;/h3&gt;
+&lt;h4 id="31-有源码库函数级别"&gt;3.1 有源码（库/函数级别）&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;特征&lt;/strong&gt;：没有可执行程序，但有核心逻辑库（Python 包、C++ 源码等）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AI 集成策略&lt;/strong&gt;：&lt;strong&gt;原子化暴露&lt;/strong&gt;。直接编写适配器（Adapter）将核心函数暴露给 Agent，无需经过命令行层。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="32-有-api-接口及文档-restgrpc"&gt;3.2 有 API 接口及文档 (REST/gRPC)&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;特征&lt;/strong&gt;：典型的 Web 服务或微服务，有标准的调用契约。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AI 集成策略&lt;/strong&gt;：&lt;strong&gt;协议对接&lt;/strong&gt;。这是最理想的模式。通过解析 OpenAPI (Swagger) 文档，让 Agent 像操作函数一样进行远程调用。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="33-无-cli-也无-api-文档"&gt;3.3 无 CLI 也无 API 文档&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;特征&lt;/strong&gt;：最极端的黑盒（如遗留的二进制文件、私有协议、或仅有 GUI）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AI 集成策略&lt;/strong&gt;：&lt;strong&gt;黑盒逆向 / UI 自动化&lt;/strong&gt;。
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;方案 A&lt;/strong&gt;：对流量进行抓包分析，强行还原接口逻辑。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;方案 B (Computer Use)&lt;/strong&gt;：通过视觉大模型（Vision Agent）模拟人工操作鼠标键盘。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="3-集成决策建议"&gt;3. 集成决策建议&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;优先级&lt;/th&gt;
+&lt;th style="text-align: left"&gt;情况类型&lt;/th&gt;
+&lt;th style="text-align: left"&gt;推荐处理方式&lt;/th&gt;
+&lt;th style="text-align: left"&gt;成本&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;P0&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;情况 1, 3.2&lt;/td&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;直接接入&lt;/strong&gt;：定义 Schema 即可&lt;/td&gt;
+&lt;td style="text-align: left"&gt;低&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;P1&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;情况 2.1, 3.1&lt;/td&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;封装转换&lt;/strong&gt;：编写轻量级适配层&lt;/td&gt;
+&lt;td style="text-align: left"&gt;中&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;P2&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;情况 2.2, 3.3&lt;/td&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;智能代理/RPA&lt;/strong&gt;：用 LLM 辅助解析或视觉模拟&lt;/td&gt;
+&lt;td style="text-align: left"&gt;高&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;</description></item><item><title>Beijing</title><link>https://ziwindlu.github.io/posts/beijing-travel-plan/</link><pubDate>Fri, 03 Apr 2026 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/beijing-travel-plan/</guid><description>&lt;h2 id="写在前面"&gt;写在前面&lt;/h2&gt;
+&lt;p&gt;本次行程为期四天。重点关注景点和美食。
+直接抄了小红书的作业，去除了一些个人感觉没啥意思的景点和一些预约不上的景点。
+第一天下午晚上&lt;/p&gt;
+&lt;h2 id="日程安排"&gt;日程安排&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;日期&lt;/th&gt;
+&lt;th&gt;时间段&lt;/th&gt;
+&lt;th&gt;景点名称&lt;/th&gt;
+&lt;th&gt;类型&lt;/th&gt;
+&lt;th&gt;备注&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;第一天 周五&lt;/td&gt;
+&lt;td&gt;09:30 - 11:00&lt;/td&gt;
+&lt;td&gt;前门大街&lt;/td&gt;
+&lt;td&gt;人文景观、购物街&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;11:00 - 13:00&lt;/td&gt;
+&lt;td&gt;大栅栏&lt;/td&gt;
+&lt;td&gt;人文景观、购物街&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;第二天 18号&lt;/td&gt;
+&lt;td&gt;6:33-7:33&lt;/td&gt;
+&lt;td&gt;天安门广场&lt;/td&gt;
+&lt;td&gt;人文景观&lt;/td&gt;
+&lt;td&gt;早起,提前九天预约&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;09:30 - 12:00&lt;/td&gt;
+&lt;td&gt;人民大会堂&lt;/td&gt;
+&lt;td&gt;人文景观、建筑&lt;/td&gt;
+&lt;td&gt;提前三天15号预约&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;11:00 - 13:00&lt;/td&gt;
+&lt;td&gt;国家博物馆&lt;/td&gt;
+&lt;td&gt;人文景观、博物馆&lt;/td&gt;
+&lt;td&gt;约不到，换一天&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;13:30 - 15:00&lt;/td&gt;
+&lt;td&gt;王府井步行街&lt;/td&gt;
+&lt;td&gt;购物街&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;下午&lt;/td&gt;
+&lt;td&gt;故宫&lt;/td&gt;
+&lt;td&gt;人文景观、历史&lt;/td&gt;
+&lt;td&gt;重点景点 提前一周预约&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;第三天&lt;/td&gt;
+&lt;td&gt;08:00 - 11:00&lt;/td&gt;
+&lt;td&gt;八达岭长城&lt;/td&gt;
+&lt;td&gt;自然景观、历史&lt;/td&gt;
+&lt;td&gt;重点景点 早起&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;11:30 - 13:00&lt;/td&gt;
+&lt;td&gt;圆明园&lt;/td&gt;
+&lt;td&gt;人文景观、历史&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;13:30 - 15:30&lt;/td&gt;
+&lt;td&gt;颐和园&lt;/td&gt;
+&lt;td&gt;自然景观、人文景观&lt;/td&gt;
+&lt;td&gt;提前七天预约&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;16:00 - 17:30&lt;/td&gt;
+&lt;td&gt;体育场&lt;/td&gt;
+&lt;td&gt;人文景观、建筑&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;第四天&lt;/td&gt;
+&lt;td&gt;08:00 - 10:00&lt;/td&gt;
+&lt;td&gt;景山公园&lt;/td&gt;
+&lt;td&gt;自然景观&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;10:30 - 12:00&lt;/td&gt;
+&lt;td&gt;北海公园&lt;/td&gt;
+&lt;td&gt;自然景观&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;12:30 - 14:00&lt;/td&gt;
+&lt;td&gt;鼓楼&lt;/td&gt;
+&lt;td&gt;人文景观、历史&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;14:30 - 16:00&lt;/td&gt;
+&lt;td&gt;南锣鼓巷&lt;/td&gt;
+&lt;td&gt;文化街区&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;16:30 - 18:00&lt;/td&gt;
+&lt;td&gt;颐和宫&lt;/td&gt;
+&lt;td&gt;人文景观&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;18:30 - 20:00&lt;/td&gt;
+&lt;td&gt;什刹海&lt;/td&gt;
+&lt;td&gt;自然景观、文化&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;第五天21号&lt;/td&gt;
+&lt;td&gt;08:00 - 10:00&lt;/td&gt;
+&lt;td&gt;动物园&lt;/td&gt;
+&lt;td&gt;自然景观&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;下午&lt;/td&gt;
+&lt;td&gt;天坛公园&lt;/td&gt;
+&lt;td&gt;自然景观&lt;/td&gt;
+&lt;td&gt;提前7天预约15号预约&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;10:30 - 12:00&lt;/td&gt;
+&lt;td&gt;西单&lt;/td&gt;
+&lt;td&gt;购物街、文化景点&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="美食"&gt;美食&lt;/h2&gt;
+&lt;p&gt;烤鸭 只吃上了紫光园的
+炸酱面 没吃
+炒肝 好吃
+卤煮 不好吃，太咸
+驴打滚 没吃上
+豌豆黄 没吃上
+豆汁儿 浅尝了一点点，接受不了
+奶皮子 好吃&lt;/p&gt;</description></item><item><title>RAID</title><link>https://ziwindlu.github.io/posts/raid/</link><pubDate>Fri, 03 Apr 2026 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/raid/</guid><description>&lt;h2 id="what"&gt;what&lt;/h2&gt;
+&lt;p&gt;RAID（Redundant Array of Independent Disks）是一种通过&lt;strong&gt;组合多个物理磁盘&lt;/strong&gt;形成逻辑存储单元的技术，旨在提升性能、容量或可靠性。
+&lt;a href="https://ziwindlu.github.io/posts/raid-types-and-practice/"&gt;RAID类型与实践&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="why"&gt;why&lt;/h2&gt;
+&lt;p&gt;各种存储场景下为了实现各种目的，而产生了RAID&lt;/p&gt;
+&lt;h2 id="how"&gt;how&lt;/h2&gt;
+&lt;p&gt;见&lt;a href="https://ziwindlu.github.io/posts/raid-types-and-practice/"&gt;RAID类型与实践&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="other"&gt;other&lt;/h2&gt;
+&lt;p&gt;RAID2.0
+RAID 2.0（又称RAID块级虚拟化或RAID分层技术）是传统RAID的升级版，通过将物理磁盘划分为小块（Chunk）并动态重组，解决传统RAID的痛点（如重建慢、资源利用率低）。&lt;/p&gt;</description></item><item><title>RAID类型与实践</title><link>https://ziwindlu.github.io/posts/raid-types-and-practice/</link><pubDate>Fri, 03 Apr 2026 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/raid-types-and-practice/</guid><description>&lt;h2 id="通用的组raid的方法"&gt;通用的组RAID的方法&lt;/h2&gt;
+&lt;p&gt;硬件组RAID
+软件组RAID&lt;/p&gt;
+&lt;h2 id="raid0"&gt;RAID0&lt;/h2&gt;
+&lt;p&gt;最少2块硬盘。高性能（条带化），无冗余，任一磁盘故障则数据全丢。&lt;/p&gt;
+&lt;h3 id="实例"&gt;实例&lt;/h3&gt;
+&lt;h2 id="raid1"&gt;RAID1&lt;/h2&gt;
+&lt;p&gt;最少2块硬盘。100%镜像冗余，写入性能低，读取性能高，磁盘利用率50%。&lt;/p&gt;
+&lt;h3 id="实例-1"&gt;实例&lt;/h3&gt;
+&lt;h2 id="raid5"&gt;RAID5&lt;/h2&gt;
+&lt;p&gt;最少3块硬盘。条带化+分布式校验，允许1块磁盘故障，平衡性能与冗余。&lt;/p&gt;
+&lt;h2 id="raid6"&gt;RAID6&lt;/h2&gt;
+&lt;p&gt;最少4块硬盘。双校验，允许2块磁盘故障，适合大容量磁盘。&lt;/p&gt;
+&lt;h2 id="raid10"&gt;RAID10&lt;/h2&gt;
+&lt;p&gt;最少4块硬盘。RAID 1+0组合，先镜像再条带化，高性能+高冗余，磁盘利用率50%。&lt;/p&gt;</description></item><item><title>route</title><link>https://ziwindlu.github.io/posts/route/</link><pubDate>Fri, 03 Apr 2026 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/route/</guid><description>&lt;h2 id="what"&gt;what&lt;/h2&gt;
+&lt;p&gt;route是任何网络中选取路径的程序&lt;/p&gt;
+&lt;h2 id="why"&gt;why&lt;/h2&gt;
+&lt;p&gt;解决数据从源节点到目标节点的有效传输问题&lt;/p&gt;
+&lt;h2 id="how"&gt;how&lt;/h2&gt;
+&lt;p&gt;以linux中ip命令为例
+查看路由&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ip route show
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;添加路由&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 添加默认路由&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ip route add default via 192.168.1.1 dev eth0
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 添加静态路由&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ip route add 10.0.0.0/8 via 10.0.0.1 dev tun0
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;删除路由&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ip route del 10.0.0.0/8
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;修改路由&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ip route replace 10.0.0.0/8 via 10.0.0.2 dev tun0
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="常见问题"&gt;常见问题&lt;/h2&gt;
+&lt;h3 id="路由表的种类"&gt;路由表的种类&lt;/h3&gt;
+&lt;p&gt;直连路由
+静态路由
+动态路由
+默认路由
+策略路由&lt;/p&gt;</description></item><item><title>Windows命令</title><link>https://ziwindlu.github.io/posts/windows-commands/</link><pubDate>Fri, 03 Apr 2026 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/windows-commands/</guid><description>&lt;h2 id="文件相关-card-forward"&gt;文件相关 #card #forward&lt;/h2&gt;
+&lt;p&gt;id:: 67b98630-7efd-480f-bbad-4e5e7479e33d
+&lt;code&gt;cd&lt;/code&gt;切换目录，特殊的如果进入其他盘符应该这样&lt;code&gt;X:&lt;/code&gt;而不是&lt;code&gt;cd X:&lt;/code&gt;，x为你向进入的盘符
+&lt;code&gt;dir&lt;/code&gt;列出文件，列出隐藏文件&lt;code&gt;-a&lt;/code&gt;
+&lt;code&gt;type&lt;/code&gt;输出文件内容
+&lt;code&gt;move&lt;/code&gt;移动，重命名文件
+&lt;code&gt;copy&lt;/code&gt;复制文件
+&lt;code&gt;ren&lt;/code&gt;重命名
+&lt;code&gt;findstr&lt;/code&gt;查找内容类似grep
+&lt;code&gt;del&lt;/code&gt;删除
+&lt;code&gt;mkdir&lt;/code&gt;创建目录
+&lt;code&gt;rmdir&lt;/code&gt;删除目录&lt;/p&gt;
+&lt;h2 id="用户和用户组管理-card-forward"&gt;用户和用户组管理 #card #forward&lt;/h2&gt;
+&lt;p&gt;id:: 67a6bca0-f234-42fd-8a5e-c277dc9868aa&lt;/p&gt;
+&lt;h3 id="用户相关操作"&gt;用户相关操作&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;查看用户信息&lt;/strong&gt;:&lt;code&gt;net user [USERNAME]&lt;/code&gt;
+&lt;strong&gt;创建新用户&lt;/strong&gt;:&lt;code&gt;net user USERNAME PASSWORD /add&lt;/code&gt;
+&lt;strong&gt;删除用户&lt;/strong&gt;:&lt;code&gt;net user USERNAME /delete&lt;/code&gt;
+&lt;strong&gt;修改密码&lt;/strong&gt;:&lt;code&gt;net user USERNAME NEW_PASSWORD&lt;/code&gt;
+&lt;strong&gt;启用/禁用用户&lt;/strong&gt;:&lt;code&gt;net user USERNAME /active:&amp;lt;yes/no&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="用户组相关操作"&gt;用户组相关操作&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;查看用户组&lt;/strong&gt;，&lt;strong&gt;新建用户组&lt;/strong&gt;，&lt;strong&gt;删除用户组&lt;/strong&gt;和用户的操作相同，将&lt;code&gt;net user&lt;/code&gt;改为&lt;code&gt;net localgroup&lt;/code&gt;即可
+&lt;strong&gt;添加用户到用户组&lt;/strong&gt;:&lt;code&gt;net localgroup GROUPNAME USERNAME /add&lt;/code&gt;
+&lt;strong&gt;从用户组中删除用户&lt;/strong&gt;:&lt;code&gt;net localgroup GROUPNAME USERNAME /delete&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="激活administrator"&gt;激活administrator&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;net user administator active&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="权限相关-card-forward"&gt;权限相关 #card #forward&lt;/h2&gt;
+&lt;p&gt;id:: 67b986c4-f71a-49d5-9012-824a945fe568
+查看当前用户权限
+&lt;code&gt;whoami /priv&lt;/code&gt;
+查看用户详细信息
+&lt;code&gt;whoami /all&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="网络相关"&gt;网络相关&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;netstat -ano&lt;/code&gt;查看网络连接
+&lt;code&gt;ipconfig&lt;/code&gt;网卡信息&lt;/p&gt;
+&lt;h2 id="进程相关-card-forward"&gt;进程相关 #card #forward&lt;/h2&gt;
+&lt;p&gt;id:: 67b9882e-0bd4-4457-8afe-dc4da64f0ea1
+&lt;code&gt;taskllist&lt;/code&gt;列出进程
+&lt;code&gt;taskkill /pid 1022&lt;/code&gt;关闭进程&lt;/p&gt;
+&lt;h2 id="文件共享-card-forward"&gt;文件共享 #card #forward&lt;/h2&gt;
+&lt;p&gt;id:: 67b98949-cc31-4bc6-9d95-a2d5ec056b68
+&lt;code&gt;net use&lt;/code&gt;查看文件共享
+&lt;code&gt;net use \\IP地址或主机名 /user:administrator &amp;quot;密码&amp;quot;&lt;/code&gt;创建文件共享
+&lt;code&gt;net use 共享连接名 /del&lt;/code&gt;删除文件共享&lt;/p&gt;
+&lt;h2 id="票据相关-card-forward"&gt;票据相关 #card #forward&lt;/h2&gt;
+&lt;p&gt;id:: 67c71a77-14cc-4c64-8a26-26bf758f7ed1
+&lt;code&gt;klist&lt;/code&gt;查看票据
+&lt;code&gt;klist purge&lt;/code&gt;清空票据&lt;/p&gt;</description></item><item><title>windows认证</title><link>https://ziwindlu.github.io/posts/windows-authentication/</link><pubDate>Fri, 03 Apr 2026 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/windows-authentication/</guid><description>&lt;h2 id="一些概念"&gt;一些概念&lt;/h2&gt;
+&lt;p&gt;SAM数据库
+Security Accounts Manager
+&lt;code&gt;C:\Windows\System32\config\SAM&lt;/code&gt;
+&lt;code&gt;HKEY_LOCAL_MACHINE\SAM&lt;/code&gt;
+SECURITY数据库
+&lt;code&gt;C:\Windows\System32\config\SECURITY&lt;/code&gt;
+krbtgt
+加入域后创建的用户
+LMHash
+LAN Manager Hash已被弃用
+NTLMHash
+NT LAN Manager Hash现在较为常用的，常用于本地认证
+netNTLMHash
+net NT LAN Manager Hash，基于NTLMHash，更安全。常用于网络认证&lt;/p&gt;
+&lt;h2 id="本地认证"&gt;本地认证&lt;/h2&gt;
+&lt;p&gt;本地用户登陆
+本地认证流程
+winlogon.exe接收密码
+lsass.exe校验传入的密码的hash与sam中的hash对比，相同则认证通过&lt;/p&gt;
+&lt;h2 id="网络认证"&gt;网络认证&lt;/h2&gt;
+&lt;p&gt;质询应答协议，NTLM认证
+rdp等远程连接
+网络认证流程
+c-&amp;gt;用户名 -&amp;gt;s
+s:校验用户名，通过后，生成challenge(随机16位密码)，并将原用户的NTLMHash与cnalenge生成一个新的密钥并存储在内存中-&amp;gt; challenge -&amp;gt;c
+c:将密码的NTLMHash与challenge生成密钥 -&amp;gt; s
+s: 对比c与内存中的密钥 -&amp;gt; c&lt;/p&gt;
+&lt;h2 id="域认证"&gt;域认证&lt;/h2&gt;
+&lt;p&gt;登陆域、访问域中SPN域服务
+在域中使用Kerberos认证
+kdc 密钥分发中心
+as 认证服务
+TGT黄金票据
+tgs 票据授权服务
+ST白银票据
+域认证的流程
+c想要访问s的服务
+c-&amp;gt; username&amp;amp;NTLMHash -&amp;gt; DC:KDC:AS
+AS-&amp;gt; TGT -&amp;gt; c
+c-&amp;gt; TGT -&amp;gt; DC:KDC:TGS
+TGS -&amp;gt; ST -&amp;gt; c
+c -&amp;gt; ST -&amp;gt; s&lt;/p&gt;</description></item><item><title>wireshark抓包实例</title><link>https://ziwindlu.github.io/posts/wireshark-capture/</link><pubDate>Fri, 03 Apr 2026 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/wireshark-capture/</guid><description>&lt;h2 id="wireshark抓包之icmp"&gt;wireshark抓包之ICMP&lt;/h2&gt;
+&lt;p&gt;整个icmp包，&lt;code&gt;ping baidu.com&lt;/code&gt;
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1732771878624_0.png"&gt;&lt;/p&gt;
+&lt;h2 id="wireshark抓包之arp"&gt;wireshark抓包之ARP&lt;/h2&gt;
+&lt;p&gt;要构造出arp包，我们可以手动进行arp请求。我们使用&lt;code&gt;arping 192.168.2.198&lt;/code&gt;。
+或是删除arp表等待arp广播
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1732772669210_0.png"&gt;&lt;/p&gt;
+&lt;h2 id="wireshark抓包之tcp"&gt;wireshark抓包之TCP&lt;/h2&gt;
+&lt;p&gt;浅浅构造一个http包，来观察TCP，&lt;code&gt;curl baidu.com&lt;/code&gt;
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1732775304528_0.png"&gt;&lt;/p&gt;
+&lt;h3 id="三次握手-card-forward"&gt;三次握手 #card #forward&lt;/h3&gt;
+&lt;p&gt;id:: 67a6bca0-06a8-45ed-aad9-0d8ef77877f1
+c:我来了哦SYN 😃
+s:我知道了，你来吧SYN,ACK 😁
+c:我真的来了哦SYN 🥵&lt;/p&gt;
+&lt;h3 id="四次挥手-card-forward"&gt;四次挥手 #card #forward&lt;/h3&gt;
+&lt;p&gt;id:: 67a6bca0-dfe7-4196-ad6b-d58ae60dd43c
+c:我要走了哦，好想你FIN,ACK 😢
+s:你走吧SYN 🤔
+s: 你走吧，拜拜了您内FIN,ACK 🤡
+c: 我走了SYN 😭&lt;/p&gt;
+&lt;h3 id="wireshark抓包之udp"&gt;wireshark抓包之UDP&lt;/h3&gt;
+&lt;p&gt;使用nc的udp模式构造udp包
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1732780002791_0.png"&gt;&lt;/p&gt;
+&lt;h3 id="wireshark抓包之dns"&gt;wireshark抓包之DNS&lt;/h3&gt;
+&lt;p&gt;向dns服务器发送dns请求&lt;code&gt;dig kali.pcx.home&lt;/code&gt;
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1732782831532_0.png"&gt;&lt;/p&gt;</description></item><item><title>反向代理</title><link>https://ziwindlu.github.io/posts/reverse-proxy/</link><pubDate>Fri, 03 Apr 2026 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/reverse-proxy/</guid><description>&lt;h2 id="what"&gt;what&lt;/h2&gt;
+&lt;p&gt;服务器端部署的代理，代表后端服务器接收客户端请求，并返回结果。&lt;/p&gt;
+&lt;h2 id="why"&gt;why&lt;/h2&gt;
+&lt;p&gt;负载均衡：分发流量到多台后端服务器（如Nginx轮询）
+安全防护：屏蔽后端架构，防DDoS（如Cloudflare）
+SSL终结：统一处理HTTPS加密，减轻后端压力&lt;/p&gt;
+&lt;h2 id="how"&gt;how&lt;/h2&gt;
+&lt;p&gt;常用工具：
+nginx&lt;/p&gt;</description></item><item><title>记录一次大量数据查询的优雅解决方案</title><link>https://ziwindlu.github.io/posts/large-data-query-solution/</link><pubDate>Fri, 03 Apr 2026 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/large-data-query-solution/</guid><description>&lt;h2 id="引子"&gt;引子&lt;/h2&gt;
+&lt;p&gt;最近有了一个从大量json数据中做查询的一个需求，期间设想了多个方案，最后通过数据库查询这种还算优雅的方式解决了，记录一下。&lt;/p&gt;
+&lt;h2 id="写在前面"&gt;写在前面&lt;/h2&gt;
+&lt;p&gt;本篇通过具体案例来进行演示，其中数据源是大量的json，且为一个相同对象的数组，目的是从这些json中做查询、筛选。当然这并不是一成不变的，数据可以是任意格式，查询也可能千奇百怪，俺希望读者也能根据俺的思路举一反三，找到优雅的解决方案。
+注意：对数据操作不当可能会导致损坏，这里仅作思路参考。&lt;/p&gt;
+&lt;h2 id="俺的心路历程"&gt;俺的心路历程&lt;/h2&gt;
+&lt;p&gt;刚开始得知这个需求时，最初的json很大，打开非常耗时，并且在纯文本中对json做人肉解析实在有些难了，俺的解决方案是给他整成excel之类的格式，直接用图形化筛选就好了。&lt;/p&gt;
+&lt;h3 id="json转excel"&gt;json转excel&lt;/h3&gt;
+&lt;p&gt;最开始俺想复杂了，俺寻思先转成csv再转成excel(个人看法：在某种程度上这csv不就是excel嘛，所以这多转了一道)。
+后来经过一顿摸索，直接整了个py脚本，json转excel。这个脚本会放到后面。
+对于大量的数据来说，使用excel的筛选就有点捉襟见肘了。&lt;/p&gt;
+&lt;h3 id="json转csvcsv导入数据库"&gt;json转csv,csv导入数据库&lt;/h3&gt;
+&lt;p&gt;上一步中间转了一道csv。突发奇想为什么不能把这个csv扔到数据库里面呢，直接用数据库查询岂不是更爽。
+经过一番摸索，发现可行。
+不过有一些值得注意的点：
+数据的预处理
+数据库的选择
+数据类型
+俺摸索了一番发现可行后，就草草了事结束了。实际上对于不同的数据、不同的查询方式需要进行分类讨论，这就是上面值得注意的点的由来。
+数据的预处理：在从json转换成csv时数据丢失、字段对不上等问题。
+数据库的选择：你的数据存在这种数据库中是否合理，对你的查询方式是不是有影响，还有是否符合你自己的查询习惯。
+数据类型：数据类型会影响到数据的预处理、数据库的选择，以及查询。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;俺不是一个优秀的开发者，描述可能不清晰，还请大佬谅解。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="基于例子的完整演示"&gt;基于例子的完整演示&lt;/h2&gt;
+&lt;h3 id="大体步骤"&gt;大体步骤&lt;/h3&gt;
+&lt;p&gt;将json中对象的字段提取出来-&amp;gt;根据字段去创建mysql数据库-&amp;gt;将json转换为csv格式并为csv添加一个头-&amp;gt;将csv导入到数据库中-&amp;gt;从数据库中查询数据&lt;/p&gt;
+&lt;h3 id="环境准备"&gt;环境准备&lt;/h3&gt;
+&lt;p&gt;我们需要用到的内容有:mysql数据库、dbeaver(数据库连接工具)、jq(处理json的工具)&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;以上提到的工具win、mac、linux都有，这里仅演示linux与mac
+mysql建议使用docker安装&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 创建数据目录&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; ~
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;mkdir -p docker/mysql/data
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;mkdir -p docker/mysql/conf.d
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; docker
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 运行容器并挂载&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;docker run -d &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;--name mysql-server &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;-e &lt;span class="nv"&gt;MYSQL_ROOT_PASSWORD&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;123456&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;-v &lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="nb"&gt;pwd&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;/mysql/data:/var/lib/mysql &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;-v &lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="nb"&gt;pwd&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;/mysql/conf.d:/etc/mysql/conf.d &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;-p 3306:3306 &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;mysql:8.3
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;dbeaver请使用社区版&lt;a href="https://dbeaver.io/download/"&gt;Download | DBeaver Community&lt;/a&gt;
+arch:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo pacman -S dbeaver
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;mac:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;brew install --cask dbeaver-community
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;或安装包安装
+jq &lt;a href="https://github.com/jqlang/jq"&gt;GitHub - jqlang/jq: Command-line JSON processor&lt;/a&gt;
+arch:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo pacman -S jq
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;mac:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;brew install jq
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;或二进制安装&lt;/p&gt;
+&lt;h3 id="提取json对象中的字段名"&gt;提取json对象中的字段名&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 这里.[0]的意思是数组中的第一个数据，要保证所有数据都是这个类型才能用俺的方法哦&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;jq &lt;span class="s1"&gt;&amp;#39;.[0] | keys&amp;#39;&lt;/span&gt; path_to.json
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;运行后你会获得一些字段，例如：
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1743778916087_0.png"&gt;
+这些字段很重要，我们需要用其建表，转换json&lt;/p&gt;
+&lt;h3 id="创建mysql数据库和表"&gt;创建mysql数据库和表&lt;/h3&gt;
+&lt;p&gt;具体的创建这里就不演示了，俺觉得一些重要的的点俺要说一下。
+由于我们这套流程是要使用json生成的csv去导入到数据库中，所以这里表中字段的顺序很重要。如果顺序不对，也可以另辟蹊径，在导入的时候手动一一对应，俺不推荐你这么做，建议删掉重新建表。
+其次是字段的类型，类型会直接影响到导入的成功率以及查询时的优雅程度。试想对着字符串类型的数字去做筛选在某区间的值，是不是很恐怖。
+俺建议对重点关注的类型去使用专门的类型，其他一些不会经常关注的类型建议使用字符型，这样会降低导入时失败的概率。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;俺数据库也不太会，大佬轻喷&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id="将json转为csv"&gt;将json转为csv&lt;/h3&gt;
+&lt;p&gt;俺这里推荐使用&lt;code&gt;jq&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;jq -c &lt;span class="s1"&gt;&amp;#39;.[]&amp;#39;&lt;/span&gt; path_to.json &lt;span class="p"&gt;|&lt;/span&gt; jq -r &lt;span class="s1"&gt;&amp;#39;[.column1,.column2] | @csv&amp;#39;&lt;/span&gt; &amp;gt; path_to.csv
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;原字段为&lt;code&gt;column1&lt;/code&gt;那么&lt;code&gt;jq -r '[]'&lt;/code&gt;中的内容应为&lt;code&gt;.column1&lt;/code&gt;，多个字段要用&lt;code&gt;,&lt;/code&gt;隔开
+这里有个小技巧，我们如何快速的进行csv到数据库的字段一一对应呢？
+可以导出一个空表，格式为csv，这样一个空的表头就会出现了
+此时将空表头附加到我们转换完毕的csv开头，倒入这个新文件dbeaver就可以帮你自动对应字段啦&lt;/p&gt;
+&lt;h3 id="导入csv到数据库"&gt;导入csv到数据库&lt;/h3&gt;
+&lt;p&gt;这一步是出现错误最多的步骤，俺记录一下俺遇到的问题。
+导入时数据类型与字段类型不匹配。解决方案：修改相关字段的类型
+导入数据是为什么创建了几个没见过的字段。原因：没加表头或表头与数据不对应。解决方案：检查表头并重新附加到数据csv的开头&lt;/p&gt;</description></item><item><title>进程线程</title><link>https://ziwindlu.github.io/posts/process-and-thread/</link><pubDate>Fri, 03 Apr 2026 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/process-and-thread/</guid><description>&lt;p&gt;进程：
+操作系统分配资源的基本单位，拥有独立的内存空间
+&lt;strong&gt;特点&lt;/strong&gt;：
+创建和销毁开销大
+进程间通信(IPC)较复杂
+安全性高(一个进程崩溃不会影响其他进程)
+适合CPU密集型，创建开销大
+线程：
+CPU调度的基本单位，共享进程的内存空间
+&lt;strong&gt;特点&lt;/strong&gt;：
+创建和销毁开销小
+线程间通信简单(共享内存)
+需要处理同步问题(因共享内存)
+适合I/O密集型，需处理同步&lt;/p&gt;</description></item><item><title>流量特征</title><link>https://ziwindlu.github.io/posts/traffic-fingerprint/</link><pubDate>Fri, 03 Apr 2026 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/traffic-fingerprint/</guid><description>&lt;h2 id="扫描器"&gt;扫描器&lt;/h2&gt;
+&lt;h2 id="awvs"&gt;awvs&lt;/h2&gt;
+&lt;p&gt;有些test&lt;/p&gt;
+&lt;h2 id="sqlmap"&gt;sqlmap&lt;/h2&gt;
+&lt;p&gt;ua+字符串中携带随机字符串&lt;/p&gt;
+&lt;h2 id="nmap"&gt;nmap&lt;/h2&gt;
+&lt;p&gt;非常多的tcp或udp连接&lt;/p&gt;
+&lt;h2 id="webshell管理工具"&gt;webshell管理工具&lt;/h2&gt;
+&lt;p&gt;蚁剑 冰蝎 哥斯拉&lt;/p&gt;
+&lt;h3 id="蚁剑"&gt;蚁剑&lt;/h3&gt;
+&lt;p&gt;明文
+&lt;code&gt;@ini_set(“display_errors”, “0”);@set_time_limit(0)&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="冰蝎"&gt;冰蝎&lt;/h3&gt;
+&lt;h3 id="哥斯拉"&gt;哥斯拉&lt;/h3&gt;
+&lt;p&gt;加密过的
+开头和结尾加起来是一个md5&lt;/p&gt;</description></item><item><title>学会提问</title><link>https://ziwindlu.github.io/posts/asking-the-right-questions/</link><pubDate>Fri, 03 Apr 2026 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/asking-the-right-questions/</guid><description>&lt;h2 id="关于本书"&gt;关于本书&lt;/h2&gt;
+&lt;p&gt;id:: 67f68be9-784a-4d4d-a2de-180b38369d57&lt;/p&gt;
+&lt;h3 id="为什么要读"&gt;为什么要读&lt;/h3&gt;
+&lt;p&gt;改变自己的思维方式，让自己更方便的了解世界。&lt;/p&gt;
+&lt;h3 id="概要"&gt;概要&lt;/h3&gt;
+&lt;p&gt;本书教我们如何成为一个批判性思维者，根据批判性思维者的思维来进行提问。让我们更好的理解问题、了解世界。&lt;/p&gt;
+&lt;h3 id="读后感"&gt;读后感&lt;/h3&gt;
+&lt;p&gt;读后受益匪浅，系统的学习了论证相关的知识，寻找论题、结论、理由。如何判断论证的有效性。更多的是让我拓宽了知识面，在阅读中也发现了自己的一些不足。
+如果让我推荐这本书，我的理由可能是：
+几乎每一个章节都提供了案例，让你有实践的机会，不至于纸上谈兵。&lt;/p&gt;
+&lt;h3 id="注意"&gt;注意&lt;/h3&gt;
+&lt;p&gt;本文大部分为对本书的摘抄，其中包含了一些我自己的碎碎念。也总结了一些内容，我总结的内容一定会有问题，有时候是为了总结而总结，就会导致出现问题。将本文发表出去更多的是想推荐一下这本书。
+格式约定：
+使用注释块的文本均为摘抄
+使用&lt;code&gt;[[]]&lt;/code&gt;圈起来的文字是我后面可能会写的东西
+除&lt;strong&gt;关于本书&lt;/strong&gt;外，所有的h2标题均为书中的章节名
+每个章节都会有一个为&lt;strong&gt;小结&lt;/strong&gt;的h3标题，该小结是我添加的&lt;/p&gt;
+&lt;h3 id="其他"&gt;其他&lt;/h3&gt;
+&lt;p&gt;总结像批判性思维者那样写作和发言
+总结批判性思维者对一个论题的思考
+作者推荐好好讲道理:反击谬误的逻辑学训练&lt;/p&gt;
+&lt;h2 id="正确提问的益处和方法"&gt;正确提问的益处和方法&lt;/h2&gt;
+&lt;p&gt;世界是嘈杂、混乱的，我们要有&amp;quot;批判性思维&amp;quot;。
+不盲目相信权威。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;批判性思维会教你很多技能和态度，让你理性地找到对自己有意义的答案并为此感到自豪。批判性思维鼓励你倾听他人，向别人学习，同时掂量别人所说的话，看看它们的分量如何。如此，你将了解到我们必须要依赖他人，但又不能来者不拒，必须做出选择。由此，批判性思维会解放你的身心，让你有能力成为自己迈向未来道路上的指导者。
+激发批评性思维
+我们在本书中使用的批判性思维（critical thinking）这一术语，指由以下三个维度激活的评估技能：
+1）意识到一整套环环相扣的批判性问题；
+2）有能力在适当时机以适当方式提出并回答这些问题；
+3）有积极主动地使用这些批判性问题的强烈渴望。
+本书的目标就是激发你朝这三个维度全面发展。
+海绵式思维与淘金式思维
+海绵式思维
+广撒网，啥都看，但无法提供任何判断方法。
+淘金式思维
+在学习过程中不断提问，互动式参与。
+两者可以互补，淘金的前提是有丰富的知识储备，这些知识储备可能会需要修正。
+别人话中的不合理之处并不会自动跳到你的眼前。作为读者或听众，你必须要积极主动地去查究才行。要做到这一点，你就需要不断地提问。最好的查缺补漏方法就是批判性地提问。这些问题的一个巨大好处是，即使你对当前讨论的问题知识有限，你仍然可以打破砂锅问到底
+批判性思维可以用来捍卫自己的信念，也可以用来对自己初始的信念加以评价和修正。
+弱势批判性思维与强势批判性思维
+弱势批判性思维是利用批判性思维来捍卫自己当前的信念。强势批判性思维是利用批判性思维来评价所有的断言和信念，尤其是对自己的信念加以评价。
+如果你利用批判性思维来捍卫自己当前的信念，你就在使用弱势批判性思维。
+这意味着你会先入为主的认为自己的观点是正确的，往往一件事可能是多面性的。
+弱势批判性思维的目的就是坚决抵制和驳倒那些不同的观点和论证。将把那些意见和你不一样的人驳得哑口无言、乖乖认输作为批判性思维的最终目标，会毁掉批判性思维潜在的人道和进步性的特征。
+强势批判性思维要求我们对所有的主张都提出批判性问题，包括对我们自己的主张。只有强迫自己批判性地看待初始信念，我们才能保证自己不自欺欺人和人云亦云。
+可以摇摆不定，即一遍一遍推翻自己之前的观点。直至接近真相
+只有当某个观点是我们千挑万选出来的——我们理解并且仔细评估过其他的观点，最终选择了这个观点，我们才会对所持的这个观点感到自豪。
+最终目的是让学习过程变得简单。
+价值观
+价值观指的是人们认为较有价值的观念（常常不曾言明）。它们树立了一定的行为准则，我们据此来衡量人类行为的品质高下。
+然我们时常要求自己必须耐心倾听那些和我们价值观倾向不同的人的观点，但是价值观所带来的最常见的社会联系是相似性。那些把个人责任当成重要价值观的人，必然会去寻找同样相信“更好的个人选择可以解决人类的大多数问题”的人为伴，和他们惺惺相惜。可见，我们许多最有价值的社会交往或学习经历都始于与拥有类似价值观的人之间的交流。鉴于此，我们面对的一个巨大挑战，就是尽量去理解那些价值观倾向和我们不同的人的论证方式。
+帮助你成为批判性思维者的价值观:
+自主决断
+好奇心
+谦恭有礼
+发自内心地尊重严密的论证(保持中立)
+你可以基于自己的观点自信行事，对自己的结论不要犹豫不定，但也要留有一点余地，让自己时不时地反省一下：我有没有可能是错的呢？
+让对话继续下去
+最重要的是，当你使用批判性思维的各种技能时，一定要让别人明白你抱着学习的态度。此外，你要让他们相信你的本意是好的，如果你和他们的意见有分歧，不管这些分歧多么重大和严肃，都不必发展成口诛笔伐来收场。
+❗：要有情商，你们在讨论，而不是在骂街
+营造出和谐的讨论氛围&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id="像批判性思维者那样写作和发言"&gt;像批判性思维者那样写作和发言&lt;/h3&gt;
+&lt;p&gt;在演讲和写作中识别和使用语气；
+避免“过度依赖”专家。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;作为批判性思维者，我们当然希望自己在阐述论点时，能做到平允公正、深思熟虑。在我们试图说服别人相信我们的观点是正确的时，我们不希望写出推理不当的论文或大声喊叫未经检验的观点。我们也不希望只是鹦鹉学舌地重复别人的论点，无论它论证得多么完美无瑕。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id="小结"&gt;小结&lt;/h3&gt;
+&lt;p&gt;本章节教你使用批判性思维，以及如何通过批判性思维不断完善自己。
+批判性思维的意义：让学习更简单。
+帮助你成为批判性思维者的价值观
+使用批判性思维时要注意的东西：
+让对话继续下去
+营造出和谐的讨论氛围&lt;/p&gt;
+&lt;h2 id="论题和结论是什么"&gt;论题和结论是什么&lt;/h2&gt;
+&lt;p&gt;学习目标：
+区分论题的类型
+发现论题找到结论
+将论题和结论应用到写作中&lt;/p&gt;
+&lt;h3 id="描述性论题和规定性论题"&gt;描述性论题和规定性论题&lt;/h3&gt;
+&lt;p&gt;描述性论题&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;对它们的回答无一例外地都要描述某一事物过去、现在或将来客观是什么样的。
+规定性型论题
+这些论题都属于伦理或道德范畴，它们提出的都是关于什么是对、什么是错、什么该有、什么不该有、什么是好、什么是坏的问题。它们需要的是规定性的答案。因此，我们将这些论题称为“规定性论题”
+对于为什么要区分论题，作者给出了答案。以个人经验来判断，这确实是有道理的，只不过我不会归纳总结这些类型
+记住这两种不同的论题是很有用的，因为你最终做出的判断和评价的类型，将取决于你要回答的论题的类型。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id="寻找论题"&gt;寻找论题&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;在识别论题的时候，千万不要以为存在且只存在一种正确的陈述论题的方法。一旦你找到整篇文章或整个发言都在论述的问题，以及该问题和该文章（或该发言）间的联系，你就已经找到了一个引发了争论的论题。只要确定你所谓的论题符合“论题”的界定标准即可。
+寻找论题的方法
+直接在文中寻找
+根据结论找论题&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id="寻找结论"&gt;寻找结论&lt;/h3&gt;
+&lt;p&gt;结论就是作者想表述的内容，想要证明的东西&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;寻找结论，其实就是寻找写作者或发言者希望你相信的一个陈述或一系列陈述。他希望你相信他在其他陈述的基础上所得出的结论。简言之，有说服力的交流或论证的基本结构是：甲之所以成立是因为乙。“甲”指结论，“乙”指结论的支撑材料。这个结构代表了推论的过程。
+结论是推论出来的，它们来源于论证。结论是需要其他观点来支撑的观点。
+没有证据支撑的断言称为纯观点&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id="小结-1"&gt;小结&lt;/h3&gt;
+&lt;p&gt;本章节告诉我们如何群分描述性论题和规定型论题，最重要的是寻找论题和结论。&lt;/p&gt;
+&lt;h2 id="理由是什么"&gt;理由是什么&lt;/h2&gt;
+&lt;p&gt;学习目标
+认识论证中理由和证据的作用
+理解论证的属性
+区别理由和结论&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;所谓理由，就是用来支撑或证明结论的信念、隐喻和其他陈述。这些陈述是结论可信度的基础，是结论成立背后的逻辑。证据则是支持断言的另一个基础，它由一系列事实组成，这些事实有助于使听众或读者相信你的理由是可靠的。
+论证有两个明显的必要组成部分，一个结论及支撑它的理由。两者当中如果有一个我们找不到，也就意味着我们失去了评价这一论证的机会。我们自然无法对找不到的东西做出评价。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id="为什么相信这个结论"&gt;为什么相信这个结论&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;你已经找到了结论，现在你想知道为什么这个结论有道理。如果一个陈述回答不了**“为什么写作者或发言者相信这个结论？”**这个问题，那么它就不属于理由。一个陈述（或一系列陈述）必须被立论者用作结论的支撑或依据，才能起到理由的作用。
+在确定论证结构的时候，你应该把每一个被论证提出者拿来支持其结论的想法都当成理由，即使你并不相信它真的能为结论提供支持。在批判性思维的这一阶段，你正在设法找出论证之所在。因为你想对提供论证的人尽量公平，所以你要利用施惠原则。如果写作者或发言者相信他正在摆事实、讲道理以支持自己的结论，那么我们至少应该考虑一下他的论证过程。之后还有大把的时间来细细评价这个论证。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id="通过提示词寻找理由"&gt;通过提示词寻找理由&lt;/h3&gt;
+&lt;p&gt;提示词有很多，中文语境和英文语境可能有些区别，下面列出俺自己平时总结的提示词
+&amp;hellip;的原因是因为&amp;hellip;
+根据&amp;hellip;所以证明&amp;hellip;&lt;/p&gt;
+&lt;h3 id="让理由和结论一目了然"&gt;让理由和结论一目了然&lt;/h3&gt;
+&lt;p&gt;寻找理由和结论的方法可以通过自己的经历慢慢总结&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;一旦你找到理由，随着阅读或倾听的不断深入，你就需要一遍又一遍地重温这些理由。结论能不能站住脚主要取决于给出的相应理由扎不扎实。薄弱的理由必然导致薄弱的论证！
+找到理由后要不断重新审视这些理由
+操控型论证就是指以一个结论开始的论证。然后提供论证者选择理由和证据，它们发挥着特定的作用。这种作用并不在于这些证据具有很强的真实性，而在于它们有助于听众或读者在脑海中勾勒出一个故事，使这个故事朝着预先确定的结论行进。
+不要带着结论去寻找理由
+我们都知道，我们倾向于匆匆下结论。要设法避免“逆向逻辑”或“反向论证”，在这种论证中，理由不过是一记马后炮，会随着你的结论而不断变化。理想的做法是，将理由和证据作为模具，结论据此得以成型和修饰。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id="像批判性思维者那样写作和发言-1"&gt;⭐像批判性思维者那样写作和发言&lt;/h3&gt;
+&lt;p&gt;在我们自己的写作和发言中，什么是一个好的论题？什么是一个好的结论？
+清晰而有趣的问题；
+重点突出、阐述明确的结论；
+有理由和证据支撑的结论，而且大多数人会觉得理由和证据有说服力；
+回应论题的结论；
+容易让读者或听众找到的结论。
+如何找到论题？如何确定论题？
+为什么要找论题？
+很多时候写文章需要一个论题，比如为什么要使用vim？
+确定一个清楚陈述的论题将有助于我们得出一个清楚陈述的结论。
+把论题当成一个问题来思考，你就能集中精力，以通俗易懂的形式让读者或听众明白，你是被某一个问题所困扰，与其他问题无关。
+如何论证？&lt;/p&gt;</description></item><item><title>2024安卓搞机体验</title><link>https://ziwindlu.github.io/posts/2024-android-modding/</link><pubDate>Mon, 05 Aug 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/2024-android-modding/</guid><description>&lt;h2 id="引子"&gt;引子&lt;/h2&gt;
+&lt;p&gt;入了只安卓机，手痒痒，给他狠狠的解bl，狠狠的root，狠狠的安装框架，狠狠的装上各种模块 🥵
+本想大干一场，搜索了一下现在的搞机教程，发现十分方便。&lt;/p&gt;
+&lt;h2 id="正文"&gt;正文&lt;/h2&gt;
+&lt;h3 id="获取权限"&gt;获取权限&lt;/h3&gt;
+&lt;p&gt;之前的superSU、magisk等不适用于现在的手机了。现在都用&lt;code&gt;shizuku&lt;/code&gt;，甚至不需要解锁，只需要能开启adb就可以。
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1722829898858_0.png"&gt;&lt;/p&gt;
+&lt;h3 id="框架"&gt;框架&lt;/h3&gt;
+&lt;p&gt;古早时候使用xposed，后来有了lsposed，这两款软件都需要root，不能搭配shizuku使用
+现在是船新版本&lt;code&gt;lspatch&lt;/code&gt;或是改版&lt;code&gt;opatch(原神)&lt;/code&gt;，类似于之前使用过的太极，需要使用框架基于原应用重新生成一个集成了框架的新app
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1722839638881_0.png"&gt;&lt;/p&gt;
+&lt;h2 id="常用软件"&gt;常用软件&lt;/h2&gt;
+&lt;h3 id="viphook"&gt;viphook&lt;/h3&gt;
+&lt;p&gt;集成了n多模块，详细说明了每个应用的适用版本，好用&lt;/p&gt;
+&lt;h3 id="润二月"&gt;润二月&lt;/h3&gt;
+&lt;p&gt;代替wx用，微信8.0.48可用&lt;/p&gt;
+&lt;h3 id="签名助手"&gt;签名助手&lt;/h3&gt;
+&lt;p&gt;对应用伪装签名&lt;/p&gt;
+&lt;h3 id="wx"&gt;wx&lt;/h3&gt;
+&lt;p&gt;wx功能很多，但因倒卖问题作者开启了捐赠，需要捐赠才能够使用&lt;/p&gt;
+&lt;h3 id="skip"&gt;skip&lt;/h3&gt;
+&lt;p&gt;跳广告&lt;/p&gt;
+&lt;h3 id="appops"&gt;appops&lt;/h3&gt;
+&lt;p&gt;修改应用权限等功能&lt;/p&gt;
+&lt;h3 id="libchecker"&gt;libchecker&lt;/h3&gt;
+&lt;p&gt;查看应用，apk信息，搭配签名助手使用&lt;/p&gt;
+&lt;h3 id="雹"&gt;雹&lt;/h3&gt;
+&lt;p&gt;冰箱，空调狗等软件的替代品&lt;/p&gt;
+&lt;h2 id="可能会存在的问题"&gt;可能会存在的问题&lt;/h2&gt;
+&lt;h3 id="shizuku经常掉"&gt;shizuku经常掉&lt;/h3&gt;
+&lt;p&gt;使用无线调试会遇到这个问题，但是俺没有解决方案&lt;/p&gt;
+&lt;h3 id="签名问题"&gt;签名问题&lt;/h3&gt;
+&lt;p&gt;通过lsp或op修补过的软件签名会发生改变，如果软件发现签名不一致可能会出现软件打不开，无法被调用的问题。
+使用签名助手伪造签名&lt;/p&gt;</description></item><item><title>一知半解linux系统配置文件</title><link>https://ziwindlu.github.io/posts/linux-system-config-files/</link><pubDate>Wed, 24 Apr 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/linux-system-config-files/</guid><description>&lt;h2 id="关于etcfstab"&gt;关于/etc/fstab&lt;/h2&gt;
+&lt;p&gt;linux系统中用来自动挂载分区使用的
+&lt;a href="https://wiki.archlinux.org/title/Fstab_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)"&gt;fstab (简体中文) ArchWiki&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="手动编辑"&gt;手动编辑&lt;/h3&gt;
+&lt;p&gt;挨个参数对照，仔细一点就可以&lt;/p&gt;
+&lt;h3 id="一键生成脚本"&gt;一键生成脚本&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;genfstab -U YourRoot&lt;/code&gt;查看YourRoot中挂载点
+其输出可以直接当作&lt;code&gt;/etc/fstab&lt;/code&gt;文件使用&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;genfstab&lt;/code&gt;在arch-install-scripts这个包中&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id="相关命令"&gt;相关命令&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;systemctl daemon-reload&lt;/code&gt;重新加载守护程序，这可以让修改的&lt;code&gt;/etc/fstab&lt;/code&gt;生效
+&lt;code&gt;fdisk -l&lt;/code&gt;查看分区情况
+&lt;code&gt;blkid /dev/sdxx&lt;/code&gt;查看分区uuid
+&lt;code&gt;ls -l /dev/disk/by-uuid/&lt;/code&gt;查看分区uuid&lt;/p&gt;
+&lt;h3 id="添加了新硬盘在系统启动时自动挂载"&gt;添加了新硬盘，在系统启动时自动挂载&lt;/h3&gt;
+&lt;p&gt;现将&lt;code&gt;/dev/sda2&lt;/code&gt;作为存放虚拟机的目录，让其开机自动挂载到&lt;code&gt;/home/user/Vbox&lt;/code&gt;下&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;卸载u盘等非必须开机挂载的设备&lt;/li&gt;
+&lt;li&gt;挂载该分区&lt;code&gt;mount /dev/sda2 /home/user/Vbox&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;使用脚本写入&lt;code&gt;/etc/fstab&lt;/code&gt; ，&lt;code&gt;genfstab -U / &amp;gt; /etc/fstab&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;踩坑请注意：
+不要将tmpfs挂载
+不要将tmpfs挂载
+不要将tmpfs挂载&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="设置语言相关的配置文件"&gt;设置语言相关的配置文件&lt;/h2&gt;
+&lt;h3 id="终端设置中文"&gt;终端设置中文&lt;/h3&gt;
+&lt;p&gt;当前shell的配置文件，&lt;code&gt;.bashrc&lt;/code&gt;、&lt;code&gt;.zshrc&lt;/code&gt;等&lt;/p&gt;
+&lt;h3 id="桌面环境设置中文"&gt;桌面环境设置中文&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;.xprofile&lt;/code&gt;适用于桌面管理器启动的用户
+&lt;code&gt;.xinitrc&lt;/code&gt; 适用于使用 startx 或 SLiM 来启动 X 窗口的用户
+&lt;code&gt;/etc/profile&lt;/code&gt; 所有用户登陆时加载
+&lt;code&gt;/etc/enviroment&lt;/code&gt;此文件linux启动时加载&lt;/p&gt;</description></item><item><title>PixelBook2013搞机日记</title><link>https://ziwindlu.github.io/posts/pixelbook-2013-modding/</link><pubDate>Sun, 07 Apr 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/pixelbook-2013-modding/</guid><description>&lt;h2 id="引子"&gt;引子&lt;/h2&gt;
+&lt;p&gt;无聊逛coolapk刷到了一台pixelbook2013,想都没想直接购入，充值信仰，体验体验chromeOS(没有)&lt;/p&gt;
+&lt;h2 id="配置"&gt;配置&lt;/h2&gt;
+&lt;p&gt;鸡鸡配置很低，4+32大内存；CPU是3代i5，低压；触摸屏
+花了370大洋淘来的，橙色一般，电池g了，其实是有点亏的。好在卖家刷了bios，系统是fyde os。放家里看电视剧问题不大&lt;/p&gt;
+&lt;h2 id="抛弃fyde-os"&gt;抛弃fyde os&lt;/h2&gt;
+&lt;p&gt;体验了一段时间fyde os后发现，这鸡鸡带这个系统有点吃力了，南桥发热很严重，只跑了浏览器而已，跑安卓应用更别说了&lt;/p&gt;
+&lt;h2 id="安装arch"&gt;安装arch&lt;/h2&gt;
+&lt;p&gt;arch虽然也反复装了很多次，arch wiki还是要看的，大体步骤记住了，一些小的细节还是容易忘记的&lt;/p&gt;
+&lt;h3 id="制作启动u盘"&gt;制作启动u盘&lt;/h3&gt;
+&lt;p&gt;u盘里装过ventory多系统启动，所以就直接把arch镜像拷到u盘里准备安装。
+可能是机器的问题，这个盘启动不了arch，所幸把ventory干掉，直接&lt;code&gt;cat arch.iso &amp;gt; /dev/sda&lt;/code&gt;，将iso写入u盘&lt;/p&gt;
+&lt;h3 id="本地化"&gt;本地化&lt;/h3&gt;
+&lt;p&gt;改中文首先要有中文包，在安装arch的时候已经生成过了，没有中文包的话还要取生成一下。更改中文无非就是把环境变量改成zh_CN巴拉巴拉的。为防止tty终端使用中文，请勿将环境变量在&lt;code&gt;/etc/envirment&lt;/code&gt;或&lt;code&gt;/etc/profile&lt;/code&gt;中进行设置。
+使用&lt;code&gt;lightdm&lt;/code&gt;等桌面管理器的用户可以在&lt;code&gt;~/.xprofile&lt;/code&gt;中进行设置，同时建议将语言环境变量也设置在这里&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# set chinese&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;LANG&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;zh_CN.UTF-8
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;LANGUAGE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;zh_CN:en_US
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="参考"&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://wiki.archlinux.org/title/Installation_guide_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)"&gt;Installation guide (简体中文) ArchWiki&lt;/a&gt;
+&lt;a href="https://0xdadream.github.io/2022/05/17/archlinux-she-zhi-zhong-wen/"&gt;archlinux设置中文 | 逐梦&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

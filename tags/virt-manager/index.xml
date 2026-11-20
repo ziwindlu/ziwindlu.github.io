@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>virt-manager on ziwindlu 的博客</title><link>https://ziwindlu.github.io/tags/virt-manager/</link><description>Recent content in virt-manager on ziwindlu 的博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Tue, 12 Nov 2024 00:00:00 +0800</lastBuildDate><atom:link href="https://ziwindlu.github.io/tags/virt-manager/index.xml" rel="self" type="application/rss+xml"/><item><title>virtmanager+remmina舒适的虚拟机体验</title><link>https://ziwindlu.github.io/posts/virt-manager-remmina/</link><pubDate>Tue, 12 Nov 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/virt-manager-remmina/</guid><description>&lt;h2 id="引子"&gt;引子&lt;/h2&gt;
+&lt;p&gt;在使用virtualbox时，vbox打开的虚拟机窗口无法便捷得最小化和展开。于是俺用了remmina，在每台vbox虚拟机的系统中开启rdp或是vnc。后面越发约感觉鸡肋，每次安装虚拟机后都要重新安装一下远程桌面服务。这时俺想到之前使用的virt-manager可以使用spice直接连接，而且这是虚拟化软件提供的，并非操作系统提供的。一是无需对虚拟机安装多余的软件，二是即便虚拟机网络不通，也可以方便的管理。
+本文会展示一些关键的配置和一些注意事项。&lt;/p&gt;
+&lt;h2 id="正文"&gt;正文&lt;/h2&gt;
+&lt;h3 id="virt-manager配置spice连接"&gt;virt-manager配置spice连接&lt;/h3&gt;
+&lt;p&gt;&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1731372521093_0.png"&gt;
+password可选，如果想要暴露连接可以将address改为”All interfaces“&lt;/p&gt;
+&lt;h3 id="配置remmina连接"&gt;配置remmina连接&lt;/h3&gt;
+&lt;p&gt;&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1731372696484_0.png"&gt;
+仅需填入ip+端口号。这里的ip为宿主机的ip并非客户机的ip&lt;/p&gt;
+&lt;h3 id="安装spice增强"&gt;安装spice增强&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;windows&lt;/strong&gt;
+下载链接在这里找&lt;a href="https://www.spice-space.org/download.html"&gt;spice-space download&lt;/a&gt;
+&lt;strong&gt;linux&lt;/strong&gt;
+debian:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-cmd" data-lang="cmd"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;# 一般来说linux客户机安装后这个包是默认被安装的
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo apt install qemu-guest-agent
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo apt install spice-vdagent
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="存在的问题"&gt;存在的问题&lt;/h2&gt;
+&lt;h3 id="使用xfce桌面环境的客户机无法自动调整屏幕大小"&gt;使用xfce桌面环境的客户机无法自动调整屏幕大小&lt;/h3&gt;
+&lt;p&gt;目前xfce暂时没有办法自动调整屏幕大小，如有需求可以参考下面这个链接或者使用其他桌面环境，比如gnome。
+&lt;a href="https://github.com/seife/spice-autorandr"&gt;GitHub seife/spice-autorandr: Automatically adjust the client window resolution in Linux KVM guests using the SPICE driver&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="参考"&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://www.spice-space.org/download.html"&gt;spice-space download&lt;/a&gt;
+&lt;a href="https://wiki.archlinux.org/title/Virt-manager"&gt;Virt-manager ArchWiki&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,106 @@
+<!doctype html><html lang=zh dir=auto data-theme=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>Linux常用服务 | ziwindlu 的博客</title><meta name=keywords content="Linux"><meta name=description content="SSH
+默认端口22
+安全配置
+禁止密码登陆
+PermitRootLogin no # 禁止root登陆
+禁止root登陆
+PermitRootLogin prohibit-password  # 仅允许密钥登录
+端口转发滥用，避免攻击者用作内网渗透
+AllowTcpForwarding no
+PermitTunnel no
+如何防御ssh爆破 #card #forward
+id:: 67ab4ea1-d4cf-493f-98c3-85b8de165ace
+禁用密码登陆
+修改默认端口
+白名单过滤
+配置尝试次数
+MaxAuthTries 3         # 单连接最大认证尝试次数
+MaxSessions 2          # 单个IP最大并发会话
+LoginGraceTime 30s     # 登录超时时间
+SMB
+默认端口139,445
+windows文件共享
+安全配置
+禁止匿名访问
+guest ok = no
+控制权限
+write list = user1, user2  # 精确控制
+create mask = 0640         # 文件权限限制
+安全漏洞
+永恒之蓝 (MS17-010/CVE-2017-0143)
+影响版本：Samba 3.x-4.5.9
+修复方案：升级smb
+SMBGhost (CVE-2020-0796)
+影响版本：Samba 4.3.0-4.11.4
+修复方案：升级smb
+FTP
+默认端口20,21
+文件传输协议
+安全配置
+禁止匿名访问
+权限控制
+创建文件权限
+可进入目录
+使用加密传输
+使用
+python快速开启ftp
+python -m pyftpdlib -u user_name -P password -p port --write
+"><meta name=author content="ziwindlu"><link rel=canonical href=https://ziwindlu.github.io/posts/linux-common-services/><link crossorigin=anonymous href=/assets/css/stylesheet.95ae6e9689bd0037456375629f411acbf8ed76e0e9a7599900ad281f9526dee6.css integrity="sha256-la5ulom9ADdFY3Vin0Eay/jtduDpp1mZAK0oH5Um3uY=" rel="preload stylesheet" as=style><link rel=icon href=https://ziwindlu.github.io/favicon.svg><link rel=icon type=image/png sizes=16x16 href=https://ziwindlu.github.io/favicon.svg><link rel=icon type=image/png sizes=32x32 href=https://ziwindlu.github.io/favicon.svg><link rel=apple-touch-icon href=https://ziwindlu.github.io/favicon.svg><link rel=mask-icon href=https://ziwindlu.github.io/favicon.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=zh href=https://ziwindlu.github.io/posts/linux-common-services/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51);color-scheme:dark}.list{background:var(--theme)}.toc{background:var(--entry)}}</style></noscript><script>localStorage.getItem("pref-theme")==="dark"?document.querySelector("html").dataset.theme="dark":localStorage.getItem("pref-theme")==="light"?document.querySelector("html").dataset.theme="light":window.matchMedia("(prefers-color-scheme: dark)").matches?document.querySelector("html").dataset.theme="dark":document.querySelector("html").dataset.theme="light"</script><meta property="og:url" content="https://ziwindlu.github.io/posts/linux-common-services/"><meta property="og:site_name" content="ziwindlu 的博客"><meta property="og:title" content="Linux常用服务"><meta property="og:description" content="SSH 默认端口22
+安全配置 禁止密码登陆
+PermitRootLogin no # 禁止root登陆 禁止root登陆
+PermitRootLogin prohibit-password # 仅允许密钥登录 端口转发滥用，避免攻击者用作内网渗透
+AllowTcpForwarding no PermitTunnel no 如何防御ssh爆破 #card #forward id:: 67ab4ea1-d4cf-493f-98c3-85b8de165ace 禁用密码登陆 修改默认端口 白名单过滤 配置尝试次数
+MaxAuthTries 3 # 单连接最大认证尝试次数 MaxSessions 2 # 单个IP最大并发会话 LoginGraceTime 30s # 登录超时时间 SMB 默认端口139,445 windows文件共享
+安全配置 禁止匿名访问
+guest ok = no 控制权限
+write list = user1, user2 # 精确控制 create mask = 0640 # 文件权限限制 安全漏洞 永恒之蓝 (MS17-010/CVE-2017-0143) 影响版本：Samba 3.x-4.5.9 修复方案：升级smb
+SMBGhost (CVE-2020-0796) 影响版本：Samba 4.3.0-4.11.4 修复方案：升级smb
+FTP 默认端口20,21 文件传输协议
+安全配置 禁止匿名访问 权限控制 创建文件权限 可进入目录 使用加密传输
+使用 python快速开启ftp
+python -m pyftpdlib -u user_name -P password -p port --write"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2026-04-03T00:00:00+08:00"><meta property="article:modified_time" content="2026-04-03T00:00:00+08:00"><meta property="article:tag" content="Linux"><meta name=twitter:card content="summary"><meta name=twitter:title content="Linux常用服务"><meta name=twitter:description content="SSH 默认端口22
+安全配置 禁止密码登陆
+PermitRootLogin no # 禁止root登陆 禁止root登陆
+PermitRootLogin prohibit-password # 仅允许密钥登录 端口转发滥用，避免攻击者用作内网渗透
+AllowTcpForwarding no PermitTunnel no 如何防御ssh爆破 #card #forward id:: 67ab4ea1-d4cf-493f-98c3-85b8de165ace 禁用密码登陆 修改默认端口 白名单过滤 配置尝试次数
+MaxAuthTries 3 # 单连接最大认证尝试次数 MaxSessions 2 # 单个IP最大并发会话 LoginGraceTime 30s # 登录超时时间 SMB 默认端口139,445 windows文件共享
+安全配置 禁止匿名访问
+guest ok = no 控制权限
+write list = user1, user2 # 精确控制 create mask = 0640 # 文件权限限制 安全漏洞 永恒之蓝 (MS17-010/CVE-2017-0143) 影响版本：Samba 3.x-4.5.9 修复方案：升级smb
+SMBGhost (CVE-2020-0796) 影响版本：Samba 4.3.0-4.11.4 修复方案：升级smb
+FTP 默认端口20,21 文件传输协议
+安全配置 禁止匿名访问 权限控制 创建文件权限 可进入目录 使用加密传输
+使用 python快速开启ftp
+python -m pyftpdlib -u user_name -P password -p port --write"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"文章","item":"https://ziwindlu.github.io/posts/"},{"@type":"ListItem","position":2,"name":"Linux常用服务","item":"https://ziwindlu.github.io/posts/linux-common-services/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"Linux常用服务","name":"Linux常用服务","description":"SSH 默认端口22\n安全配置 禁止密码登陆\nPermitRootLogin no # 禁止root登陆 禁止root登陆\nPermitRootLogin prohibit-password # 仅允许密钥登录 端口转发滥用，避免攻击者用作内网渗透\nAllowTcpForwarding no PermitTunnel no 如何防御ssh爆破 #card #forward id:: 67ab4ea1-d4cf-493f-98c3-85b8de165ace 禁用密码登陆 修改默认端口 白名单过滤 配置尝试次数\nMaxAuthTries 3 # 单连接最大认证尝试次数 MaxSessions 2 # 单个IP最大并发会话 LoginGraceTime 30s # 登录超时时间 SMB 默认端口139,445 windows文件共享\n安全配置 禁止匿名访问\nguest ok = no 控制权限\nwrite list = user1, user2 # 精确控制 create mask = 0640 # 文件权限限制 安全漏洞 永恒之蓝 (MS17-010/CVE-2017-0143) 影响版本：Samba 3.x-4.5.9 修复方案：升级smb\nSMBGhost (CVE-2020-0796) 影响版本：Samba 4.3.0-4.11.4 修复方案：升级smb\nFTP 默认端口20,21 文件传输协议\n安全配置 禁止匿名访问 权限控制 创建文件权限 可进入目录 使用加密传输\n使用 python快速开启ftp\npython -m pyftpdlib -u user_name -P password -p port --write ","keywords":["Linux"],"articleBody":"SSH 默认端口22\n安全配置 禁止密码登陆\nPermitRootLogin no # 禁止root登陆 禁止root登陆\nPermitRootLogin prohibit-password # 仅允许密钥登录 端口转发滥用，避免攻击者用作内网渗透\nAllowTcpForwarding no PermitTunnel no 如何防御ssh爆破 #card #forward id:: 67ab4ea1-d4cf-493f-98c3-85b8de165ace 禁用密码登陆 修改默认端口 白名单过滤 配置尝试次数\nMaxAuthTries 3 # 单连接最大认证尝试次数 MaxSessions 2 # 单个IP最大并发会话 LoginGraceTime 30s # 登录超时时间 SMB 默认端口139,445 windows文件共享\n安全配置 禁止匿名访问\nguest ok = no 控制权限\nwrite list = user1, user2 # 精确控制 create mask = 0640 # 文件权限限制 安全漏洞 永恒之蓝 (MS17-010/CVE-2017-0143) 影响版本：Samba 3.x-4.5.9 修复方案：升级smb\nSMBGhost (CVE-2020-0796) 影响版本：Samba 4.3.0-4.11.4 修复方案：升级smb\nFTP 默认端口20,21 文件传输协议\n安全配置 禁止匿名访问 权限控制 创建文件权限 可进入目录 使用加密传输\n使用 python快速开启ftp\npython -m pyftpdlib -u user_name -P password -p port --write ","wordCount":"94","inLanguage":"zh","datePublished":"2026-04-03T00:00:00+08:00","dateModified":"2026-04-03T00:00:00+08:00","author":{"@type":"Person","name":"ziwindlu"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://ziwindlu.github.io/posts/linux-common-services/"},"publisher":{"@type":"Organization","name":"ziwindlu 的博客","logo":{"@type":"ImageObject","url":"https://ziwindlu.github.io/favicon.svg"}}}</script></head><body id=top><header class=header><nav class=header-nav><div class=logo><a href=https://ziwindlu.github.io/ accesskey=h title="ziwindlu 的博客 (Alt + H)">ziwindlu 的博客</a><div class=logo-switches><button id=theme-toggle class=theme-toggle accesskey=t title="(Alt + T)" aria-label="Toggle theme">
+<svg class="moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+<svg class="sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu class=menu><li><a href=https://ziwindlu.github.io/ title=首页><span>首页</span></a></li><li><a href=https://ziwindlu.github.io/posts/ title=文章><span>文章</span></a></li><li><a href=https://ziwindlu.github.io/tags/ title=标签><span>标签</span></a></li><li><a href=https://ziwindlu.github.io/search/ title=搜索><span>搜索</span></a></li><li><a href=https://ziwindlu.github.io/about/ title=关于><span>关于</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><h1 class="post-title entry-hint-parent">Linux常用服务</h1><div class=post-meta><span title=2026-04-03T00:00:00+08:00>2026-04-03</span>&nbsp;·&nbsp;<span>1 分钟</span>&nbsp;·&nbsp;<span>ziwindlu</span>&nbsp;·&nbsp;<span class=post-source>源笔记：<code>02-Knowledge/Linux/Linux常用服务.md</code></span></div></header><details class=toc><summary accesskey=c title="(Alt + C)"><span class=title>目录</span></summary><div class=inner><ul><li><a href=#ssh aria-label=SSH>SSH</a><ul><li><a href=#%e5%ae%89%e5%85%a8%e9%85%8d%e7%bd%ae aria-label=安全配置>安全配置</a></li><li><a href=#%e5%a6%82%e4%bd%95%e9%98%b2%e5%be%a1ssh%e7%88%86%e7%a0%b4-card-forward aria-label="如何防御ssh爆破 #card #forward">如何防御ssh爆破 #card #forward</a></li></ul></li><li><a href=#smb aria-label=SMB>SMB</a><ul><li><a href=#%e5%ae%89%e5%85%a8%e9%85%8d%e7%bd%ae-1 aria-label=安全配置>安全配置</a></li><li><a href=#%e5%ae%89%e5%85%a8%e6%bc%8f%e6%b4%9e aria-label=安全漏洞>安全漏洞</a><ul><li><a href=#%e6%b0%b8%e6%81%92%e4%b9%8b%e8%93%9d-ms17-010cve-2017-0143 aria-label="永恒之蓝 (MS17-010/CVE-2017-0143)">永恒之蓝 (MS17-010/CVE-2017-0143)</a></li></ul></li><li><a href=#smbghost-cve-2020-0796 aria-label="SMBGhost (CVE-2020-0796)">SMBGhost (CVE-2020-0796)</a></li></ul></li><li><a href=#ftp aria-label=FTP>FTP</a><ul><li><a href=#%e5%ae%89%e5%85%a8%e9%85%8d%e7%bd%ae-2 aria-label=安全配置>安全配置</a></li><li><a href=#%e4%bd%bf%e7%94%a8 aria-label=使用>使用</a></li></ul></li></ul></div></details><div class="post-content md-content"><h2 id=ssh>SSH<a hidden class=anchor aria-hidden=true href=#ssh>#</a></h2><p>默认端口22</p><h3 id=安全配置>安全配置<a hidden class=anchor aria-hidden=true href=#安全配置>#</a></h3><p>禁止密码登陆</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-apl data-lang=apl><span class=line><span class=cl><span class=nv>PermitRootLogin</span> <span class=nv>no</span> <span class=c1># 禁止root登陆</span>
+</span></span></code></pre></div><p>禁止root登陆</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-apl data-lang=apl><span class=line><span class=cl><span class=nv>PermitRootLogin</span> <span class=nv>prohibit</span><span class=o>-</span><span class=nv>password</span>  <span class=c1># 仅允许密钥登录</span>
+</span></span></code></pre></div><p>端口转发滥用，避免攻击者用作内网渗透</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-apl data-lang=apl><span class=line><span class=cl><span class=nv>AllowTcpForwarding</span> <span class=nv>no</span>
+</span></span><span class=line><span class=cl><span class=nv>PermitTunnel</span> <span class=nv>no</span>
+</span></span></code></pre></div><h3 id=如何防御ssh爆破-card-forward>如何防御ssh爆破 #card #forward<a hidden class=anchor aria-hidden=true href=#如何防御ssh爆破-card-forward>#</a></h3><p>id:: 67ab4ea1-d4cf-493f-98c3-85b8de165ace
+禁用密码登陆
+修改默认端口
+白名单过滤
+配置尝试次数</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-apl data-lang=apl><span class=line><span class=cl><span class=nv>MaxAuthTries</span> <span class=m>3</span>         <span class=c1># 单连接最大认证尝试次数</span>
+</span></span><span class=line><span class=cl><span class=nv>MaxSessions</span> <span class=m>2</span>          <span class=c1># 单个IP最大并发会话</span>
+</span></span><span class=line><span class=cl><span class=nv>LoginGraceTime</span> <span class=m>30</span><span class=nv>s</span>     <span class=c1># 登录超时时间</span>
+</span></span></code></pre></div><h2 id=smb>SMB<a hidden class=anchor aria-hidden=true href=#smb>#</a></h2><p>默认端口139,445
+windows文件共享</p><h3 id=安全配置-1>安全配置<a hidden class=anchor aria-hidden=true href=#安全配置-1>#</a></h3><p>禁止匿名访问</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-apl data-lang=apl><span class=line><span class=cl><span class=nv>guest</span> <span class=nv>ok</span> <span class=o>=</span> <span class=nv>no</span>
+</span></span></code></pre></div><p>控制权限</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-apl data-lang=apl><span class=line><span class=cl><span class=nv>write</span> <span class=nv>list</span> <span class=o>=</span> <span class=nv>user1</span><span class=o>,</span> <span class=nv>user2</span>  <span class=c1># 精确控制</span>
+</span></span><span class=line><span class=cl><span class=nv>create</span> <span class=nv>mask</span> <span class=o>=</span> <span class=m>0640</span>         <span class=c1># 文件权限限制</span>
+</span></span></code></pre></div><h3 id=安全漏洞>安全漏洞<a hidden class=anchor aria-hidden=true href=#安全漏洞>#</a></h3><h4 id=永恒之蓝-ms17-010cve-2017-0143>永恒之蓝 (MS17-010/CVE-2017-0143)<a hidden class=anchor aria-hidden=true href=#永恒之蓝-ms17-010cve-2017-0143>#</a></h4><p>影响版本：Samba 3.x-4.5.9
+修复方案：升级smb</p><h3 id=smbghost-cve-2020-0796>SMBGhost (CVE-2020-0796)<a hidden class=anchor aria-hidden=true href=#smbghost-cve-2020-0796>#</a></h3><p>影响版本：Samba 4.3.0-4.11.4
+修复方案：升级smb</p><h2 id=ftp>FTP<a hidden class=anchor aria-hidden=true href=#ftp>#</a></h2><p>默认端口20,21
+文件传输协议</p><h3 id=安全配置-2>安全配置<a hidden class=anchor aria-hidden=true href=#安全配置-2>#</a></h3><p>禁止匿名访问
+权限控制
+创建文件权限
+可进入目录
+使用加密传输</p><h3 id=使用>使用<a hidden class=anchor aria-hidden=true href=#使用>#</a></h3><p>python快速开启ftp</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>python -m pyftpdlib -u user_name -P password -p port --write
+</span></span></code></pre></div></div><footer class=post-footer><ul class=post-tags><li><a href=https://ziwindlu.github.io/tags/linux/>Linux</a></li></ul><nav class=paginav><a class=prev href=https://ziwindlu.github.io/posts/http-basics/><span class=title>« 上一页</span>
+<span>HTTP基础</span>
+</a><a class=next href=https://ziwindlu.github.io/posts/linux-firewall/><span class=title>下一页 »</span>
+<span>Linux防火墙</span></a></nav></footer></article></main><footer class=footer><span>&copy; 2026 <a href=https://ziwindlu.github.io/>ziwindlu 的博客</a></span> ·
+<span>Powered by
+<a href="https://gohugo.io/?utm_source=papermod" rel=noopener target=_blank>Hugo</a> &
+<a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top id=top-link class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey=g><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up"><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg>
+</a><script>let menu=document.getElementById("menu");if(menu){const e=localStorage.getItem("menu-scroll-position");e&&(menu.scrollLeft=parseInt(e,10));let t;menu.addEventListener("scroll",function(){clearTimeout(t),t=setTimeout(function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)},150)},{passive:!0})}document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var n=this.getAttribute("href").substr(1);const t=document.querySelector(`[id='${decodeURIComponent(n)}']`);window.matchMedia("(prefers-reduced-motion: reduce)").matches?t.scrollIntoView():t.scrollIntoView({behavior:"smooth"}),t.tabIndex<0&&!t.hasAttribute("tabindex")&&t.setAttribute("tabindex","-1"),t.focus({preventScroll:!0}),n==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${n}`)})})</script><script>var toplink=document.getElementById("top-link"),scrollTicking=!1;window.addEventListener("scroll",function(){if(scrollTicking)return;scrollTicking=!0,requestAnimationFrame(function(){const e=window.innerHeight,t=document.body.scrollTop>e||document.documentElement.scrollTop>e;toplink.classList.toggle("hidden",!t),scrollTicking=!1})},{passive:!0})</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{const e=document.querySelector("html");e.dataset.theme==="dark"?(e.dataset.theme="light",localStorage.setItem("pref-theme","light")):(e.dataset.theme="dark",localStorage.setItem("pref-theme","dark"))})</script><script>document.querySelectorAll("pre > code").forEach(e=>{const n=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="复制";function s(){t.innerHTML="已复制！",setTimeout(()=>{t.innerHTML="复制"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),s();return}const n=document.createRange();n.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(n);try{document.execCommand("copy"),s()}catch{}o.removeRange(n)}),n.classList.contains("highlight")?n.appendChild(t):n.parentNode.firstChild==n||(e.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?e.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(t):e.parentNode.appendChild(t))})</script></body></html>

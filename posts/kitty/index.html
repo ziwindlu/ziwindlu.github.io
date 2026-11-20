@@ -1,0 +1,232 @@
+<!doctype html><html lang=zh dir=auto data-theme=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>kitty | ziwindlu 的博客</title><meta name=keywords content="kitty,快捷键"><meta name=description content="引子
+一直以来都在使用xfce4的终端，偶然发现了tmux，才有了换终端的想法
+经过一系列对比，最后选择了kitty
+为什么选择kitty:
+高度定制化
+gpu渲染
+linux,mac双端使用
+shell集成
+本文记录了一些kitty的配置、快捷键、使用方法、插件。
+下面的快捷键大部分只是将ctrl+shift替换为了alt，使用~来代表相同项
+配置在conf或config代码块中
+功能太多暂时探索这么多
+快捷键
+经常用到的
+复制粘贴c-s-c,c-s-v
+屏幕滚动
+
+	
+			
+					orgin shortcut
+					my shortcut
+					action
+			
+	
+	
+			
+					~
+					mod+up
+					向上一行
+			
+			
+					~
+					mod+down
+					向下一行
+			
+			
+					mod+page_up
+					mod+u
+					向上一页
+			
+			
+					mod+page_down
+					mod+d
+					向下一页
+			
+			
+					mod+home
+					mod+shift+u
+					移动到顶端
+			
+			
+					mod+end
+					mod+shift+d
+					移动到结尾
+			
+			
+					~
+					mod+z
+					到上一个命令输入的地方
+			
+			
+					~
+					mod+x
+					到下一个要输入命令的地方
+			
+			
+					mod+h
+					mod+shift+h
+					使用less浏览历史(已经使用alias vimhis代替)
+			
+			
+					~
+					mod+g
+					使用less浏览上一个命令的输出
+			
+	
+
+tab相关
+
+	
+			
+					shortcut
+					action
+			
+	
+	
+			
+					mod-t
+					新建tab
+			
+			
+					mod+q
+					关闭tab
+			
+			
+					mod-right/left
+					移动tab
+			
+			
+					c-s-,/.
+					将tab往前往后移动
+			
+			
+					mod+shift-t
+					命名tab
+			
+			
+					mod+0-9
+					跳转到对应的tab
+			
+	
+
+window相关
+
+	
+			
+					shortcut
+					action
+			
+	
+	
+			
+					mod+enter
+					新建一个窗口
+			
+			
+					mod+shift+enter
+					新建一个窗口并复制环境变量
+			
+			
+					mod+w
+					关闭窗口
+			
+			
+					mod+r
+					调整窗口大小(比较反人类)
+			
+			
+					mod+[/]
+					窗口间移动(emmm,勉强能用)已经调整为hjkl
+			
+			
+					mod+h/l/j/k
+					窗口移动like i3
+			
+			
+					mod+n
+					切换布局，kitty默认将所有布局都开启了详情请见kitty layouts
+			
+			
+					mod+shift+up/down/left/right
+					调整窗口大小
+			
+			
+					mod+s
+					可视化交换窗口
+			
+	
+
+自定义配置
+鼠标右键选中命令输出
+mouse_map right press ungrabbed mouse_select_command_output
+shell集成
+打开shell集成
+shell_integration enabled
+特性以及用法
+在pager中打开最后一个命令的输出 mod+g
+跳转到上一个或下一个命令输入的地方 mod+z,mod+x
+在pager中打开鼠标停留处的命令输出 ctrl+shift+right_click
+新窗口复制当前窗口的环境变量 mod+enter
+在kitty中编辑文件edit-in-kitty将远程的文件copy到本地使用本地的编辑器进行编辑
+在子shell或docker中使用shell集成
+kitten run-shell                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+插件
+这里仅介绍了一些俺感兴趣的插件，和一些以后可能用到的插件
+远程编辑
+在本地编辑器编辑远程文件,再也不用给服务器配置.vimrc辣
+kitten edit-in-kitty file运行这个命令后kitty会自动下载kitten二进制文件"><meta name=author content="ziwindlu"><link rel=canonical href=https://ziwindlu.github.io/posts/kitty/><link crossorigin=anonymous href=/assets/css/stylesheet.95ae6e9689bd0037456375629f411acbf8ed76e0e9a7599900ad281f9526dee6.css integrity="sha256-la5ulom9ADdFY3Vin0Eay/jtduDpp1mZAK0oH5Um3uY=" rel="preload stylesheet" as=style><link rel=icon href=https://ziwindlu.github.io/favicon.svg><link rel=icon type=image/png sizes=16x16 href=https://ziwindlu.github.io/favicon.svg><link rel=icon type=image/png sizes=32x32 href=https://ziwindlu.github.io/favicon.svg><link rel=apple-touch-icon href=https://ziwindlu.github.io/favicon.svg><link rel=mask-icon href=https://ziwindlu.github.io/favicon.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=zh href=https://ziwindlu.github.io/posts/kitty/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51);color-scheme:dark}.list{background:var(--theme)}.toc{background:var(--entry)}}</style></noscript><script>localStorage.getItem("pref-theme")==="dark"?document.querySelector("html").dataset.theme="dark":localStorage.getItem("pref-theme")==="light"?document.querySelector("html").dataset.theme="light":window.matchMedia("(prefers-color-scheme: dark)").matches?document.querySelector("html").dataset.theme="dark":document.querySelector("html").dataset.theme="light"</script><meta property="og:url" content="https://ziwindlu.github.io/posts/kitty/"><meta property="og:site_name" content="ziwindlu 的博客"><meta property="og:title" content="kitty"><meta property="og:description" content="引子 一直以来都在使用xfce4的终端，偶然发现了tmux，才有了换终端的想法 经过一系列对比，最后选择了kitty 为什么选择kitty: 高度定制化 gpu渲染 linux,mac双端使用 shell集成 本文记录了一些kitty的配置、快捷键、使用方法、插件。 下面的快捷键大部分只是将ctrl+shift替换为了alt，使用~来代表相同项 配置在conf或config代码块中 功能太多暂时探索这么多
+快捷键 经常用到的 复制粘贴c-s-c,c-s-v
+屏幕滚动 orgin shortcut my shortcut action ~ mod+up 向上一行 ~ mod+down 向下一行 mod+page_up mod+u 向上一页 mod+page_down mod+d 向下一页 mod+home mod+shift+u 移动到顶端 mod+end mod+shift+d 移动到结尾 ~ mod+z 到上一个命令输入的地方 ~ mod+x 到下一个要输入命令的地方 mod+h mod+shift+h 使用less浏览历史(已经使用alias vimhis代替) ~ mod+g 使用less浏览上一个命令的输出 tab相关 shortcut action mod-t 新建tab mod+q 关闭tab mod-right/left 移动tab c-s-,/. 将tab往前往后移动 mod+shift-t 命名tab mod+0-9 跳转到对应的tab window相关 shortcut action mod+enter 新建一个窗口 mod+shift+enter 新建一个窗口并复制环境变量 mod+w 关闭窗口 mod+r 调整窗口大小(比较反人类) mod+[/] 窗口间移动(emmm,勉强能用)已经调整为hjkl mod+h/l/j/k 窗口移动like i3 mod+n 切换布局，kitty默认将所有布局都开启了详情请见kitty layouts mod+shift+up/down/left/right 调整窗口大小 mod+s 可视化交换窗口 自定义配置 鼠标右键选中命令输出 mouse_map right press ungrabbed mouse_select_command_output shell集成 打开shell集成 shell_integration enabled 特性以及用法 在pager中打开最后一个命令的输出 mod+g 跳转到上一个或下一个命令输入的地方 mod+z,mod+x 在pager中打开鼠标停留处的命令输出 ctrl+shift+right_click 新窗口复制当前窗口的环境变量 mod+enter 在kitty中编辑文件edit-in-kitty将远程的文件copy到本地使用本地的编辑器进行编辑
+在子shell或docker中使用shell集成 kitten run-shell 插件 这里仅介绍了一些俺感兴趣的插件，和一些以后可能用到的插件
+远程编辑 在本地编辑器编辑远程文件,再也不用给服务器配置.vimrc辣 kitten edit-in-kitty file运行这个命令后kitty会自动下载kitten二进制文件"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2024-04-10T00:00:00+08:00"><meta property="article:modified_time" content="2024-04-10T00:00:00+08:00"><meta property="article:tag" content="kitty"><meta property="article:tag" content="快捷键"><meta name=twitter:card content="summary"><meta name=twitter:title content="kitty"><meta name=twitter:description content="引子 一直以来都在使用xfce4的终端，偶然发现了tmux，才有了换终端的想法 经过一系列对比，最后选择了kitty 为什么选择kitty: 高度定制化 gpu渲染 linux,mac双端使用 shell集成 本文记录了一些kitty的配置、快捷键、使用方法、插件。 下面的快捷键大部分只是将ctrl+shift替换为了alt，使用~来代表相同项 配置在conf或config代码块中 功能太多暂时探索这么多
+快捷键 经常用到的 复制粘贴c-s-c,c-s-v
+屏幕滚动 orgin shortcut my shortcut action ~ mod+up 向上一行 ~ mod+down 向下一行 mod+page_up mod+u 向上一页 mod+page_down mod+d 向下一页 mod+home mod+shift+u 移动到顶端 mod+end mod+shift+d 移动到结尾 ~ mod+z 到上一个命令输入的地方 ~ mod+x 到下一个要输入命令的地方 mod+h mod+shift+h 使用less浏览历史(已经使用alias vimhis代替) ~ mod+g 使用less浏览上一个命令的输出 tab相关 shortcut action mod-t 新建tab mod+q 关闭tab mod-right/left 移动tab c-s-,/. 将tab往前往后移动 mod+shift-t 命名tab mod+0-9 跳转到对应的tab window相关 shortcut action mod+enter 新建一个窗口 mod+shift+enter 新建一个窗口并复制环境变量 mod+w 关闭窗口 mod+r 调整窗口大小(比较反人类) mod+[/] 窗口间移动(emmm,勉强能用)已经调整为hjkl mod+h/l/j/k 窗口移动like i3 mod+n 切换布局，kitty默认将所有布局都开启了详情请见kitty layouts mod+shift+up/down/left/right 调整窗口大小 mod+s 可视化交换窗口 自定义配置 鼠标右键选中命令输出 mouse_map right press ungrabbed mouse_select_command_output shell集成 打开shell集成 shell_integration enabled 特性以及用法 在pager中打开最后一个命令的输出 mod+g 跳转到上一个或下一个命令输入的地方 mod+z,mod+x 在pager中打开鼠标停留处的命令输出 ctrl+shift+right_click 新窗口复制当前窗口的环境变量 mod+enter 在kitty中编辑文件edit-in-kitty将远程的文件copy到本地使用本地的编辑器进行编辑
+在子shell或docker中使用shell集成 kitten run-shell 插件 这里仅介绍了一些俺感兴趣的插件，和一些以后可能用到的插件
+远程编辑 在本地编辑器编辑远程文件,再也不用给服务器配置.vimrc辣 kitten edit-in-kitty file运行这个命令后kitty会自动下载kitten二进制文件"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"文章","item":"https://ziwindlu.github.io/posts/"},{"@type":"ListItem","position":2,"name":"kitty","item":"https://ziwindlu.github.io/posts/kitty/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"kitty","name":"kitty","description":"引子 一直以来都在使用xfce4的终端，偶然发现了tmux，才有了换终端的想法 经过一系列对比，最后选择了kitty 为什么选择kitty: 高度定制化 gpu渲染 linux,mac双端使用 shell集成 本文记录了一些kitty的配置、快捷键、使用方法、插件。 下面的快捷键大部分只是将ctrl+shift替换为了alt，使用~来代表相同项 配置在conf或config代码块中 功能太多暂时探索这么多\n快捷键 经常用到的 复制粘贴c-s-c,c-s-v\n屏幕滚动 orgin shortcut my shortcut action ~ mod+up 向上一行 ~ mod+down 向下一行 mod+page_up mod+u 向上一页 mod+page_down mod+d 向下一页 mod+home mod+shift+u 移动到顶端 mod+end mod+shift+d 移动到结尾 ~ mod+z 到上一个命令输入的地方 ~ mod+x 到下一个要输入命令的地方 mod+h mod+shift+h 使用less浏览历史(已经使用alias vimhis代替) ~ mod+g 使用less浏览上一个命令的输出 tab相关 shortcut action mod-t 新建tab mod+q 关闭tab mod-right/left 移动tab c-s-,/. 将tab往前往后移动 mod+shift-t 命名tab mod+0-9 跳转到对应的tab window相关 shortcut action mod+enter 新建一个窗口 mod+shift+enter 新建一个窗口并复制环境变量 mod+w 关闭窗口 mod+r 调整窗口大小(比较反人类) mod+[/] 窗口间移动(emmm,勉强能用)已经调整为hjkl mod+h/l/j/k 窗口移动like i3 mod+n 切换布局，kitty默认将所有布局都开启了详情请见kitty layouts mod+shift+up/down/left/right 调整窗口大小 mod+s 可视化交换窗口 自定义配置 鼠标右键选中命令输出 mouse_map right press ungrabbed mouse_select_command_output shell集成 打开shell集成 shell_integration enabled 特性以及用法 在pager中打开最后一个命令的输出 mod+g 跳转到上一个或下一个命令输入的地方 mod+z,mod+x 在pager中打开鼠标停留处的命令输出 ctrl+shift+right_click 新窗口复制当前窗口的环境变量 mod+enter 在kitty中编辑文件edit-in-kitty将远程的文件copy到本地使用本地的编辑器进行编辑\n在子shell或docker中使用shell集成 kitten run-shell 插件 这里仅介绍了一些俺感兴趣的插件，和一些以后可能用到的插件\n远程编辑 在本地编辑器编辑远程文件,再也不用给服务器配置.vimrc辣 kitten edit-in-kitty file运行这个命令后kitty会自动下载kitten二进制文件\n","keywords":["kitty","快捷键"],"articleBody":"引子 一直以来都在使用xfce4的终端，偶然发现了tmux，才有了换终端的想法 经过一系列对比，最后选择了kitty 为什么选择kitty: 高度定制化 gpu渲染 linux,mac双端使用 shell集成 本文记录了一些kitty的配置、快捷键、使用方法、插件。 下面的快捷键大部分只是将ctrl+shift替换为了alt，使用~来代表相同项 配置在conf或config代码块中 功能太多暂时探索这么多\n快捷键 经常用到的 复制粘贴c-s-c,c-s-v\n屏幕滚动 orgin shortcut my shortcut action ~ mod+up 向上一行 ~ mod+down 向下一行 mod+page_up mod+u 向上一页 mod+page_down mod+d 向下一页 mod+home mod+shift+u 移动到顶端 mod+end mod+shift+d 移动到结尾 ~ mod+z 到上一个命令输入的地方 ~ mod+x 到下一个要输入命令的地方 mod+h mod+shift+h 使用less浏览历史(已经使用alias vimhis代替) ~ mod+g 使用less浏览上一个命令的输出 tab相关 shortcut action mod-t 新建tab mod+q 关闭tab mod-right/left 移动tab c-s-,/. 将tab往前往后移动 mod+shift-t 命名tab mod+0-9 跳转到对应的tab window相关 shortcut action mod+enter 新建一个窗口 mod+shift+enter 新建一个窗口并复制环境变量 mod+w 关闭窗口 mod+r 调整窗口大小(比较反人类) mod+[/] 窗口间移动(emmm,勉强能用)已经调整为hjkl mod+h/l/j/k 窗口移动like i3 mod+n 切换布局，kitty默认将所有布局都开启了详情请见kitty layouts mod+shift+up/down/left/right 调整窗口大小 mod+s 可视化交换窗口 自定义配置 鼠标右键选中命令输出 mouse_map right press ungrabbed mouse_select_command_output shell集成 打开shell集成 shell_integration enabled 特性以及用法 在pager中打开最后一个命令的输出 mod+g 跳转到上一个或下一个命令输入的地方 mod+z,mod+x 在pager中打开鼠标停留处的命令输出 ctrl+shift+right_click 新窗口复制当前窗口的环境变量 mod+enter 在kitty中编辑文件edit-in-kitty将远程的文件copy到本地使用本地的编辑器进行编辑\n在子shell或docker中使用shell集成 kitten run-shell 插件 这里仅介绍了一些俺感兴趣的插件，和一些以后可能用到的插件\n远程编辑 在本地编辑器编辑远程文件,再也不用给服务器配置.vimrc辣 kitten edit-in-kitty file运行这个命令后kitty会自动下载kitten二进制文件\n文件传输 不使用scp进行快捷的文件传输 要求连接时都使用kitten ssh连接 远程到本地\n# remote kitten transfer some-file /path/on/local/computer 本地到远程\n# remote kitten transfer --direction=upload /path/on/local/computer remote-file 广播 设置广播快捷键\nmap f2 launch --allow-remote-control kitty +kitten broadcast 使用 做并发任务有奇效\n剪切板 kitty将内容复制到系统剪切板，俺使用了xclip无需用到该插件\nkitty-bar 使用gpu渲染的bar，俺用不到这个功能\nremote 目前俺对该功能的探索比较少，相关内容仅代表个人理解\nhello world 在同一个kitty进程中kitty可以向另一个kitty窗口发送指令之类的 来自官网的一个实例 Hello World\nkitty @ launch --title Output --keep-focus cat 这将会开启一个新的窗口，我理解为打开了一个kitty客户端，并且运行了cat\nkitty @ send-text --match cmdline:cat Hello, World 这会让kitty去找寻cmdline运行了cat的kitty远程客户端，并发送Hello, World，cat命令接收到Hello World将会输出 同样的你可以使用管道符将ls的输出放到Output中\nls | kitty @ send-text --match cmdline:cat --stdin 如果你发现你的kitty并不能使用远程，可能是配置问题，可去官网查询\n参数 暂无\n细粒度控制 暂无\n启动会话 待探索\n终端高亮字符 DONE 待编辑\n一些问题 无法使用ctrl+left/right进行单词间移动 配置文件中加入以下内容\nmap ctrl+left send_text all \\x1b\\x62 map ctrl+right send_text all \\x1b\\x66 参考 kitty remote doc kitty layouts How to have Ctrl-Left and Ctrl-Right to jump one word\n","wordCount":"229","inLanguage":"zh","datePublished":"2024-04-10T00:00:00+08:00","dateModified":"2024-04-10T00:00:00+08:00","author":{"@type":"Person","name":"ziwindlu"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://ziwindlu.github.io/posts/kitty/"},"publisher":{"@type":"Organization","name":"ziwindlu 的博客","logo":{"@type":"ImageObject","url":"https://ziwindlu.github.io/favicon.svg"}}}</script></head><body id=top><header class=header><nav class=header-nav><div class=logo><a href=https://ziwindlu.github.io/ accesskey=h title="ziwindlu 的博客 (Alt + H)">ziwindlu 的博客</a><div class=logo-switches><button id=theme-toggle class=theme-toggle accesskey=t title="(Alt + T)" aria-label="Toggle theme">
+<svg class="moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+<svg class="sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu class=menu><li><a href=https://ziwindlu.github.io/ title=首页><span>首页</span></a></li><li><a href=https://ziwindlu.github.io/posts/ title=文章><span>文章</span></a></li><li><a href=https://ziwindlu.github.io/tags/ title=标签><span>标签</span></a></li><li><a href=https://ziwindlu.github.io/search/ title=搜索><span>搜索</span></a></li><li><a href=https://ziwindlu.github.io/about/ title=关于><span>关于</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><h1 class="post-title entry-hint-parent">kitty</h1><div class=post-meta><span title=2024-04-10T00:00:00+08:00>2024-04-10</span>&nbsp;·&nbsp;<span>2 分钟</span>&nbsp;·&nbsp;<span>ziwindlu</span>&nbsp;·&nbsp;<span class=post-source>源笔记：<code>02-Knowledge/常用软件/kitty.md</code></span></div></header><details class=toc><summary accesskey=c title="(Alt + C)"><span class=title>目录</span></summary><div class=inner><ul><li><a href=#%e5%bc%95%e5%ad%90 aria-label=引子>引子</a></li><li><a href=#%e5%bf%ab%e6%8d%b7%e9%94%ae aria-label=快捷键>快捷键</a><ul><li><a href=#%e7%bb%8f%e5%b8%b8%e7%94%a8%e5%88%b0%e7%9a%84 aria-label=经常用到的>经常用到的</a></li><li><a href=#%e5%b1%8f%e5%b9%95%e6%bb%9a%e5%8a%a8 aria-label=屏幕滚动>屏幕滚动</a></li><li><a href=#tab%e7%9b%b8%e5%85%b3 aria-label=tab相关>tab相关</a></li><li><a href=#window%e7%9b%b8%e5%85%b3 aria-label=window相关>window相关</a></li><li><a href=#%e8%87%aa%e5%ae%9a%e4%b9%89%e9%85%8d%e7%bd%ae aria-label=自定义配置>自定义配置</a><ul><li><a href=#%e9%bc%a0%e6%a0%87%e5%8f%b3%e9%94%ae%e9%80%89%e4%b8%ad%e5%91%bd%e4%bb%a4%e8%be%93%e5%87%ba aria-label=鼠标右键选中命令输出>鼠标右键选中命令输出</a></li></ul></li></ul></li><li><a href=#shell%e9%9b%86%e6%88%90 aria-label=shell集成>shell集成</a><ul><li><a href=#%e6%89%93%e5%bc%80shell%e9%9b%86%e6%88%90 aria-label=打开shell集成>打开shell集成</a></li><li><a href=#%e7%89%b9%e6%80%a7%e4%bb%a5%e5%8f%8a%e7%94%a8%e6%b3%95 aria-label=特性以及用法>特性以及用法</a></li><li><a href=#%e5%9c%a8%e5%ad%90shell%e6%88%96docker%e4%b8%ad%e4%bd%bf%e7%94%a8shell%e9%9b%86%e6%88%90 aria-label=在子shell或docker中使用shell集成>在子shell或docker中使用shell集成</a></li></ul></li><li><a href=#%e6%8f%92%e4%bb%b6 aria-label=插件>插件</a><ul><li><a href=#%e8%bf%9c%e7%a8%8b%e7%bc%96%e8%be%91 aria-label=远程编辑>远程编辑</a></li><li><a href=#%e6%96%87%e4%bb%b6%e4%bc%a0%e8%be%93 aria-label=文件传输>文件传输</a></li><li><a href=#%e5%b9%bf%e6%92%ad aria-label=广播>广播</a></li><li><a href=#%e5%89%aa%e5%88%87%e6%9d%bf aria-label=剪切板>剪切板</a></li><li><a href=#kitty-bar aria-label=kitty-bar>kitty-bar</a></li></ul></li><li><a href=#remote aria-label=remote>remote</a><ul><li><a href=#hello-world aria-label="hello world">hello world</a></li><li><a href=#%e5%8f%82%e6%95%b0 aria-label=参数>参数</a></li><li><a href=#%e7%bb%86%e7%b2%92%e5%ba%a6%e6%8e%a7%e5%88%b6 aria-label=细粒度控制>细粒度控制</a></li></ul></li><li><a href=#%e5%90%af%e5%8a%a8%e4%bc%9a%e8%af%9d aria-label=启动会话>启动会话</a></li><li><a href=#%e7%bb%88%e7%ab%af%e9%ab%98%e4%ba%ae%e5%ad%97%e7%ac%a6 aria-label=终端高亮字符>终端高亮字符</a></li><li><a href=#%e4%b8%80%e4%ba%9b%e9%97%ae%e9%a2%98 aria-label=一些问题>一些问题</a><ul><li><a href=#%e6%97%a0%e6%b3%95%e4%bd%bf%e7%94%a8ctrlleftright%e8%bf%9b%e8%a1%8c%e5%8d%95%e8%af%8d%e9%97%b4%e7%a7%bb%e5%8a%a8 aria-label=无法使用ctrl+left/right进行单词间移动>无法使用ctrl+left/right进行单词间移动</a></li></ul></li><li><a href=#%e5%8f%82%e8%80%83 aria-label=参考>参考</a></li></ul></div></details><div class="post-content md-content"><h2 id=引子>引子<a hidden class=anchor aria-hidden=true href=#引子>#</a></h2><p>一直以来都在使用xfce4的终端，偶然发现了tmux，才有了换终端的想法
+经过一系列对比，最后选择了kitty
+为什么选择kitty:
+高度定制化
+gpu渲染
+linux,mac双端使用
+shell集成
+本文记录了一些kitty的配置、快捷键、使用方法、插件。
+下面的快捷键大部分只是将<code>ctrl+shift</code>替换为了<code>alt</code>，使用<code>~</code>来代表相同项
+配置在conf或config代码块中
+功能太多暂时探索这么多</p><h2 id=快捷键>快捷键<a hidden class=anchor aria-hidden=true href=#快捷键>#</a></h2><h3 id=经常用到的>经常用到的<a hidden class=anchor aria-hidden=true href=#经常用到的>#</a></h3><p>复制粘贴<code>c-s-c</code>,<code>c-s-v</code></p><h3 id=屏幕滚动>屏幕滚动<a hidden class=anchor aria-hidden=true href=#屏幕滚动>#</a></h3><table><thead><tr><th>orgin shortcut</th><th>my shortcut</th><th>action</th></tr></thead><tbody><tr><td><code>~</code></td><td><code>mod+up</code></td><td>向上一行</td></tr><tr><td><code>~</code></td><td><code>mod+down</code></td><td>向下一行</td></tr><tr><td><code>mod+page_up</code></td><td><code>mod+u</code></td><td>向上一页</td></tr><tr><td><code>mod+page_down</code></td><td><code>mod+d</code></td><td>向下一页</td></tr><tr><td><code>mod+home</code></td><td><code>mod+shift+u</code></td><td>移动到顶端</td></tr><tr><td><code>mod+end</code></td><td><code>mod+shift+d</code></td><td>移动到结尾</td></tr><tr><td><code>~</code></td><td><code>mod+z</code></td><td>到上一个命令输入的地方</td></tr><tr><td><code>~</code></td><td><code>mod+x</code></td><td>到下一个要输入命令的地方</td></tr><tr><td><code>mod+h</code></td><td><code>mod+shift+h</code></td><td>使用less浏览历史(已经使用alias vimhis代替)</td></tr><tr><td><code>~</code></td><td><code>mod+g</code></td><td>使用less浏览上一个命令的输出</td></tr></tbody></table><h3 id=tab相关>tab相关<a hidden class=anchor aria-hidden=true href=#tab相关>#</a></h3><table><thead><tr><th>shortcut</th><th>action</th></tr></thead><tbody><tr><td><code>mod-t</code></td><td>新建tab</td></tr><tr><td><code>mod+q</code></td><td>关闭tab</td></tr><tr><td><code>mod-right/left</code></td><td>移动tab</td></tr><tr><td><code>c-s-,/.</code></td><td>将tab往前往后移动</td></tr><tr><td><code>mod+shift-t</code></td><td>命名tab</td></tr><tr><td><code>mod+0-9</code></td><td>跳转到对应的tab</td></tr></tbody></table><h3 id=window相关>window相关<a hidden class=anchor aria-hidden=true href=#window相关>#</a></h3><table><thead><tr><th>shortcut</th><th>action</th></tr></thead><tbody><tr><td><code>mod+enter</code></td><td>新建一个窗口</td></tr><tr><td><code>mod+shift+enter</code></td><td>新建一个窗口并复制环境变量</td></tr><tr><td><code>mod+w</code></td><td>关闭窗口</td></tr><tr><td><code>mod+r</code></td><td>调整窗口大小(比较反人类)</td></tr><tr><td><code>mod+[/]</code></td><td>窗口间移动(emmm,勉强能用)已经调整为hjkl</td></tr><tr><td><code>mod+h/l/j/k</code></td><td>窗口移动like i3</td></tr><tr><td><code>mod+n</code></td><td>切换布局，kitty默认将所有布局都开启了详情请见<code>kitty layouts</code></td></tr><tr><td><code>mod+shift+up/down/left/right</code></td><td>调整窗口大小</td></tr><tr><td><code>mod+s</code></td><td>可视化交换窗口</td></tr></tbody></table><h3 id=自定义配置>自定义配置<a hidden class=anchor aria-hidden=true href=#自定义配置>#</a></h3><h4 id=鼠标右键选中命令输出>鼠标右键选中命令输出<a hidden class=anchor aria-hidden=true href=#鼠标右键选中命令输出>#</a></h4><pre tabindex=0><code class=language-conf data-lang=conf>mouse_map right press ungrabbed mouse_select_command_output
+</code></pre><h2 id=shell集成>shell集成<a hidden class=anchor aria-hidden=true href=#shell集成>#</a></h2><h3 id=打开shell集成>打开shell集成<a hidden class=anchor aria-hidden=true href=#打开shell集成>#</a></h3><pre tabindex=0><code class=language-conf data-lang=conf>shell_integration enabled
+</code></pre><h3 id=特性以及用法>特性以及用法<a hidden class=anchor aria-hidden=true href=#特性以及用法>#</a></h3><p>在pager中打开最后一个命令的输出 <code>mod+g</code>
+跳转到上一个或下一个命令输入的地方 <code>mod+z,mod+x</code>
+在pager中打开鼠标停留处的命令输出 <code>ctrl+shift+right_click</code>
+新窗口复制当前窗口的环境变量 <code>mod+enter</code>
+在kitty中编辑文件<code>edit-in-kitty</code>将远程的文件copy到本地使用本地的编辑器进行编辑</p><h3 id=在子shell或docker中使用shell集成>在子shell或docker中使用shell集成<a hidden class=anchor aria-hidden=true href=#在子shell或docker中使用shell集成>#</a></h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>kitten run-shell                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+</span></span></code></pre></div><h2 id=插件>插件<a hidden class=anchor aria-hidden=true href=#插件>#</a></h2><p>这里仅介绍了一些俺感兴趣的插件，和一些以后可能用到的插件</p><h3 id=远程编辑>远程编辑<a hidden class=anchor aria-hidden=true href=#远程编辑>#</a></h3><p>在本地编辑器编辑远程文件,再也不用给服务器配置<code>.vimrc</code>辣
+<code>kitten edit-in-kitty file</code>运行这个命令后kitty会自动下载kitten二进制文件</p><h3 id=文件传输>文件传输<a hidden class=anchor aria-hidden=true href=#文件传输>#</a></h3><p>不使用<code>scp</code>进行快捷的文件传输
+要求连接时都使用<code>kitten ssh</code>连接
+远程到本地</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=c1># remote</span>
+</span></span><span class=line><span class=cl>kitten transfer some-file /path/on/local/computer
+</span></span></code></pre></div><p>本地到远程</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=c1># remote</span>
+</span></span><span class=line><span class=cl>kitten transfer --direction<span class=o>=</span>upload /path/on/local/computer remote-file
+</span></span></code></pre></div><h3 id=广播>广播<a hidden class=anchor aria-hidden=true href=#广播>#</a></h3><p>设置广播快捷键</p><pre tabindex=0><code class=language-config data-lang=config>map f2 launch --allow-remote-control kitty +kitten broadcast
+</code></pre><p>使用
+<img alt=image.png loading=lazy src=/images/image_1712654206871_0.png>
+做并发任务有奇效</p><h3 id=剪切板>剪切板<a hidden class=anchor aria-hidden=true href=#剪切板>#</a></h3><p>kitty将内容复制到系统剪切板，俺使用了xclip无需用到该插件</p><h3 id=kitty-bar>kitty-bar<a hidden class=anchor aria-hidden=true href=#kitty-bar>#</a></h3><p>使用gpu渲染的bar，俺用不到这个功能</p><h2 id=remote>remote<a hidden class=anchor aria-hidden=true href=#remote>#</a></h2><p>目前俺对该功能的探索比较少，相关内容仅代表个人理解</p><h3 id=hello-world>hello world<a hidden class=anchor aria-hidden=true href=#hello-world>#</a></h3><p>在同一个kitty进程中kitty可以向另一个kitty窗口发送指令之类的
+来自官网的一个实例
+Hello World</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>kitty @ launch --title Output --keep-focus cat
+</span></span></code></pre></div><p>这将会开启一个新的窗口，我理解为打开了一个kitty客户端，并且运行了cat</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>kitty @ send-text --match cmdline:cat Hello, World
+</span></span></code></pre></div><p>这会让kitty去找寻cmdline运行了cat的kitty远程客户端，并发送Hello, World，cat命令接收到Hello World将会输出
+同样的你可以使用管道符将ls的输出放到Output中</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>ls <span class=p>|</span> kitty @ send-text --match cmdline:cat --stdin
+</span></span></code></pre></div><blockquote><p>如果你发现你的kitty并不能使用远程，可能是配置问题，可去官网查询</p></blockquote><h3 id=参数>参数<a hidden class=anchor aria-hidden=true href=#参数>#</a></h3><p>暂无</p><h3 id=细粒度控制>细粒度控制<a hidden class=anchor aria-hidden=true href=#细粒度控制>#</a></h3><p>暂无</p><h2 id=启动会话>启动会话<a hidden class=anchor aria-hidden=true href=#启动会话>#</a></h2><p>待探索</p><h2 id=终端高亮字符>终端高亮字符<a hidden class=anchor aria-hidden=true href=#终端高亮字符>#</a></h2><p>DONE 待编辑</p><h2 id=一些问题>一些问题<a hidden class=anchor aria-hidden=true href=#一些问题>#</a></h2><h3 id=无法使用ctrlleftright进行单词间移动>无法使用ctrl+left/right进行单词间移动<a hidden class=anchor aria-hidden=true href=#无法使用ctrlleftright进行单词间移动>#</a></h3><p>配置文件中加入以下内容</p><pre tabindex=0><code class=language-kitty.conf data-lang=kitty.conf>map ctrl+left send_text all \x1b\x62
+map ctrl+right send_text all \x1b\x66
+</code></pre><h2 id=参考>参考<a hidden class=anchor aria-hidden=true href=#参考>#</a></h2><p><a href=https://sw.kovidgoyal.net/kitty/remote-control/>kitty remote doc</a>
+<a href=https://sw.kovidgoyal.net/kitty/layouts>kitty layouts</a>
+<a href=https://www.reddit.com/r/KittyTerminal/comments/llsmty/how_to_have_ctrlleft_and_ctrlright_to_jump_one/>How to have Ctrl-Left and Ctrl-Right to jump one word</a></p></div><footer class=post-footer><ul class=post-tags><li><a href=https://ziwindlu.github.io/tags/kitty/>kitty</a></li><li><a href=https://ziwindlu.github.io/tags/%E5%BF%AB%E6%8D%B7%E9%94%AE/>快捷键</a></li></ul><nav class=paginav><a class=prev href=https://ziwindlu.github.io/posts/hedgedoc-setup/><span class=title>« 上一页</span>
+<span>hedgedoc搭建</span>
+</a><a class=next href=https://ziwindlu.github.io/posts/mac-small-things/><span class=title>下一页 »</span>
+<span>mac中琐碎小事</span></a></nav></footer></article></main><footer class=footer><span>&copy; 2026 <a href=https://ziwindlu.github.io/>ziwindlu 的博客</a></span> ·
+<span>Powered by
+<a href="https://gohugo.io/?utm_source=papermod" rel=noopener target=_blank>Hugo</a> &
+<a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top id=top-link class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey=g><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up"><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg>
+</a><script>let menu=document.getElementById("menu");if(menu){const e=localStorage.getItem("menu-scroll-position");e&&(menu.scrollLeft=parseInt(e,10));let t;menu.addEventListener("scroll",function(){clearTimeout(t),t=setTimeout(function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)},150)},{passive:!0})}document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var n=this.getAttribute("href").substr(1);const t=document.querySelector(`[id='${decodeURIComponent(n)}']`);window.matchMedia("(prefers-reduced-motion: reduce)").matches?t.scrollIntoView():t.scrollIntoView({behavior:"smooth"}),t.tabIndex<0&&!t.hasAttribute("tabindex")&&t.setAttribute("tabindex","-1"),t.focus({preventScroll:!0}),n==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${n}`)})})</script><script>var toplink=document.getElementById("top-link"),scrollTicking=!1;window.addEventListener("scroll",function(){if(scrollTicking)return;scrollTicking=!0,requestAnimationFrame(function(){const e=window.innerHeight,t=document.body.scrollTop>e||document.documentElement.scrollTop>e;toplink.classList.toggle("hidden",!t),scrollTicking=!1})},{passive:!0})</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{const e=document.querySelector("html");e.dataset.theme==="dark"?(e.dataset.theme="light",localStorage.setItem("pref-theme","light")):(e.dataset.theme="dark",localStorage.setItem("pref-theme","dark"))})</script><script>document.querySelectorAll("pre > code").forEach(e=>{const n=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="复制";function s(){t.innerHTML="已复制！",setTimeout(()=>{t.innerHTML="复制"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),s();return}const n=document.createRange();n.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(n);try{document.execCommand("copy"),s()}catch{}o.removeRange(n)}),n.classList.contains("highlight")?n.appendChild(t):n.parentNode.firstChild==n||(e.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?e.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(t):e.parentNode.appendChild(t))})</script></body></html>

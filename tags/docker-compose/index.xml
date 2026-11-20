@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>docker-compose on ziwindlu 的博客</title><link>https://ziwindlu.github.io/tags/docker-compose/</link><description>Recent content in docker-compose on ziwindlu 的博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Wed, 10 Apr 2024 00:00:00 +0800</lastBuildDate><atom:link href="https://ziwindlu.github.io/tags/docker-compose/index.xml" rel="self" type="application/rss+xml"/><item><title>centos安装docker以及docker-compose</title><link>https://ziwindlu.github.io/posts/centos-install-docker-compose/</link><pubDate>Wed, 10 Apr 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/centos-install-docker-compose/</guid><description>&lt;h2 id="引子"&gt;引子&lt;/h2&gt;
+&lt;p&gt;centos安装软件实在太麻烦辣，还得添加源，记录下来方便复制
+更新: 原来的docker源没法用了，换成了清华的源，接着更新了其几种安装方式&lt;/p&gt;
+&lt;h2 id="正文"&gt;正文&lt;/h2&gt;
+&lt;h3 id="安装yum官方源docker"&gt;安装yum官方源docker&lt;/h3&gt;
+&lt;p&gt;docker,yum官方源的docker版本较低&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;yum install -y docker
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="安装docker-ce"&gt;安装docker-ce&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;docker-ce&lt;/code&gt;为docker的社区版&lt;/p&gt;
+&lt;h4 id="方法1使用yum-utils"&gt;方法1(使用yum-utils)&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo yum install -y yum-utils device-mapper-persistent-data lvm2
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 这里我们换成清华的源&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sed -i &lt;span class="s1"&gt;&amp;#39;s+https://download.docker.com+https://mirrors.tuna.tsinghua.edu.cn/docker-ce+&amp;#39;&lt;/span&gt; /etc/yum.repos.d/docker-ce.repo
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo yum makecache
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;yum install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id="方法2手动导入仓库"&gt;&lt;del&gt;方法2(手动导入仓库)&lt;/del&gt;&lt;/h4&gt;
+&lt;p&gt;添加&lt;code&gt;/etc/yum.repos.d/docker-ce.repo&lt;/code&gt;这个文件
+内容为&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code class="language-file" data-lang="file"&gt;[docker-ce-stable]
+name=Docker CE Stable - $basearch
+baseurl=https://download.docker.com/linux/centos/7/$basearch/stable
+enabled=1
+gpgcheck=1
+gpgkey=https://download.docker.com/linux/centos/gpg
+[docker-ce-stable-debuginfo]
+name=Docker CE Stable - Debuginfo $basearch
+baseurl=https://download.docker.com/linux/centos/7/debug-$basearch/stable
+enabled=0
+gpgcheck=1
+gpgkey=https://download.docker.com/linux/centos/gpg
+[docker-ce-stable-source]
+name=Docker CE Stable - Sources
+baseurl=https://download.docker.com/linux/centos/7/source/stable
+enabled=0
+gpgcheck=1
+gpgkey=https://download.docker.com/linux/centos/gpg
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;安装&lt;code&gt;sudo yum install docker-ce&lt;/code&gt;&lt;/p&gt;
+&lt;h4 id="方法3脚本安装"&gt;方法3脚本安装&lt;/h4&gt;
+&lt;p&gt;以下内容假定
+您为 root 用户，或有 sudo 权限，或知道 root 密码；
+您系统上有 curl 或 wget&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;DOWNLOAD_URL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;https://mirrors.tuna.tsinghua.edu.cn/docker-ce&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 如您使用 curl&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -fsSL https://raw.githubusercontent.com/docker/docker-install/master/install.sh &lt;span class="p"&gt;|&lt;/span&gt; sh
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 如您使用 wget&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;wget -O- https://raw.githubusercontent.com/docker/docker-install/master/install.sh &lt;span class="p"&gt;|&lt;/span&gt; sh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;纯copy的官方文档&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id="启动"&gt;启动&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;systemctl &lt;span class="nb"&gt;enable&lt;/span&gt; --now docker
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="安装docker-compose"&gt;安装docker-compose&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -L &lt;span class="s2"&gt;&amp;#34;https://github.com/docker/compose/releases/latest/download/docker-compose-&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;uname -s&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;-&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;uname -m&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt; -o /usr/local/bin/docker-compose
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;chmod +x /usr/local/bin/docker-compose
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="可能会遇到的问题"&gt;可能会遇到的问题&lt;/h3&gt;
+&lt;h3 id="我先安装了yum官方源的docker但是我想升级到最新版在安装docker-ce的时候遇到了问题"&gt;我先安装了yum官方源的docker，但是我想升级到最新版，在安装docker-ce的时候遇到了问题&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ransaction check error:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;file /usr/bin/docker from install of docker-ce-cli-1:24.0.2-1.el7.x86_64 conflicts with file from package docker-common-2:1.13.1-209.git7d71120.el7.centos.x86_64
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;file /usr/bin/dockerd from install of docker-ce-3:24.0.2-1.el7.x86_64 conflicts with file from package docker-common-2:1.13.1-209.git7d71120.el7.centos.x86_64
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;原因是docker-ce与旧版本docker冲突，你需要卸载旧版本的docker&lt;/p&gt;</description></item></channel></rss>

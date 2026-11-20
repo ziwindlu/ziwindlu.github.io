@@ -1,0 +1,203 @@
+<!doctype html><html lang=zh dir=auto data-theme=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>shell | ziwindlu 的博客</title><meta name=keywords content="Linux,Shell"><meta name=description content='语言规范
+语法
+特殊的变量
+坏境变量(均为大写)
+PATH可执行程序的路径
+PWD当前所在的目录
+SHELL当前使用的shell
+常见变量
+$0为该脚本本身的名字
+$#：表示传入参数的个数。
+$@：表示所有传入的参数（以独立形式显示，每个参数都保留为单独的字符串）
+$*：表示所有传入的参数（以一个字符串形式显示，所有参数被合并）
+变量定义
+变量定义以及使用
+限定符local当前作用域
+export作为环境变量
+name=value定义
+$name使用
+数据类型
+shell中的数据类型有整数、字符串、数组、关联数组(bash4.0及以后的特性)
+&#39;和"的区别
+&#39;字符原始数据，"可以解析其中的变量值
+数组使用
+fruits=("apple" "banana" "cherry")
+echo "First fruit: ${fruits[0]}"
+# tostring
+echo "All fruit: ${fruits[*]}"
+# 列出所有内容
+echo "All fruit: ${fruits[@]}"
+# *和@两者的去区别可以参考常见变量
+# 获取长度
+length=${#fruits[@]}
+echo $length
+# 遍历
+for fruit in "${fruits[@]}"; do
+echo "Fruit: $fruit"
+done
+# 添加元素
+fruits+=("date")
+# 修改元素
+fruits[1]="blueberry"
+# 删除元素
+unset fruits[1]
+# 合并两个数组
+more_fruits=("kiwi" "melon")
+combined=("${fruits[@]}" "${more_fruits[@]}")
+echo "Combined fruits: ${combined[@]}"
+运算符
+算术：
+expr(不推荐)
+echo &#39;1+1&#39; | bc
+(推荐)
+$(( a + b ))
+let x=a+b
+字符串：
+${#var1}字符串长度
+${str:start:end}截取字符串
+${str/old/new}替换字符
+分支控制
+if语法：
+if [ condition ]; then
+# commands
+elif [ another_condition ]; then
+# commands
+else
+# commands
+fi
+case语法：
+echo "input 0 or 1"
+read option
+case $option in
+0) echo "0" ;;
+1) echo "1" ;;
+*) echo "error" ;;
+esac
+判断相关:
+| 特性 | [ ] | [[ ]] | 无括号 |
+| &mdash;- | &mdash;- | &mdash;- |
+| 本质 | test 命令 | Bash 内置功能 | 直接执行命令 |
+| 支持正则表达式 | 不支持 | 支持 | 取决于命令 |
+| 支持逻辑运算符 | 需要使用 -a 和 -o | 使用 && 和 ` |  |
+| 变量双引号要求 | 必须加 | 可省略 | 通常不需要 |
+| 安全性 | 较低（易受空值或特殊字符影响） | 高 | 高 |'><meta name=author content="ziwindlu"><link rel=canonical href=https://ziwindlu.github.io/posts/shell/><link crossorigin=anonymous href=/assets/css/stylesheet.95ae6e9689bd0037456375629f411acbf8ed76e0e9a7599900ad281f9526dee6.css integrity="sha256-la5ulom9ADdFY3Vin0Eay/jtduDpp1mZAK0oH5Um3uY=" rel="preload stylesheet" as=style><link rel=icon href=https://ziwindlu.github.io/favicon.svg><link rel=icon type=image/png sizes=16x16 href=https://ziwindlu.github.io/favicon.svg><link rel=icon type=image/png sizes=32x32 href=https://ziwindlu.github.io/favicon.svg><link rel=apple-touch-icon href=https://ziwindlu.github.io/favicon.svg><link rel=mask-icon href=https://ziwindlu.github.io/favicon.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=zh href=https://ziwindlu.github.io/posts/shell/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51);color-scheme:dark}.list{background:var(--theme)}.toc{background:var(--entry)}}</style></noscript><script>localStorage.getItem("pref-theme")==="dark"?document.querySelector("html").dataset.theme="dark":localStorage.getItem("pref-theme")==="light"?document.querySelector("html").dataset.theme="light":window.matchMedia("(prefers-color-scheme: dark)").matches?document.querySelector("html").dataset.theme="dark":document.querySelector("html").dataset.theme="light"</script><meta property="og:url" content="https://ziwindlu.github.io/posts/shell/"><meta property="og:site_name" content="ziwindlu 的博客"><meta property="og:title" content="shell"><meta property="og:description" content='语言规范 语法 特殊的变量 坏境变量(均为大写) PATH可执行程序的路径 PWD当前所在的目录 SHELL当前使用的shell 常见变量 $0为该脚本本身的名字 $#：表示传入参数的个数。 $@：表示所有传入的参数（以独立形式显示，每个参数都保留为单独的字符串） $*：表示所有传入的参数（以一个字符串形式显示，所有参数被合并）
+变量定义 变量定义以及使用 限定符local当前作用域 export作为环境变量 name=value定义 $name使用
+数据类型 shell中的数据类型有整数、字符串、数组、关联数组(bash4.0及以后的特性) &#39;和"的区别 &#39;字符原始数据，"可以解析其中的变量值 数组使用
+fruits=("apple" "banana" "cherry") echo "First fruit: ${fruits[0]}" # tostring echo "All fruit: ${fruits[*]}" # 列出所有内容 echo "All fruit: ${fruits[@]}" # *和@两者的去区别可以参考常见变量 # 获取长度 length=${#fruits[@]} echo $length # 遍历 for fruit in "${fruits[@]}"; do echo "Fruit: $fruit" done # 添加元素 fruits+=("date") # 修改元素 fruits[1]="blueberry" # 删除元素 unset fruits[1] # 合并两个数组 more_fruits=("kiwi" "melon") combined=("${fruits[@]}" "${more_fruits[@]}") echo "Combined fruits: ${combined[@]}" 运算符 算术： expr(不推荐) echo &#39;1+1&#39; | bc (推荐) $(( a + b )) let x=a+b 字符串： ${#var1}字符串长度 ${str:start:end}截取字符串 ${str/old/new}替换字符
+分支控制 if语法：
+if [ condition ]; then # commands elif [ another_condition ]; then # commands else # commands fi case语法：
+echo "input 0 or 1" read option case $option in 0) echo "0" ;; 1) echo "1" ;; *) echo "error" ;; esac 判断相关: | 特性 | [ ] | [[ ]] | 无括号 | | —- | —- | —- | | 本质 | test 命令 | Bash 内置功能 | 直接执行命令 | | 支持正则表达式 | 不支持 | 支持 | 取决于命令 | | 支持逻辑运算符 | 需要使用 -a 和 -o | 使用 && 和 ` | | | 变量双引号要求 | 必须加 | 可省略 | 通常不需要 | | 安全性 | 较低（易受空值或特殊字符影响） | 高 | 高 |'><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2026-04-03T00:00:00+08:00"><meta property="article:modified_time" content="2026-04-03T00:00:00+08:00"><meta property="article:tag" content="Linux"><meta property="article:tag" content="Shell"><meta name=twitter:card content="summary"><meta name=twitter:title content="shell"><meta name=twitter:description content='语言规范 语法 特殊的变量 坏境变量(均为大写) PATH可执行程序的路径 PWD当前所在的目录 SHELL当前使用的shell 常见变量 $0为该脚本本身的名字 $#：表示传入参数的个数。 $@：表示所有传入的参数（以独立形式显示，每个参数都保留为单独的字符串） $*：表示所有传入的参数（以一个字符串形式显示，所有参数被合并）
+变量定义 变量定义以及使用 限定符local当前作用域 export作为环境变量 name=value定义 $name使用
+数据类型 shell中的数据类型有整数、字符串、数组、关联数组(bash4.0及以后的特性) &#39;和"的区别 &#39;字符原始数据，"可以解析其中的变量值 数组使用
+fruits=("apple" "banana" "cherry") echo "First fruit: ${fruits[0]}" # tostring echo "All fruit: ${fruits[*]}" # 列出所有内容 echo "All fruit: ${fruits[@]}" # *和@两者的去区别可以参考常见变量 # 获取长度 length=${#fruits[@]} echo $length # 遍历 for fruit in "${fruits[@]}"; do echo "Fruit: $fruit" done # 添加元素 fruits+=("date") # 修改元素 fruits[1]="blueberry" # 删除元素 unset fruits[1] # 合并两个数组 more_fruits=("kiwi" "melon") combined=("${fruits[@]}" "${more_fruits[@]}") echo "Combined fruits: ${combined[@]}" 运算符 算术： expr(不推荐) echo &#39;1+1&#39; | bc (推荐) $(( a + b )) let x=a+b 字符串： ${#var1}字符串长度 ${str:start:end}截取字符串 ${str/old/new}替换字符
+分支控制 if语法：
+if [ condition ]; then # commands elif [ another_condition ]; then # commands else # commands fi case语法：
+echo "input 0 or 1" read option case $option in 0) echo "0" ;; 1) echo "1" ;; *) echo "error" ;; esac 判断相关: | 特性 | [ ] | [[ ]] | 无括号 | | —- | —- | —- | | 本质 | test 命令 | Bash 内置功能 | 直接执行命令 | | 支持正则表达式 | 不支持 | 支持 | 取决于命令 | | 支持逻辑运算符 | 需要使用 -a 和 -o | 使用 && 和 ` | | | 变量双引号要求 | 必须加 | 可省略 | 通常不需要 | | 安全性 | 较低（易受空值或特殊字符影响） | 高 | 高 |'><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"文章","item":"https://ziwindlu.github.io/posts/"},{"@type":"ListItem","position":2,"name":"shell","item":"https://ziwindlu.github.io/posts/shell/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"shell","name":"shell","description":"语言规范 语法 特殊的变量 坏境变量(均为大写) PATH可执行程序的路径 PWD当前所在的目录 SHELL当前使用的shell 常见变量 $0为该脚本本身的名字 $#：表示传入参数的个数。 $@：表示所有传入的参数（以独立形式显示，每个参数都保留为单独的字符串） $*：表示所有传入的参数（以一个字符串形式显示，所有参数被合并）\n变量定义 变量定义以及使用 限定符local当前作用域 export作为环境变量 name=value定义 $name使用\n数据类型 shell中的数据类型有整数、字符串、数组、关联数组(bash4.0及以后的特性) '和\u0026quot;的区别 '字符原始数据，\u0026quot;可以解析其中的变量值 数组使用\nfruits=(\u0026#34;apple\u0026#34; \u0026#34;banana\u0026#34; \u0026#34;cherry\u0026#34;) echo \u0026#34;First fruit: ${fruits[0]}\u0026#34; # tostring echo \u0026#34;All fruit: ${fruits[*]}\u0026#34; # 列出所有内容 echo \u0026#34;All fruit: ${fruits[@]}\u0026#34; # *和@两者的去区别可以参考常见变量 # 获取长度 length=${#fruits[@]} echo $length # 遍历 for fruit in \u0026#34;${fruits[@]}\u0026#34;; do echo \u0026#34;Fruit: $fruit\u0026#34; done # 添加元素 fruits+=(\u0026#34;date\u0026#34;) # 修改元素 fruits[1]=\u0026#34;blueberry\u0026#34; # 删除元素 unset fruits[1] # 合并两个数组 more_fruits=(\u0026#34;kiwi\u0026#34; \u0026#34;melon\u0026#34;) combined=(\u0026#34;${fruits[@]}\u0026#34; \u0026#34;${more_fruits[@]}\u0026#34;) echo \u0026#34;Combined fruits: ${combined[@]}\u0026#34; 运算符 算术： expr(不推荐) echo '1+1' | bc (推荐) $(( a + b )) let x=a+b 字符串： ${#var1}字符串长度 ${str:start:end}截取字符串 ${str/old/new}替换字符\n分支控制 if语法：\nif [ condition ]; then # commands elif [ another_condition ]; then # commands else # commands fi case语法：\necho \u0026#34;input 0 or 1\u0026#34; read option case $option in 0) echo \u0026#34;0\u0026#34; ;; 1) echo \u0026#34;1\u0026#34; ;; *) echo \u0026#34;error\u0026#34; ;; esac 判断相关: | 特性 | [ ] | [[ ]] | 无括号 | | \u0026mdash;- | \u0026mdash;- | \u0026mdash;- | | 本质 | test 命令 | Bash 内置功能 | 直接执行命令 | | 支持正则表达式 | 不支持 | 支持 | 取决于命令 | | 支持逻辑运算符 | 需要使用 -a 和 -o | 使用 \u0026amp;\u0026amp; 和 ` | | | 变量双引号要求 | 必须加 | 可省略 | 通常不需要 | | 安全性 | 较低（易受空值或特殊字符影响） | 高 | 高 |\n","keywords":["Linux","Shell"],"articleBody":"语言规范 语法 特殊的变量 坏境变量(均为大写) PATH可执行程序的路径 PWD当前所在的目录 SHELL当前使用的shell 常见变量 $0为该脚本本身的名字 $#：表示传入参数的个数。 $@：表示所有传入的参数（以独立形式显示，每个参数都保留为单独的字符串） $*：表示所有传入的参数（以一个字符串形式显示，所有参数被合并）\n变量定义 变量定义以及使用 限定符local当前作用域 export作为环境变量 name=value定义 $name使用\n数据类型 shell中的数据类型有整数、字符串、数组、关联数组(bash4.0及以后的特性) '和\"的区别 '字符原始数据，\"可以解析其中的变量值 数组使用\nfruits=(\"apple\" \"banana\" \"cherry\") echo \"First fruit: ${fruits[0]}\" # tostring echo \"All fruit: ${fruits[*]}\" # 列出所有内容 echo \"All fruit: ${fruits[@]}\" # *和@两者的去区别可以参考常见变量 # 获取长度 length=${#fruits[@]} echo $length # 遍历 for fruit in \"${fruits[@]}\"; do echo \"Fruit: $fruit\" done # 添加元素 fruits+=(\"date\") # 修改元素 fruits[1]=\"blueberry\" # 删除元素 unset fruits[1] # 合并两个数组 more_fruits=(\"kiwi\" \"melon\") combined=(\"${fruits[@]}\" \"${more_fruits[@]}\") echo \"Combined fruits: ${combined[@]}\" 运算符 算术： expr(不推荐) echo '1+1' | bc (推荐) $(( a + b )) let x=a+b 字符串： ${#var1}字符串长度 ${str:start:end}截取字符串 ${str/old/new}替换字符\n分支控制 if语法：\nif [ condition ]; then # commands elif [ another_condition ]; then # commands else # commands fi case语法：\necho \"input 0 or 1\" read option case $option in 0) echo \"0\" ;; 1) echo \"1\" ;; *) echo \"error\" ;; esac 判断相关: | 特性 | [ ] | [[ ]] | 无括号 | | —- | —- | —- | | 本质 | test 命令 | Bash 内置功能 | 直接执行命令 | | 支持正则表达式 | 不支持 | 支持 | 取决于命令 | | 支持逻辑运算符 | 需要使用 -a 和 -o | 使用 \u0026\u0026 和 ` | | | 变量双引号要求 | 必须加 | 可省略 | 通常不需要 | | 安全性 | 较低（易受空值或特殊字符影响） | 高 | 高 |\n循环控制 for语法:\nfor i in $@ ; do if [[ condition ]]; then continue fi if [[ condition ]]; then break fi # cmmmands done while语法:\nwhile [ condition ]; do # commands done 函数 函数定义\nfunction xx(){ echo \"function 1\" } xxx(){ echo \"function 2\" } 函数调用 function_name 传参 fun1 var1 var2 处理参数\nfun(){ echo $1 $2 } 引入其他文件 source file\n常见场景 简单三元运算 c=${a:-$b} 如果a未定义则会将b赋值给c c=${a:+$b}如果a被定义则会将b赋值给c\n参数处理 getops\n模板 脚本描述 脚本使用方法 参数处理 依赖检查 日志\n","wordCount":"289","inLanguage":"zh","datePublished":"2026-04-03T00:00:00+08:00","dateModified":"2026-04-03T00:00:00+08:00","author":{"@type":"Person","name":"ziwindlu"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://ziwindlu.github.io/posts/shell/"},"publisher":{"@type":"Organization","name":"ziwindlu 的博客","logo":{"@type":"ImageObject","url":"https://ziwindlu.github.io/favicon.svg"}}}</script></head><body id=top><header class=header><nav class=header-nav><div class=logo><a href=https://ziwindlu.github.io/ accesskey=h title="ziwindlu 的博客 (Alt + H)">ziwindlu 的博客</a><div class=logo-switches><button id=theme-toggle class=theme-toggle accesskey=t title="(Alt + T)" aria-label="Toggle theme">
+<svg class="moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+<svg class="sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu class=menu><li><a href=https://ziwindlu.github.io/ title=首页><span>首页</span></a></li><li><a href=https://ziwindlu.github.io/posts/ title=文章><span>文章</span></a></li><li><a href=https://ziwindlu.github.io/tags/ title=标签><span>标签</span></a></li><li><a href=https://ziwindlu.github.io/search/ title=搜索><span>搜索</span></a></li><li><a href=https://ziwindlu.github.io/about/ title=关于><span>关于</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><h1 class="post-title entry-hint-parent">shell</h1><div class=post-meta><span title=2026-04-03T00:00:00+08:00>2026-04-03</span>&nbsp;·&nbsp;<span>2 分钟</span>&nbsp;·&nbsp;<span>ziwindlu</span>&nbsp;·&nbsp;<span class=post-source>源笔记：<code>02-Knowledge/Linux/shell.md</code></span></div></header><details class=toc><summary accesskey=c title="(Alt + C)"><span class=title>目录</span></summary><div class=inner><ul><li><a href=#%e8%af%ad%e8%a8%80%e8%a7%84%e8%8c%83 aria-label=语言规范>语言规范</a></li><li><a href=#%e8%af%ad%e6%b3%95 aria-label=语法>语法</a><ul><li><a href=#%e7%89%b9%e6%ae%8a%e7%9a%84%e5%8f%98%e9%87%8f aria-label=特殊的变量>特殊的变量</a></li><li><a href=#%e5%8f%98%e9%87%8f%e5%ae%9a%e4%b9%89 aria-label=变量定义>变量定义</a></li><li><a href=#%e6%95%b0%e6%8d%ae%e7%b1%bb%e5%9e%8b aria-label=数据类型>数据类型</a></li><li><a href=#%e8%bf%90%e7%ae%97%e7%ac%a6 aria-label=运算符>运算符</a></li><li><a href=#%e5%88%86%e6%94%af%e6%8e%a7%e5%88%b6 aria-label=分支控制>分支控制</a></li><li><a href=#%e5%be%aa%e7%8e%af%e6%8e%a7%e5%88%b6 aria-label=循环控制>循环控制</a></li><li><a href=#%e5%87%bd%e6%95%b0 aria-label=函数>函数</a></li><li><a href=#%e5%bc%95%e5%85%a5%e5%85%b6%e4%bb%96%e6%96%87%e4%bb%b6 aria-label=引入其他文件>引入其他文件</a></li></ul></li><li><a href=#%e5%b8%b8%e8%a7%81%e5%9c%ba%e6%99%af aria-label=常见场景>常见场景</a><ul><li><a href=#%e7%ae%80%e5%8d%95%e4%b8%89%e5%85%83%e8%bf%90%e7%ae%97 aria-label=简单三元运算>简单三元运算</a></li><li><a href=#%e5%8f%82%e6%95%b0%e5%a4%84%e7%90%86 aria-label=参数处理>参数处理</a></li></ul></li><li><a href=#%e6%a8%a1%e6%9d%bf aria-label=模板>模板</a></li></ul></div></details><div class="post-content md-content"><h2 id=语言规范>语言规范<a hidden class=anchor aria-hidden=true href=#语言规范>#</a></h2><h2 id=语法>语法<a hidden class=anchor aria-hidden=true href=#语法>#</a></h2><h3 id=特殊的变量>特殊的变量<a hidden class=anchor aria-hidden=true href=#特殊的变量>#</a></h3><p>坏境变量(均为大写)
+<code>PATH</code>可执行程序的路径
+<code>PWD</code>当前所在的目录
+<code>SHELL</code>当前使用的shell
+常见变量
+<code>$0</code>为该脚本本身的名字
+<code>$#</code>：表示传入参数的个数。
+<code>$@</code>：表示所有传入的参数（以独立形式显示，每个参数都保留为单独的字符串）
+<code>$*</code>：表示所有传入的参数（以一个字符串形式显示，所有参数被合并）</p><h3 id=变量定义>变量定义<a hidden class=anchor aria-hidden=true href=#变量定义>#</a></h3><p>变量定义以及使用
+限定符<code>local</code>当前作用域
+<code>export</code>作为环境变量
+<code>name=value</code>定义
+<code>$name</code>使用</p><h3 id=数据类型>数据类型<a hidden class=anchor aria-hidden=true href=#数据类型>#</a></h3><p>shell中的数据类型有整数、字符串、数组、关联数组(bash4.0及以后的特性)
+<code>'</code>和<code>"</code>的区别
+<code>'</code>字符原始数据，<code>"</code>可以解析其中的变量值
+数组使用</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=nv>fruits</span><span class=o>=(</span><span class=s2>&#34;apple&#34;</span> <span class=s2>&#34;banana&#34;</span> <span class=s2>&#34;cherry&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;First fruit: </span><span class=si>${</span><span class=nv>fruits</span><span class=p>[0]</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=c1># tostring</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;All fruit: </span><span class=si>${</span><span class=nv>fruits</span><span class=p>[*]</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=c1># 列出所有内容</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;All fruit: </span><span class=si>${</span><span class=nv>fruits</span><span class=p>[@]</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=c1># *和@两者的去区别可以参考常见变量</span>
+</span></span><span class=line><span class=cl><span class=c1># 获取长度</span>
+</span></span><span class=line><span class=cl><span class=nv>length</span><span class=o>=</span><span class=si>${#</span><span class=nv>fruits</span><span class=p>[@]</span><span class=si>}</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=nv>$length</span>
+</span></span><span class=line><span class=cl><span class=c1># 遍历</span>
+</span></span><span class=line><span class=cl><span class=k>for</span> fruit in <span class=s2>&#34;</span><span class=si>${</span><span class=nv>fruits</span><span class=p>[@]</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>;</span> <span class=k>do</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;Fruit: </span><span class=nv>$fruit</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>done</span>
+</span></span><span class=line><span class=cl><span class=c1># 添加元素</span>
+</span></span><span class=line><span class=cl><span class=nv>fruits</span><span class=o>+=(</span><span class=s2>&#34;date&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl><span class=c1># 修改元素</span>
+</span></span><span class=line><span class=cl>fruits<span class=o>[</span>1<span class=o>]=</span><span class=s2>&#34;blueberry&#34;</span>
+</span></span><span class=line><span class=cl><span class=c1># 删除元素</span>
+</span></span><span class=line><span class=cl><span class=nb>unset</span> fruits<span class=o>[</span>1<span class=o>]</span>
+</span></span><span class=line><span class=cl><span class=c1># 合并两个数组</span>
+</span></span><span class=line><span class=cl><span class=nv>more_fruits</span><span class=o>=(</span><span class=s2>&#34;kiwi&#34;</span> <span class=s2>&#34;melon&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl><span class=nv>combined</span><span class=o>=(</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>fruits</span><span class=p>[@]</span><span class=si>}</span><span class=s2>&#34;</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>more_fruits</span><span class=p>[@]</span><span class=si>}</span><span class=s2>&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;Combined fruits: </span><span class=si>${</span><span class=nv>combined</span><span class=p>[@]</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span></code></pre></div><h3 id=运算符>运算符<a hidden class=anchor aria-hidden=true href=#运算符>#</a></h3><p>算术：
+<code>expr</code>(不推荐)
+<code>echo '1+1' | bc</code>
+(推荐)
+<code>$(( a + b ))</code>
+<code>let x=a+b</code>
+字符串：
+<code>${#var1}</code>字符串长度
+<code>${str:start:end}</code>截取字符串
+<code>${str/old/new}</code>替换字符</p><h3 id=分支控制>分支控制<a hidden class=anchor aria-hidden=true href=#分支控制>#</a></h3><p>if语法：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=k>if</span> <span class=o>[</span> condition <span class=o>]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl><span class=c1># commands</span>
+</span></span><span class=line><span class=cl><span class=k>elif</span> <span class=o>[</span> another_condition <span class=o>]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl><span class=c1># commands</span>
+</span></span><span class=line><span class=cl><span class=k>else</span>
+</span></span><span class=line><span class=cl><span class=c1># commands</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span></code></pre></div><p>case语法：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;input 0 or 1&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>read</span> option
+</span></span><span class=line><span class=cl><span class=k>case</span> <span class=nv>$option</span> in
+</span></span><span class=line><span class=cl>0<span class=o>)</span> <span class=nb>echo</span> <span class=s2>&#34;0&#34;</span> <span class=p>;;</span>
+</span></span><span class=line><span class=cl>1<span class=o>)</span> <span class=nb>echo</span> <span class=s2>&#34;1&#34;</span> <span class=p>;;</span>
+</span></span><span class=line><span class=cl>*<span class=o>)</span> <span class=nb>echo</span> <span class=s2>&#34;error&#34;</span> <span class=p>;;</span>
+</span></span><span class=line><span class=cl><span class=k>esac</span>
+</span></span></code></pre></div><p>判断相关:
+| 特性 | <code>[ ]</code> | <code>[[ ]]</code> | 无括号 |
+| &mdash;- | &mdash;- | &mdash;- |
+| <strong>本质</strong> | <code>test</code> 命令 | Bash 内置功能 | 直接执行命令 |
+| <strong>支持正则表达式</strong> | 不支持 | 支持 | 取决于命令 |
+| <strong>支持逻辑运算符</strong> | 需要使用 <code>-a</code> 和 <code>-o</code> | 使用 <code>&&</code> 和 ` | |
+| <strong>变量双引号要求</strong> | 必须加 | 可省略 | 通常不需要 |
+| <strong>安全性</strong> | 较低（易受空值或特殊字符影响） | 高 | 高 |</p><h3 id=循环控制>循环控制<a hidden class=anchor aria-hidden=true href=#循环控制>#</a></h3><p>for语法:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=k>for</span> i in <span class=nv>$@</span> <span class=p>;</span> <span class=k>do</span>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>[[</span> condition <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl><span class=k>continue</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>[[</span> condition <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl><span class=nb>break</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl><span class=c1># cmmmands</span>
+</span></span><span class=line><span class=cl><span class=k>done</span>
+</span></span></code></pre></div><p>while语法:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=k>while</span> <span class=o>[</span> condition <span class=o>]</span><span class=p>;</span> <span class=k>do</span>
+</span></span><span class=line><span class=cl><span class=c1># commands</span>
+</span></span><span class=line><span class=cl><span class=k>done</span>
+</span></span></code></pre></div><h3 id=函数>函数<a hidden class=anchor aria-hidden=true href=#函数>#</a></h3><p>函数定义</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=k>function</span> xx<span class=o>(){</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;function 1&#34;</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>xxx<span class=o>(){</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;function 2&#34;</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></div><p>函数调用
+<code>function_name</code>
+传参
+<code>fun1 var1 var2</code>
+处理参数</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>fun<span class=o>(){</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=nv>$1</span> <span class=nv>$2</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></div><h3 id=引入其他文件>引入其他文件<a hidden class=anchor aria-hidden=true href=#引入其他文件>#</a></h3><p><code>source file</code></p><h2 id=常见场景>常见场景<a hidden class=anchor aria-hidden=true href=#常见场景>#</a></h2><h3 id=简单三元运算>简单三元运算<a hidden class=anchor aria-hidden=true href=#简单三元运算>#</a></h3><p><code>c=${a:-$b}</code> 如果a未定义则会将b赋值给c
+<code>c=${a:+$b}</code>如果a被定义则会将b赋值给c</p><h3 id=参数处理>参数处理<a hidden class=anchor aria-hidden=true href=#参数处理>#</a></h3><p>getops</p><h2 id=模板>模板<a hidden class=anchor aria-hidden=true href=#模板>#</a></h2><p>脚本描述
+脚本使用方法
+参数处理
+依赖检查
+日志</p></div><footer class=post-footer><ul class=post-tags><li><a href=https://ziwindlu.github.io/tags/linux/>Linux</a></li><li><a href=https://ziwindlu.github.io/tags/shell/>Shell</a></li></ul><nav class=paginav><a class=prev href=https://ziwindlu.github.io/posts/router/><span class=title>« 上一页</span>
+<span>router</span>
+</a><a class=next href=https://ziwindlu.github.io/posts/switch/><span class=title>下一页 »</span>
+<span>switch</span></a></nav></footer></article></main><footer class=footer><span>&copy; 2026 <a href=https://ziwindlu.github.io/>ziwindlu 的博客</a></span> ·
+<span>Powered by
+<a href="https://gohugo.io/?utm_source=papermod" rel=noopener target=_blank>Hugo</a> &
+<a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top id=top-link class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey=g><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up"><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg>
+</a><script>let menu=document.getElementById("menu");if(menu){const e=localStorage.getItem("menu-scroll-position");e&&(menu.scrollLeft=parseInt(e,10));let t;menu.addEventListener("scroll",function(){clearTimeout(t),t=setTimeout(function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)},150)},{passive:!0})}document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var n=this.getAttribute("href").substr(1);const t=document.querySelector(`[id='${decodeURIComponent(n)}']`);window.matchMedia("(prefers-reduced-motion: reduce)").matches?t.scrollIntoView():t.scrollIntoView({behavior:"smooth"}),t.tabIndex<0&&!t.hasAttribute("tabindex")&&t.setAttribute("tabindex","-1"),t.focus({preventScroll:!0}),n==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${n}`)})})</script><script>var toplink=document.getElementById("top-link"),scrollTicking=!1;window.addEventListener("scroll",function(){if(scrollTicking)return;scrollTicking=!0,requestAnimationFrame(function(){const e=window.innerHeight,t=document.body.scrollTop>e||document.documentElement.scrollTop>e;toplink.classList.toggle("hidden",!t),scrollTicking=!1})},{passive:!0})</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{const e=document.querySelector("html");e.dataset.theme==="dark"?(e.dataset.theme="light",localStorage.setItem("pref-theme","light")):(e.dataset.theme="dark",localStorage.setItem("pref-theme","dark"))})</script><script>document.querySelectorAll("pre > code").forEach(e=>{const n=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="复制";function s(){t.innerHTML="已复制！",setTimeout(()=>{t.innerHTML="复制"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),s();return}const n=document.createRange();n.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(n);try{document.execCommand("copy"),s()}catch{}o.removeRange(n)}),n.classList.contains("highlight")?n.appendChild(t):n.parentNode.firstChild==n||(e.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?e.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(t):e.parentNode.appendChild(t))})</script></body></html>

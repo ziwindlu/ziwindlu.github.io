@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>交换机 on ziwindlu 的博客</title><link>https://ziwindlu.github.io/tags/%E4%BA%A4%E6%8D%A2%E6%9C%BA/</link><description>Recent content in 交换机 on ziwindlu 的博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Fri, 03 Apr 2026 00:00:00 +0800</lastBuildDate><atom:link href="https://ziwindlu.github.io/tags/%E4%BA%A4%E6%8D%A2%E6%9C%BA/index.xml" rel="self" type="application/rss+xml"/><item><title>switch</title><link>https://ziwindlu.github.io/posts/switch/</link><pubDate>Fri, 03 Apr 2026 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/switch/</guid><description>&lt;h2 id="what"&gt;what&lt;/h2&gt;
+&lt;p&gt;局域网内基于MAC地址转发数据的设备，用于终端设备互联（如电脑、打印机）。&lt;/p&gt;
+&lt;h2 id="why"&gt;why&lt;/h2&gt;
+&lt;p&gt;高速内网通信：比路由器更低的延迟（如游戏、文件传输）。
+扩展端口：一台交换机可连接多台设备（如24口千兆交换机）。
+网络分段：VLAN减少广播风暴风险。&lt;/p&gt;
+&lt;h2 id="how"&gt;how&lt;/h2&gt;</description></item></channel></rss>

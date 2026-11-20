@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>系统管理 on ziwindlu 的博客</title><link>https://ziwindlu.github.io/tags/%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86/</link><description>Recent content in 系统管理 on ziwindlu 的博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Fri, 03 Apr 2026 00:00:00 +0800</lastBuildDate><atom:link href="https://ziwindlu.github.io/tags/%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86/index.xml" rel="self" type="application/rss+xml"/><item><title>Linux基础</title><link>https://ziwindlu.github.io/posts/linux-basics/</link><pubDate>Fri, 03 Apr 2026 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/linux-basics/</guid><description>&lt;h2 id="文件相关命令"&gt;文件相关命令&lt;/h2&gt;
+&lt;p&gt;新增:&lt;code&gt;touch&lt;/code&gt;,&lt;code&gt;mkdir&lt;/code&gt;
+删除:&lt;code&gt;rm&lt;/code&gt;
+修改:&lt;code&gt;mv&lt;/code&gt;,&lt;code&gt;cp&lt;/code&gt;
+查询:&lt;code&gt;ls&lt;/code&gt;,&lt;code&gt;cat&lt;/code&gt;,&lt;code&gt;find&lt;/code&gt;,&lt;code&gt;grep&lt;/code&gt;
+打包:&lt;code&gt;tar&lt;/code&gt;,&lt;code&gt;zip&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="权限相关命令"&gt;权限相关命令&lt;/h2&gt;
+&lt;p&gt;基础的三个权限&lt;code&gt;rwx&lt;/code&gt;
+&lt;code&gt;ls -l&lt;/code&gt;解析&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;-rw-r--r-- &lt;span class="m"&gt;1&lt;/span&gt; root root &lt;span class="m"&gt;432&lt;/span&gt; Jan &lt;span class="m"&gt;10&lt;/span&gt; 13:57 file
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;-&lt;/code&gt;文件的类型
+&lt;code&gt;rw-&lt;/code&gt;属主权限
+&lt;code&gt;r--&lt;/code&gt;属组权限
+&lt;code&gt;r--&lt;/code&gt;其他用户权限
+修改权限:&lt;code&gt;chmod&lt;/code&gt;
+修改属主属组:&lt;code&gt;chown&lt;/code&gt;
+特殊权限:suid,guid,sbit
+切换用户:&lt;code&gt;su&lt;/code&gt; switch user
+使用root权限运行命令:&lt;code&gt;sudo&lt;/code&gt; super user do&lt;/p&gt;
+&lt;h2 id="用户和用户组相关"&gt;用户和用户组相关&lt;/h2&gt;
+&lt;p&gt;新增:&lt;code&gt;useradd&lt;/code&gt;,&lt;code&gt;groupadd&lt;/code&gt;
+删除:&lt;code&gt;userdel&lt;/code&gt;,&lt;code&gt;groupdel&lt;/code&gt;
+修改:&lt;code&gt;usermod&lt;/code&gt;,&lt;code&gt;groupmod&lt;/code&gt;
+查询:&lt;code&gt;/etc/passwd&lt;/code&gt;,&lt;code&gt;/etc/group&lt;/code&gt;
+修改密码:&lt;code&gt;passwd&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="网络管理"&gt;网络管理&lt;/h2&gt;
+&lt;p&gt;查看网卡:&lt;code&gt;ifconfig&lt;/code&gt;,&lt;code&gt;ip addr&lt;/code&gt;
+查看网络连接:&lt;code&gt;netstat&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="进程管理"&gt;进程管理&lt;/h2&gt;
+&lt;p&gt;查看进程:&lt;code&gt;ps&lt;/code&gt;
+终结进程:&lt;code&gt;kill&lt;/code&gt;,&lt;code&gt;pkill&lt;/code&gt;
+其他命令: &lt;code&gt;top&lt;/code&gt;、&lt;code&gt;htop&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="服务管理"&gt;服务管理&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;systemd options service_name&lt;/code&gt;
+&lt;code&gt;service service_name options&lt;/code&gt;
+&lt;code&gt;/etc/init.d/service_name options&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="linux运行级别-card-forward"&gt;linux运行级别 #card #forward&lt;/h2&gt;
+&lt;p&gt;id:: 67b97041-1b2f-4cea-9b28-bccb786ab85e&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;级别&lt;/th&gt;
+&lt;th&gt;说明&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;td&gt;关机&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;单用户模式，用来恢复密码等系统g了时修复&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;没有网络的多用户模式&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;完整的多用户模式&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;图形化多用户模式&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;6&lt;/td&gt;
+&lt;td&gt;重启&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="计划任务-card-forward"&gt;计划任务 #card #forward&lt;/h2&gt;
+&lt;p&gt;id:: 67a6bc9f-66ff-479f-bc75-eac3c3fb41cf
+计划任务相关文件:&lt;code&gt;/etc/crontab&lt;/code&gt;(root用户)
+&lt;code&gt;/var/spool/cron/username&lt;/code&gt;(redhat)
+&lt;code&gt;/var/spool/cron/crontabs/username&lt;/code&gt;(debian)&lt;/p&gt;
+&lt;h2 id="参考"&gt;参考&lt;/h2&gt;
+&lt;p&gt;book
+鸟哥的linux私房菜&lt;/p&gt;</description></item></channel></rss>

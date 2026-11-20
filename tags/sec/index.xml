@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Sec on ziwindlu 的博客</title><link>https://ziwindlu.github.io/tags/sec/</link><description>Recent content in Sec on ziwindlu 的博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Mon, 22 Apr 2024 00:00:00 +0800</lastBuildDate><atom:link href="https://ziwindlu.github.io/tags/sec/index.xml" rel="self" type="application/rss+xml"/><item><title>git历史提交记录脱敏</title><link>https://ziwindlu.github.io/posts/git-history-anonymize/</link><pubDate>Mon, 22 Apr 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/git-history-anonymize/</guid><description>&lt;h2 id="引子"&gt;引子&lt;/h2&gt;
+&lt;p&gt;最近写了个小项目，一直放在本地。写简历的时候俺觉得github有点少，于是俺决定将其放到github里去。蛋是，俺发现俺的大名在git的提交记录里面，俺又想保留提交记录，emmmm,于是有了这篇文章，目前仅有对用户名和邮箱的脱敏，因为俺只有这个地方比较敏感。至于代码中提交的系统文件绝对路径，俺倒是不在乎。&lt;/p&gt;
+&lt;h2 id="正文"&gt;正文&lt;/h2&gt;
+&lt;p&gt;原本使用&lt;code&gt;git filter-branch&lt;/code&gt;，尝试运行后提示&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;WARNING: git-filter-branch has a glut of gotchas generating mangled &lt;span class="nb"&gt;history&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;rewrites. Hit Ctrl-C before proceeding to abort, &lt;span class="k"&gt;then&lt;/span&gt; use an
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;alternative filtering tool such as &lt;span class="s1"&gt;&amp;#39;git filter-repo&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;(&lt;/span&gt;https://github.com/newren/git-filter-repo/&lt;span class="o"&gt;)&lt;/span&gt; instead. See the
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;filter-branch manual page &lt;span class="k"&gt;for&lt;/span&gt; more details&lt;span class="p"&gt;;&lt;/span&gt; to squelch this warning,
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;set&lt;/span&gt; &lt;span class="nv"&gt;FILTER_BRANCH_SQUELCH_WARNING&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1.
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;于是俺就去看了看这个项目，本文会使用&lt;code&gt;git-filter-repo&lt;/code&gt;对提交记录脱敏。&lt;/p&gt;
+&lt;h3 id="安装"&gt;安装&lt;/h3&gt;
+&lt;p&gt;pip安装&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;pip install git-filter-repo
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;aur安装&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;yay -S git-filter-repo
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="对邮箱和用户名脱敏"&gt;对邮箱和用户名脱敏&lt;/h3&gt;
+&lt;h4 id="mailmap"&gt;mailmap&lt;/h4&gt;
+&lt;p&gt;要对历史记录中的用户名和邮箱进行脱敏，需要用到mailmap文件
+mailmap写法&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code class="language-mailmap" data-lang="mailmap"&gt;username &amp;lt;email@addre.ss&amp;gt;
+&amp;lt;new@ema.il&amp;gt; &amp;lt;old1@ema.il&amp;gt;
+newusername &amp;lt;new@ema.il&amp;gt; &amp;lt;old2@ema.il&amp;gt;
+newusername &amp;lt;new@ema.il&amp;gt; oldusername&amp;lt;old3@ema.il&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;修改用户名和邮箱的基础是原邮箱，所有的修改都是建立在匹配原邮箱的基础上做的&lt;/p&gt;
+&lt;h4 id="使用"&gt;使用&lt;/h4&gt;
+&lt;p&gt;编写mailmap文件&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-apl" data-lang="apl"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 注意这个&amp;lt;&amp;gt;是必须的&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;username&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;new&lt;/span&gt;&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="nv"&gt;ema&lt;/span&gt;&lt;span class="na"&gt;.&lt;/span&gt;&lt;span class="nv"&gt;il&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;email&lt;/span&gt;&lt;span class="na"&gt;@&lt;/span&gt;&lt;span class="nv"&gt;addre&lt;/span&gt;&lt;span class="na"&gt;.&lt;/span&gt;&lt;span class="nv"&gt;ss&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;执行命令&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git filter-repo --mailmap mailmapfile
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id="缩写"&gt;缩写&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;--use-mailmap&lt;/code&gt;是&lt;code&gt;--mailmap .mailmap&lt;/code&gt;的缩写
+直接使用当前目录下的&lt;code&gt;.mailmap&lt;/code&gt;文件&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;如果要将这个文件提交到git中。就使用第一个mailmap写法把，不要将oldemail放到里面了哦&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="参考"&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://github.com/newren/git-filter-repo"&gt;GitHub newren/git-filter-repo: Quickly rewrite git repository history (filter-branch replacement)&lt;/a&gt;&lt;/p&gt;</description></item><item><title>maven依赖检查</title><link>https://ziwindlu.github.io/posts/maven-dependency-check/</link><pubDate>Wed, 10 Apr 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/maven-dependency-check/</guid><description>&lt;h2 id="引子"&gt;引子&lt;/h2&gt;
+&lt;p&gt;在idea中编辑maven依赖文件时，发现了很多警告，定眼一看，原来是maven依赖的漏洞。于是决定找一个检查maven依赖的工具，以备不时之需&lt;/p&gt;
+&lt;h2 id="正文"&gt;正文&lt;/h2&gt;
+&lt;h3 id="命令行"&gt;命令行&lt;/h3&gt;
+&lt;p&gt;安装&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;yay -S dependency-check-cli
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;安装后会提示这个&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Users should be added to the &lt;span class="s1"&gt;&amp;#39;dependencycheck&amp;#39;&lt;/span&gt; group to be able to perform vulnerability database updates.
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;需要将用户加到&lt;code&gt;dependencycheck&lt;/code&gt;这个用户组里面去
+使用
+&lt;code&gt;dependency-check -h&lt;/code&gt;用法查看&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;dependency-check -o . -s x.jar
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;注意，命令行工具需主机要对&lt;code&gt;nvd.nist.gov&lt;/code&gt;访问流畅&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id="maven插件方式"&gt;maven插件方式&lt;/h3&gt;
+&lt;p&gt;这里仅介绍一种开箱即用的方式
+其他方式请&lt;a href="http://jeremylong.github.io/DependencyCheck/dependency-check-maven/index.html"&gt;查看链接&lt;/a&gt;
+项目中引入仅生成html
+在pom.xml中plugs中添加以下内容&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&amp;lt;plugin&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&amp;lt;groupId&amp;gt;org.owasp&amp;lt;/groupId&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&amp;lt;artifactId&amp;gt;dependency-check-maven&amp;lt;/artifactId&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&amp;lt;version&amp;gt;8.4.0&amp;lt;/version&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&amp;lt;executions&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&amp;lt;execution&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&amp;lt;goals&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&amp;lt;goal&amp;gt;check&amp;lt;/goal&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&amp;lt;/goals&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&amp;lt;/execution&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&amp;lt;/executions&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&amp;lt;/plugin&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;添加完成后导入依赖
+运行&lt;code&gt;mvn dependency-check:check&lt;/code&gt;即可在target中找到对应的报告了&lt;/p&gt;</description></item></channel></rss>

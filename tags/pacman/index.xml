@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>pacman on ziwindlu 的博客</title><link>https://ziwindlu.github.io/tags/pacman/</link><description>Recent content in pacman on ziwindlu 的博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Wed, 24 Apr 2024 00:00:00 +0800</lastBuildDate><atom:link href="https://ziwindlu.github.io/tags/pacman/index.xml" rel="self" type="application/rss+xml"/><item><title>记录archlinux网易云音乐滚挂</title><link>https://ziwindlu.github.io/posts/archlinux-netease-music-fix/</link><pubDate>Wed, 24 Apr 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/archlinux-netease-music-fix/</guid><description>&lt;p&gt;时间: 2023-06-14
+版本: netease-cloud-music 1.2.1-7
+美好的一天从滚包更新开始，滚完发现网易云音乐打不开了，果断使用terminal看一看输出&lt;/p&gt;
+&lt;h2 id="噩耗来袭"&gt;噩耗来袭&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;[&lt;/span&gt;0614/083435.997611:ERROR:nss_util.cc&lt;span class="o"&gt;(&lt;/span&gt;706&lt;span class="o"&gt;)]&lt;/span&gt; Error initializing NSS with a persistent database
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;去网易云音乐aur下讨论发现了解决方案，只需要将&lt;code&gt;nss&lt;/code&gt;这个包回退到3.89.1-1这个版本就好了&lt;/p&gt;
+&lt;h2 id="解决"&gt;解决&lt;/h2&gt;
+&lt;p&gt;方案1:手动下载该版本的包并安装
+&lt;strong&gt;step1&lt;/strong&gt;
+在这里可以找到&lt;a href="https://archive.archlinux.org/packages/"&gt;Arch Linux Archive&lt;/a&gt;
+&lt;strong&gt;step2&lt;/strong&gt;
+&lt;code&gt;sudo pacman -U pkg&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;arch仅会保存近一年的历史包，如果要下载更老的需要手动打包
+这里想体验一下，选择了手动打包
+方案2:手动打包
+&lt;strong&gt;step1&lt;/strong&gt;
+找到打包的源代码
+先去到&lt;a href="https://archlinux.org/packages/core/x86_64/nss/"&gt;nss package页面&lt;/a&gt;点击SourceFiles，你就会看到熟悉的gitlab页面啦，这时只需要找到对应的版本克隆到本地就好啦
+&lt;strong&gt;step2&lt;/strong&gt;
+手动打包
+进入到含有&lt;code&gt;PKGBUILD&lt;/code&gt;的目录执行命令&lt;code&gt;makepkg -s&lt;/code&gt;
+慢慢等待你就会发现目录下出现了一个&lt;code&gt;.zst&lt;/code&gt;文件，有了这个文件你就可以手动安装了
+&lt;strong&gt;step3&lt;/strong&gt;
+手动安装&lt;code&gt;sudo pacman -U&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="参考"&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://zhuanlan.zhihu.com/p/260993724"&gt;在archlinux中如何安装老版本软件&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

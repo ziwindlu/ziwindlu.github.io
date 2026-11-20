@@ -1,0 +1,292 @@
+<!doctype html><html lang=zh dir=auto data-theme=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>zinit高效的zsh插件管理器 | ziwindlu 的博客</title><meta name=keywords content="zinit,zsh"><meta name=description content='引子
+心血来潮，更新一下自己的zshrc，之前写的zinit看不懂了。再去重温一下zinit的文档。记录一下以便备忘。本文会重点介绍常用的插件加载方式。也会推荐一些插件
+为什么使用zinit？更快，方便管理。
+安装zinit
+俺比较喜欢手动安装，将下面这些放入你的zshrc，source一下zshrc他就会安装啦。
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+[ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
+[ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+source "${ZINIT_HOME}/zinit.zsh"
+插件加载
+简单的加载load/light
+这些插件加载完成后会放到$ZINIT_HOME/plugins
+zinit load zdharma-continuum/history-search-multi-word
+load和light的区别：
+light更快，load慢些。load加载的插件可以跟踪也可以卸载，而light不可以
+文件加载snippet，含oh-my-zsh和Prezto插件加载
+这些插件加载完成后会放到$ZINIT_HOME/snippets
+# 单个文件
+zinit snippet &#39;https://github.com/robbyrussell/oh-my-zsh/raw/master/plugins/git/git.plugin.zsh&#39;
+# 对于 Oh My Zsh 和 Prezto，您以使用 OMZ:: 和 PZT:: 简写
+zinit snippet OMZ::plugins/git/git.plugin.zsh
+zinit snippet PZT::modules/helper/init.zsh
+使用svn
+如果你的插件不是在github中，而是在svn中。那么你可以添加svn关键字
+zinit ice svn
+zinit snippet PZT::modules/docker
+ice是为下面的zinit命令添加参数
+更多的参数ice
+如上面的svn
+更多的ice参数请参考wiki
+作为程序as"programe"
+有时候插件以命令的形式存在，这时我们需要使用as"programe"
+zinit ice as"program" cp"httpstat.sh -> httpstat" pick"httpstat"
+zinit light b4b4r07/httpstat
+对于上面的解释:
+cp"httpstat.sh -> httpstat"将克隆过后的httpstat.sh复制为httpstat
+pick"httpstat"为httpstat设置执行权限
+Turbo模式(常用)
+使用wait选项，可以使插件延迟加载!0意味着将以接近于0s的延迟后加载
+zinit ice wait&#39;!0&#39;
+zinit load halfo/lambda-mod-zsh-theme
+
+俺的很多配置文件也是抄的，想了解更多语法请参考wiki
+
+插件推荐
+更详细的用法请参考官方文档
+命令补全
+zsh-users/zsh-autosuggestions
+命令高亮
+zdharma-continuum/fast-syntax-highlighting
+sudo
+OMZP::sudo
+按两次esc就会在当前行开头补上sudo
+vi-mode
+jeffreytse/zsh-vi-mode
+配置
+# 让kj作为esc
+ZVM_VI_INSERT_ESCAPE_BINDKEY=kj
+使用方法
+normal模式下vv进入vim编辑当前命令
+zoxide
+模糊cd，他会记住你cd过的目录
+ajeetdsouza/zoxide
+使用方法z x x
+fzf
+模糊搜索
+junegunn/fzf
+配置
+# 触发键改为\
+export FZF_COMPLETION_TRIGGER=&#39;\&#39;
+# fzf窗口高度变为当前窗口的40%
+export FZF_TMUX_HEIGHT=&#39;40%&#39;
+fzf-tab
+对fzf的增强，支持命令搜索、参数搜索等
+Aloxaf/fzf-tab
+配置'><meta name=author content="ziwindlu"><link rel=canonical href=https://ziwindlu.github.io/posts/zinit-zsh-plugin-manager/><link crossorigin=anonymous href=/assets/css/stylesheet.95ae6e9689bd0037456375629f411acbf8ed76e0e9a7599900ad281f9526dee6.css integrity="sha256-la5ulom9ADdFY3Vin0Eay/jtduDpp1mZAK0oH5Um3uY=" rel="preload stylesheet" as=style><link rel=icon href=https://ziwindlu.github.io/favicon.svg><link rel=icon type=image/png sizes=16x16 href=https://ziwindlu.github.io/favicon.svg><link rel=icon type=image/png sizes=32x32 href=https://ziwindlu.github.io/favicon.svg><link rel=apple-touch-icon href=https://ziwindlu.github.io/favicon.svg><link rel=mask-icon href=https://ziwindlu.github.io/favicon.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=zh href=https://ziwindlu.github.io/posts/zinit-zsh-plugin-manager/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51);color-scheme:dark}.list{background:var(--theme)}.toc{background:var(--entry)}}</style></noscript><script>localStorage.getItem("pref-theme")==="dark"?document.querySelector("html").dataset.theme="dark":localStorage.getItem("pref-theme")==="light"?document.querySelector("html").dataset.theme="light":window.matchMedia("(prefers-color-scheme: dark)").matches?document.querySelector("html").dataset.theme="dark":document.querySelector("html").dataset.theme="light"</script><meta property="og:url" content="https://ziwindlu.github.io/posts/zinit-zsh-plugin-manager/"><meta property="og:site_name" content="ziwindlu 的博客"><meta property="og:title" content="zinit高效的zsh插件管理器"><meta property="og:description" content='引子 心血来潮，更新一下自己的zshrc，之前写的zinit看不懂了。再去重温一下zinit的文档。记录一下以便备忘。本文会重点介绍常用的插件加载方式。也会推荐一些插件 为什么使用zinit？更快，方便管理。
+安装zinit 俺比较喜欢手动安装，将下面这些放入你的zshrc，source一下zshrc他就会安装啦。
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git" [ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)" [ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME" source "${ZINIT_HOME}/zinit.zsh" 插件加载 简单的加载load/light 这些插件加载完成后会放到$ZINIT_HOME/plugins
+zinit load zdharma-continuum/history-search-multi-word load和light的区别： light更快，load慢些。load加载的插件可以跟踪也可以卸载，而light不可以
+文件加载snippet，含oh-my-zsh和Prezto插件加载 这些插件加载完成后会放到$ZINIT_HOME/snippets
+# 单个文件 zinit snippet &#39;https://github.com/robbyrussell/oh-my-zsh/raw/master/plugins/git/git.plugin.zsh&#39; # 对于 Oh My Zsh 和 Prezto，您以使用 OMZ:: 和 PZT:: 简写 zinit snippet OMZ::plugins/git/git.plugin.zsh zinit snippet PZT::modules/helper/init.zsh 使用svn 如果你的插件不是在github中，而是在svn中。那么你可以添加svn关键字
+zinit ice svn zinit snippet PZT::modules/docker ice是为下面的zinit命令添加参数
+更多的参数ice 如上面的svn 更多的ice参数请参考wiki
+作为程序as"programe" 有时候插件以命令的形式存在，这时我们需要使用as"programe"
+zinit ice as"program" cp"httpstat.sh -> httpstat" pick"httpstat" zinit light b4b4r07/httpstat 对于上面的解释: cp"httpstat.sh -> httpstat"将克隆过后的httpstat.sh复制为httpstat pick"httpstat"为httpstat设置执行权限
+Turbo模式(常用) 使用wait选项，可以使插件延迟加载!0意味着将以接近于0s的延迟后加载
+zinit ice wait&#39;!0&#39; zinit load halfo/lambda-mod-zsh-theme 俺的很多配置文件也是抄的，想了解更多语法请参考wiki
+插件推荐 更详细的用法请参考官方文档
+命令补全 zsh-users/zsh-autosuggestions
+命令高亮 zdharma-continuum/fast-syntax-highlighting
+sudo OMZP::sudo 按两次esc就会在当前行开头补上sudo
+vi-mode jeffreytse/zsh-vi-mode 配置
+# 让kj作为esc ZVM_VI_INSERT_ESCAPE_BINDKEY=kj 使用方法 normal模式下vv进入vim编辑当前命令
+zoxide 模糊cd，他会记住你cd过的目录 ajeetdsouza/zoxide 使用方法z x x
+fzf 模糊搜索 junegunn/fzf 配置
+# 触发键改为\ export FZF_COMPLETION_TRIGGER=&#39;\&#39; # fzf窗口高度变为当前窗口的40% export FZF_TMUX_HEIGHT=&#39;40%&#39; fzf-tab 对fzf的增强，支持命令搜索、参数搜索等 Aloxaf/fzf-tab 配置'><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2024-11-30T00:00:00+08:00"><meta property="article:modified_time" content="2024-11-30T00:00:00+08:00"><meta property="article:tag" content="zinit"><meta property="article:tag" content="zsh"><meta name=twitter:card content="summary"><meta name=twitter:title content="zinit高效的zsh插件管理器"><meta name=twitter:description content='引子 心血来潮，更新一下自己的zshrc，之前写的zinit看不懂了。再去重温一下zinit的文档。记录一下以便备忘。本文会重点介绍常用的插件加载方式。也会推荐一些插件 为什么使用zinit？更快，方便管理。
+安装zinit 俺比较喜欢手动安装，将下面这些放入你的zshrc，source一下zshrc他就会安装啦。
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git" [ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)" [ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME" source "${ZINIT_HOME}/zinit.zsh" 插件加载 简单的加载load/light 这些插件加载完成后会放到$ZINIT_HOME/plugins
+zinit load zdharma-continuum/history-search-multi-word load和light的区别： light更快，load慢些。load加载的插件可以跟踪也可以卸载，而light不可以
+文件加载snippet，含oh-my-zsh和Prezto插件加载 这些插件加载完成后会放到$ZINIT_HOME/snippets
+# 单个文件 zinit snippet &#39;https://github.com/robbyrussell/oh-my-zsh/raw/master/plugins/git/git.plugin.zsh&#39; # 对于 Oh My Zsh 和 Prezto，您以使用 OMZ:: 和 PZT:: 简写 zinit snippet OMZ::plugins/git/git.plugin.zsh zinit snippet PZT::modules/helper/init.zsh 使用svn 如果你的插件不是在github中，而是在svn中。那么你可以添加svn关键字
+zinit ice svn zinit snippet PZT::modules/docker ice是为下面的zinit命令添加参数
+更多的参数ice 如上面的svn 更多的ice参数请参考wiki
+作为程序as"programe" 有时候插件以命令的形式存在，这时我们需要使用as"programe"
+zinit ice as"program" cp"httpstat.sh -> httpstat" pick"httpstat" zinit light b4b4r07/httpstat 对于上面的解释: cp"httpstat.sh -> httpstat"将克隆过后的httpstat.sh复制为httpstat pick"httpstat"为httpstat设置执行权限
+Turbo模式(常用) 使用wait选项，可以使插件延迟加载!0意味着将以接近于0s的延迟后加载
+zinit ice wait&#39;!0&#39; zinit load halfo/lambda-mod-zsh-theme 俺的很多配置文件也是抄的，想了解更多语法请参考wiki
+插件推荐 更详细的用法请参考官方文档
+命令补全 zsh-users/zsh-autosuggestions
+命令高亮 zdharma-continuum/fast-syntax-highlighting
+sudo OMZP::sudo 按两次esc就会在当前行开头补上sudo
+vi-mode jeffreytse/zsh-vi-mode 配置
+# 让kj作为esc ZVM_VI_INSERT_ESCAPE_BINDKEY=kj 使用方法 normal模式下vv进入vim编辑当前命令
+zoxide 模糊cd，他会记住你cd过的目录 ajeetdsouza/zoxide 使用方法z x x
+fzf 模糊搜索 junegunn/fzf 配置
+# 触发键改为\ export FZF_COMPLETION_TRIGGER=&#39;\&#39; # fzf窗口高度变为当前窗口的40% export FZF_TMUX_HEIGHT=&#39;40%&#39; fzf-tab 对fzf的增强，支持命令搜索、参数搜索等 Aloxaf/fzf-tab 配置'><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"文章","item":"https://ziwindlu.github.io/posts/"},{"@type":"ListItem","position":2,"name":"zinit高效的zsh插件管理器","item":"https://ziwindlu.github.io/posts/zinit-zsh-plugin-manager/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"zinit高效的zsh插件管理器","name":"zinit高效的zsh插件管理器","description":"引子 心血来潮，更新一下自己的zshrc，之前写的zinit看不懂了。再去重温一下zinit的文档。记录一下以便备忘。本文会重点介绍常用的插件加载方式。也会推荐一些插件 为什么使用zinit？更快，方便管理。\n安装zinit 俺比较喜欢手动安装，将下面这些放入你的zshrc，source一下zshrc他就会安装啦。\nZINIT_HOME=\u0026#34;${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git\u0026#34; [ ! -d $ZINIT_HOME ] \u0026amp;\u0026amp; mkdir -p \u0026#34;$(dirname $ZINIT_HOME)\u0026#34; [ ! -d $ZINIT_HOME/.git ] \u0026amp;\u0026amp; git clone https://github.com/zdharma-continuum/zinit.git \u0026#34;$ZINIT_HOME\u0026#34; source \u0026#34;${ZINIT_HOME}/zinit.zsh\u0026#34; 插件加载 简单的加载load/light 这些插件加载完成后会放到$ZINIT_HOME/plugins\nzinit load zdharma-continuum/history-search-multi-word load和light的区别： light更快，load慢些。load加载的插件可以跟踪也可以卸载，而light不可以\n文件加载snippet，含oh-my-zsh和Prezto插件加载 这些插件加载完成后会放到$ZINIT_HOME/snippets\n# 单个文件 zinit snippet \u0026#39;https://github.com/robbyrussell/oh-my-zsh/raw/master/plugins/git/git.plugin.zsh\u0026#39; # 对于 Oh My Zsh 和 Prezto，您以使用 OMZ:: 和 PZT:: 简写 zinit snippet OMZ::plugins/git/git.plugin.zsh zinit snippet PZT::modules/helper/init.zsh 使用svn 如果你的插件不是在github中，而是在svn中。那么你可以添加svn关键字\nzinit ice svn zinit snippet PZT::modules/docker ice是为下面的zinit命令添加参数\n更多的参数ice 如上面的svn 更多的ice参数请参考wiki\n作为程序as\u0026quot;programe\u0026quot; 有时候插件以命令的形式存在，这时我们需要使用as\u0026quot;programe\u0026quot;\nzinit ice as\u0026#34;program\u0026#34; cp\u0026#34;httpstat.sh -\u0026gt; httpstat\u0026#34; pick\u0026#34;httpstat\u0026#34; zinit light b4b4r07/httpstat 对于上面的解释: cp\u0026quot;httpstat.sh -\u0026gt; httpstat\u0026quot;将克隆过后的httpstat.sh复制为httpstat pick\u0026quot;httpstat\u0026quot;为httpstat设置执行权限\nTurbo模式(常用) 使用wait选项，可以使插件延迟加载!0意味着将以接近于0s的延迟后加载\nzinit ice wait\u0026#39;!0\u0026#39; zinit load halfo/lambda-mod-zsh-theme 俺的很多配置文件也是抄的，想了解更多语法请参考wiki\n插件推荐 更详细的用法请参考官方文档\n命令补全 zsh-users/zsh-autosuggestions\n命令高亮 zdharma-continuum/fast-syntax-highlighting\nsudo OMZP::sudo 按两次esc就会在当前行开头补上sudo\nvi-mode jeffreytse/zsh-vi-mode 配置\n# 让kj作为esc ZVM_VI_INSERT_ESCAPE_BINDKEY=kj 使用方法 normal模式下vv进入vim编辑当前命令\nzoxide 模糊cd，他会记住你cd过的目录 ajeetdsouza/zoxide 使用方法z x x\nfzf 模糊搜索 junegunn/fzf 配置\n# 触发键改为\\ export FZF_COMPLETION_TRIGGER=\u0026#39;\\\u0026#39; # fzf窗口高度变为当前窗口的40% export FZF_TMUX_HEIGHT=\u0026#39;40%\u0026#39; fzf-tab 对fzf的增强，支持命令搜索、参数搜索等 Aloxaf/fzf-tab 配置\n","keywords":["zinit","zsh"],"articleBody":"引子 心血来潮，更新一下自己的zshrc，之前写的zinit看不懂了。再去重温一下zinit的文档。记录一下以便备忘。本文会重点介绍常用的插件加载方式。也会推荐一些插件 为什么使用zinit？更快，方便管理。\n安装zinit 俺比较喜欢手动安装，将下面这些放入你的zshrc，source一下zshrc他就会安装啦。\nZINIT_HOME=\"${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git\" [ ! -d $ZINIT_HOME ] \u0026\u0026 mkdir -p \"$(dirname $ZINIT_HOME)\" [ ! -d $ZINIT_HOME/.git ] \u0026\u0026 git clone https://github.com/zdharma-continuum/zinit.git \"$ZINIT_HOME\" source \"${ZINIT_HOME}/zinit.zsh\" 插件加载 简单的加载load/light 这些插件加载完成后会放到$ZINIT_HOME/plugins\nzinit load zdharma-continuum/history-search-multi-word load和light的区别： light更快，load慢些。load加载的插件可以跟踪也可以卸载，而light不可以\n文件加载snippet，含oh-my-zsh和Prezto插件加载 这些插件加载完成后会放到$ZINIT_HOME/snippets\n# 单个文件 zinit snippet 'https://github.com/robbyrussell/oh-my-zsh/raw/master/plugins/git/git.plugin.zsh' # 对于 Oh My Zsh 和 Prezto，您以使用 OMZ:: 和 PZT:: 简写 zinit snippet OMZ::plugins/git/git.plugin.zsh zinit snippet PZT::modules/helper/init.zsh 使用svn 如果你的插件不是在github中，而是在svn中。那么你可以添加svn关键字\nzinit ice svn zinit snippet PZT::modules/docker ice是为下面的zinit命令添加参数\n更多的参数ice 如上面的svn 更多的ice参数请参考wiki\n作为程序as\"programe\" 有时候插件以命令的形式存在，这时我们需要使用as\"programe\"\nzinit ice as\"program\" cp\"httpstat.sh -\u003e httpstat\" pick\"httpstat\" zinit light b4b4r07/httpstat 对于上面的解释: cp\"httpstat.sh -\u003e httpstat\"将克隆过后的httpstat.sh复制为httpstat pick\"httpstat\"为httpstat设置执行权限\nTurbo模式(常用) 使用wait选项，可以使插件延迟加载!0意味着将以接近于0s的延迟后加载\nzinit ice wait'!0' zinit load halfo/lambda-mod-zsh-theme 俺的很多配置文件也是抄的，想了解更多语法请参考wiki\n插件推荐 更详细的用法请参考官方文档\n命令补全 zsh-users/zsh-autosuggestions\n命令高亮 zdharma-continuum/fast-syntax-highlighting\nsudo OMZP::sudo 按两次esc就会在当前行开头补上sudo\nvi-mode jeffreytse/zsh-vi-mode 配置\n# 让kj作为esc ZVM_VI_INSERT_ESCAPE_BINDKEY=kj 使用方法 normal模式下vv进入vim编辑当前命令\nzoxide 模糊cd，他会记住你cd过的目录 ajeetdsouza/zoxide 使用方法z x x\nfzf 模糊搜索 junegunn/fzf 配置\n# 触发键改为\\ export FZF_COMPLETION_TRIGGER='\\' # fzf窗口高度变为当前窗口的40% export FZF_TMUX_HEIGHT='40%' fzf-tab 对fzf的增强，支持命令搜索、参数搜索等 Aloxaf/fzf-tab 配置\n# disable sort when completing `git checkout` zstyle ':completion:*:git-checkout:*' sort false # set descriptions format to enable group support # NOTE: don't use escape sequences (like '%F{red}%d%f') here, fzf-tab will ignore them zstyle ':completion:*:descriptions' format '[%d]' # set list-colors to enable filename colorizing zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS} # force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix zstyle ':completion:*' menu no # preview directory's content with eza when completing cd zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath' # custom fzf flags # NOTE: fzf-tab does not follow FZF_DEFAULT_OPTS by default zstyle ':fzf-tab:*' fzf-flags --color=fg:1,fg+:2 --bind=tab:accept # To make fzf-tab follow FZF_DEFAULT_OPTS. # NOTE: This may lead to unexpected behavior since some flags break this plugin. See Aloxaf/fzf-tab#455. zstyle ':fzf-tab:*' use-fzf-default-opts yes # switch group using `\u003c` and `\u003e` zstyle ':fzf-tab:*' switch-group '\u003c' '\u003e' 俺的.zshrc # 获取系统信息 os=`uname` my_home=${remote_home:-$HOME} # 加载zinit{{{ function zinit_setup(){ # 使用zinit ZINIT_HOME=\"$my_home/.local/share/zinit/zinit.git\" [ ! -d $ZINIT_HOME ] \u0026\u0026 mkdir -p \"$(dirname $ZINIT_HOME)\" [ ! -d $ZINIT_HOME/.git ] \u0026\u0026 git clone https://github.com/zdharma-continuum/zinit.git \"$ZINIT_HOME\" source \"${ZINIT_HOME}/zinit.zsh\" zinit_load_plug } # }}} # 加载zshrc插件{{{ function zinit_load_plug(){ # powerlevel10k{{{ [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true zinit ice depth=1; zinit light romkatv/powerlevel10k # }}} # # zoxide{{{ zinit ice lucid wait from\"gh-r\" as\"program\" \\ pick\"zoxide/zoxide\" \\ atload'eval \"$(zoxide init zsh)\"' zinit light ajeetdsouza/zoxide # }}} # # fzf{{{ export FZF_COMPLETION_TRIGGER='\\' export FZF_TMUX_HEIGHT='40%' zinit ice wait silent from\"gh-r\" as\"program\" zinit load junegunn/fzf #}}} # # fzf-tab{{{ # disable sort when completing `git checkout` zstyle ':completion:*:git-checkout:*' sort false # set descriptions format to enable group support # NOTE: don't use escape sequences (like '%F{red}%d%f') here, fzf-tab will ignore them zstyle ':completion:*:descriptions' format '[%d]' # set list-colors to enable filename colorizing zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS} # force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix zstyle ':completion:*' menu no # preview directory's content with eza when completing cd zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath' # custom fzf flags # NOTE: fzf-tab does not follow FZF_DEFAULT_OPTS by default zstyle ':fzf-tab:*' fzf-flags --color=fg:1,fg+:2 --bind=tab:accept # To make fzf-tab follow FZF_DEFAULT_OPTS. # NOTE: This may lead to unexpected behavior since some flags break this plugin. See Aloxaf/fzf-tab#455. zstyle ':fzf-tab:*' use-fzf-default-opts yes # switch group using `\u003c` and `\u003e` zstyle ':fzf-tab:*' switch-group '\u003c' '\u003e' zinit ice depth=1 wait atload\"zicompinit; zicdreplay\" silent zinit load Aloxaf/fzf-tab # }}} # # vim mod{{{ ZVM_VI_INSERT_ESCAPE_BINDKEY=kj zinit ice depth=1 zinit light jeffreytse/zsh-vi-mode # }}} # # 补全 sudo highlight{{{ zinit wait lucid depth'1' for \\ atload\"_zsh_autosuggest_start\" zsh-users/zsh-autosuggestions \\ OMZP::sudo \\ zdharma-continuum/fast-syntax-highlighting # }}} # } # }}} # linux键盘绑定{{{ function linux_keybinding(){ # use ctrl+left ctrl+right to move in words bindkey \"^[[1;5C\" forward-word bindkey \"^[[1;5D\" backward-word bindkey '^U' backward-kill-line } # }}} # macos键盘绑定{{{ function macos_keybinding(){ } # }}} # 加载bashrc{{{ function source_rc(){ if [ ! -z $1 ]; then [ -f $1 ] \u0026\u0026 source $1 fi } # }}} if [[ $os == \"Darwin\" ]]; then zinit_setup macos_keybinding elif [[ $os == \"Linux\" ]]; then # 发行版 source /etc/os-release case $ID in ; \"arch\" | \"kali\" | \"centos\") zinit_setup linux_keybinding ;; esac else echo \"unknow os\" fi source_rc $my_home/.bashrc 参考 GitHub zdharma-continuum/zinit: 🌻 Flexible and fast ZSH plugin manager Introduction Zinit Wiki Zsh ArchWiki\n","wordCount":"673","inLanguage":"zh","datePublished":"2024-11-30T00:00:00+08:00","dateModified":"2024-11-30T00:00:00+08:00","author":{"@type":"Person","name":"ziwindlu"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://ziwindlu.github.io/posts/zinit-zsh-plugin-manager/"},"publisher":{"@type":"Organization","name":"ziwindlu 的博客","logo":{"@type":"ImageObject","url":"https://ziwindlu.github.io/favicon.svg"}}}</script></head><body id=top><header class=header><nav class=header-nav><div class=logo><a href=https://ziwindlu.github.io/ accesskey=h title="ziwindlu 的博客 (Alt + H)">ziwindlu 的博客</a><div class=logo-switches><button id=theme-toggle class=theme-toggle accesskey=t title="(Alt + T)" aria-label="Toggle theme">
+<svg class="moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+<svg class="sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu class=menu><li><a href=https://ziwindlu.github.io/ title=首页><span>首页</span></a></li><li><a href=https://ziwindlu.github.io/posts/ title=文章><span>文章</span></a></li><li><a href=https://ziwindlu.github.io/tags/ title=标签><span>标签</span></a></li><li><a href=https://ziwindlu.github.io/search/ title=搜索><span>搜索</span></a></li><li><a href=https://ziwindlu.github.io/about/ title=关于><span>关于</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><h1 class="post-title entry-hint-parent">zinit高效的zsh插件管理器</h1><div class=post-meta><span title=2024-11-30T00:00:00+08:00>2024-11-30</span>&nbsp;·&nbsp;<span>4 分钟</span>&nbsp;·&nbsp;<span>ziwindlu</span>&nbsp;·&nbsp;<span class=post-source>源笔记：<code>04-Solutions/zinit高效的zsh插件管理器.md</code></span></div></header><details class=toc><summary accesskey=c title="(Alt + C)"><span class=title>目录</span></summary><div class=inner><ul><li><a href=#%e5%bc%95%e5%ad%90 aria-label=引子>引子</a></li><li><a href=#%e5%ae%89%e8%a3%85zinit aria-label=安装zinit>安装zinit</a></li><li><a href=#%e6%8f%92%e4%bb%b6%e5%8a%a0%e8%bd%bd aria-label=插件加载>插件加载</a><ul><li><a href=#%e7%ae%80%e5%8d%95%e7%9a%84%e5%8a%a0%e8%bd%bdloadlight aria-label=简单的加载load/light>简单的加载load/light</a></li><li><a href=#%e6%96%87%e4%bb%b6%e5%8a%a0%e8%bd%bdsnippet%e5%90%aboh-my-zsh%e5%92%8cprezto%e6%8f%92%e4%bb%b6%e5%8a%a0%e8%bd%bd aria-label=文件加载snippet，含oh-my-zsh和Prezto插件加载>文件加载snippet，含oh-my-zsh和Prezto插件加载</a></li><li><a href=#%e4%bd%bf%e7%94%a8svn aria-label=使用svn>使用svn</a></li><li><a href=#%e6%9b%b4%e5%a4%9a%e7%9a%84%e5%8f%82%e6%95%b0ice aria-label=更多的参数ice>更多的参数ice</a></li><li><a href=#%e4%bd%9c%e4%b8%ba%e7%a8%8b%e5%ba%8fasprograme aria-label='作为程序as"programe"'>作为程序as"programe"</a></li><li><a href=#turbo%e6%a8%a1%e5%bc%8f%e5%b8%b8%e7%94%a8 aria-label=Turbo模式(常用)>Turbo模式(常用)</a></li></ul></li><li><a href=#%e6%8f%92%e4%bb%b6%e6%8e%a8%e8%8d%90 aria-label=插件推荐>插件推荐</a><ul><li><a href=#%e5%91%bd%e4%bb%a4%e8%a1%a5%e5%85%a8 aria-label=命令补全>命令补全</a></li><li><a href=#%e5%91%bd%e4%bb%a4%e9%ab%98%e4%ba%ae aria-label=命令高亮>命令高亮</a></li><li><a href=#sudo aria-label=sudo>sudo</a></li><li><a href=#vi-mode aria-label=vi-mode>vi-mode</a></li><li><a href=#zoxide aria-label=zoxide>zoxide</a></li><li><a href=#fzf aria-label=fzf>fzf</a></li><li><a href=#fzf-tab aria-label=fzf-tab>fzf-tab</a></li></ul></li><li><a href=#%e4%bf%ba%e7%9a%84zshrc aria-label=俺的.zshrc>俺的.zshrc</a></li><li><a href=#%e5%8f%82%e8%80%83 aria-label=参考>参考</a></li></ul></div></details><div class="post-content md-content"><h2 id=引子>引子<a hidden class=anchor aria-hidden=true href=#引子>#</a></h2><p>心血来潮，更新一下自己的zshrc，之前写的zinit看不懂了。再去重温一下zinit的文档。记录一下以便备忘。本文会重点介绍常用的插件加载方式。也会推荐一些插件
+为什么使用zinit？更快，方便管理。</p><h2 id=安装zinit>安装zinit<a hidden class=anchor aria-hidden=true href=#安装zinit>#</a></h2><p>俺比较喜欢手动安装，将下面这些放入你的zshrc，source一下zshrc他就会安装啦。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=nv>ZINIT_HOME</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>XDG_DATA_HOME</span><span class=k>:-</span><span class=si>${</span><span class=nv>HOME</span><span class=si>}</span><span class=p>/.local/share</span><span class=si>}</span><span class=s2>/zinit/zinit.git&#34;</span>
+</span></span><span class=line><span class=cl><span class=o>[</span> ! -d <span class=nv>$ZINIT_HOME</span> <span class=o>]</span> <span class=o>&amp;&amp;</span> mkdir -p <span class=s2>&#34;</span><span class=k>$(</span>dirname <span class=nv>$ZINIT_HOME</span><span class=k>)</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=o>[</span> ! -d <span class=nv>$ZINIT_HOME</span>/.git <span class=o>]</span> <span class=o>&amp;&amp;</span> git clone https://github.com/zdharma-continuum/zinit.git <span class=s2>&#34;</span><span class=nv>$ZINIT_HOME</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>source</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>ZINIT_HOME</span><span class=si>}</span><span class=s2>/zinit.zsh&#34;</span>
+</span></span></code></pre></div><h2 id=插件加载>插件加载<a hidden class=anchor aria-hidden=true href=#插件加载>#</a></h2><h3 id=简单的加载loadlight>简单的加载load/light<a hidden class=anchor aria-hidden=true href=#简单的加载loadlight>#</a></h3><p>这些插件加载完成后会放到<code>$ZINIT_HOME/plugins</code></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>zinit load zdharma-continuum/history-search-multi-word
+</span></span></code></pre></div><p>load和light的区别：
+light更快，load慢些。load加载的插件可以跟踪也可以卸载，而light不可以</p><h3 id=文件加载snippet含oh-my-zsh和prezto插件加载>文件加载snippet，含oh-my-zsh和Prezto插件加载<a hidden class=anchor aria-hidden=true href=#文件加载snippet含oh-my-zsh和prezto插件加载>#</a></h3><p>这些插件加载完成后会放到<code>$ZINIT_HOME/snippets</code></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=c1># 单个文件</span>
+</span></span><span class=line><span class=cl>zinit snippet <span class=s1>&#39;https://github.com/robbyrussell/oh-my-zsh/raw/master/plugins/git/git.plugin.zsh&#39;</span>
+</span></span><span class=line><span class=cl><span class=c1># 对于 Oh My Zsh 和 Prezto，您以使用 OMZ:: 和 PZT:: 简写</span>
+</span></span><span class=line><span class=cl>zinit snippet OMZ::plugins/git/git.plugin.zsh
+</span></span><span class=line><span class=cl>zinit snippet PZT::modules/helper/init.zsh
+</span></span></code></pre></div><h3 id=使用svn>使用svn<a hidden class=anchor aria-hidden=true href=#使用svn>#</a></h3><p>如果你的插件不是在github中，而是在svn中。那么你可以添加svn关键字</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>zinit ice svn
+</span></span><span class=line><span class=cl>zinit snippet PZT::modules/docker
+</span></span></code></pre></div><p>ice是为下面的zinit命令添加参数</p><h3 id=更多的参数ice>更多的参数ice<a hidden class=anchor aria-hidden=true href=#更多的参数ice>#</a></h3><p>如上面的svn
+更多的ice参数请参考wiki</p><h3 id=作为程序asprograme>作为程序as"programe"<a hidden class=anchor aria-hidden=true href=#作为程序asprograme>#</a></h3><p>有时候插件以命令的形式存在，这时我们需要使用as"programe"</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>zinit ice as<span class=s2>&#34;program&#34;</span> cp<span class=s2>&#34;httpstat.sh -&gt; httpstat&#34;</span> pick<span class=s2>&#34;httpstat&#34;</span>
+</span></span><span class=line><span class=cl>zinit light b4b4r07/httpstat
+</span></span></code></pre></div><p>对于上面的解释:
+<code>cp"httpstat.sh -> httpstat"</code>将克隆过后的<code>httpstat.sh</code>复制为<code>httpstat</code>
+pick"httpstat"为<code>httpstat</code>设置执行权限</p><h3 id=turbo模式常用>Turbo模式(常用)<a hidden class=anchor aria-hidden=true href=#turbo模式常用>#</a></h3><p>使用wait选项，可以使插件延迟加载<code>!0</code>意味着将以接近于0s的延迟后加载</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>zinit ice wait<span class=s1>&#39;!0&#39;</span>
+</span></span><span class=line><span class=cl>zinit load halfo/lambda-mod-zsh-theme
+</span></span></code></pre></div><blockquote><p>俺的很多配置文件也是抄的，想了解更多语法请参考wiki</p></blockquote><h2 id=插件推荐>插件推荐<a hidden class=anchor aria-hidden=true href=#插件推荐>#</a></h2><p>更详细的用法请参考官方文档</p><h3 id=命令补全>命令补全<a hidden class=anchor aria-hidden=true href=#命令补全>#</a></h3><p><code>zsh-users/zsh-autosuggestions</code></p><h3 id=命令高亮>命令高亮<a hidden class=anchor aria-hidden=true href=#命令高亮>#</a></h3><p><code>zdharma-continuum/fast-syntax-highlighting</code></p><h3 id=sudo>sudo<a hidden class=anchor aria-hidden=true href=#sudo>#</a></h3><p><code>OMZP::sudo</code>
+按两次esc就会在当前行开头补上sudo</p><h3 id=vi-mode>vi-mode<a hidden class=anchor aria-hidden=true href=#vi-mode>#</a></h3><p><code>jeffreytse/zsh-vi-mode</code>
+<strong>配置</strong></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=c1># 让kj作为esc</span>
+</span></span><span class=line><span class=cl><span class=nv>ZVM_VI_INSERT_ESCAPE_BINDKEY</span><span class=o>=</span>kj
+</span></span></code></pre></div><p><strong>使用方法</strong>
+normal模式下<code>vv</code>进入vim编辑当前命令</p><h3 id=zoxide>zoxide<a hidden class=anchor aria-hidden=true href=#zoxide>#</a></h3><p>模糊cd，他会记住你cd过的目录
+<code>ajeetdsouza/zoxide</code>
+使用方法<code>z x x</code></p><h3 id=fzf>fzf<a hidden class=anchor aria-hidden=true href=#fzf>#</a></h3><p>模糊搜索
+<code>junegunn/fzf</code>
+<strong>配置</strong></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=c1># 触发键改为\</span>
+</span></span><span class=line><span class=cl><span class=nb>export</span> <span class=nv>FZF_COMPLETION_TRIGGER</span><span class=o>=</span><span class=s1>&#39;\&#39;</span>
+</span></span><span class=line><span class=cl><span class=c1># fzf窗口高度变为当前窗口的40%</span>
+</span></span><span class=line><span class=cl><span class=nb>export</span> <span class=nv>FZF_TMUX_HEIGHT</span><span class=o>=</span><span class=s1>&#39;40%&#39;</span>
+</span></span></code></pre></div><h3 id=fzf-tab>fzf-tab<a hidden class=anchor aria-hidden=true href=#fzf-tab>#</a></h3><p>对fzf的增强，支持命令搜索、参数搜索等
+<code>Aloxaf/fzf-tab</code>
+<strong>配置</strong></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=c1># disable sort when completing `git checkout`</span>
+</span></span><span class=line><span class=cl>zstyle <span class=s1>&#39;:completion:*:git-checkout:*&#39;</span> sort <span class=nb>false</span>
+</span></span><span class=line><span class=cl><span class=c1># set descriptions format to enable group support</span>
+</span></span><span class=line><span class=cl><span class=c1># NOTE: don&#39;t use escape sequences (like &#39;%F{red}%d%f&#39;) here, fzf-tab will ignore them</span>
+</span></span><span class=line><span class=cl>zstyle <span class=s1>&#39;:completion:*:descriptions&#39;</span> format <span class=s1>&#39;[%d]&#39;</span>
+</span></span><span class=line><span class=cl><span class=c1># set list-colors to enable filename colorizing</span>
+</span></span><span class=line><span class=cl>zstyle <span class=s1>&#39;:completion:*&#39;</span> list-colors <span class=si>${</span><span class=p>(s.:.)LS_COLORS</span><span class=si>}</span>
+</span></span><span class=line><span class=cl><span class=c1># force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix</span>
+</span></span><span class=line><span class=cl>zstyle <span class=s1>&#39;:completion:*&#39;</span> menu no
+</span></span><span class=line><span class=cl><span class=c1># preview directory&#39;s content with eza when completing cd</span>
+</span></span><span class=line><span class=cl>zstyle <span class=s1>&#39;:fzf-tab:complete:cd:*&#39;</span> fzf-preview <span class=s1>&#39;eza -1 --color=always $realpath&#39;</span>
+</span></span><span class=line><span class=cl><span class=c1># custom fzf flags</span>
+</span></span><span class=line><span class=cl><span class=c1># NOTE: fzf-tab does not follow FZF_DEFAULT_OPTS by default</span>
+</span></span><span class=line><span class=cl>zstyle <span class=s1>&#39;:fzf-tab:*&#39;</span> fzf-flags --color<span class=o>=</span>fg:1,fg+:2 --bind<span class=o>=</span>tab:accept
+</span></span><span class=line><span class=cl><span class=c1># To make fzf-tab follow FZF_DEFAULT_OPTS.</span>
+</span></span><span class=line><span class=cl><span class=c1># NOTE: This may lead to unexpected behavior since some flags break this plugin. See Aloxaf/fzf-tab#455.</span>
+</span></span><span class=line><span class=cl>zstyle <span class=s1>&#39;:fzf-tab:*&#39;</span> use-fzf-default-opts yes
+</span></span><span class=line><span class=cl><span class=c1># switch group using `&lt;` and `&gt;`</span>
+</span></span><span class=line><span class=cl>zstyle <span class=s1>&#39;:fzf-tab:*&#39;</span> switch-group <span class=s1>&#39;&lt;&#39;</span> <span class=s1>&#39;&gt;&#39;</span>
+</span></span></code></pre></div><h2 id=俺的zshrc>俺的.zshrc<a hidden class=anchor aria-hidden=true href=#俺的zshrc>#</a></h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=c1># 获取系统信息</span>
+</span></span><span class=line><span class=cl><span class=nv>os</span><span class=o>=</span><span class=sb>`</span>uname<span class=sb>`</span>
+</span></span><span class=line><span class=cl><span class=nv>my_home</span><span class=o>=</span><span class=si>${</span><span class=nv>remote_home</span><span class=k>:-</span><span class=nv>$HOME</span><span class=si>}</span>
+</span></span><span class=line><span class=cl><span class=c1># 加载zinit{{{</span>
+</span></span><span class=line><span class=cl><span class=k>function</span> zinit_setup<span class=o>(){</span>
+</span></span><span class=line><span class=cl><span class=c1># 使用zinit</span>
+</span></span><span class=line><span class=cl><span class=nv>ZINIT_HOME</span><span class=o>=</span><span class=s2>&#34;</span><span class=nv>$my_home</span><span class=s2>/.local/share/zinit/zinit.git&#34;</span>
+</span></span><span class=line><span class=cl><span class=o>[</span> ! -d <span class=nv>$ZINIT_HOME</span> <span class=o>]</span> <span class=o>&amp;&amp;</span> mkdir -p <span class=s2>&#34;</span><span class=k>$(</span>dirname <span class=nv>$ZINIT_HOME</span><span class=k>)</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=o>[</span> ! -d <span class=nv>$ZINIT_HOME</span>/.git <span class=o>]</span> <span class=o>&amp;&amp;</span> git clone https://github.com/zdharma-continuum/zinit.git <span class=s2>&#34;</span><span class=nv>$ZINIT_HOME</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>source</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>ZINIT_HOME</span><span class=si>}</span><span class=s2>/zinit.zsh&#34;</span>
+</span></span><span class=line><span class=cl>zinit_load_plug
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=c1># }}}</span>
+</span></span><span class=line><span class=cl><span class=c1># 加载zshrc插件{{{</span>
+</span></span><span class=line><span class=cl><span class=k>function</span> zinit_load_plug<span class=o>(){</span>
+</span></span><span class=line><span class=cl><span class=c1># powerlevel10k{{{</span>
+</span></span><span class=line><span class=cl><span class=o>[[</span> ! -f ~/.p10k.zsh <span class=o>]]</span> <span class=o>||</span> <span class=nb>source</span> ~/.p10k.zsh
+</span></span><span class=line><span class=cl><span class=nv>POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD</span><span class=o>=</span><span class=nb>true</span>
+</span></span><span class=line><span class=cl>zinit ice <span class=nv>depth</span><span class=o>=</span>1<span class=p>;</span>
+</span></span><span class=line><span class=cl>zinit light romkatv/powerlevel10k
+</span></span><span class=line><span class=cl><span class=c1># }}}</span>
+</span></span><span class=line><span class=cl><span class=c1>#</span>
+</span></span><span class=line><span class=cl><span class=c1># zoxide{{{</span>
+</span></span><span class=line><span class=cl>zinit ice lucid <span class=nb>wait</span> from<span class=s2>&#34;gh-r&#34;</span> as<span class=s2>&#34;program&#34;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl>pick<span class=s2>&#34;zoxide/zoxide&#34;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl>atload<span class=s1>&#39;eval &#34;$(zoxide init zsh)&#34;&#39;</span>
+</span></span><span class=line><span class=cl>zinit light ajeetdsouza/zoxide
+</span></span><span class=line><span class=cl><span class=c1># }}}</span>
+</span></span><span class=line><span class=cl><span class=c1>#</span>
+</span></span><span class=line><span class=cl><span class=c1># fzf{{{</span>
+</span></span><span class=line><span class=cl><span class=nb>export</span> <span class=nv>FZF_COMPLETION_TRIGGER</span><span class=o>=</span><span class=s1>&#39;\&#39;</span>
+</span></span><span class=line><span class=cl><span class=nb>export</span> <span class=nv>FZF_TMUX_HEIGHT</span><span class=o>=</span><span class=s1>&#39;40%&#39;</span>
+</span></span><span class=line><span class=cl>zinit ice <span class=nb>wait</span> silent from<span class=s2>&#34;gh-r&#34;</span> as<span class=s2>&#34;program&#34;</span>
+</span></span><span class=line><span class=cl>zinit load junegunn/fzf
+</span></span><span class=line><span class=cl><span class=c1>#}}}</span>
+</span></span><span class=line><span class=cl><span class=c1>#</span>
+</span></span><span class=line><span class=cl><span class=c1># fzf-tab{{{</span>
+</span></span><span class=line><span class=cl><span class=c1># disable sort when completing `git checkout`</span>
+</span></span><span class=line><span class=cl>zstyle <span class=s1>&#39;:completion:*:git-checkout:*&#39;</span> sort <span class=nb>false</span>
+</span></span><span class=line><span class=cl><span class=c1># set descriptions format to enable group support</span>
+</span></span><span class=line><span class=cl><span class=c1># NOTE: don&#39;t use escape sequences (like &#39;%F{red}%d%f&#39;) here, fzf-tab will ignore them</span>
+</span></span><span class=line><span class=cl>zstyle <span class=s1>&#39;:completion:*:descriptions&#39;</span> format <span class=s1>&#39;[%d]&#39;</span>
+</span></span><span class=line><span class=cl><span class=c1># set list-colors to enable filename colorizing</span>
+</span></span><span class=line><span class=cl>zstyle <span class=s1>&#39;:completion:*&#39;</span> list-colors <span class=si>${</span><span class=p>(s.:.)LS_COLORS</span><span class=si>}</span>
+</span></span><span class=line><span class=cl><span class=c1># force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix</span>
+</span></span><span class=line><span class=cl>zstyle <span class=s1>&#39;:completion:*&#39;</span> menu no
+</span></span><span class=line><span class=cl><span class=c1># preview directory&#39;s content with eza when completing cd</span>
+</span></span><span class=line><span class=cl>zstyle <span class=s1>&#39;:fzf-tab:complete:cd:*&#39;</span> fzf-preview <span class=s1>&#39;eza -1 --color=always $realpath&#39;</span>
+</span></span><span class=line><span class=cl><span class=c1># custom fzf flags</span>
+</span></span><span class=line><span class=cl><span class=c1># NOTE: fzf-tab does not follow FZF_DEFAULT_OPTS by default</span>
+</span></span><span class=line><span class=cl>zstyle <span class=s1>&#39;:fzf-tab:*&#39;</span> fzf-flags --color<span class=o>=</span>fg:1,fg+:2 --bind<span class=o>=</span>tab:accept
+</span></span><span class=line><span class=cl><span class=c1># To make fzf-tab follow FZF_DEFAULT_OPTS.</span>
+</span></span><span class=line><span class=cl><span class=c1># NOTE: This may lead to unexpected behavior since some flags break this plugin. See Aloxaf/fzf-tab#455.</span>
+</span></span><span class=line><span class=cl>zstyle <span class=s1>&#39;:fzf-tab:*&#39;</span> use-fzf-default-opts yes
+</span></span><span class=line><span class=cl><span class=c1># switch group using `&lt;` and `&gt;`</span>
+</span></span><span class=line><span class=cl>zstyle <span class=s1>&#39;:fzf-tab:*&#39;</span> switch-group <span class=s1>&#39;&lt;&#39;</span> <span class=s1>&#39;&gt;&#39;</span>
+</span></span><span class=line><span class=cl>zinit ice <span class=nv>depth</span><span class=o>=</span><span class=m>1</span> <span class=nb>wait</span> atload<span class=s2>&#34;zicompinit; zicdreplay&#34;</span> silent
+</span></span><span class=line><span class=cl>zinit load Aloxaf/fzf-tab
+</span></span><span class=line><span class=cl><span class=c1># }}}</span>
+</span></span><span class=line><span class=cl><span class=c1>#</span>
+</span></span><span class=line><span class=cl><span class=c1># vim mod{{{</span>
+</span></span><span class=line><span class=cl><span class=nv>ZVM_VI_INSERT_ESCAPE_BINDKEY</span><span class=o>=</span>kj
+</span></span><span class=line><span class=cl>zinit ice <span class=nv>depth</span><span class=o>=</span><span class=m>1</span>
+</span></span><span class=line><span class=cl>zinit light jeffreytse/zsh-vi-mode
+</span></span><span class=line><span class=cl><span class=c1># }}}</span>
+</span></span><span class=line><span class=cl><span class=c1>#</span>
+</span></span><span class=line><span class=cl><span class=c1># 补全 sudo highlight{{{</span>
+</span></span><span class=line><span class=cl>zinit <span class=nb>wait</span> lucid depth<span class=s1>&#39;1&#39;</span> <span class=k>for</span> <span class=se>\
+</span></span></span><span class=line><span class=cl>atload<span class=s2>&#34;_zsh_autosuggest_start&#34;</span>  zsh-users/zsh-autosuggestions <span class=se>\
+</span></span></span><span class=line><span class=cl>OMZP::sudo <span class=se>\
+</span></span></span><span class=line><span class=cl>zdharma-continuum/fast-syntax-highlighting
+</span></span><span class=line><span class=cl><span class=c1># }}}</span>
+</span></span><span class=line><span class=cl><span class=c1>#</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=c1># }}}</span>
+</span></span><span class=line><span class=cl><span class=c1># linux键盘绑定{{{</span>
+</span></span><span class=line><span class=cl><span class=k>function</span> linux_keybinding<span class=o>(){</span>
+</span></span><span class=line><span class=cl><span class=c1># use ctrl+left ctrl+right to move in words</span>
+</span></span><span class=line><span class=cl>bindkey <span class=s2>&#34;^[[1;5C&#34;</span> forward-word
+</span></span><span class=line><span class=cl>bindkey <span class=s2>&#34;^[[1;5D&#34;</span> backward-word
+</span></span><span class=line><span class=cl>bindkey <span class=s1>&#39;^U&#39;</span> backward-kill-line
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=c1># }}}</span>
+</span></span><span class=line><span class=cl><span class=c1># macos键盘绑定{{{</span>
+</span></span><span class=line><span class=cl><span class=k>function</span> macos_keybinding<span class=o>(){</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=c1># }}}</span>
+</span></span><span class=line><span class=cl><span class=c1># 加载bashrc{{{</span>
+</span></span><span class=line><span class=cl><span class=k>function</span> source_rc<span class=o>(){</span>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>[</span> ! -z <span class=nv>$1</span> <span class=o>]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl><span class=o>[</span> -f <span class=nv>$1</span> <span class=o>]</span> <span class=o>&amp;&amp;</span> <span class=nb>source</span> <span class=nv>$1</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=c1># }}}</span>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>[[</span>  <span class=nv>$os</span> <span class=o>==</span> <span class=s2>&#34;Darwin&#34;</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>zinit_setup
+</span></span><span class=line><span class=cl>macos_keybinding
+</span></span><span class=line><span class=cl><span class=k>elif</span> <span class=o>[[</span> <span class=nv>$os</span> <span class=o>==</span> <span class=s2>&#34;Linux&#34;</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl><span class=c1># 发行版</span>
+</span></span><span class=line><span class=cl><span class=nb>source</span> /etc/os-release
+</span></span><span class=line><span class=cl><span class=k>case</span> <span class=nv>$ID</span> in <span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=s2>&#34;arch&#34;</span> <span class=p>|</span> <span class=s2>&#34;kali&#34;</span> <span class=p>|</span> <span class=s2>&#34;centos&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>zinit_setup
+</span></span><span class=line><span class=cl>linux_keybinding
+</span></span><span class=line><span class=cl><span class=p>;;</span>
+</span></span><span class=line><span class=cl><span class=k>esac</span>
+</span></span><span class=line><span class=cl><span class=k>else</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;unknow os&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl>source_rc <span class=nv>$my_home</span>/.bashrc
+</span></span></code></pre></div><h2 id=参考>参考<a hidden class=anchor aria-hidden=true href=#参考>#</a></h2><p><a href="https://github.com/zdharma-continuum/zinit?tab=readme-ov-file#zinit-wiki">GitHub zdharma-continuum/zinit: 🌻 Flexible and fast ZSH plugin manager</a>
+<a href=https://zdharma-continuum.github.io/zinit/wiki/INTRODUCTION/>Introduction Zinit Wiki</a>
+<a href=https://wiki.archlinux.org/title/Zsh>Zsh ArchWiki</a></p></div><footer class=post-footer><ul class=post-tags><li><a href=https://ziwindlu.github.io/tags/zinit/>zinit</a></li><li><a href=https://ziwindlu.github.io/tags/zsh/>zsh</a></li></ul><nav class=paginav><a class=prev href=https://ziwindlu.github.io/posts/linux-system-info-commands/><span class=title>« 上一页</span>
+<span>linux常用的系统信息查看命令</span>
+</a><a class=next href=https://ziwindlu.github.io/posts/docker-network-arp-storm/><span class=title>下一页 »</span>
+<span>记录docker网络与当前网络冲突形成arp广播风暴造成断网的问题</span></a></nav></footer></article></main><footer class=footer><span>&copy; 2026 <a href=https://ziwindlu.github.io/>ziwindlu 的博客</a></span> ·
+<span>Powered by
+<a href="https://gohugo.io/?utm_source=papermod" rel=noopener target=_blank>Hugo</a> &
+<a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top id=top-link class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey=g><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up"><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg>
+</a><script>let menu=document.getElementById("menu");if(menu){const e=localStorage.getItem("menu-scroll-position");e&&(menu.scrollLeft=parseInt(e,10));let t;menu.addEventListener("scroll",function(){clearTimeout(t),t=setTimeout(function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)},150)},{passive:!0})}document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var n=this.getAttribute("href").substr(1);const t=document.querySelector(`[id='${decodeURIComponent(n)}']`);window.matchMedia("(prefers-reduced-motion: reduce)").matches?t.scrollIntoView():t.scrollIntoView({behavior:"smooth"}),t.tabIndex<0&&!t.hasAttribute("tabindex")&&t.setAttribute("tabindex","-1"),t.focus({preventScroll:!0}),n==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${n}`)})})</script><script>var toplink=document.getElementById("top-link"),scrollTicking=!1;window.addEventListener("scroll",function(){if(scrollTicking)return;scrollTicking=!0,requestAnimationFrame(function(){const e=window.innerHeight,t=document.body.scrollTop>e||document.documentElement.scrollTop>e;toplink.classList.toggle("hidden",!t),scrollTicking=!1})},{passive:!0})</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{const e=document.querySelector("html");e.dataset.theme==="dark"?(e.dataset.theme="light",localStorage.setItem("pref-theme","light")):(e.dataset.theme="dark",localStorage.setItem("pref-theme","dark"))})</script><script>document.querySelectorAll("pre > code").forEach(e=>{const n=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="复制";function s(){t.innerHTML="已复制！",setTimeout(()=>{t.innerHTML="复制"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),s();return}const n=document.createRange();n.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(n);try{document.execCommand("copy"),s()}catch{}o.removeRange(n)}),n.classList.contains("highlight")?n.appendChild(t):n.parentNode.firstChild==n||(e.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?e.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(t):e.parentNode.appendChild(t))})</script></body></html>

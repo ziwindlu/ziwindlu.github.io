@@ -1,0 +1,1031 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Linux on ziwindlu 的博客</title><link>https://ziwindlu.github.io/tags/linux/</link><description>Recent content in Linux on ziwindlu 的博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Fri, 03 Apr 2026 00:00:00 +0800</lastBuildDate><atom:link href="https://ziwindlu.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>docker</title><link>https://ziwindlu.github.io/posts/docker/</link><pubDate>Fri, 03 Apr 2026 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/docker/</guid><description>&lt;h2 id="overview"&gt;OverView&lt;/h2&gt;
+&lt;p&gt;基本概念
+容器container
+容器基于镜像，容器可类比虚拟实例
+镜像image
+镜像可类比安装虚拟机的iso系统镜像
+&lt;a href="https://ziwindlu.github.io/posts/docker-network/"&gt;docker网络&lt;/a&gt;
+docker数据卷
+docker常用命令
+编写dockerfile
+docker-compose
+更简单便捷的docker用法
+docker-compose用法
+&lt;a href="https://ziwindlu.github.io/posts/docker-compose-syntax/"&gt;docker-compose写法&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="learningfiles"&gt;LearningFiles&lt;/h2&gt;
+&lt;h2 id="posts"&gt;Posts&lt;/h2&gt;</description></item><item><title>docker-compose写法</title><link>https://ziwindlu.github.io/posts/docker-compose-syntax/</link><pubDate>Fri, 03 Apr 2026 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/docker-compose-syntax/</guid><description>&lt;h2 id="一个标准的yml"&gt;一个标准的yml&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;version: &lt;span class="s1"&gt;&amp;#39;3.9&amp;#39;&lt;/span&gt; &lt;span class="c1"&gt;# Compose 文件格式版本&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;services: &lt;span class="c1"&gt;# 服务定义&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;service_name: &lt;span class="c1"&gt;# 服务名称&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;image: image_name:tag &lt;span class="c1"&gt;# 使用的镜像和标签&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;build: &lt;span class="c1"&gt;# 构建选项（可选）&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;context: ./path &lt;span class="c1"&gt;# Dockerfile 的上下文目录&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;dockerfile: Dockerfile &lt;span class="c1"&gt;# Dockerfile 文件名&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;container_name: container_name &lt;span class="c1"&gt;# 容器名称（可选）&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ports: &lt;span class="c1"&gt;# 端口映射&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt;&amp;#34;外部端口:容器端口&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;volumes: &lt;span class="c1"&gt;# 数据卷挂载&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt;&amp;#34;宿主路径:容器路径&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;environment: &lt;span class="c1"&gt;# 环境变量&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;KEY&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;value
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;depends_on: &lt;span class="c1"&gt;# 服务依赖关系&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;other_service_name
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;networks: &lt;span class="c1"&gt;# 网络配置&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;network_name
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;networks: &lt;span class="c1"&gt;# 自定义网络（可选）&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;network_name:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;driver: bridge
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;volumes: &lt;span class="c1"&gt;# 定义数据卷（可选）&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;volume_name:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;driver: &lt;span class="nb"&gt;local&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title>docker网络</title><link>https://ziwindlu.github.io/posts/docker-network/</link><pubDate>Fri, 03 Apr 2026 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/docker-network/</guid><description>&lt;h2 id="docker中的网络模式"&gt;docker中的网络模式&lt;/h2&gt;
+&lt;p&gt;bridge
+host
+none&lt;/p&gt;
+&lt;h2 id="相关命令"&gt;相关命令&lt;/h2&gt;
+&lt;p&gt;查看:&lt;code&gt;docker network ls&lt;/code&gt;,&lt;code&gt;docker network inspect NETWORK&lt;/code&gt;
+创建:&lt;code&gt;docker network create -d TYPE network_name&lt;/code&gt;
+加入:&lt;code&gt;docker network connect NETWORK CONTAINER [CONTAINERS]&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="使用"&gt;使用&lt;/h2&gt;
+&lt;p&gt;在创建容器时使用&lt;code&gt;--network &lt;/code&gt;指定网络即可&lt;code&gt;docker run --network NETWORK IMAGE&lt;/code&gt;&lt;/p&gt;</description></item><item><title>Linux常用服务</title><link>https://ziwindlu.github.io/posts/linux-common-services/</link><pubDate>Fri, 03 Apr 2026 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/linux-common-services/</guid><description>&lt;h2 id="ssh"&gt;SSH&lt;/h2&gt;
+&lt;p&gt;默认端口22&lt;/p&gt;
+&lt;h3 id="安全配置"&gt;安全配置&lt;/h3&gt;
+&lt;p&gt;禁止密码登陆&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-apl" data-lang="apl"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;PermitRootLogin&lt;/span&gt; &lt;span class="nv"&gt;no&lt;/span&gt; &lt;span class="c1"&gt;# 禁止root登陆&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;禁止root登陆&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-apl" data-lang="apl"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;PermitRootLogin&lt;/span&gt; &lt;span class="nv"&gt;prohibit&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;password&lt;/span&gt; &lt;span class="c1"&gt;# 仅允许密钥登录&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;端口转发滥用，避免攻击者用作内网渗透&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-apl" data-lang="apl"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;AllowTcpForwarding&lt;/span&gt; &lt;span class="nv"&gt;no&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;PermitTunnel&lt;/span&gt; &lt;span class="nv"&gt;no&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="如何防御ssh爆破-card-forward"&gt;如何防御ssh爆破 #card #forward&lt;/h3&gt;
+&lt;p&gt;id:: 67ab4ea1-d4cf-493f-98c3-85b8de165ace
+禁用密码登陆
+修改默认端口
+白名单过滤
+配置尝试次数&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-apl" data-lang="apl"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;MaxAuthTries&lt;/span&gt; &lt;span class="m"&gt;3&lt;/span&gt; &lt;span class="c1"&gt;# 单连接最大认证尝试次数&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;MaxSessions&lt;/span&gt; &lt;span class="m"&gt;2&lt;/span&gt; &lt;span class="c1"&gt;# 单个IP最大并发会话&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;LoginGraceTime&lt;/span&gt; &lt;span class="m"&gt;30&lt;/span&gt;&lt;span class="nv"&gt;s&lt;/span&gt; &lt;span class="c1"&gt;# 登录超时时间&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="smb"&gt;SMB&lt;/h2&gt;
+&lt;p&gt;默认端口139,445
+windows文件共享&lt;/p&gt;
+&lt;h3 id="安全配置-1"&gt;安全配置&lt;/h3&gt;
+&lt;p&gt;禁止匿名访问&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-apl" data-lang="apl"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;guest&lt;/span&gt; &lt;span class="nv"&gt;ok&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nv"&gt;no&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;控制权限&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-apl" data-lang="apl"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;write&lt;/span&gt; &lt;span class="nv"&gt;list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nv"&gt;user1&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nv"&gt;user2&lt;/span&gt; &lt;span class="c1"&gt;# 精确控制&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;create&lt;/span&gt; &lt;span class="nv"&gt;mask&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;0640&lt;/span&gt; &lt;span class="c1"&gt;# 文件权限限制&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="安全漏洞"&gt;安全漏洞&lt;/h3&gt;
+&lt;h4 id="永恒之蓝-ms17-010cve-2017-0143"&gt;永恒之蓝 (MS17-010/CVE-2017-0143)&lt;/h4&gt;
+&lt;p&gt;影响版本：Samba 3.x-4.5.9
+修复方案：升级smb&lt;/p&gt;
+&lt;h3 id="smbghost-cve-2020-0796"&gt;SMBGhost (CVE-2020-0796)&lt;/h3&gt;
+&lt;p&gt;影响版本：Samba 4.3.0-4.11.4
+修复方案：升级smb&lt;/p&gt;
+&lt;h2 id="ftp"&gt;FTP&lt;/h2&gt;
+&lt;p&gt;默认端口20,21
+文件传输协议&lt;/p&gt;
+&lt;h3 id="安全配置-2"&gt;安全配置&lt;/h3&gt;
+&lt;p&gt;禁止匿名访问
+权限控制
+创建文件权限
+可进入目录
+使用加密传输&lt;/p&gt;
+&lt;h3 id="使用"&gt;使用&lt;/h3&gt;
+&lt;p&gt;python快速开启ftp&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;python -m pyftpdlib -u user_name -P password -p port --write
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title>Linux防火墙</title><link>https://ziwindlu.github.io/posts/linux-firewall/</link><pubDate>Fri, 03 Apr 2026 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/linux-firewall/</guid><description>&lt;h2 id="基本概念"&gt;基本概念&lt;/h2&gt;
+&lt;h3 id="四表table"&gt;四表table&lt;/h3&gt;
+&lt;p&gt;FILTER表
+NAT表
+MANGLE表
+RAW表&lt;/p&gt;
+&lt;h3 id="五链chain"&gt;五链chain&lt;/h3&gt;
+&lt;p&gt;PREROUTING链
+INPUT链
+FORWARD链
+OUTPUT链
+POSTROUTING链&lt;/p&gt;
+&lt;h2 id="iptables-card-forward"&gt;iptables #card #forward&lt;/h2&gt;
+&lt;p&gt;id:: 67b96abd-426c-46a3-b296-eefb563d0ed0
+iptables基于netfilter&lt;/p&gt;
+&lt;h3 id="查看规则"&gt;查看规则&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;iptables -t [table] -L [chain] [options]&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="添加规则"&gt;添加规则&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;iptables -t [table] -A [chain] [match] -j [action]&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="删除规则"&gt;删除规则&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;iptables -t [table] -D [chain]&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="配置永久规则"&gt;配置永久规则&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;iptables-save &amp;gt; file&lt;/code&gt;保存规则到文件
+一般来说iptables会加载&lt;code&gt;/etc/iptables/*.roules&lt;/code&gt;中的内容
+&lt;code&gt;iptables-restore &amp;lt; file&lt;/code&gt;手动加载规则&lt;/p&gt;
+&lt;h2 id="ufw-card-forward"&gt;ufw #card #forward&lt;/h2&gt;
+&lt;p&gt;id:: 67b96acf-5566-4be1-9e6a-134afd1b8ae7
+ufw基于iptables&lt;/p&gt;
+&lt;h3 id="查看规则-1"&gt;查看规则&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;ufw status [numberd,verbose]&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="添加规则-1"&gt;添加规则&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;ufw action args&lt;/code&gt;
+action:&lt;code&gt;allow&lt;/code&gt;,&lt;code&gt;reject&lt;/code&gt;,&lt;code&gt;deny&lt;/code&gt;,&lt;code&gt;limit&lt;/code&gt;
+简单的args：
+端口号/协议&lt;code&gt;port[/protocol]&lt;/code&gt;
+服务名&lt;code&gt;service&lt;/code&gt;，example:&lt;code&gt;samba&lt;/code&gt;,&lt;code&gt;ftp&lt;/code&gt;,&lt;code&gt;mysql&lt;/code&gt;
+默认状态下ufw添加的规则就是永久的&lt;/p&gt;
+&lt;h3 id="删除规则-1"&gt;删除规则&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;ufw delete add_thing&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;add_thing&lt;/code&gt;为你添加时输入的内容&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="firewalld-card-forward"&gt;firewalld #card #forward&lt;/h2&gt;
+&lt;p&gt;id:: 67b98493-7541-453f-9730-f3db80eb5f35
+firewalld是centos默认的防火墙&lt;/p&gt;
+&lt;h3 id="查看规则-2"&gt;查看规则&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;firewall-cmd --list-all&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="添加规则-2"&gt;添加规则&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;firewall-cmd --add-xx args&lt;/code&gt;
+example:
+添加http服务放行&lt;code&gt;firewall-cmd --add-service http&lt;/code&gt;
+添加tcp88端口放行&lt;code&gt;firewall-cmd --add-port 88/tcp&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;如果想要添加永久规则，需要添加参数&lt;code&gt;--permanent&lt;/code&gt;，例如&lt;code&gt;firewall-cmd --permanent --add-service http&lt;/code&gt;，让其生效需要执行&lt;code&gt;firewall-cmd --reload&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id="删除规则-2"&gt;删除规则&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;firewall-cmd --remove-xx args&lt;/code&gt;
+example:
+删除服务规则&lt;code&gt;firewall-cmd --remove-service service_name&lt;/code&gt;&lt;/p&gt;</description></item><item><title>Linux基础</title><link>https://ziwindlu.github.io/posts/linux-basics/</link><pubDate>Fri, 03 Apr 2026 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/linux-basics/</guid><description>&lt;h2 id="文件相关命令"&gt;文件相关命令&lt;/h2&gt;
+&lt;p&gt;新增:&lt;code&gt;touch&lt;/code&gt;,&lt;code&gt;mkdir&lt;/code&gt;
+删除:&lt;code&gt;rm&lt;/code&gt;
+修改:&lt;code&gt;mv&lt;/code&gt;,&lt;code&gt;cp&lt;/code&gt;
+查询:&lt;code&gt;ls&lt;/code&gt;,&lt;code&gt;cat&lt;/code&gt;,&lt;code&gt;find&lt;/code&gt;,&lt;code&gt;grep&lt;/code&gt;
+打包:&lt;code&gt;tar&lt;/code&gt;,&lt;code&gt;zip&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="权限相关命令"&gt;权限相关命令&lt;/h2&gt;
+&lt;p&gt;基础的三个权限&lt;code&gt;rwx&lt;/code&gt;
+&lt;code&gt;ls -l&lt;/code&gt;解析&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;-rw-r--r-- &lt;span class="m"&gt;1&lt;/span&gt; root root &lt;span class="m"&gt;432&lt;/span&gt; Jan &lt;span class="m"&gt;10&lt;/span&gt; 13:57 file
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;-&lt;/code&gt;文件的类型
+&lt;code&gt;rw-&lt;/code&gt;属主权限
+&lt;code&gt;r--&lt;/code&gt;属组权限
+&lt;code&gt;r--&lt;/code&gt;其他用户权限
+修改权限:&lt;code&gt;chmod&lt;/code&gt;
+修改属主属组:&lt;code&gt;chown&lt;/code&gt;
+特殊权限:suid,guid,sbit
+切换用户:&lt;code&gt;su&lt;/code&gt; switch user
+使用root权限运行命令:&lt;code&gt;sudo&lt;/code&gt; super user do&lt;/p&gt;
+&lt;h2 id="用户和用户组相关"&gt;用户和用户组相关&lt;/h2&gt;
+&lt;p&gt;新增:&lt;code&gt;useradd&lt;/code&gt;,&lt;code&gt;groupadd&lt;/code&gt;
+删除:&lt;code&gt;userdel&lt;/code&gt;,&lt;code&gt;groupdel&lt;/code&gt;
+修改:&lt;code&gt;usermod&lt;/code&gt;,&lt;code&gt;groupmod&lt;/code&gt;
+查询:&lt;code&gt;/etc/passwd&lt;/code&gt;,&lt;code&gt;/etc/group&lt;/code&gt;
+修改密码:&lt;code&gt;passwd&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="网络管理"&gt;网络管理&lt;/h2&gt;
+&lt;p&gt;查看网卡:&lt;code&gt;ifconfig&lt;/code&gt;,&lt;code&gt;ip addr&lt;/code&gt;
+查看网络连接:&lt;code&gt;netstat&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="进程管理"&gt;进程管理&lt;/h2&gt;
+&lt;p&gt;查看进程:&lt;code&gt;ps&lt;/code&gt;
+终结进程:&lt;code&gt;kill&lt;/code&gt;,&lt;code&gt;pkill&lt;/code&gt;
+其他命令: &lt;code&gt;top&lt;/code&gt;、&lt;code&gt;htop&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="服务管理"&gt;服务管理&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;systemd options service_name&lt;/code&gt;
+&lt;code&gt;service service_name options&lt;/code&gt;
+&lt;code&gt;/etc/init.d/service_name options&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="linux运行级别-card-forward"&gt;linux运行级别 #card #forward&lt;/h2&gt;
+&lt;p&gt;id:: 67b97041-1b2f-4cea-9b28-bccb786ab85e&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;级别&lt;/th&gt;
+&lt;th&gt;说明&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;td&gt;关机&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;单用户模式，用来恢复密码等系统g了时修复&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;没有网络的多用户模式&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;完整的多用户模式&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;图形化多用户模式&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;6&lt;/td&gt;
+&lt;td&gt;重启&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="计划任务-card-forward"&gt;计划任务 #card #forward&lt;/h2&gt;
+&lt;p&gt;id:: 67a6bc9f-66ff-479f-bc75-eac3c3fb41cf
+计划任务相关文件:&lt;code&gt;/etc/crontab&lt;/code&gt;(root用户)
+&lt;code&gt;/var/spool/cron/username&lt;/code&gt;(redhat)
+&lt;code&gt;/var/spool/cron/crontabs/username&lt;/code&gt;(debian)&lt;/p&gt;
+&lt;h2 id="参考"&gt;参考&lt;/h2&gt;
+&lt;p&gt;book
+鸟哥的linux私房菜&lt;/p&gt;</description></item><item><title>linux用户和用户组</title><link>https://ziwindlu.github.io/posts/linux-users-groups/</link><pubDate>Fri, 03 Apr 2026 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/linux-users-groups/</guid><description>&lt;h2 id="引子"&gt;引子&lt;/h2&gt;
+&lt;p&gt;写文章时用到的很多关于用户和用户组的命令都没有背过，这里记录一下&lt;/p&gt;
+&lt;h2 id="与用户和用户组相关的文件"&gt;与用户和用户组相关的文件&lt;/h2&gt;
+&lt;p&gt;|文件| 作用|
+|&lt;code&gt;/etc/shadow&lt;/code&gt;| 保存用户安全信息|
+|&lt;code&gt;/etc/passwd&lt;/code&gt;| 用户账户信息|
+|&lt;code&gt;/etc/gshadow&lt;/code&gt;| 保存组账号的安全信息|
+|&lt;code&gt;/etc/group&lt;/code&gt;| 定义用户所属的组|
+|&lt;code&gt;/etc/sudoers&lt;/code&gt;| 可以运行 sudo 的用户|
+| &lt;code&gt;/home/*&lt;/code&gt; | 主目录|&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这些文件有专用的工具进行修改，不要手动修改&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="用户管理"&gt;用户管理&lt;/h2&gt;
+&lt;p&gt;添加用户&lt;code&gt;useradd -m -aG group1,group2 -s shell username&lt;/code&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;参数&lt;/th&gt;
+&lt;th&gt;说明&lt;/th&gt;
+&lt;th&gt;助记&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;-m&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;创建用户家目录&lt;/td&gt;
+&lt;td&gt;create home&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;-aG&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;添加用户组&lt;/td&gt;
+&lt;td&gt;append group&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;-s&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;设置shell&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;指定用户家目录使用参数&lt;code&gt;-d /path/to/home username&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;禁止用户登陆使用参数&lt;code&gt;-s /usr/bin/nologin&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;删除用户&lt;code&gt;userdel -r username&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;修改用户名&lt;code&gt;usermod -l newusername oldusername&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;修改用户密码&lt;code&gt;passwd username&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="用户组管理"&gt;用户组管理&lt;/h2&gt;
+&lt;p&gt;查看用户的用户组&lt;code&gt;groups username&lt;/code&gt;
+创建用户组&lt;code&gt;groupadd groupname&lt;/code&gt;
+将用户添加到用户组&lt;code&gt;gpasswd -a username groupname&lt;/code&gt;
+修改组名&lt;code&gt;gpasswd -n newname oldname&lt;/code&gt;
+删除用户组&lt;code&gt;groupdel groupname&lt;/code&gt;
+将用户从用户组中删除&lt;code&gt;gpasswd -d username groupname&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="总结"&gt;总结&lt;/h2&gt;
+&lt;p&gt;对于用户和用户组的新增和删除均可使用&lt;code&gt;xxadd&lt;/code&gt;和&lt;code&gt;xxdel&lt;/code&gt;
+对于用户和用户组的的修改使用&lt;code&gt;xxmod&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="参考"&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://wiki.archlinuxcn.org/wiki/%E7%94%A8%E6%88%B7%E5%92%8C%E7%94%A8%E6%88%B7%E7%BB%84#%E7%BE%A4%E7%BB%84%E5%88%97%E8%A1%A8"&gt;用户和用户组 Arch Linux 中文维基&lt;/a&gt;&lt;/p&gt;</description></item><item><title>nginx</title><link>https://ziwindlu.github.io/posts/nginx/</link><pubDate>Fri, 03 Apr 2026 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/nginx/</guid><description>&lt;h2 id="一个示例配置"&gt;一个示例配置&lt;/h2&gt;
+&lt;p&gt;基本配置介绍&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code class="language-conf" data-lang="conf"&gt;# 全局块
+user nginx;
+worker_processes auto;
+# 事件块
+events {
+worker_connections 1024;
+}
+# http 块
+http {
+include mime.types;
+default_type application/octet-stream;
+# 日志配置
+access_log /var/log/nginx/access.log;
+error_log /var/log/nginx/error.log;
+# 服务器块
+server {
+listen 80;
+server_name example.com;
+# 位置块
+location / {
+root /usr/share/nginx/html;
+index index.html index.htm;
+}
+}
+# 还可以有多个 server 块
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="server块"&gt;server块&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;listen&lt;/code&gt;: 监听的端口
+&lt;code&gt;server_name&lt;/code&gt;: 绑定的域名
+&lt;code&gt;location&lt;/code&gt;: 处理不同请求路径的规则&lt;/p&gt;
+&lt;h2 id="场景"&gt;场景&lt;/h2&gt;
+&lt;h3 id="反向代理"&gt;反向代理&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code class="language-conf" data-lang="conf"&gt;server {
+listen 80;
+server_name example.com;
+location / {
+proxy_pass http://localhost:3000;
+# 这些是推荐加上的可选配置
+proxy_set_header Host $host;
+proxy_set_header X-Real-IP $remote_addr;
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header X-Forwarded-Proto $scheme;
+}
+}
+&lt;/code&gt;&lt;/pre&gt;</description></item><item><title>shell</title><link>https://ziwindlu.github.io/posts/shell/</link><pubDate>Fri, 03 Apr 2026 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/shell/</guid><description>&lt;h2 id="语言规范"&gt;语言规范&lt;/h2&gt;
+&lt;h2 id="语法"&gt;语法&lt;/h2&gt;
+&lt;h3 id="特殊的变量"&gt;特殊的变量&lt;/h3&gt;
+&lt;p&gt;坏境变量(均为大写)
+&lt;code&gt;PATH&lt;/code&gt;可执行程序的路径
+&lt;code&gt;PWD&lt;/code&gt;当前所在的目录
+&lt;code&gt;SHELL&lt;/code&gt;当前使用的shell
+常见变量
+&lt;code&gt;$0&lt;/code&gt;为该脚本本身的名字
+&lt;code&gt;$#&lt;/code&gt;：表示传入参数的个数。
+&lt;code&gt;$@&lt;/code&gt;：表示所有传入的参数（以独立形式显示，每个参数都保留为单独的字符串）
+&lt;code&gt;$*&lt;/code&gt;：表示所有传入的参数（以一个字符串形式显示，所有参数被合并）&lt;/p&gt;
+&lt;h3 id="变量定义"&gt;变量定义&lt;/h3&gt;
+&lt;p&gt;变量定义以及使用
+限定符&lt;code&gt;local&lt;/code&gt;当前作用域
+&lt;code&gt;export&lt;/code&gt;作为环境变量
+&lt;code&gt;name=value&lt;/code&gt;定义
+&lt;code&gt;$name&lt;/code&gt;使用&lt;/p&gt;
+&lt;h3 id="数据类型"&gt;数据类型&lt;/h3&gt;
+&lt;p&gt;shell中的数据类型有整数、字符串、数组、关联数组(bash4.0及以后的特性)
+&lt;code&gt;'&lt;/code&gt;和&lt;code&gt;&amp;quot;&lt;/code&gt;的区别
+&lt;code&gt;'&lt;/code&gt;字符原始数据，&lt;code&gt;&amp;quot;&lt;/code&gt;可以解析其中的变量值
+数组使用&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;fruits&lt;/span&gt;&lt;span class="o"&gt;=(&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;apple&amp;#34;&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;banana&amp;#34;&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;cherry&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;First fruit: &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;fruits&lt;/span&gt;&lt;span class="p"&gt;[0]&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# tostring&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;All fruit: &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;fruits&lt;/span&gt;&lt;span class="p"&gt;[*]&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 列出所有内容&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;All fruit: &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;fruits&lt;/span&gt;&lt;span class="p"&gt;[@]&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# *和@两者的去区别可以参考常见变量&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 获取长度&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="si"&gt;${#&lt;/span&gt;&lt;span class="nv"&gt;fruits&lt;/span&gt;&lt;span class="p"&gt;[@]&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$length&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 遍历&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;for&lt;/span&gt; fruit in &lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;fruits&lt;/span&gt;&lt;span class="p"&gt;[@]&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Fruit: &lt;/span&gt;&lt;span class="nv"&gt;$fruit&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;done&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 添加元素&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;fruits&lt;/span&gt;&lt;span class="o"&gt;+=(&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;date&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 修改元素&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;fruits&lt;span class="o"&gt;[&lt;/span&gt;1&lt;span class="o"&gt;]=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;blueberry&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 删除元素&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;unset&lt;/span&gt; fruits&lt;span class="o"&gt;[&lt;/span&gt;1&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 合并两个数组&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;more_fruits&lt;/span&gt;&lt;span class="o"&gt;=(&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;kiwi&amp;#34;&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;melon&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;combined&lt;/span&gt;&lt;span class="o"&gt;=(&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;fruits&lt;/span&gt;&lt;span class="p"&gt;[@]&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;more_fruits&lt;/span&gt;&lt;span class="p"&gt;[@]&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Combined fruits: &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;combined&lt;/span&gt;&lt;span class="p"&gt;[@]&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="运算符"&gt;运算符&lt;/h3&gt;
+&lt;p&gt;算术：
+&lt;code&gt;expr&lt;/code&gt;(不推荐)
+&lt;code&gt;echo '1+1' | bc&lt;/code&gt;
+(推荐)
+&lt;code&gt;$(( a + b ))&lt;/code&gt;
+&lt;code&gt;let x=a+b&lt;/code&gt;
+字符串：
+&lt;code&gt;${#var1}&lt;/code&gt;字符串长度
+&lt;code&gt;${str:start:end}&lt;/code&gt;截取字符串
+&lt;code&gt;${str/old/new}&lt;/code&gt;替换字符&lt;/p&gt;
+&lt;h3 id="分支控制"&gt;分支控制&lt;/h3&gt;
+&lt;p&gt;if语法：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; condition &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# commands&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;elif&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; another_condition &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# commands&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;else&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# commands&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;case语法：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;input 0 or 1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;read&lt;/span&gt; option
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="nv"&gt;$option&lt;/span&gt; in
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;0&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;0&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;1&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;1&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;*&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;error&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;esac&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;判断相关:
+| 特性 | &lt;code&gt;[ ]&lt;/code&gt; | &lt;code&gt;[[ ]]&lt;/code&gt; | 无括号 |
+| &amp;mdash;- | &amp;mdash;- | &amp;mdash;- |
+| &lt;strong&gt;本质&lt;/strong&gt; | &lt;code&gt;test&lt;/code&gt; 命令 | Bash 内置功能 | 直接执行命令 |
+| &lt;strong&gt;支持正则表达式&lt;/strong&gt; | 不支持 | 支持 | 取决于命令 |
+| &lt;strong&gt;支持逻辑运算符&lt;/strong&gt; | 需要使用 &lt;code&gt;-a&lt;/code&gt; 和 &lt;code&gt;-o&lt;/code&gt; | 使用 &lt;code&gt;&amp;amp;&amp;amp;&lt;/code&gt; 和 ` | |
+| &lt;strong&gt;变量双引号要求&lt;/strong&gt; | 必须加 | 可省略 | 通常不需要 |
+| &lt;strong&gt;安全性&lt;/strong&gt; | 较低（易受空值或特殊字符影响） | 高 | 高 |&lt;/p&gt;</description></item><item><title>linux进程监控工具top,htop,btm</title><link>https://ziwindlu.github.io/posts/linux-process-monitoring/</link><pubDate>Wed, 13 Nov 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/linux-process-monitoring/</guid><description>&lt;h2 id="引子why"&gt;引子&amp;amp;why&lt;/h2&gt;
+&lt;p&gt;linux中进程管理是非常重要的，俺觉得有必要来整理一些这些命令或是工具的使用。
+为什么要学这么多工具呢？他们很多都是重复的。
+对于主力系统，我会选择用着舒适的工具。
+对于服务器，先尝试下载一个自己用着舒服的，实在下载不了才会选择使用系统默认自带的。
+对于一些常用但俺用着不舒服的，仍然要去学习，这样不会让工具(面试)难住。&lt;/p&gt;
+&lt;h2 id="知识预备"&gt;知识预备&lt;/h2&gt;
+&lt;p&gt;这里会介绍一些linux中进程相关的词语(俺经常用的，后面可能会补充🤔)
+这里以top为例
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1731504385721_0.png"&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;keyword&lt;/th&gt;
+&lt;th&gt;translation&lt;/th&gt;
+&lt;th&gt;means&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;PR&lt;/td&gt;
+&lt;td&gt;优先级(Priority)&lt;/td&gt;
+&lt;td&gt;越小优先级越高&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;NI&lt;/td&gt;
+&lt;td&gt;nice值&lt;/td&gt;
+&lt;td&gt;越小优先级越高，与PR一起决定程序的调度&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;VIRT&lt;/td&gt;
+&lt;td&gt;虚拟内存(Virtual Memory Size)&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;RES&lt;/td&gt;
+&lt;td&gt;常驻内存(Resident Memory Size)&lt;/td&gt;
+&lt;td&gt;物理内存+已映射的共享库和文件&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;SHR&lt;/td&gt;
+&lt;td&gt;共享内存(Shared Memory)&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="top常用操作"&gt;top常用操作&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;options&lt;/th&gt;
+&lt;th&gt;means&lt;/th&gt;
+&lt;th&gt;help_memory&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;space&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;刷新&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;k&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;杀死某个程序&lt;/td&gt;
+&lt;td&gt;kill&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;u&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;根据用户筛选&lt;/td&gt;
+&lt;td&gt;user&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;P&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;根据cpu排序&lt;/td&gt;
+&lt;td&gt;cpu&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;M&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;根据内存排序&lt;/td&gt;
+&lt;td&gt;memory&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;T&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;根据运行时间排序&lt;/td&gt;
+&lt;td&gt;time&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;N&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;根据pid排序&lt;/td&gt;
+&lt;td&gt;pid nomber?&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="htop"&gt;htop&lt;/h2&gt;
+&lt;p&gt;&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1731505689284_0.png"&gt;
+介绍的挺明白的了，操作和top类似，移动起来有些麻烦&lt;/p&gt;
+&lt;h2 id="btm"&gt;btm&lt;/h2&gt;
+&lt;p&gt;btm的操作逻辑类似于vim
+进入btm后你会发现有很多很多功能
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1733063284504_0.png"&gt;
+&lt;strong&gt;在功能区移动&lt;/strong&gt;&lt;code&gt;HJKL&lt;/code&gt;或&lt;code&gt;WASD&lt;/code&gt;
+&lt;strong&gt;打开帮助&lt;/strong&gt;&lt;code&gt;?&lt;/code&gt;
+&lt;strong&gt;进程相关&lt;/strong&gt;
+移动&lt;code&gt;jk&lt;/code&gt;
+顶部和底部&lt;code&gt;gg/G&lt;/code&gt;
+滚屏&lt;code&gt;c-u/c-d&lt;/code&gt;
+结束进程&lt;code&gt;dd&lt;/code&gt;
+查找进程&lt;code&gt;/&lt;/code&gt;
+排序&lt;code&gt;s&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="参考"&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://www.runoob.com/linux/linux-comm-top.html"&gt;Linux top 命令 | 菜鸟教程&lt;/a&gt;&lt;/p&gt;</description></item><item><title>linux使用配置文件配置网络</title><link>https://ziwindlu.github.io/posts/linux-network-config/</link><pubDate>Wed, 13 Nov 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/linux-network-config/</guid><description>&lt;h2 id="引子"&gt;引子&lt;/h2&gt;
+&lt;p&gt;对于游走于n个发行版的小卡拉米，时常面临着要使用配置文件配置ip地址的问题。然鹅这些发行版并不统一，大家都自己整自己的，存在一些差异。虽然有很多好用的工具可以用，但是保不齐工作的时候就得用配置文件手动配置。这里记录一下。&lt;/p&gt;
+&lt;h2 id="debianubuntu系列"&gt;Debian/Ubuntu系列&lt;/h2&gt;
+&lt;h3 id="较老一点的版本"&gt;较老一点的版本&lt;/h3&gt;
+&lt;p&gt;网卡配置信息在&lt;code&gt;/etc/network/interfaces&lt;/code&gt;，这是个文件
+配置静态ip&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 以太网接口 enp3s0 配置&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;auto enp3s0
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;iface enp3s0 inet static
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;address 192.168.1.100
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;netmask 255.255.255.0
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;gateway 192.168.1.1
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;dns-nameservers 8.8.8.8 8.8.4.4
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="新一点的版本"&gt;新一点的版本&lt;/h3&gt;
+&lt;p&gt;网卡配置信息在&lt;code&gt;/etc/netplan/01-netcfg.yaml&lt;/code&gt;，这是个文件
+配置静态ip&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;network&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;version&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;renderer&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;networkd&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;ethernets&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;enp3s0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;dhcp4&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;no&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;addresses&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="m"&gt;192.168.1.100&lt;/span&gt;&lt;span class="l"&gt;/24&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;gateway4&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;192.168.1.1&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;nameservers&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;addresses&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="m"&gt;8.8.8.8&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="m"&gt;8.8.4.4&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="arch系列"&gt;Arch系列&lt;/h2&gt;
+&lt;p&gt;配置文件在&lt;code&gt;/etc/netctl&lt;/code&gt;，这是个目录，具体的文件名可以随便写
+配置静态ip&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;Description&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;A basic static ethernet connection&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;Interface&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;enp3s0
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;Connection&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;ethernet
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;IP&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;static
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;Address&lt;/span&gt;&lt;span class="o"&gt;=(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;192.168.1.100/24&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;Gateway&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;192.168.1.1&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;DNS&lt;/span&gt;&lt;span class="o"&gt;=(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;8.8.8.8&amp;#39;&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;8.8.4.4&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="red-hatcentos系列"&gt;Red Hat/CentOS系列&lt;/h2&gt;
+&lt;p&gt;网卡配置信息在&lt;code&gt;/etc/sysconfig/network-scripts/&lt;/code&gt;，这是个目录，具体文件名应为&lt;code&gt;ifcfg-interfacename&lt;/code&gt;
+配置静态ip&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;DEVICE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;enp3s0
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;BOOTPROTO&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;static
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;ONBOOT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;yes
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;IPADDR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;192.168.1.100
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;NETMASK&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;255.255.255.0
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;GATEWAY&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;192.168.1.1
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;DNS1&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;8.8.8.8
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;DNS2&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;8.8.4.4
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="注意"&gt;注意&lt;/h2&gt;
+&lt;p&gt;使用配置文件配置完后，需要重启网络
+使用NetworkManager作为网络管理的：
+&lt;code&gt;systemctl restart NetworkManager&lt;/code&gt;
+手动：
+使用ip命令对对应网卡进行手动重启
+&lt;code&gt;ip link set dev interface down&lt;/code&gt;
+&lt;code&gt;ip link set dev interface up&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="dns配置"&gt;dns配置&lt;/h2&gt;
+&lt;p&gt;这玩意大家竟然出奇的统一，基本都放在&lt;code&gt;/etc/resolv.conf&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# /etc/resolv.conf&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;nameserver 8.8.8.8 &lt;span class="c1"&gt;# Google DNS&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;nameserver 8.8.4.4 &lt;span class="c1"&gt;# Google DNS&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="参考"&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://wiki.archlinuxcn.org/zh-sg/%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE"&gt;网络管理 archwiki&lt;/a&gt;&lt;/p&gt;</description></item><item><title>linux特殊权限suid,sgid,sbit</title><link>https://ziwindlu.github.io/posts/linux-special-permissions/</link><pubDate>Wed, 13 Nov 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/linux-special-permissions/</guid><description>&lt;h2 id="特殊权限介绍"&gt;特殊权限介绍&lt;/h2&gt;
+&lt;h3 id="suid"&gt;SUID&lt;/h3&gt;
+&lt;p&gt;set user id
+当一个可执行文件设置了suid位时，运行该程序的权限变为该文件的所属用户权限
+一个经典的案例是&lt;code&gt;/bin/passwd&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="sgid"&gt;SGID&lt;/h3&gt;
+&lt;p&gt;set group id
+当一个可执行文件设置了sgid位时，运行该程序的权限变为该文件所属组的权限
+当一个目录设置了sgid位时，该目录下创建的所有文件和目录的所属组会继承该目录&lt;/p&gt;
+&lt;h3 id="sbit"&gt;SBIT&lt;/h3&gt;
+&lt;p&gt;当一个目录设置了sbit位时，该目录下的文件只有文件所有者才能删除
+一个经典的案例是&lt;code&gt;/tmp&lt;/code&gt;
+sbit会被经常用于共享目录&lt;/p&gt;
+&lt;h2 id="如何设置"&gt;如何设置&lt;/h2&gt;
+&lt;h3 id="suid-1"&gt;suid&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 方式1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;chmod &lt;span class="m"&gt;4755&lt;/span&gt; xx.sh
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 方式2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;chmod u+s xx.sh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="sgid-1"&gt;sgid&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 方式1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;chmod &lt;span class="m"&gt;2755&lt;/span&gt; xx.sh
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 方式2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;chmod g+s xx.sh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="sbit-1"&gt;sbit&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 方式1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;chmod &lt;span class="m"&gt;1666&lt;/span&gt; xx
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 方式2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;chmod o+t xx
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="应用场景"&gt;应用场景&lt;/h2&gt;
+&lt;h3 id="团队协作创建公用目录sgid实现"&gt;团队协作创建公用目录sgid实现&lt;/h3&gt;
+&lt;p&gt;团队协作中，多个用户在同一用户组中。
+团队成员在创建文件或目录时均会继承同一组，避免了文件所属组出现混乱的情况。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;mkdir projects
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;chown manager:project_team projects
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;chmod &lt;span class="m"&gt;2755&lt;/span&gt; projects
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="参考"&gt;参考&lt;/h2&gt;
+&lt;p&gt;book: 鸟哥的linux私房菜&lt;/p&gt;</description></item><item><title>记录archlinux滚挂</title><link>https://ziwindlu.github.io/posts/archlinux-breakage-recovery/</link><pubDate>Tue, 12 Nov 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/archlinux-breakage-recovery/</guid><description>&lt;p&gt;注意，本篇适用于在pacman升级时*linux.img丢失的情况&lt;/p&gt;
+&lt;h2 id="原因"&gt;原因&lt;/h2&gt;
+&lt;p&gt;使用zinit安装了fzf插件后，fzf的alias与部分命令冲突，导致应用编译会调用到fzf。导致hook执行失败，无法生成*linux.img&lt;/p&gt;
+&lt;h2 id="解决"&gt;解决&lt;/h2&gt;
+&lt;p&gt;找了个ubuntu启动盘启动，chroot后，挂载一些必须挂载的设备&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;随便啥启动盘都可以，可以进入linux环境即可&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 挂载设备&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;mount -t proc proc /yourRootMnt/proc/
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;mount -t sysfs sys /yourRootMnt/sys/
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;mount -o &lt;span class="nb"&gt;bind&lt;/span&gt; /dev /yourRootMnt/dev/
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;mount -t devpts pts /yourRootMnt/dev/pts/
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;执行&lt;code&gt;pacman -S linux&lt;/code&gt;
+确保执行完钩子函数，并且生成了*linux.img&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;一般来说这样就可以了，如果还有问题的话需要更新一下grub.cfg
+&lt;code&gt;grub-mkconfig -o /path/to/grub.cfg&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="参考"&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://wiki.archlinuxcn.org/wiki/Pacman#%E5%8D%87%E7%BA%A7%E7%B3%BB%E7%BB%9F%E9%87%8D%E5%90%AF%E5%90%8E%EF%BC%8C%E5%87%BA%E7%8E%B0%22unable_to_find_root_device%22%E9%94%99%E8%AF%AF%EF%BC%8C%E6%97%A0%E6%B3%95%E7%99%BB%E9%99%86"&gt;pacman Arch Linux 中文维基&lt;/a&gt;&lt;/p&gt;</description></item><item><title>记录archlinux网易云音乐滚挂</title><link>https://ziwindlu.github.io/posts/archlinux-netease-music-fix/</link><pubDate>Wed, 24 Apr 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/archlinux-netease-music-fix/</guid><description>&lt;p&gt;时间: 2023-06-14
+版本: netease-cloud-music 1.2.1-7
+美好的一天从滚包更新开始，滚完发现网易云音乐打不开了，果断使用terminal看一看输出&lt;/p&gt;
+&lt;h2 id="噩耗来袭"&gt;噩耗来袭&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;[&lt;/span&gt;0614/083435.997611:ERROR:nss_util.cc&lt;span class="o"&gt;(&lt;/span&gt;706&lt;span class="o"&gt;)]&lt;/span&gt; Error initializing NSS with a persistent database
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;去网易云音乐aur下讨论发现了解决方案，只需要将&lt;code&gt;nss&lt;/code&gt;这个包回退到3.89.1-1这个版本就好了&lt;/p&gt;
+&lt;h2 id="解决"&gt;解决&lt;/h2&gt;
+&lt;p&gt;方案1:手动下载该版本的包并安装
+&lt;strong&gt;step1&lt;/strong&gt;
+在这里可以找到&lt;a href="https://archive.archlinux.org/packages/"&gt;Arch Linux Archive&lt;/a&gt;
+&lt;strong&gt;step2&lt;/strong&gt;
+&lt;code&gt;sudo pacman -U pkg&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;arch仅会保存近一年的历史包，如果要下载更老的需要手动打包
+这里想体验一下，选择了手动打包
+方案2:手动打包
+&lt;strong&gt;step1&lt;/strong&gt;
+找到打包的源代码
+先去到&lt;a href="https://archlinux.org/packages/core/x86_64/nss/"&gt;nss package页面&lt;/a&gt;点击SourceFiles，你就会看到熟悉的gitlab页面啦，这时只需要找到对应的版本克隆到本地就好啦
+&lt;strong&gt;step2&lt;/strong&gt;
+手动打包
+进入到含有&lt;code&gt;PKGBUILD&lt;/code&gt;的目录执行命令&lt;code&gt;makepkg -s&lt;/code&gt;
+慢慢等待你就会发现目录下出现了一个&lt;code&gt;.zst&lt;/code&gt;文件，有了这个文件你就可以手动安装了
+&lt;strong&gt;step3&lt;/strong&gt;
+手动安装&lt;code&gt;sudo pacman -U&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="参考"&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://zhuanlan.zhihu.com/p/260993724"&gt;在archlinux中如何安装老版本软件&lt;/a&gt;&lt;/p&gt;</description></item><item><title>记录一次linux虚拟机硬盘空间不足扩展硬盘内含docker文件迁移</title><link>https://ziwindlu.github.io/posts/linux-vm-disk-expand/</link><pubDate>Tue, 23 Apr 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/linux-vm-disk-expand/</guid><description>&lt;h2 id="引子"&gt;引子&lt;/h2&gt;
+&lt;p&gt;虚拟机硬盘只给了64g，随着服务越来越多，硬盘不够用了&lt;/p&gt;
+&lt;h2 id="分析内存"&gt;分析内存&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;ncdu&lt;/code&gt;一个图形化交互式的储存分析工具
+&lt;code&gt;du -sh&lt;/code&gt; disk usage
+&lt;code&gt;df -h&lt;/code&gt; dis free
+&lt;code&gt;du&lt;/code&gt;需要遍历比较慢，可以使用&lt;code&gt;df&lt;/code&gt;可以粗略的看一下&lt;/p&gt;
+&lt;h2 id="俺的方案"&gt;俺的方案&lt;/h2&gt;
+&lt;p&gt;服务器中的绝大部分服务都跑在docker上，决定docker文件单独放到一块硬盘(物理)里。还好有一个习惯，将docker外部存储卷都放到了&lt;code&gt;/opt&lt;/code&gt;下，所以我只需要将&lt;code&gt;/opt&lt;/code&gt;和&lt;code&gt;/var/lib/docker&lt;/code&gt;单独放到一块硬盘中进行存储即可&lt;/p&gt;
+&lt;h2 id="实施过程"&gt;实施过程&lt;/h2&gt;
+&lt;p&gt;这里省略了新硬盘分区，格式化硬盘的操作
+强烈建议先备份一下
+对&lt;code&gt;/var/lib/docker&lt;/code&gt;进行迁移
+挂载目标硬盘
+&lt;code&gt;mount /dev/sdX1 /mnt&lt;/code&gt;
+先停掉docker
+&lt;code&gt;systemctl stop docker&lt;/code&gt;
+数据迁移
+&lt;code&gt;rsync -avh /var/lib/docker /mnt/var/lib/docker&lt;/code&gt;
+修改docker配置文件
+&lt;code&gt;/etc/docker/daemon.json&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;&amp;#34;data-root&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;/opt/var/lib/docker&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;重启docker&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;systemctl daemon-reload
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;systemctl restart docker
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;对&lt;code&gt;/opt&lt;/code&gt;进行迁移
+数据迁移
+&lt;code&gt;rsync -avh /opt /mnt&lt;/code&gt;
+开机自动挂载
+修改&lt;code&gt;/etc/fstab&lt;/code&gt;，添加下面一行&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/dev/sdb1 /opt ext4 defaults &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title>archlinux下samba服务搭建</title><link>https://ziwindlu.github.io/posts/archlinux-samba/</link><pubDate>Thu, 11 Apr 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/archlinux-samba/</guid><description>&lt;h2 id="安装所需安装包"&gt;安装所需安装包&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;pacman -S samba&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="修改配置文件"&gt;修改配置文件&lt;/h2&gt;
+&lt;p&gt;samba没有提供配置文件，需要手动创建。
+创建&lt;code&gt;/etc/samba/smb.conf&lt;/code&gt;文件，内容如下&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code class="language-smb.conf" data-lang="smb.conf"&gt;# 文件夹名称
+[homes]
+# 注释
+comment = Home Directories
+# 共享的路径
+path = /home/smb_user/
+# 是否显示文件夹
+browseable = yes
+# 是否可写
+writable = yes
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;更多配置项&lt;a href="https://www.samba.org/samba/docs/current/man-html/smb.conf.5.html"&gt;samba.org&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="管理smb用户"&gt;管理smb用户&lt;/h2&gt;
+&lt;p&gt;samba需要linux用户才能使用
+修改samba密码
+&lt;code&gt;smbpasswd -a mysmb&lt;/code&gt;
+samba管理工具
+&lt;code&gt;pdbedit&lt;/code&gt;
+创建用户
+&lt;code&gt;pdbedit -a username&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;注意这个username是要已经在linux用户中存在的
+删除用户
+&lt;code&gt;pdbedit -x username&lt;/code&gt;
+查看用户
+&lt;code&gt;pdbedit -L -v&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="启动服务"&gt;启动服务&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;systemctl start smb.service nmb.service&lt;/code&gt;
+开机自启动
+&lt;code&gt;systemctl enable smb.service nmb.service&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="使smb服务可被发现"&gt;使smb服务可被发现&lt;/h2&gt;
+&lt;p&gt;使smb被linux、mac发现
+安装软件包&lt;code&gt;pacman -S avahi&lt;/code&gt;
+启动服务&lt;code&gt;systemctl start avahi-daemon.service&lt;/code&gt;
+使smb被windows发现
+安装软件包&lt;code&gt;yay -S wsdd&lt;/code&gt;
+启动服务&lt;code&gt;systemctl start wsdd.service&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="windows下连接"&gt;windows下连接&lt;/h2&gt;
+&lt;p&gt;网络-&amp;gt;映射网络驱动器-&amp;gt;文件夹框内填入&lt;code&gt;\\ipaddres\homes&lt;/code&gt;-&amp;gt;输入账号密码连接
+命令行挂载&lt;code&gt;net use \\host\share_name password /user:user_name&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="linux下连接"&gt;linux下连接&lt;/h2&gt;
+&lt;p&gt;smbclient连接smb&lt;code&gt;smbclient --user username //host/share_name&lt;/code&gt;
+挂载&lt;code&gt;mount -t cifs -o username=user_name,password=passwd //host/share_name /local_mount_point&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="参考"&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://zhuanlan.zhihu.com/p/397145106"&gt;Arch下的KVM win10客户机与宿主机使用samba共享文件的步骤&lt;/a&gt;
+&lt;a href="https://wiki.archlinuxcn.org/wiki/Samba"&gt;Samba Arch Linux 中文维基&lt;/a&gt;&lt;/p&gt;</description></item><item><title>centos安装docker以及docker-compose</title><link>https://ziwindlu.github.io/posts/centos-install-docker-compose/</link><pubDate>Wed, 10 Apr 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/centos-install-docker-compose/</guid><description>&lt;h2 id="引子"&gt;引子&lt;/h2&gt;
+&lt;p&gt;centos安装软件实在太麻烦辣，还得添加源，记录下来方便复制
+更新: 原来的docker源没法用了，换成了清华的源，接着更新了其几种安装方式&lt;/p&gt;
+&lt;h2 id="正文"&gt;正文&lt;/h2&gt;
+&lt;h3 id="安装yum官方源docker"&gt;安装yum官方源docker&lt;/h3&gt;
+&lt;p&gt;docker,yum官方源的docker版本较低&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;yum install -y docker
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="安装docker-ce"&gt;安装docker-ce&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;docker-ce&lt;/code&gt;为docker的社区版&lt;/p&gt;
+&lt;h4 id="方法1使用yum-utils"&gt;方法1(使用yum-utils)&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo yum install -y yum-utils device-mapper-persistent-data lvm2
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 这里我们换成清华的源&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sed -i &lt;span class="s1"&gt;&amp;#39;s+https://download.docker.com+https://mirrors.tuna.tsinghua.edu.cn/docker-ce+&amp;#39;&lt;/span&gt; /etc/yum.repos.d/docker-ce.repo
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo yum makecache
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;yum install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id="方法2手动导入仓库"&gt;&lt;del&gt;方法2(手动导入仓库)&lt;/del&gt;&lt;/h4&gt;
+&lt;p&gt;添加&lt;code&gt;/etc/yum.repos.d/docker-ce.repo&lt;/code&gt;这个文件
+内容为&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code class="language-file" data-lang="file"&gt;[docker-ce-stable]
+name=Docker CE Stable - $basearch
+baseurl=https://download.docker.com/linux/centos/7/$basearch/stable
+enabled=1
+gpgcheck=1
+gpgkey=https://download.docker.com/linux/centos/gpg
+[docker-ce-stable-debuginfo]
+name=Docker CE Stable - Debuginfo $basearch
+baseurl=https://download.docker.com/linux/centos/7/debug-$basearch/stable
+enabled=0
+gpgcheck=1
+gpgkey=https://download.docker.com/linux/centos/gpg
+[docker-ce-stable-source]
+name=Docker CE Stable - Sources
+baseurl=https://download.docker.com/linux/centos/7/source/stable
+enabled=0
+gpgcheck=1
+gpgkey=https://download.docker.com/linux/centos/gpg
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;安装&lt;code&gt;sudo yum install docker-ce&lt;/code&gt;&lt;/p&gt;
+&lt;h4 id="方法3脚本安装"&gt;方法3脚本安装&lt;/h4&gt;
+&lt;p&gt;以下内容假定
+您为 root 用户，或有 sudo 权限，或知道 root 密码；
+您系统上有 curl 或 wget&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;DOWNLOAD_URL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;https://mirrors.tuna.tsinghua.edu.cn/docker-ce&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 如您使用 curl&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -fsSL https://raw.githubusercontent.com/docker/docker-install/master/install.sh &lt;span class="p"&gt;|&lt;/span&gt; sh
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 如您使用 wget&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;wget -O- https://raw.githubusercontent.com/docker/docker-install/master/install.sh &lt;span class="p"&gt;|&lt;/span&gt; sh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;纯copy的官方文档&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id="启动"&gt;启动&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;systemctl &lt;span class="nb"&gt;enable&lt;/span&gt; --now docker
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="安装docker-compose"&gt;安装docker-compose&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -L &lt;span class="s2"&gt;&amp;#34;https://github.com/docker/compose/releases/latest/download/docker-compose-&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;uname -s&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;-&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;uname -m&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt; -o /usr/local/bin/docker-compose
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;chmod +x /usr/local/bin/docker-compose
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="可能会遇到的问题"&gt;可能会遇到的问题&lt;/h3&gt;
+&lt;h3 id="我先安装了yum官方源的docker但是我想升级到最新版在安装docker-ce的时候遇到了问题"&gt;我先安装了yum官方源的docker，但是我想升级到最新版，在安装docker-ce的时候遇到了问题&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ransaction check error:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;file /usr/bin/docker from install of docker-ce-cli-1:24.0.2-1.el7.x86_64 conflicts with file from package docker-common-2:1.13.1-209.git7d71120.el7.centos.x86_64
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;file /usr/bin/dockerd from install of docker-ce-3:24.0.2-1.el7.x86_64 conflicts with file from package docker-common-2:1.13.1-209.git7d71120.el7.centos.x86_64
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;原因是docker-ce与旧版本docker冲突，你需要卸载旧版本的docker&lt;/p&gt;</description></item><item><title>rsync强大的文件同步工具</title><link>https://ziwindlu.github.io/posts/rsync/</link><pubDate>Wed, 10 Apr 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/rsync/</guid><description>&lt;h2 id="引子"&gt;引子&lt;/h2&gt;
+&lt;p&gt;备份docker镜像时需要将文件归档复制，留作备忘&lt;/p&gt;
+&lt;h2 id="正文"&gt;正文&lt;/h2&gt;
+&lt;h3 id="rsync常用参数"&gt;rsync常用参数&lt;/h3&gt;
+&lt;p&gt;id:: 65e2c5a5-a39f-4bb2-938a-1f988dc4620d&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;参数&lt;/th&gt;
+&lt;th&gt;说明&lt;/th&gt;
+&lt;th&gt;助记&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;-a&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;已归档模式复制，尽可能保留文件原本的样子&lt;/td&gt;
+&lt;td&gt;archive&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;-v&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;详情&lt;/td&gt;
+&lt;td&gt;verbose&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;-h&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;人类可读&lt;/td&gt;
+&lt;td&gt;human&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;-n&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;模拟执行结果，但不真的这样做&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;--delete&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;添加这个参数会让同步的原目录和目的目录保持相同,即删除目的目录中存在但原目录中不存在的内容&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="过滤"&gt;过滤&lt;/h3&gt;
+&lt;h4 id="排除"&gt;排除&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;--exclude='xxx'&lt;/code&gt;支持正则&lt;/p&gt;
+&lt;h4 id="包含"&gt;包含&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;--include='xxx'&lt;/code&gt;必须包含，通常和&lt;code&gt;--exclude&lt;/code&gt;一起使用
+过滤文件过多可以通过&lt;code&gt;--include-from&lt;/code&gt;和&lt;code&gt;--exclude-from&lt;/code&gt;指定文件进行过滤&lt;/p&gt;
+&lt;h4 id="一个正确使用include参数的例子"&gt;一个正确使用include参数的例子&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;rsync -avh --include&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;include&amp;#39;&lt;/span&gt; --include&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;include/*rc&amp;#39;&lt;/span&gt; --exclude&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;*&amp;#39;&lt;/span&gt; .vim/ .vimback
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;exclude&lt;/code&gt;要在&lt;code&gt;include&lt;/code&gt;后面
+想要包含某个文件下的文件，这个文件也要被包含&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id="远程同步"&gt;远程同步&lt;/h3&gt;
+&lt;h4 id="ssh"&gt;ssh&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;rsync -avh source_file username@host:dest_file
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="增量备份"&gt;增量备份&lt;/h3&gt;
+&lt;p&gt;这会使rsync以&lt;code&gt;backup_old&lt;/code&gt;为基准将(未修改的文件直接使用这个文件夹中的文件做硬连接到新的文件夹)有改动的文件同步到&lt;code&gt;backup_new&lt;/code&gt;中&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;rsync -avh --delete source_file --link-dest backup_old backup_new
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="使用rsync代替mv和cp"&gt;使用rsync代替mv和cp&lt;/h3&gt;
+&lt;p&gt;在&lt;code&gt;.bashrc&lt;/code&gt;或&lt;code&gt;.zshrc&lt;/code&gt;添加以下内容&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;type&lt;/span&gt; rsync &amp;gt; /dev/null 2&amp;gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;1&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;cpr&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;rsync --archive -hh --partial --info&lt;span class="o"&gt;=&lt;/span&gt;stats1,progress2 --modify-window&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="nv"&gt;$@&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;mvr&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;rsync --archive -hh --partial --info&lt;span class="o"&gt;=&lt;/span&gt;stats1,progress2 --modify-window&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; --remove-source-files &lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="nv"&gt;$@&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="参考"&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://www.ruanyifeng.com/blog/2020/08/rsync.html"&gt;rsync 用法教程 阮一峰的网络日志&lt;/a&gt;
+&lt;a href="https://wiki.archlinuxcn.org/wiki/Rsync"&gt;rsync Arch Linux 中文维基&lt;/a&gt;&lt;/p&gt;</description></item><item><title>yadm优雅地管理dotfile</title><link>https://ziwindlu.github.io/posts/yadm-dotfiles/</link><pubDate>Wed, 10 Apr 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/yadm-dotfiles/</guid><description>&lt;h2 id="引子"&gt;引子&lt;/h2&gt;
+&lt;p&gt;配置文件管理起来非常麻烦，在之前写过一个shell脚本来管理配置文件，仅仅做了简单的复制粘贴，虽然用上了git，仍然感觉不够优雅，遂有此笔记&lt;/p&gt;
+&lt;h2 id="yadm的使用"&gt;yadm的使用&lt;/h2&gt;
+&lt;p&gt;使用起来与git相同&lt;code&gt;yadm init/push/pull/add/commit&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="新用户创建一个仓库"&gt;新用户创建一个仓库&lt;/h3&gt;
+&lt;p&gt;使用&lt;code&gt;yadm init&lt;/code&gt;创建一个仓库&lt;/p&gt;
+&lt;h3 id="克隆已有的仓库"&gt;克隆已有的仓库&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;yadm clone&lt;/code&gt;
+yadm的仓库存储在&lt;code&gt;~/.local/share/yadm/repo.git/&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="基本用法"&gt;基本用法&lt;/h2&gt;
+&lt;h3 id="另类文件"&gt;另类文件&lt;/h3&gt;
+&lt;p&gt;可能存在差异的文件&lt;/p&gt;
+&lt;h4 id="用法"&gt;用法&lt;/h4&gt;
+&lt;p&gt;在文件名后添加&lt;code&gt;file##&amp;lt;condition&amp;gt;[,&amp;lt;condition&amp;gt;,…]&lt;/code&gt;
+yadm会根据&lt;code&gt;condition&lt;/code&gt;自动生成生成该文件的软连接&lt;/p&gt;
+&lt;h4 id="举例"&gt;举例&lt;/h4&gt;
+&lt;p&gt;使用&lt;code&gt;yadm alt&lt;/code&gt;会生成软连接&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;application_display_rule.conf -&amp;gt; application_display_rule.conf##hostname.gee
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;application_display_rule.conf##default
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;application_display_rule.conf##hostname.gee
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;autostart.conf -&amp;gt; autostart.conf##hostname.gee
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;autostart.conf##cursor
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;autostart.conf##hostname.gee
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;autostart.conf##hostname.tkpde14
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id="可用参数"&gt;可用参数&lt;/h4&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;参数名&lt;/th&gt;
+&lt;th&gt;描述&lt;/th&gt;
+&lt;th&gt;用法&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;arch,a&lt;/td&gt;
+&lt;td&gt;架构&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;##arch.x86_64&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;class,c&lt;/td&gt;
+&lt;td&gt;在yadm中配置的类&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;##class.classname&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;default&lt;/td&gt;
+&lt;td&gt;默认的&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;##default&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;distro,d&lt;/td&gt;
+&lt;td&gt;发行版，&lt;code&gt;lsb_release ‑si&lt;/code&gt;的值&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;distro_family,f&lt;/td&gt;
+&lt;td&gt;发行版系列,使用的是&lt;code&gt;/etc/os-release&lt;/code&gt;中的&lt;code&gt;ID&lt;/code&gt;属性&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;##distro_family.rhel fedora&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;extension,e&lt;/td&gt;
+&lt;td&gt;无任何影响，可以理解为注释&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;##extension.unuse&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;hostname,h&lt;/td&gt;
+&lt;td&gt;主机名hostname&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;##hostname.xxx&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;os,o&lt;/td&gt;
+&lt;td&gt;系统类型 使用&lt;code&gt;uname -s&lt;/code&gt;中的值&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;##os.Linux&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;template,t&lt;/td&gt;
+&lt;td&gt;模板&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;##template.templateType&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;user,u&lt;/td&gt;
+&lt;td&gt;用户名&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;##user.username&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="类"&gt;类&lt;/h3&gt;
+&lt;p&gt;类可以作用于另类文件用作判断。&lt;/p&gt;
+&lt;h4 id="设置类"&gt;设置类&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;yadm config local.class classname&lt;/code&gt;
+删除/修改-&amp;gt; 使用方法和&lt;code&gt;git config&lt;/code&gt;相同&lt;/p&gt;
+&lt;h3 id="bootstrap"&gt;bootstrap&lt;/h3&gt;
+&lt;p&gt;yadm在克隆成功后会主动运行这个程序，默认位置在&lt;code&gt;~/.config/yadm/bootstrap&lt;/code&gt;，需要有可执行权限。
+可以做安装软件，初始化某些应用之类的操作&lt;/p&gt;
+&lt;h4 id="手动运行"&gt;手动运行&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;yadm bootstrap&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="模板"&gt;模板&lt;/h3&gt;
+&lt;p&gt;模板会让你在不同机器中使用不同的内容，避免在配置文件中频繁使用&lt;code&gt;include&lt;/code&gt;之类加载其他配置文件的方法&lt;/p&gt;
+&lt;h4 id="一个直观的例子"&gt;一个直观的例子&lt;/h4&gt;
+&lt;p&gt;&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1712627236237_0.png"&gt;
+使用类template后无需书写这个&lt;code&gt;if&lt;/code&gt;加载启动vim时会快一丢丢&lt;/p&gt;
+&lt;h4 id="用法-1"&gt;用法&lt;/h4&gt;
+&lt;p&gt;变量
+变量需要使用大括号和空格包裹，例如&lt;code&gt;{{ var }}&lt;/code&gt;
+使用yadm内置变量
+&lt;code&gt;yadm.var&lt;/code&gt;
+var: &lt;code&gt;arch,class,classes,distro,distro_family,hostname,os,source,user&lt;/code&gt;
+特别的变量&lt;code&gt;source&lt;/code&gt;该变量为当前模板的文件名
+使用环境变量
+&lt;code&gt;env.VAR&lt;/code&gt;
+判断&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code class="language-conf" data-lang="conf"&gt;{% if yadm.user == &amp;#34;root&amp;#34; %}
+# root user not use vimplug
+{% else %}
+source ~/.vim/include/plug
+{% endif %}
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;注意这里的判断仅支持&lt;code&gt;==&lt;/code&gt;，支持嵌套
+包含
+可在模板中包含其他文件&lt;/p&gt;
+&lt;/blockquote&gt;</description></item></channel></rss>

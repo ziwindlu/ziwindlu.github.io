@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>协议 on ziwindlu 的博客</title><link>https://ziwindlu.github.io/tags/%E5%8D%8F%E8%AE%AE/</link><description>Recent content in 协议 on ziwindlu 的博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Fri, 03 Apr 2026 00:00:00 +0800</lastBuildDate><atom:link href="https://ziwindlu.github.io/tags/%E5%8D%8F%E8%AE%AE/index.xml" rel="self" type="application/rss+xml"/><item><title>dns协议</title><link>https://ziwindlu.github.io/posts/dns-protocol/</link><pubDate>Fri, 03 Apr 2026 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/dns-protocol/</guid><description>&lt;h2 id="dns记录类型-card-forward"&gt;dns记录类型 #card #forward&lt;/h2&gt;
+&lt;p&gt;id:: 67a6bca0-b42c-4841-afb1-8543d48c8fd7
+&lt;strong&gt;A 记录&lt;/strong&gt;：将域名解析为 IPv4 地址。
+&lt;strong&gt;AAAA 记录&lt;/strong&gt;：将域名解析为 IPv6 地址。
+&lt;strong&gt;CNAME 记录&lt;/strong&gt;：别名记录，将一个域名映射到另一个域名。
+&lt;strong&gt;PTR 记录&lt;/strong&gt;：反向解析记录。
+&lt;strong&gt;MX 记录&lt;/strong&gt;：邮件交换记录，用于电子邮件服务器。
+&lt;strong&gt;NS 记录&lt;/strong&gt;：指向域名的权威 DNS 服务器。
+&lt;strong&gt;SOA 记录&lt;/strong&gt;：起始授权机构记录，标识区域的主要信息。
+&lt;strong&gt;TXT 记录&lt;/strong&gt;：存储任意文本数据，常用于身份验证（如 SPF、DKIM）。&lt;/p&gt;
+&lt;h2 id="dns查询模式-card-forward"&gt;dns查询模式 #card #forward&lt;/h2&gt;
+&lt;p&gt;id:: 67a6bca0-21f3-48e6-888a-240aa381101a
+递归查询
+迭代查询
+反向查询&lt;/p&gt;</description></item></channel></rss>

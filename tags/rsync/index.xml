@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>rsync on ziwindlu 的博客</title><link>https://ziwindlu.github.io/tags/rsync/</link><description>Recent content in rsync on ziwindlu 的博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Wed, 10 Apr 2024 00:00:00 +0800</lastBuildDate><atom:link href="https://ziwindlu.github.io/tags/rsync/index.xml" rel="self" type="application/rss+xml"/><item><title>rsync强大的文件同步工具</title><link>https://ziwindlu.github.io/posts/rsync/</link><pubDate>Wed, 10 Apr 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/rsync/</guid><description>&lt;h2 id="引子"&gt;引子&lt;/h2&gt;
+&lt;p&gt;备份docker镜像时需要将文件归档复制，留作备忘&lt;/p&gt;
+&lt;h2 id="正文"&gt;正文&lt;/h2&gt;
+&lt;h3 id="rsync常用参数"&gt;rsync常用参数&lt;/h3&gt;
+&lt;p&gt;id:: 65e2c5a5-a39f-4bb2-938a-1f988dc4620d&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;参数&lt;/th&gt;
+&lt;th&gt;说明&lt;/th&gt;
+&lt;th&gt;助记&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;-a&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;已归档模式复制，尽可能保留文件原本的样子&lt;/td&gt;
+&lt;td&gt;archive&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;-v&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;详情&lt;/td&gt;
+&lt;td&gt;verbose&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;-h&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;人类可读&lt;/td&gt;
+&lt;td&gt;human&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;-n&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;模拟执行结果，但不真的这样做&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;--delete&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;添加这个参数会让同步的原目录和目的目录保持相同,即删除目的目录中存在但原目录中不存在的内容&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="过滤"&gt;过滤&lt;/h3&gt;
+&lt;h4 id="排除"&gt;排除&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;--exclude='xxx'&lt;/code&gt;支持正则&lt;/p&gt;
+&lt;h4 id="包含"&gt;包含&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;--include='xxx'&lt;/code&gt;必须包含，通常和&lt;code&gt;--exclude&lt;/code&gt;一起使用
+过滤文件过多可以通过&lt;code&gt;--include-from&lt;/code&gt;和&lt;code&gt;--exclude-from&lt;/code&gt;指定文件进行过滤&lt;/p&gt;
+&lt;h4 id="一个正确使用include参数的例子"&gt;一个正确使用include参数的例子&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;rsync -avh --include&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;include&amp;#39;&lt;/span&gt; --include&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;include/*rc&amp;#39;&lt;/span&gt; --exclude&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;*&amp;#39;&lt;/span&gt; .vim/ .vimback
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;exclude&lt;/code&gt;要在&lt;code&gt;include&lt;/code&gt;后面
+想要包含某个文件下的文件，这个文件也要被包含&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id="远程同步"&gt;远程同步&lt;/h3&gt;
+&lt;h4 id="ssh"&gt;ssh&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;rsync -avh source_file username@host:dest_file
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="增量备份"&gt;增量备份&lt;/h3&gt;
+&lt;p&gt;这会使rsync以&lt;code&gt;backup_old&lt;/code&gt;为基准将(未修改的文件直接使用这个文件夹中的文件做硬连接到新的文件夹)有改动的文件同步到&lt;code&gt;backup_new&lt;/code&gt;中&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;rsync -avh --delete source_file --link-dest backup_old backup_new
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="使用rsync代替mv和cp"&gt;使用rsync代替mv和cp&lt;/h3&gt;
+&lt;p&gt;在&lt;code&gt;.bashrc&lt;/code&gt;或&lt;code&gt;.zshrc&lt;/code&gt;添加以下内容&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;type&lt;/span&gt; rsync &amp;gt; /dev/null 2&amp;gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;1&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;cpr&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;rsync --archive -hh --partial --info&lt;span class="o"&gt;=&lt;/span&gt;stats1,progress2 --modify-window&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="nv"&gt;$@&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;mvr&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;rsync --archive -hh --partial --info&lt;span class="o"&gt;=&lt;/span&gt;stats1,progress2 --modify-window&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; --remove-source-files &lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="nv"&gt;$@&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="参考"&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://www.ruanyifeng.com/blog/2020/08/rsync.html"&gt;rsync 用法教程 阮一峰的网络日志&lt;/a&gt;
+&lt;a href="https://wiki.archlinuxcn.org/wiki/Rsync"&gt;rsync Arch Linux 中文维基&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

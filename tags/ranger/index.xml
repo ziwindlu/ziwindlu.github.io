@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>ranger on ziwindlu 的博客</title><link>https://ziwindlu.github.io/tags/ranger/</link><description>Recent content in ranger on ziwindlu 的博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Sat, 30 Nov 2024 00:00:00 +0800</lastBuildDate><atom:link href="https://ziwindlu.github.io/tags/ranger/index.xml" rel="self" type="application/rss+xml"/><item><title>记录ranger中yank失效的问题</title><link>https://ziwindlu.github.io/posts/ranger-yank-fix/</link><pubDate>Sat, 30 Nov 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/ranger-yank-fix/</guid><description>&lt;h2 id="引子"&gt;引子&lt;/h2&gt;
+&lt;p&gt;ranger用了一会儿发现&lt;code&gt;yp&lt;/code&gt;没法用了，竟然跟俺报wayland相关的错误，实际上俺用的是x11，闹不清。
+那俺就手动改一下吧&lt;/p&gt;
+&lt;h2 id="配置文件修改"&gt;配置文件修改&lt;/h2&gt;
+&lt;p&gt;修改&lt;code&gt;~/.config/ranger/rc.conf&lt;/code&gt;。删除原来的映射，添加以下映射&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 将文件的完整路径复制到剪贴板&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;map yp shell -f &lt;span class="nb"&gt;echo&lt;/span&gt; -n %d/%f &lt;span class="p"&gt;|&lt;/span&gt; xclip -selection c
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 将目录路径复制到剪贴板&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;map yd shell -f &lt;span class="nb"&gt;echo&lt;/span&gt; -n %d &lt;span class="p"&gt;|&lt;/span&gt; xclip -selection c
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 将文件名（不包括路径）复制到剪贴板&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;map yn shell -f &lt;span class="nb"&gt;echo&lt;/span&gt; -n %f &lt;span class="p"&gt;|&lt;/span&gt; xclip -selection c
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 将文件名（不包括路径和扩展名）复制到剪贴板&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;map y. shell -f &lt;span class="nb"&gt;echo&lt;/span&gt; -n %f &lt;span class="p"&gt;|&lt;/span&gt; sed &lt;span class="s1"&gt;&amp;#39;s/\.[^.]*$//&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; xclip -selection c
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="存在的问题"&gt;存在的问题&lt;/h2&gt;
+&lt;p&gt;按理来说，yank是可用的。ranger认为当前环境是wayland指定有问题。这样修改配置文件，会导致x11和wayland不通用。不纠结了，睡大觉&lt;/p&gt;</description></item></channel></rss>

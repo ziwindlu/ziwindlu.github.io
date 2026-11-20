@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>hexo on ziwindlu 的博客</title><link>https://ziwindlu.github.io/tags/hexo/</link><description>Recent content in hexo on ziwindlu 的博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Wed, 24 Apr 2024 00:00:00 +0800</lastBuildDate><atom:link href="https://ziwindlu.github.io/tags/hexo/index.xml" rel="self" type="application/rss+xml"/><item><title>hexo使用gitlab进行cicd</title><link>https://ziwindlu.github.io/posts/hexo-gitlab-cicd/</link><pubDate>Wed, 24 Apr 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/hexo-gitlab-cicd/</guid><description>&lt;h2 id="引子"&gt;引子&lt;/h2&gt;
+&lt;p&gt;由于个人博客过于松散，不想写完就发布到gitpage上，于是做了一个基于gitlab的cicd发布到内网&lt;/p&gt;
+&lt;h2 id="gitlab-ciyml编写"&gt;.gitlab-ci.yml编写&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;stages&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="l"&gt;build&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;build&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;stage&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;build&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;before_script&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="l"&gt;npm install&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="l"&gt;export TRIGGER=diff&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c"&gt;# 指定触发规则 full：全量部署，diff：差异部署，不填：不执行操作&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;script&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="l"&gt;bash deploy&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="runner"&gt;Runner&lt;/h2&gt;
+&lt;h3 id="runner安装"&gt;Runner安装&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://docs.gitlab.com/runner/install/linux-manually.html"&gt;官方教程&lt;/a&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 这里以centos7,x86_64架构做演示&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 下载rpm包并安装&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -LJO &lt;span class="s2"&gt;&amp;#34;https://gitlab-runner-downloads.s3.amazonaws.com/latest/rpm/gitlab-runner_amd64.rpm&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;rpm -i gitlab-runner_amd64.rpm
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="hexo环境"&gt;hexo环境&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# hexo本体&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npm install -g hexo-cli
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 主题&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npm install hexo-theme-butterfly
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="自动部署脚本编写"&gt;自动部署脚本编写&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#!/bin/bash
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx hexo g
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 直接将静态文件覆盖到了runner所在nginx目录&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;cp public/* /usr/share/nginx/html/ -rf
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title>Hexo+GithubPage搭建个人博客</title><link>https://ziwindlu.github.io/posts/hexo-github-pages-blog/</link><pubDate>Mon, 08 Apr 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/hexo-github-pages-blog/</guid><description>&lt;h2 id="引子"&gt;引子&lt;/h2&gt;
+&lt;p&gt;大部分人的第一篇博客便是教人怎么搭建博客&amp;hellip;
+经历了备份失误，笔记软件迁移等一系列问题后，让我不得不重新从头整理自己的博客。本次更新添加了一些图片&lt;/p&gt;
+&lt;h2 id="软件安装"&gt;软件安装&lt;/h2&gt;
+&lt;h3 id="安装nodejs"&gt;安装nodejs&lt;/h3&gt;
+&lt;p&gt;安装hexo需要nodejs版本不低于10.13
+去&lt;a href="https://nodejs.org/en/download/"&gt;nodejs官网&lt;/a&gt;查看如何安装
+检查是否正常运作&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;node -v
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npm -v
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如有类似以下回显说明安装成功&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;[&lt;/span&gt;xxx@localhost ~&lt;span class="o"&gt;]&lt;/span&gt;$ node -v
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;v16.13.0
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;[&lt;/span&gt;xxx@localhost ~&lt;span class="o"&gt;]&lt;/span&gt;$ npm -v
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;8.1.0
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="安装hexo"&gt;安装hexo&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npm install -g hexo-cli
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="搭建站点"&gt;搭建站点&lt;/h2&gt;
+&lt;h3 id="hexo基本命令介绍"&gt;hexo基本命令介绍&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://hexo.io/zh-cn/docs/"&gt;hexo官方文档&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id="新建一个站点"&gt;新建一个站点&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;hexo init [folder]&lt;/code&gt;
+如果没有设置 folder ，Hexo 默认在目前的文件夹建立网站&lt;/p&gt;
+&lt;h4 id="新建一篇文章"&gt;新建一篇文章&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;hexo new [layout] &amp;lt;title&amp;gt;&lt;/code&gt;
+[layout]可选，没有的话默认使用_config.yml中的default_layout
+&amp;lt;title&amp;gt;必选，文章的名字&lt;/p&gt;
+&lt;h4 id="生成静态文件"&gt;生成静态文件&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;hexo generate&lt;/code&gt;可简写为&lt;code&gt;hexo g&lt;/code&gt;&lt;/p&gt;
+&lt;h4 id="启动服务"&gt;启动服务&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;hexo server&lt;/code&gt;可简写为&lt;code&gt;hexo s&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="搭建流程示例"&gt;搭建流程示例&lt;/h3&gt;
+&lt;p&gt;新建一个hexo站点-&amp;gt;编写文章-&amp;gt;生成静态文件-&amp;gt;启动服务&lt;/p&gt;
+&lt;h4 id="新建站点"&gt;新建站点&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;hexo init myBlog
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id="生成静态文件启动站点"&gt;生成静态文件启动站点&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;hexo g &amp;amp;&amp;amp; hexo s&lt;/code&gt;
+将将，访问&lt;code&gt;localhost:4000&lt;/code&gt;就可以看到你的站点啦&lt;/p&gt;
+&lt;h2 id="github设置"&gt;github设置&lt;/h2&gt;
+&lt;h3 id="创建新的仓库"&gt;创建新的仓库&lt;/h3&gt;
+&lt;p&gt;注意仓库名最好为&lt;code&gt;githubUsername.github.io&lt;/code&gt;，这样可以避免出现css找不到的问题。
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1739434945249_0.png"&gt;
+记录仓库地址
+&lt;code&gt;git@github.com:ziwindlu/ziwindlu.github.io.git&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="配置ssh公钥"&gt;配置ssh公钥&lt;/h3&gt;
+&lt;p&gt;&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1739435017642_0.png"&gt;&lt;/p&gt;
+&lt;h3 id="部署到github"&gt;部署到github&lt;/h3&gt;
+&lt;h4 id="安装hexo-deployer-git"&gt;安装hexo-deployer-git&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;npm install hexo-deployer-git --save&lt;/code&gt;&lt;/p&gt;
+&lt;h4 id="修改hexo配置文件"&gt;修改hexo配置文件&lt;/h4&gt;
+&lt;p&gt;修改_config.yml&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-_config.yml" data-lang="_config.yml"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;deploy&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;type&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;git&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;repository&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;git@github.com:ziwindlu/ziwindlu.github.io.git&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;branch&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;main&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id="将静态页面上传到github"&gt;将静态页面上传到github&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;hexo clean &amp;amp;&amp;amp; hexo g &amp;amp;&amp;amp; hexo d&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="参考"&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://hexo.io/zh-cn/docs/"&gt;文档 | Hexo&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>计算机网络 on ziwindlu 的博客</title><link>https://ziwindlu.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</link><description>Recent content in 计算机网络 on ziwindlu 的博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Fri, 03 Apr 2026 00:00:00 +0800</lastBuildDate><atom:link href="https://ziwindlu.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/index.xml" rel="self" type="application/rss+xml"/><item><title>trunk</title><link>https://ziwindlu.github.io/posts/trunk/</link><pubDate>Fri, 03 Apr 2026 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/trunk/</guid><description>&lt;h2 id="what"&gt;what&lt;/h2&gt;
+&lt;p&gt;Trunk是用于在交换机之间或交换机与路由器之间传输多个VLAN流量的专用链路，通过标记（如IEEE 802.1Q）区分不同VLAN的数据。&lt;/p&gt;
+&lt;h2 id="why"&gt;why&lt;/h2&gt;
+&lt;p&gt;跨交换机VLAN扩展，使同一VLAN的设备可以跨交换机通信
+节省端口，无需为每个VLAN单独拉一根物理链路&lt;/p&gt;
+&lt;h2 id="how"&gt;how&lt;/h2&gt;
+&lt;p&gt;暂无&lt;/p&gt;</description></item></channel></rss>

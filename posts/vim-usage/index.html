@@ -1,0 +1,263 @@
+<!doctype html><html lang=zh dir=auto data-theme=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>vim编辑器的使用 | ziwindlu 的博客</title><meta name=keywords content="Vim,快捷键"><meta name=description content="一张图记住vim快捷键
+
+vim的几种模式
+普通模式
+插入模式
+可视模式
+搜索模式
+命令模式
+替换模式
+增强模式
+普通模式
+此模式中你可以进行跳转、修改文本内容等操作，当然最重要的的还是在此模式下进入其他模式XD
+在任何模式下按<ESC><ESC>即可进入普通模式
+在此模式下可以进入其他模式
+i,INSERT进入插入模式
+v,<S-V>,<C-V>可分别进入可视模式，可视行模式，可视块模式
+/,?进入搜索模式
+:进入命令模式
+R进入替换模式
+Q进入增强模式
+
+/和?均为搜索，前者为向后搜索，后者为向前搜索。搜索后，n向下一个搜索结果跳转，N向前一个搜索结果跳转
+
+插入模式
+此模式下可以插入文本内容
+可视模式
+此模式下可以对文本进行范围修改
+命令模式
+此模式可以执行各种命令，:!command可执行外部命令
+一些简单命令的介绍
+wirte fileName将文件保存为fileName，如果没有fileName，则仅保存。可简写为w fileName
+quit  退出vim，quit!为强制退出，即不保存退出。可简写为q
+edit fileName  编辑fileName的文件。
+help  获取帮助，可简写为h
+.  重复上一次操作
+[range]s/old/new/[option]将old替换为new
+[range]为范围，x,y代表从第x行到第y行
+特别的：.为当前行
+[option]为选项，/g表示全部替换；/c表示需要确认；/p表示替换结果逐行显示
+如要组合使用，应这样写/cgp，并非这样/g/c
+替换模式
+插入模式下按INSERT可进入替换模式
+此模式下可将已输入的内容替换为将要输入的内容
+
+example:
+将wrod改为word
+仅需将光标跳到wrod上,进入替换模式来重新打一遍word即可
+
+在vim中移动
+常规移动
+j;k;h;l或<UP>;<DOWN>;<LEFT>;<RIGHT>
+滚屏
+单行
+<C-E> <C-Y>
+半屏
+<C-U> <C-D>
+整屏
+<C-F> <C-B>
+单词间
+w跳到下一个单词的后
+e调到单词最后一个字母
+b前一个单词的首字母
+行中
+0行首
+$行尾
+f{char}快速跳转到当前光标到下一个char出现的光标
+F{char}快速跳转到当前光标到前一个char出现的光标
+段落间
+}跳转到下一个空行，即下一段喽
+{跳转到上一个空行
+文件中
+]];G跳到文件底部
+[[;gg跳到文件顶部
+m{a-zA-Z}把当前光标位置设置标记
+'{a-zA-Z}跳到标记处
+'';``跳到跳转前的位置
+相关命令:
+:marks  查看已设置的标记
+:delmarks <marks>  删除marks标记
+:delmarks!  删除所有标记
+在vim中进行改动
+:read <file>  插入文件，将文件内容插入到光标所在位置
+example:
+将外部命令的返回值插入到所编辑文件中
+:read !ls
+I跳到当前行的最前面并进入插入模式
+a在当前光标后进入插入模式
+A跳到当前行的最后面并进入插入模式
+x删除光标所在字符
+d[move]删除(delate)
+example:
+dd #删除当前行
+d5w #删除后5个单词
+c[move]修改(change)
+example:
+cc删除当前行所有内容并进入插入模式
+c$删除当前行所在光标后所有内容并进入插入模式
+r将当前光标内容替换为将要输入的内容
+打造属于你自己的vim，配置vimrc
+每个人的vim都是独一无二的，动手打造属于你自己的vim吧
+vim插件推荐
+文件管理
+preservim/NERDTree
+vim主题
+tomasr/molokai
+代码注释
+scrooloose/nerdcommenter
+代码查错
+w0rp/ale
+自动括号
+jiangmiao/auto-pairs
+surround插件
+tpope/vim-surround
+回车选中块
+gcmt/wildfire.vim
+vim中文文档
+yianwillis/vimcdoc
+代码补全
+neoclide/coc.nvim
+markdown-preview
+iamcco/markdown-preview.vim
+markdown画表插件
+dhruvasagar/vim-table-mode
+markdown列表插件
+dkarter/bullets.vim"><meta name=author content="ziwindlu"><link rel=canonical href=https://ziwindlu.github.io/posts/vim-usage/><link crossorigin=anonymous href=/assets/css/stylesheet.95ae6e9689bd0037456375629f411acbf8ed76e0e9a7599900ad281f9526dee6.css integrity="sha256-la5ulom9ADdFY3Vin0Eay/jtduDpp1mZAK0oH5Um3uY=" rel="preload stylesheet" as=style><link rel=icon href=https://ziwindlu.github.io/favicon.svg><link rel=icon type=image/png sizes=16x16 href=https://ziwindlu.github.io/favicon.svg><link rel=icon type=image/png sizes=32x32 href=https://ziwindlu.github.io/favicon.svg><link rel=apple-touch-icon href=https://ziwindlu.github.io/favicon.svg><link rel=mask-icon href=https://ziwindlu.github.io/favicon.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=zh href=https://ziwindlu.github.io/posts/vim-usage/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51);color-scheme:dark}.list{background:var(--theme)}.toc{background:var(--entry)}}</style></noscript><script>localStorage.getItem("pref-theme")==="dark"?document.querySelector("html").dataset.theme="dark":localStorage.getItem("pref-theme")==="light"?document.querySelector("html").dataset.theme="light":window.matchMedia("(prefers-color-scheme: dark)").matches?document.querySelector("html").dataset.theme="dark":document.querySelector("html").dataset.theme="light"</script><meta property="og:url" content="https://ziwindlu.github.io/posts/vim-usage/"><meta property="og:site_name" content="ziwindlu 的博客"><meta property="og:title" content="vim编辑器的使用"><meta property="og:description" content="一张图记住vim快捷键 vim的几种模式 普通模式 插入模式 可视模式 搜索模式 命令模式 替换模式 增强模式
+普通模式 此模式中你可以进行跳转、修改文本内容等操作，当然最重要的的还是在此模式下进入其他模式XD 在任何模式下按<ESC><ESC>即可进入普通模式 在此模式下可以进入其他模式 i,INSERT进入插入模式 v,<S-V>,<C-V>可分别进入可视模式，可视行模式，可视块模式 /,?进入搜索模式 :进入命令模式 R进入替换模式 Q进入增强模式
+/和?均为搜索，前者为向后搜索，后者为向前搜索。搜索后，n向下一个搜索结果跳转，N向前一个搜索结果跳转
+插入模式 此模式下可以插入文本内容
+可视模式 此模式下可以对文本进行范围修改
+命令模式 此模式可以执行各种命令，:!command可执行外部命令 一些简单命令的介绍 wirte fileName将文件保存为fileName，如果没有fileName，则仅保存。可简写为w fileName quit 退出vim，quit!为强制退出，即不保存退出。可简写为q edit fileName 编辑fileName的文件。 help 获取帮助，可简写为h . 重复上一次操作 [range]s/old/new/[option]将old替换为new [range]为范围，x,y代表从第x行到第y行 特别的：.为当前行 [option]为选项，/g表示全部替换；/c表示需要确认；/p表示替换结果逐行显示 如要组合使用，应这样写/cgp，并非这样/g/c
+替换模式 插入模式下按INSERT可进入替换模式 此模式下可将已输入的内容替换为将要输入的内容
+example: 将wrod改为word 仅需将光标跳到wrod上,进入替换模式来重新打一遍word即可
+在vim中移动 常规移动 j;k;h;l或<UP>;<DOWN>;<LEFT>;<RIGHT>
+滚屏 单行 <C-E> <C-Y> 半屏 <C-U> <C-D> 整屏 <C-F> <C-B>
+单词间 w跳到下一个单词的后 e调到单词最后一个字母 b前一个单词的首字母
+行中 0行首 $行尾 f{char}快速跳转到当前光标到下一个char出现的光标 F{char}快速跳转到当前光标到前一个char出现的光标
+段落间 }跳转到下一个空行，即下一段喽 {跳转到上一个空行
+文件中 ]];G跳到文件底部 [[;gg跳到文件顶部 m{a-zA-Z}把当前光标位置设置标记 '{a-zA-Z}跳到标记处 '';``跳到跳转前的位置 相关命令: :marks 查看已设置的标记 :delmarks <marks> 删除marks标记 :delmarks! 删除所有标记
+在vim中进行改动 :read <file> 插入文件，将文件内容插入到光标所在位置 example: 将外部命令的返回值插入到所编辑文件中 :read !ls I跳到当前行的最前面并进入插入模式 a在当前光标后进入插入模式 A跳到当前行的最后面并进入插入模式 x删除光标所在字符 d[move]删除(delate) example: dd #删除当前行 d5w #删除后5个单词 c[move]修改(change) example: cc删除当前行所有内容并进入插入模式 c$删除当前行所在光标后所有内容并进入插入模式 r将当前光标内容替换为将要输入的内容
+打造属于你自己的vim，配置vimrc 每个人的vim都是独一无二的，动手打造属于你自己的vim吧
+vim插件推荐 文件管理 preservim/NERDTree vim主题 tomasr/molokai 代码注释 scrooloose/nerdcommenter 代码查错 w0rp/ale 自动括号 jiangmiao/auto-pairs surround插件 tpope/vim-surround 回车选中块 gcmt/wildfire.vim vim中文文档 yianwillis/vimcdoc 代码补全 neoclide/coc.nvim markdown-preview iamcco/markdown-preview.vim markdown画表插件 dhruvasagar/vim-table-mode markdown列表插件 dkarter/bullets.vim"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2024-04-10T00:00:00+08:00"><meta property="article:modified_time" content="2024-04-10T00:00:00+08:00"><meta property="article:tag" content="Vim"><meta property="article:tag" content="快捷键"><meta name=twitter:card content="summary"><meta name=twitter:title content="vim编辑器的使用"><meta name=twitter:description content="一张图记住vim快捷键 vim的几种模式 普通模式 插入模式 可视模式 搜索模式 命令模式 替换模式 增强模式
+普通模式 此模式中你可以进行跳转、修改文本内容等操作，当然最重要的的还是在此模式下进入其他模式XD 在任何模式下按<ESC><ESC>即可进入普通模式 在此模式下可以进入其他模式 i,INSERT进入插入模式 v,<S-V>,<C-V>可分别进入可视模式，可视行模式，可视块模式 /,?进入搜索模式 :进入命令模式 R进入替换模式 Q进入增强模式
+/和?均为搜索，前者为向后搜索，后者为向前搜索。搜索后，n向下一个搜索结果跳转，N向前一个搜索结果跳转
+插入模式 此模式下可以插入文本内容
+可视模式 此模式下可以对文本进行范围修改
+命令模式 此模式可以执行各种命令，:!command可执行外部命令 一些简单命令的介绍 wirte fileName将文件保存为fileName，如果没有fileName，则仅保存。可简写为w fileName quit 退出vim，quit!为强制退出，即不保存退出。可简写为q edit fileName 编辑fileName的文件。 help 获取帮助，可简写为h . 重复上一次操作 [range]s/old/new/[option]将old替换为new [range]为范围，x,y代表从第x行到第y行 特别的：.为当前行 [option]为选项，/g表示全部替换；/c表示需要确认；/p表示替换结果逐行显示 如要组合使用，应这样写/cgp，并非这样/g/c
+替换模式 插入模式下按INSERT可进入替换模式 此模式下可将已输入的内容替换为将要输入的内容
+example: 将wrod改为word 仅需将光标跳到wrod上,进入替换模式来重新打一遍word即可
+在vim中移动 常规移动 j;k;h;l或<UP>;<DOWN>;<LEFT>;<RIGHT>
+滚屏 单行 <C-E> <C-Y> 半屏 <C-U> <C-D> 整屏 <C-F> <C-B>
+单词间 w跳到下一个单词的后 e调到单词最后一个字母 b前一个单词的首字母
+行中 0行首 $行尾 f{char}快速跳转到当前光标到下一个char出现的光标 F{char}快速跳转到当前光标到前一个char出现的光标
+段落间 }跳转到下一个空行，即下一段喽 {跳转到上一个空行
+文件中 ]];G跳到文件底部 [[;gg跳到文件顶部 m{a-zA-Z}把当前光标位置设置标记 '{a-zA-Z}跳到标记处 '';``跳到跳转前的位置 相关命令: :marks 查看已设置的标记 :delmarks <marks> 删除marks标记 :delmarks! 删除所有标记
+在vim中进行改动 :read <file> 插入文件，将文件内容插入到光标所在位置 example: 将外部命令的返回值插入到所编辑文件中 :read !ls I跳到当前行的最前面并进入插入模式 a在当前光标后进入插入模式 A跳到当前行的最后面并进入插入模式 x删除光标所在字符 d[move]删除(delate) example: dd #删除当前行 d5w #删除后5个单词 c[move]修改(change) example: cc删除当前行所有内容并进入插入模式 c$删除当前行所在光标后所有内容并进入插入模式 r将当前光标内容替换为将要输入的内容
+打造属于你自己的vim，配置vimrc 每个人的vim都是独一无二的，动手打造属于你自己的vim吧
+vim插件推荐 文件管理 preservim/NERDTree vim主题 tomasr/molokai 代码注释 scrooloose/nerdcommenter 代码查错 w0rp/ale 自动括号 jiangmiao/auto-pairs surround插件 tpope/vim-surround 回车选中块 gcmt/wildfire.vim vim中文文档 yianwillis/vimcdoc 代码补全 neoclide/coc.nvim markdown-preview iamcco/markdown-preview.vim markdown画表插件 dhruvasagar/vim-table-mode markdown列表插件 dkarter/bullets.vim"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"文章","item":"https://ziwindlu.github.io/posts/"},{"@type":"ListItem","position":2,"name":"vim编辑器的使用","item":"https://ziwindlu.github.io/posts/vim-usage/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"vim编辑器的使用","name":"vim编辑器的使用","description":"一张图记住vim快捷键 vim的几种模式 普通模式 插入模式 可视模式 搜索模式 命令模式 替换模式 增强模式\n普通模式 此模式中你可以进行跳转、修改文本内容等操作，当然最重要的的还是在此模式下进入其他模式XD 在任何模式下按\u0026lt;ESC\u0026gt;\u0026lt;ESC\u0026gt;即可进入普通模式 在此模式下可以进入其他模式 i,INSERT进入插入模式 v,\u0026lt;S-V\u0026gt;,\u0026lt;C-V\u0026gt;可分别进入可视模式，可视行模式，可视块模式 /,?进入搜索模式 :进入命令模式 R进入替换模式 Q进入增强模式\n/和?均为搜索，前者为向后搜索，后者为向前搜索。搜索后，n向下一个搜索结果跳转，N向前一个搜索结果跳转\n插入模式 此模式下可以插入文本内容\n可视模式 此模式下可以对文本进行范围修改\n命令模式 此模式可以执行各种命令，:!command可执行外部命令 一些简单命令的介绍 wirte fileName将文件保存为fileName，如果没有fileName，则仅保存。可简写为w fileName quit 退出vim，quit!为强制退出，即不保存退出。可简写为q edit fileName 编辑fileName的文件。 help 获取帮助，可简写为h . 重复上一次操作 [range]s/old/new/[option]将old替换为new [range]为范围，x,y代表从第x行到第y行 特别的：.为当前行 [option]为选项，/g表示全部替换；/c表示需要确认；/p表示替换结果逐行显示 如要组合使用，应这样写/cgp，并非这样/g/c\n替换模式 插入模式下按INSERT可进入替换模式 此模式下可将已输入的内容替换为将要输入的内容\nexample: 将wrod改为word 仅需将光标跳到wrod上,进入替换模式来重新打一遍word即可\n在vim中移动 常规移动 j;k;h;l或\u0026lt;UP\u0026gt;;\u0026lt;DOWN\u0026gt;;\u0026lt;LEFT\u0026gt;;\u0026lt;RIGHT\u0026gt;\n滚屏 单行 \u0026lt;C-E\u0026gt; \u0026lt;C-Y\u0026gt; 半屏 \u0026lt;C-U\u0026gt; \u0026lt;C-D\u0026gt; 整屏 \u0026lt;C-F\u0026gt; \u0026lt;C-B\u0026gt;\n单词间 w跳到下一个单词的后 e调到单词最后一个字母 b前一个单词的首字母\n行中 0行首 $行尾 f{char}快速跳转到当前光标到下一个char出现的光标 F{char}快速跳转到当前光标到前一个char出现的光标\n段落间 }跳转到下一个空行，即下一段喽 {跳转到上一个空行\n文件中 ]];G跳到文件底部 [[;gg跳到文件顶部 m{a-zA-Z}把当前光标位置设置标记 '{a-zA-Z}跳到标记处 '';``跳到跳转前的位置 相关命令: :marks 查看已设置的标记 :delmarks \u0026lt;marks\u0026gt; 删除marks标记 :delmarks! 删除所有标记\n在vim中进行改动 :read \u0026lt;file\u0026gt; 插入文件，将文件内容插入到光标所在位置 example: 将外部命令的返回值插入到所编辑文件中 :read !ls I跳到当前行的最前面并进入插入模式 a在当前光标后进入插入模式 A跳到当前行的最后面并进入插入模式 x删除光标所在字符 d[move]删除(delate) example: dd #删除当前行 d5w #删除后5个单词 c[move]修改(change) example: cc删除当前行所有内容并进入插入模式 c$删除当前行所在光标后所有内容并进入插入模式 r将当前光标内容替换为将要输入的内容\n打造属于你自己的vim，配置vimrc 每个人的vim都是独一无二的，动手打造属于你自己的vim吧\nvim插件推荐 文件管理 preservim/NERDTree vim主题 tomasr/molokai 代码注释 scrooloose/nerdcommenter 代码查错 w0rp/ale 自动括号 jiangmiao/auto-pairs surround插件 tpope/vim-surround 回车选中块 gcmt/wildfire.vim vim中文文档 yianwillis/vimcdoc 代码补全 neoclide/coc.nvim markdown-preview iamcco/markdown-preview.vim markdown画表插件 dhruvasagar/vim-table-mode markdown列表插件 dkarter/bullets.vim\n","keywords":["Vim","快捷键"],"articleBody":"一张图记住vim快捷键 vim的几种模式 普通模式 插入模式 可视模式 搜索模式 命令模式 替换模式 增强模式\n普通模式 此模式中你可以进行跳转、修改文本内容等操作，当然最重要的的还是在此模式下进入其他模式XD 在任何模式下按即可进入普通模式 在此模式下可以进入其他模式 i,INSERT进入插入模式 v,,可分别进入可视模式，可视行模式，可视块模式 /,?进入搜索模式 :进入命令模式 R进入替换模式 Q进入增强模式\n/和?均为搜索，前者为向后搜索，后者为向前搜索。搜索后，n向下一个搜索结果跳转，N向前一个搜索结果跳转\n插入模式 此模式下可以插入文本内容\n可视模式 此模式下可以对文本进行范围修改\n命令模式 此模式可以执行各种命令，:!command可执行外部命令 一些简单命令的介绍 wirte fileName将文件保存为fileName，如果没有fileName，则仅保存。可简写为w fileName quit 退出vim，quit!为强制退出，即不保存退出。可简写为q edit fileName 编辑fileName的文件。 help 获取帮助，可简写为h . 重复上一次操作 [range]s/old/new/[option]将old替换为new [range]为范围，x,y代表从第x行到第y行 特别的：.为当前行 [option]为选项，/g表示全部替换；/c表示需要确认；/p表示替换结果逐行显示 如要组合使用，应这样写/cgp，并非这样/g/c\n替换模式 插入模式下按INSERT可进入替换模式 此模式下可将已输入的内容替换为将要输入的内容\nexample: 将wrod改为word 仅需将光标跳到wrod上,进入替换模式来重新打一遍word即可\n在vim中移动 常规移动 j;k;h;l或;;;\n滚屏 单行 半屏 整屏 单词间 w跳到下一个单词的后 e调到单词最后一个字母 b前一个单词的首字母\n行中 0行首 $行尾 f{char}快速跳转到当前光标到下一个char出现的光标 F{char}快速跳转到当前光标到前一个char出现的光标\n段落间 }跳转到下一个空行，即下一段喽 {跳转到上一个空行\n文件中 ]];G跳到文件底部 [[;gg跳到文件顶部 m{a-zA-Z}把当前光标位置设置标记 '{a-zA-Z}跳到标记处 '';``跳到跳转前的位置 相关命令: :marks 查看已设置的标记 :delmarks 删除marks标记 :delmarks! 删除所有标记\n在vim中进行改动 :read 插入文件，将文件内容插入到光标所在位置 example: 将外部命令的返回值插入到所编辑文件中 :read !ls I跳到当前行的最前面并进入插入模式 a在当前光标后进入插入模式 A跳到当前行的最后面并进入插入模式 x删除光标所在字符 d[move]删除(delate) example: dd #删除当前行 d5w #删除后5个单词 c[move]修改(change) example: cc删除当前行所有内容并进入插入模式 c$删除当前行所在光标后所有内容并进入插入模式 r将当前光标内容替换为将要输入的内容\n打造属于你自己的vim，配置vimrc 每个人的vim都是独一无二的，动手打造属于你自己的vim吧\nvim插件推荐 文件管理 preservim/NERDTree vim主题 tomasr/molokai 代码注释 scrooloose/nerdcommenter 代码查错 w0rp/ale 自动括号 jiangmiao/auto-pairs surround插件 tpope/vim-surround 回车选中块 gcmt/wildfire.vim vim中文文档 yianwillis/vimcdoc 代码补全 neoclide/coc.nvim markdown-preview iamcco/markdown-preview.vim markdown画表插件 dhruvasagar/vim-table-mode markdown列表插件 dkarter/bullets.vim\nvim使用技巧 vim中高效操作 [次数]+[范围]+[操作]+[动作] example: 20dj意为将dj重复20次\n自动格式化 让vim给你自动排列 ==排列当前行 =是一个动作，后面可以加动作，当然前面也可以跟范围 example: =gg从当前行排列到第一行 =G从当前行排列到最后一行\n保存某范围内容到某个文件 lin1,lin2 wirte filename example: 100-50,100+50 w filename 范围是可以使用表达式的\n录制宏 q[寄存器名]录制,以后的操作可以录制下来,方便重复使用 @[寄存器名]使用宏\n折叠 让vim帮你折叠一些行，方便查看内容\n","wordCount":"165","inLanguage":"zh","datePublished":"2024-04-10T00:00:00+08:00","dateModified":"2024-04-10T00:00:00+08:00","author":{"@type":"Person","name":"ziwindlu"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://ziwindlu.github.io/posts/vim-usage/"},"publisher":{"@type":"Organization","name":"ziwindlu 的博客","logo":{"@type":"ImageObject","url":"https://ziwindlu.github.io/favicon.svg"}}}</script></head><body id=top><header class=header><nav class=header-nav><div class=logo><a href=https://ziwindlu.github.io/ accesskey=h title="ziwindlu 的博客 (Alt + H)">ziwindlu 的博客</a><div class=logo-switches><button id=theme-toggle class=theme-toggle accesskey=t title="(Alt + T)" aria-label="Toggle theme">
+<svg class="moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+<svg class="sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu class=menu><li><a href=https://ziwindlu.github.io/ title=首页><span>首页</span></a></li><li><a href=https://ziwindlu.github.io/posts/ title=文章><span>文章</span></a></li><li><a href=https://ziwindlu.github.io/tags/ title=标签><span>标签</span></a></li><li><a href=https://ziwindlu.github.io/search/ title=搜索><span>搜索</span></a></li><li><a href=https://ziwindlu.github.io/about/ title=关于><span>关于</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><h1 class="post-title entry-hint-parent">vim编辑器的使用</h1><div class=post-meta><span title=2024-04-10T00:00:00+08:00>2024-04-10</span>&nbsp;·&nbsp;<span>1 分钟</span>&nbsp;·&nbsp;<span>ziwindlu</span>&nbsp;·&nbsp;<span class=post-source>源笔记：<code>02-Knowledge/Linux/vim编辑器的使用.md</code></span></div></header><details class=toc><summary accesskey=c title="(Alt + C)"><span class=title>目录</span></summary><div class=inner><ul><li><a href=#%e4%b8%80%e5%bc%a0%e5%9b%be%e8%ae%b0%e4%bd%8fvim%e5%bf%ab%e6%8d%b7%e9%94%ae aria-label=一张图记住vim快捷键>一张图记住vim快捷键</a></li><li><a href=#vim%e7%9a%84%e5%87%a0%e7%a7%8d%e6%a8%a1%e5%bc%8f aria-label=vim的几种模式>vim的几种模式</a><ul><li><a href=#%e6%99%ae%e9%80%9a%e6%a8%a1%e5%bc%8f aria-label=普通模式>普通模式</a></li><li><a href=#%e6%8f%92%e5%85%a5%e6%a8%a1%e5%bc%8f aria-label=插入模式>插入模式</a></li><li><a href=#%e5%8f%af%e8%a7%86%e6%a8%a1%e5%bc%8f aria-label=可视模式>可视模式</a></li><li><a href=#%e5%91%bd%e4%bb%a4%e6%a8%a1%e5%bc%8f aria-label=命令模式>命令模式</a></li><li><a href=#%e6%9b%bf%e6%8d%a2%e6%a8%a1%e5%bc%8f aria-label=替换模式>替换模式</a></li></ul></li><li><a href=#%e5%9c%a8vim%e4%b8%ad%e7%a7%bb%e5%8a%a8 aria-label=在vim中移动>在vim中移动</a><ul><li><a href=#%e5%b8%b8%e8%a7%84%e7%a7%bb%e5%8a%a8 aria-label=常规移动>常规移动</a></li><li><a href=#%e6%bb%9a%e5%b1%8f aria-label=滚屏>滚屏</a></li><li><a href=#%e5%8d%95%e8%af%8d%e9%97%b4 aria-label=单词间>单词间</a></li><li><a href=#%e8%a1%8c%e4%b8%ad aria-label=行中>行中</a></li><li><a href=#%e6%ae%b5%e8%90%bd%e9%97%b4 aria-label=段落间>段落间</a></li><li><a href=#%e6%96%87%e4%bb%b6%e4%b8%ad aria-label=文件中>文件中</a></li></ul></li><li><a href=#%e5%9c%a8vim%e4%b8%ad%e8%bf%9b%e8%a1%8c%e6%94%b9%e5%8a%a8 aria-label=在vim中进行改动>在vim中进行改动</a></li><li><a href=#%e6%89%93%e9%80%a0%e5%b1%9e%e4%ba%8e%e4%bd%a0%e8%87%aa%e5%b7%b1%e7%9a%84vim%e9%85%8d%e7%bd%aevimrc aria-label=打造属于你自己的vim，配置vimrc>打造属于你自己的vim，配置vimrc</a></li><li><a href=#vim%e6%8f%92%e4%bb%b6%e6%8e%a8%e8%8d%90 aria-label=vim插件推荐>vim插件推荐</a></li><li><a href=#vim%e4%bd%bf%e7%94%a8%e6%8a%80%e5%b7%a7 aria-label=vim使用技巧>vim使用技巧</a><ul><li><a href=#vim%e4%b8%ad%e9%ab%98%e6%95%88%e6%93%8d%e4%bd%9c aria-label=vim中高效操作>vim中高效操作</a></li><li><a href=#%e8%87%aa%e5%8a%a8%e6%a0%bc%e5%bc%8f%e5%8c%96 aria-label=自动格式化>自动格式化</a></li><li><a href=#%e4%bf%9d%e5%ad%98%e6%9f%90%e8%8c%83%e5%9b%b4%e5%86%85%e5%ae%b9%e5%88%b0%e6%9f%90%e4%b8%aa%e6%96%87%e4%bb%b6 aria-label=保存某范围内容到某个文件>保存某范围内容到某个文件</a></li><li><a href=#%e5%bd%95%e5%88%b6%e5%ae%8f aria-label=录制宏>录制宏</a></li><li><a href=#%e6%8a%98%e5%8f%a0 aria-label=折叠>折叠</a></li></ul></li></ul></div></details><div class="post-content md-content"><h2 id=一张图记住vim快捷键>一张图记住vim快捷键<a hidden class=anchor aria-hidden=true href=#一张图记住vim快捷键>#</a></h2><p><img alt=vi-vim-cheat-sheet-sch1.gif loading=lazy src=/images/vi-vim-cheat-sheet-sch1_1739447948530_0.gif></p><h2 id=vim的几种模式>vim的几种模式<a hidden class=anchor aria-hidden=true href=#vim的几种模式>#</a></h2><p>普通模式
+插入模式
+可视模式
+搜索模式
+命令模式
+替换模式
+增强模式</p><h3 id=普通模式>普通模式<a hidden class=anchor aria-hidden=true href=#普通模式>#</a></h3><p>此模式中你可以进行跳转、修改文本内容等操作，当然最重要的的还是在此模式下进入其他模式XD
+在任何模式下按<code>&lt;ESC>&lt;ESC></code>即可进入普通模式
+在此模式下可以进入其他模式
+<code>i</code>,<code>INSERT</code>进入插入模式
+<code>v</code>,<code>&lt;S-V></code>,<code>&lt;C-V></code>可分别进入可视模式，可视行模式，可视块模式
+<code>/</code>,<code>?</code>进入搜索模式
+<code>:</code>进入命令模式
+<code>R</code>进入替换模式
+<code>Q</code>进入增强模式</p><blockquote><p><code>/</code>和<code>?</code>均为搜索，前者为向后搜索，后者为向前搜索。搜索后，<code>n</code>向下一个搜索结果跳转，<code>N</code>向前一个搜索结果跳转</p></blockquote><h3 id=插入模式>插入模式<a hidden class=anchor aria-hidden=true href=#插入模式>#</a></h3><p>此模式下可以插入文本内容</p><h3 id=可视模式>可视模式<a hidden class=anchor aria-hidden=true href=#可视模式>#</a></h3><p>此模式下可以对文本进行范围修改</p><h3 id=命令模式>命令模式<a hidden class=anchor aria-hidden=true href=#命令模式>#</a></h3><p>此模式可以执行各种命令，<code>:!command</code>可执行外部命令
+<strong>一些简单命令的介绍</strong>
+<code>wirte fileName</code>将文件保存为fileName，如果没有fileName，则仅保存。可简写为<code>w fileName</code>
+<code>quit</code> 退出vim，<code>quit!</code>为强制退出，即不保存退出。可简写为<code>q</code>
+<code>edit fileName</code> 编辑fileName的文件。
+<code>help</code> 获取帮助，可简写为<code>h</code>
+<code>.</code> 重复上一次操作
+<code>[range]s/old/new/[option]</code>将old替换为new
+<code>[range]</code>为范围，<code>x,y</code>代表从第x行到第y行
+特别的：<code>.</code>为当前行
+<code>[option]</code>为选项，<code>/g</code>表示全部替换；<code>/c</code>表示需要确认；<code>/p</code>表示替换结果逐行显示
+如要组合使用，应这样写<code>/cgp</code>，并非这样<code>/g/c</code></p><h3 id=替换模式>替换模式<a hidden class=anchor aria-hidden=true href=#替换模式>#</a></h3><p>插入模式下按<code>INSERT</code>可进入替换模式
+此模式下可将已输入的内容替换为将要输入的内容</p><blockquote><p>example:
+将<em>wrod</em>改为<em>word</em>
+仅需将光标跳到<em>wrod</em>上,进入<strong>替换模式</strong>来重新打一遍<em>word</em>即可</p></blockquote><h2 id=在vim中移动>在vim中移动<a hidden class=anchor aria-hidden=true href=#在vim中移动>#</a></h2><h3 id=常规移动>常规移动<a hidden class=anchor aria-hidden=true href=#常规移动>#</a></h3><p><code>j</code>;<code>k</code>;<code>h</code>;<code>l</code>或<code>&lt;UP></code>;<code>&lt;DOWN></code>;<code>&lt;LEFT></code>;<code>&lt;RIGHT></code></p><h3 id=滚屏>滚屏<a hidden class=anchor aria-hidden=true href=#滚屏>#</a></h3><p>单行
+<code>&lt;C-E></code> <code>&lt;C-Y></code>
+半屏
+<code>&lt;C-U></code> <code>&lt;C-D></code>
+整屏
+<code>&lt;C-F></code> <code>&lt;C-B></code></p><h3 id=单词间>单词间<a hidden class=anchor aria-hidden=true href=#单词间>#</a></h3><p><code>w</code>跳到下一个单词的后
+<code>e</code>调到单词最后一个字母
+<code>b</code>前一个单词的首字母</p><h3 id=行中>行中<a hidden class=anchor aria-hidden=true href=#行中>#</a></h3><p><code>0</code>行首
+<code>$</code>行尾
+<code>f{char}</code>快速跳转到当前光标到下一个<code>char</code>出现的光标
+<code>F{char}</code>快速跳转到当前光标到前一个<code>char</code>出现的光标</p><h3 id=段落间>段落间<a hidden class=anchor aria-hidden=true href=#段落间>#</a></h3><p><code>}</code>跳转到下一个空行，即下一段喽
+<code>{</code>跳转到上一个空行</p><h3 id=文件中>文件中<a hidden class=anchor aria-hidden=true href=#文件中>#</a></h3><p><code>]]</code>;<code>G</code>跳到文件底部
+<code>[[</code>;<code>gg</code>跳到文件顶部
+<code>m{a-zA-Z}</code>把当前光标位置设置标记
+<code>'{a-zA-Z}</code>跳到标记处
+<code>''</code>;``跳到跳转前的位置
+<strong>相关命令:</strong>
+<code>:marks</code> 查看已设置的标记
+<code>:delmarks &lt;marks></code> 删除<code>marks</code>标记
+<code>:delmarks!</code> 删除所有标记</p><h2 id=在vim中进行改动>在vim中进行改动<a hidden class=anchor aria-hidden=true href=#在vim中进行改动>#</a></h2><p><code>:read &lt;file></code> 插入文件，将文件内容插入到光标所在位置
+example:
+将外部命令的返回值插入到所编辑文件中
+:read !ls
+<code>I</code>跳到当前行的最前面并进入插入模式
+<code>a</code>在当前光标后进入插入模式
+<code>A</code>跳到当前行的最后面并进入插入模式
+<code>x</code>删除光标所在字符
+<code>d[move]</code>删除(delate)
+example:
+dd #删除当前行
+d5w #删除后5个单词
+<code>c[move]</code>修改(change)
+example:
+<code>cc</code>删除当前行所有内容并进入插入模式
+<code>c$</code>删除当前行所在光标后所有内容并进入插入模式
+<code>r</code>将当前光标内容替换为将要输入的内容</p><h2 id=打造属于你自己的vim配置vimrc>打造属于你自己的vim，配置vimrc<a hidden class=anchor aria-hidden=true href=#打造属于你自己的vim配置vimrc>#</a></h2><p>每个人的vim都是独一无二的，动手打造属于你自己的vim吧</p><h2 id=vim插件推荐>vim插件推荐<a hidden class=anchor aria-hidden=true href=#vim插件推荐>#</a></h2><p><strong>文件管理</strong>
+preservim/NERDTree
+<strong>vim主题</strong>
+tomasr/molokai
+<strong>代码注释</strong>
+scrooloose/nerdcommenter
+<strong>代码查错</strong>
+w0rp/ale
+<strong>自动括号</strong>
+jiangmiao/auto-pairs
+<strong>surround插件</strong>
+tpope/vim-surround
+<strong>回车选中块</strong>
+gcmt/wildfire.vim
+<strong>vim中文文档</strong>
+yianwillis/vimcdoc
+<strong>代码补全</strong>
+neoclide/coc.nvim
+<strong>markdown-preview</strong>
+iamcco/markdown-preview.vim
+<strong>markdown画表插件</strong>
+dhruvasagar/vim-table-mode
+<strong>markdown列表插件</strong>
+dkarter/bullets.vim</p><h2 id=vim使用技巧>vim使用技巧<a hidden class=anchor aria-hidden=true href=#vim使用技巧>#</a></h2><h3 id=vim中高效操作>vim中高效操作<a hidden class=anchor aria-hidden=true href=#vim中高效操作>#</a></h3><p><code>[次数]+[范围]+[操作]+[动作]</code>
+example:
+<code>20dj</code>意为将<code>dj</code>重复20次</p><h3 id=自动格式化>自动格式化<a hidden class=anchor aria-hidden=true href=#自动格式化>#</a></h3><p>让vim给你自动排列
+<code>==</code>排列当前行
+<code>=</code>是一个动作，后面可以加动作，当然前面也可以跟范围
+example:
+<code>=gg</code>从当前行排列到第一行
+<code>=G</code>从当前行排列到最后一行</p><h3 id=保存某范围内容到某个文件>保存某范围内容到某个文件<a hidden class=anchor aria-hidden=true href=#保存某范围内容到某个文件>#</a></h3><p><code>lin1,lin2 wirte filename</code>
+example:
+<code>100-50,100+50 w filename</code>
+范围是可以使用表达式的</p><h3 id=录制宏>录制宏<a hidden class=anchor aria-hidden=true href=#录制宏>#</a></h3><p><code>q[寄存器名]</code>录制,以后的操作可以录制下来,方便重复使用
+<code>@[寄存器名]</code>使用宏</p><h3 id=折叠>折叠<a hidden class=anchor aria-hidden=true href=#折叠>#</a></h3><p>让vim帮你折叠一些行，方便查看内容</p></div><footer class=post-footer><ul class=post-tags><li><a href=https://ziwindlu.github.io/tags/vim/>Vim</a></li><li><a href=https://ziwindlu.github.io/tags/%E5%BF%AB%E6%8D%B7%E9%94%AE/>快捷键</a></li></ul><nav class=paginav><a class=prev href=https://ziwindlu.github.io/posts/vimiumc/><span class=title>« 上一页</span>
+<span>vimiumC-浏览器利器</span>
+</a><a class=next href=https://ziwindlu.github.io/posts/yadm-dotfiles/><span class=title>下一页 »</span>
+<span>yadm优雅地管理dotfile</span></a></nav></footer></article></main><footer class=footer><span>&copy; 2026 <a href=https://ziwindlu.github.io/>ziwindlu 的博客</a></span> ·
+<span>Powered by
+<a href="https://gohugo.io/?utm_source=papermod" rel=noopener target=_blank>Hugo</a> &
+<a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top id=top-link class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey=g><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up"><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg>
+</a><script>let menu=document.getElementById("menu");if(menu){const e=localStorage.getItem("menu-scroll-position");e&&(menu.scrollLeft=parseInt(e,10));let t;menu.addEventListener("scroll",function(){clearTimeout(t),t=setTimeout(function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)},150)},{passive:!0})}document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var n=this.getAttribute("href").substr(1);const t=document.querySelector(`[id='${decodeURIComponent(n)}']`);window.matchMedia("(prefers-reduced-motion: reduce)").matches?t.scrollIntoView():t.scrollIntoView({behavior:"smooth"}),t.tabIndex<0&&!t.hasAttribute("tabindex")&&t.setAttribute("tabindex","-1"),t.focus({preventScroll:!0}),n==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${n}`)})})</script><script>var toplink=document.getElementById("top-link"),scrollTicking=!1;window.addEventListener("scroll",function(){if(scrollTicking)return;scrollTicking=!0,requestAnimationFrame(function(){const e=window.innerHeight,t=document.body.scrollTop>e||document.documentElement.scrollTop>e;toplink.classList.toggle("hidden",!t),scrollTicking=!1})},{passive:!0})</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{const e=document.querySelector("html");e.dataset.theme==="dark"?(e.dataset.theme="light",localStorage.setItem("pref-theme","light")):(e.dataset.theme="dark",localStorage.setItem("pref-theme","dark"))})</script><script>document.querySelectorAll("pre > code").forEach(e=>{const n=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="复制";function s(){t.innerHTML="已复制！",setTimeout(()=>{t.innerHTML="复制"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),s();return}const n=document.createRange();n.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(n);try{document.execCommand("copy"),s()}catch{}o.removeRange(n)}),n.classList.contains("highlight")?n.appendChild(t):n.parentNode.firstChild==n||(e.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?e.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(t):e.parentNode.appendChild(t))})</script></body></html>

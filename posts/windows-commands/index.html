@@ -1,0 +1,103 @@
+<!doctype html><html lang=zh dir=auto data-theme=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>Windows命令 | ziwindlu 的博客</title><meta name=keywords content="未分类"><meta name=description content='文件相关 #card #forward
+id:: 67b98630-7efd-480f-bbad-4e5e7479e33d
+cd切换目录，特殊的如果进入其他盘符应该这样X:而不是cd X:，x为你向进入的盘符
+dir列出文件，列出隐藏文件-a
+type输出文件内容
+move移动，重命名文件
+copy复制文件
+ren重命名
+findstr查找内容类似grep
+del删除
+mkdir创建目录
+rmdir删除目录
+用户和用户组管理 #card #forward
+id:: 67a6bca0-f234-42fd-8a5e-c277dc9868aa
+用户相关操作
+查看用户信息:net user [USERNAME]
+创建新用户:net user USERNAME PASSWORD /add
+删除用户:net user USERNAME /delete
+修改密码:net user USERNAME NEW_PASSWORD
+启用/禁用用户:net user USERNAME /active:<yes/no>
+用户组相关操作
+查看用户组，新建用户组，删除用户组和用户的操作相同，将net user改为net localgroup即可
+添加用户到用户组:net localgroup GROUPNAME USERNAME /add
+从用户组中删除用户:net localgroup GROUPNAME USERNAME /delete
+激活administrator
+net user administator active
+权限相关 #card #forward
+id:: 67b986c4-f71a-49d5-9012-824a945fe568
+查看当前用户权限
+whoami /priv
+查看用户详细信息
+whoami /all
+网络相关
+netstat -ano查看网络连接
+ipconfig网卡信息
+进程相关 #card #forward
+id:: 67b9882e-0bd4-4457-8afe-dc4da64f0ea1
+taskllist列出进程
+taskkill /pid 1022关闭进程
+文件共享 #card #forward
+id:: 67b98949-cc31-4bc6-9d95-a2d5ec056b68
+net use查看文件共享
+net use \\IP地址或主机名 /user:administrator "密码"创建文件共享
+net use 共享连接名 /del删除文件共享
+票据相关 #card #forward
+id:: 67c71a77-14cc-4c64-8a26-26bf758f7ed1
+klist查看票据
+klist purge清空票据'><meta name=author content="ziwindlu"><link rel=canonical href=https://ziwindlu.github.io/posts/windows-commands/><link crossorigin=anonymous href=/assets/css/stylesheet.95ae6e9689bd0037456375629f411acbf8ed76e0e9a7599900ad281f9526dee6.css integrity="sha256-la5ulom9ADdFY3Vin0Eay/jtduDpp1mZAK0oH5Um3uY=" rel="preload stylesheet" as=style><link rel=icon href=https://ziwindlu.github.io/favicon.svg><link rel=icon type=image/png sizes=16x16 href=https://ziwindlu.github.io/favicon.svg><link rel=icon type=image/png sizes=32x32 href=https://ziwindlu.github.io/favicon.svg><link rel=apple-touch-icon href=https://ziwindlu.github.io/favicon.svg><link rel=mask-icon href=https://ziwindlu.github.io/favicon.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=zh href=https://ziwindlu.github.io/posts/windows-commands/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51);color-scheme:dark}.list{background:var(--theme)}.toc{background:var(--entry)}}</style></noscript><script>localStorage.getItem("pref-theme")==="dark"?document.querySelector("html").dataset.theme="dark":localStorage.getItem("pref-theme")==="light"?document.querySelector("html").dataset.theme="light":window.matchMedia("(prefers-color-scheme: dark)").matches?document.querySelector("html").dataset.theme="dark":document.querySelector("html").dataset.theme="light"</script><meta property="og:url" content="https://ziwindlu.github.io/posts/windows-commands/"><meta property="og:site_name" content="ziwindlu 的博客"><meta property="og:title" content="Windows命令"><meta property="og:description" content='文件相关 #card #forward id:: 67b98630-7efd-480f-bbad-4e5e7479e33d cd切换目录，特殊的如果进入其他盘符应该这样X:而不是cd X:，x为你向进入的盘符 dir列出文件，列出隐藏文件-a type输出文件内容 move移动，重命名文件 copy复制文件 ren重命名 findstr查找内容类似grep del删除 mkdir创建目录 rmdir删除目录
+用户和用户组管理 #card #forward id:: 67a6bca0-f234-42fd-8a5e-c277dc9868aa
+用户相关操作 查看用户信息:net user [USERNAME] 创建新用户:net user USERNAME PASSWORD /add 删除用户:net user USERNAME /delete 修改密码:net user USERNAME NEW_PASSWORD 启用/禁用用户:net user USERNAME /active:<yes/no>
+用户组相关操作 查看用户组，新建用户组，删除用户组和用户的操作相同，将net user改为net localgroup即可 添加用户到用户组:net localgroup GROUPNAME USERNAME /add 从用户组中删除用户:net localgroup GROUPNAME USERNAME /delete
+激活administrator net user administator active
+权限相关 #card #forward id:: 67b986c4-f71a-49d5-9012-824a945fe568 查看当前用户权限 whoami /priv 查看用户详细信息 whoami /all
+网络相关 netstat -ano查看网络连接 ipconfig网卡信息
+进程相关 #card #forward id:: 67b9882e-0bd4-4457-8afe-dc4da64f0ea1 taskllist列出进程 taskkill /pid 1022关闭进程
+文件共享 #card #forward id:: 67b98949-cc31-4bc6-9d95-a2d5ec056b68 net use查看文件共享 net use \\IP地址或主机名 /user:administrator "密码"创建文件共享 net use 共享连接名 /del删除文件共享
+票据相关 #card #forward id:: 67c71a77-14cc-4c64-8a26-26bf758f7ed1 klist查看票据 klist purge清空票据'><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2026-04-03T00:00:00+08:00"><meta property="article:modified_time" content="2026-04-03T00:00:00+08:00"><meta property="article:tag" content="未分类"><meta name=twitter:card content="summary"><meta name=twitter:title content="Windows命令"><meta name=twitter:description content='文件相关 #card #forward id:: 67b98630-7efd-480f-bbad-4e5e7479e33d cd切换目录，特殊的如果进入其他盘符应该这样X:而不是cd X:，x为你向进入的盘符 dir列出文件，列出隐藏文件-a type输出文件内容 move移动，重命名文件 copy复制文件 ren重命名 findstr查找内容类似grep del删除 mkdir创建目录 rmdir删除目录
+用户和用户组管理 #card #forward id:: 67a6bca0-f234-42fd-8a5e-c277dc9868aa
+用户相关操作 查看用户信息:net user [USERNAME] 创建新用户:net user USERNAME PASSWORD /add 删除用户:net user USERNAME /delete 修改密码:net user USERNAME NEW_PASSWORD 启用/禁用用户:net user USERNAME /active:<yes/no>
+用户组相关操作 查看用户组，新建用户组，删除用户组和用户的操作相同，将net user改为net localgroup即可 添加用户到用户组:net localgroup GROUPNAME USERNAME /add 从用户组中删除用户:net localgroup GROUPNAME USERNAME /delete
+激活administrator net user administator active
+权限相关 #card #forward id:: 67b986c4-f71a-49d5-9012-824a945fe568 查看当前用户权限 whoami /priv 查看用户详细信息 whoami /all
+网络相关 netstat -ano查看网络连接 ipconfig网卡信息
+进程相关 #card #forward id:: 67b9882e-0bd4-4457-8afe-dc4da64f0ea1 taskllist列出进程 taskkill /pid 1022关闭进程
+文件共享 #card #forward id:: 67b98949-cc31-4bc6-9d95-a2d5ec056b68 net use查看文件共享 net use \\IP地址或主机名 /user:administrator "密码"创建文件共享 net use 共享连接名 /del删除文件共享
+票据相关 #card #forward id:: 67c71a77-14cc-4c64-8a26-26bf758f7ed1 klist查看票据 klist purge清空票据'><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"文章","item":"https://ziwindlu.github.io/posts/"},{"@type":"ListItem","position":2,"name":"Windows命令","item":"https://ziwindlu.github.io/posts/windows-commands/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"Windows命令","name":"Windows命令","description":"文件相关 #card #forward id:: 67b98630-7efd-480f-bbad-4e5e7479e33d cd切换目录，特殊的如果进入其他盘符应该这样X:而不是cd X:，x为你向进入的盘符 dir列出文件，列出隐藏文件-a type输出文件内容 move移动，重命名文件 copy复制文件 ren重命名 findstr查找内容类似grep del删除 mkdir创建目录 rmdir删除目录\n用户和用户组管理 #card #forward id:: 67a6bca0-f234-42fd-8a5e-c277dc9868aa\n用户相关操作 查看用户信息:net user [USERNAME] 创建新用户:net user USERNAME PASSWORD /add 删除用户:net user USERNAME /delete 修改密码:net user USERNAME NEW_PASSWORD 启用/禁用用户:net user USERNAME /active:\u0026lt;yes/no\u0026gt;\n用户组相关操作 查看用户组，新建用户组，删除用户组和用户的操作相同，将net user改为net localgroup即可 添加用户到用户组:net localgroup GROUPNAME USERNAME /add 从用户组中删除用户:net localgroup GROUPNAME USERNAME /delete\n激活administrator net user administator active\n权限相关 #card #forward id:: 67b986c4-f71a-49d5-9012-824a945fe568 查看当前用户权限 whoami /priv 查看用户详细信息 whoami /all\n网络相关 netstat -ano查看网络连接 ipconfig网卡信息\n进程相关 #card #forward id:: 67b9882e-0bd4-4457-8afe-dc4da64f0ea1 taskllist列出进程 taskkill /pid 1022关闭进程\n文件共享 #card #forward id:: 67b98949-cc31-4bc6-9d95-a2d5ec056b68 net use查看文件共享 net use \\\\IP地址或主机名 /user:administrator \u0026quot;密码\u0026quot;创建文件共享 net use 共享连接名 /del删除文件共享\n票据相关 #card #forward id:: 67c71a77-14cc-4c64-8a26-26bf758f7ed1 klist查看票据 klist purge清空票据\n","keywords":["未分类"],"articleBody":"文件相关 #card #forward id:: 67b98630-7efd-480f-bbad-4e5e7479e33d cd切换目录，特殊的如果进入其他盘符应该这样X:而不是cd X:，x为你向进入的盘符 dir列出文件，列出隐藏文件-a type输出文件内容 move移动，重命名文件 copy复制文件 ren重命名 findstr查找内容类似grep del删除 mkdir创建目录 rmdir删除目录\n用户和用户组管理 #card #forward id:: 67a6bca0-f234-42fd-8a5e-c277dc9868aa\n用户相关操作 查看用户信息:net user [USERNAME] 创建新用户:net user USERNAME PASSWORD /add 删除用户:net user USERNAME /delete 修改密码:net user USERNAME NEW_PASSWORD 启用/禁用用户:net user USERNAME /active:\n用户组相关操作 查看用户组，新建用户组，删除用户组和用户的操作相同，将net user改为net localgroup即可 添加用户到用户组:net localgroup GROUPNAME USERNAME /add 从用户组中删除用户:net localgroup GROUPNAME USERNAME /delete\n激活administrator net user administator active\n权限相关 #card #forward id:: 67b986c4-f71a-49d5-9012-824a945fe568 查看当前用户权限 whoami /priv 查看用户详细信息 whoami /all\n网络相关 netstat -ano查看网络连接 ipconfig网卡信息\n进程相关 #card #forward id:: 67b9882e-0bd4-4457-8afe-dc4da64f0ea1 taskllist列出进程 taskkill /pid 1022关闭进程\n文件共享 #card #forward id:: 67b98949-cc31-4bc6-9d95-a2d5ec056b68 net use查看文件共享 net use \\\\IP地址或主机名 /user:administrator \"密码\"创建文件共享 net use 共享连接名 /del删除文件共享\n票据相关 #card #forward id:: 67c71a77-14cc-4c64-8a26-26bf758f7ed1 klist查看票据 klist purge清空票据\n","wordCount":"109","inLanguage":"zh","datePublished":"2026-04-03T00:00:00+08:00","dateModified":"2026-04-03T00:00:00+08:00","author":{"@type":"Person","name":"ziwindlu"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://ziwindlu.github.io/posts/windows-commands/"},"publisher":{"@type":"Organization","name":"ziwindlu 的博客","logo":{"@type":"ImageObject","url":"https://ziwindlu.github.io/favicon.svg"}}}</script></head><body id=top><header class=header><nav class=header-nav><div class=logo><a href=https://ziwindlu.github.io/ accesskey=h title="ziwindlu 的博客 (Alt + H)">ziwindlu 的博客</a><div class=logo-switches><button id=theme-toggle class=theme-toggle accesskey=t title="(Alt + T)" aria-label="Toggle theme">
+<svg class="moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+<svg class="sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu class=menu><li><a href=https://ziwindlu.github.io/ title=首页><span>首页</span></a></li><li><a href=https://ziwindlu.github.io/posts/ title=文章><span>文章</span></a></li><li><a href=https://ziwindlu.github.io/tags/ title=标签><span>标签</span></a></li><li><a href=https://ziwindlu.github.io/search/ title=搜索><span>搜索</span></a></li><li><a href=https://ziwindlu.github.io/about/ title=关于><span>关于</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><h1 class="post-title entry-hint-parent">Windows命令</h1><div class=post-meta><span title=2026-04-03T00:00:00+08:00>2026-04-03</span>&nbsp;·&nbsp;<span>1 分钟</span>&nbsp;·&nbsp;<span>ziwindlu</span>&nbsp;·&nbsp;<span class=post-source>源笔记：<code>02-Knowledge/系统/Windows命令.md</code></span></div></header><details class=toc><summary accesskey=c title="(Alt + C)"><span class=title>目录</span></summary><div class=inner><ul><li><a href=#%e6%96%87%e4%bb%b6%e7%9b%b8%e5%85%b3-card-forward aria-label="文件相关 #card #forward">文件相关 #card #forward</a></li><li><a href=#%e7%94%a8%e6%88%b7%e5%92%8c%e7%94%a8%e6%88%b7%e7%bb%84%e7%ae%a1%e7%90%86-card-forward aria-label="用户和用户组管理 #card #forward">用户和用户组管理 #card #forward</a><ul><li><a href=#%e7%94%a8%e6%88%b7%e7%9b%b8%e5%85%b3%e6%93%8d%e4%bd%9c aria-label=用户相关操作>用户相关操作</a></li><li><a href=#%e7%94%a8%e6%88%b7%e7%bb%84%e7%9b%b8%e5%85%b3%e6%93%8d%e4%bd%9c aria-label=用户组相关操作>用户组相关操作</a></li><li><a href=#%e6%bf%80%e6%b4%bbadministrator aria-label=激活administrator>激活administrator</a></li></ul></li><li><a href=#%e6%9d%83%e9%99%90%e7%9b%b8%e5%85%b3-card-forward aria-label="权限相关 #card #forward">权限相关 #card #forward</a></li><li><a href=#%e7%bd%91%e7%bb%9c%e7%9b%b8%e5%85%b3 aria-label=网络相关>网络相关</a></li><li><a href=#%e8%bf%9b%e7%a8%8b%e7%9b%b8%e5%85%b3-card-forward aria-label="进程相关 #card #forward">进程相关 #card #forward</a></li><li><a href=#%e6%96%87%e4%bb%b6%e5%85%b1%e4%ba%ab-card-forward aria-label="文件共享 #card #forward">文件共享 #card #forward</a></li><li><a href=#%e7%a5%a8%e6%8d%ae%e7%9b%b8%e5%85%b3-card-forward aria-label="票据相关 #card #forward">票据相关 #card #forward</a></li></ul></div></details><div class="post-content md-content"><h2 id=文件相关-card-forward>文件相关 #card #forward<a hidden class=anchor aria-hidden=true href=#文件相关-card-forward>#</a></h2><p>id:: 67b98630-7efd-480f-bbad-4e5e7479e33d
+<code>cd</code>切换目录，特殊的如果进入其他盘符应该这样<code>X:</code>而不是<code>cd X:</code>，x为你向进入的盘符
+<code>dir</code>列出文件，列出隐藏文件<code>-a</code>
+<code>type</code>输出文件内容
+<code>move</code>移动，重命名文件
+<code>copy</code>复制文件
+<code>ren</code>重命名
+<code>findstr</code>查找内容类似grep
+<code>del</code>删除
+<code>mkdir</code>创建目录
+<code>rmdir</code>删除目录</p><h2 id=用户和用户组管理-card-forward>用户和用户组管理 #card #forward<a hidden class=anchor aria-hidden=true href=#用户和用户组管理-card-forward>#</a></h2><p>id:: 67a6bca0-f234-42fd-8a5e-c277dc9868aa</p><h3 id=用户相关操作>用户相关操作<a hidden class=anchor aria-hidden=true href=#用户相关操作>#</a></h3><p><strong>查看用户信息</strong>:<code>net user [USERNAME]</code>
+<strong>创建新用户</strong>:<code>net user USERNAME PASSWORD /add</code>
+<strong>删除用户</strong>:<code>net user USERNAME /delete</code>
+<strong>修改密码</strong>:<code>net user USERNAME NEW_PASSWORD</code>
+<strong>启用/禁用用户</strong>:<code>net user USERNAME /active:&lt;yes/no></code></p><h3 id=用户组相关操作>用户组相关操作<a hidden class=anchor aria-hidden=true href=#用户组相关操作>#</a></h3><p><strong>查看用户组</strong>，<strong>新建用户组</strong>，<strong>删除用户组</strong>和用户的操作相同，将<code>net user</code>改为<code>net localgroup</code>即可
+<strong>添加用户到用户组</strong>:<code>net localgroup GROUPNAME USERNAME /add</code>
+<strong>从用户组中删除用户</strong>:<code>net localgroup GROUPNAME USERNAME /delete</code></p><h3 id=激活administrator>激活administrator<a hidden class=anchor aria-hidden=true href=#激活administrator>#</a></h3><p><code>net user administator active</code></p><h2 id=权限相关-card-forward>权限相关 #card #forward<a hidden class=anchor aria-hidden=true href=#权限相关-card-forward>#</a></h2><p>id:: 67b986c4-f71a-49d5-9012-824a945fe568
+查看当前用户权限
+<code>whoami /priv</code>
+查看用户详细信息
+<code>whoami /all</code></p><h2 id=网络相关>网络相关<a hidden class=anchor aria-hidden=true href=#网络相关>#</a></h2><p><code>netstat -ano</code>查看网络连接
+<code>ipconfig</code>网卡信息</p><h2 id=进程相关-card-forward>进程相关 #card #forward<a hidden class=anchor aria-hidden=true href=#进程相关-card-forward>#</a></h2><p>id:: 67b9882e-0bd4-4457-8afe-dc4da64f0ea1
+<code>taskllist</code>列出进程
+<code>taskkill /pid 1022</code>关闭进程</p><h2 id=文件共享-card-forward>文件共享 #card #forward<a hidden class=anchor aria-hidden=true href=#文件共享-card-forward>#</a></h2><p>id:: 67b98949-cc31-4bc6-9d95-a2d5ec056b68
+<code>net use</code>查看文件共享
+<code>net use \\IP地址或主机名 /user:administrator "密码"</code>创建文件共享
+<code>net use 共享连接名 /del</code>删除文件共享</p><h2 id=票据相关-card-forward>票据相关 #card #forward<a hidden class=anchor aria-hidden=true href=#票据相关-card-forward>#</a></h2><p>id:: 67c71a77-14cc-4c64-8a26-26bf758f7ed1
+<code>klist</code>查看票据
+<code>klist purge</code>清空票据</p></div><footer class=post-footer><ul class=post-tags><li><a href=https://ziwindlu.github.io/tags/%E6%9C%AA%E5%88%86%E7%B1%BB/>未分类</a></li></ul><nav class=paginav><a class=prev href=https://ziwindlu.github.io/posts/trunk/><span class=title>« 上一页</span>
+<span>trunk</span>
+</a><a class=next href=https://ziwindlu.github.io/posts/windows-authentication/><span class=title>下一页 »</span>
+<span>windows认证</span></a></nav></footer></article></main><footer class=footer><span>&copy; 2026 <a href=https://ziwindlu.github.io/>ziwindlu 的博客</a></span> ·
+<span>Powered by
+<a href="https://gohugo.io/?utm_source=papermod" rel=noopener target=_blank>Hugo</a> &
+<a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top id=top-link class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey=g><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up"><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg>
+</a><script>let menu=document.getElementById("menu");if(menu){const e=localStorage.getItem("menu-scroll-position");e&&(menu.scrollLeft=parseInt(e,10));let t;menu.addEventListener("scroll",function(){clearTimeout(t),t=setTimeout(function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)},150)},{passive:!0})}document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var n=this.getAttribute("href").substr(1);const t=document.querySelector(`[id='${decodeURIComponent(n)}']`);window.matchMedia("(prefers-reduced-motion: reduce)").matches?t.scrollIntoView():t.scrollIntoView({behavior:"smooth"}),t.tabIndex<0&&!t.hasAttribute("tabindex")&&t.setAttribute("tabindex","-1"),t.focus({preventScroll:!0}),n==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${n}`)})})</script><script>var toplink=document.getElementById("top-link"),scrollTicking=!1;window.addEventListener("scroll",function(){if(scrollTicking)return;scrollTicking=!0,requestAnimationFrame(function(){const e=window.innerHeight,t=document.body.scrollTop>e||document.documentElement.scrollTop>e;toplink.classList.toggle("hidden",!t),scrollTicking=!1})},{passive:!0})</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{const e=document.querySelector("html");e.dataset.theme==="dark"?(e.dataset.theme="light",localStorage.setItem("pref-theme","light")):(e.dataset.theme="dark",localStorage.setItem("pref-theme","dark"))})</script><script>document.querySelectorAll("pre > code").forEach(e=>{const n=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="复制";function s(){t.innerHTML="已复制！",setTimeout(()=>{t.innerHTML="复制"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),s();return}const n=document.createRange();n.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(n);try{document.execCommand("copy"),s()}catch{}o.removeRange(n)}),n.classList.contains("highlight")?n.appendChild(t):n.parentNode.firstChild==n||(e.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?e.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(t):e.parentNode.appendChild(t))})</script></body></html>

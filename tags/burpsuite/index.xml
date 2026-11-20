@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>burpsuite on ziwindlu 的博客</title><link>https://ziwindlu.github.io/tags/burpsuite/</link><description>Recent content in burpsuite on ziwindlu 的博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Mon, 02 Dec 2024 00:00:00 +0800</lastBuildDate><atom:link href="https://ziwindlu.github.io/tags/burpsuite/index.xml" rel="self" type="application/rss+xml"/><item><title>奶妈级教学从0开始手把手教你使用开心版burpsuite</title><link>https://ziwindlu.github.io/posts/burpsuite-setup/</link><pubDate>Mon, 02 Dec 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/burpsuite-setup/</guid><description>&lt;h2 id="前言"&gt;前言&lt;/h2&gt;
+&lt;p&gt;本文将会从0开始演示在linux环境下的burpsuite开心版使用，以及添加桌面图标。如果你使用的是windows，请随机应变。
+burpsuite版本:2024.10.3&lt;/p&gt;
+&lt;h2 id="java环境搭建"&gt;java环境搭建&lt;/h2&gt;
+&lt;p&gt;为了方便，我们不配置环境变量了，直接将jdk解压下来，直接调用java程序即可
+jdk下载&lt;a href="https://www.oracle.com/cn/java/technologies/downloads/"&gt;Java Downloads | Oracle 中国&lt;/a&gt;，建议使用jdk21&lt;/p&gt;
+&lt;h2 id="物料准备"&gt;物料准备&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;BurpLoaderKeygen.jar&lt;/code&gt;去github搜索吧，这里就不提供下载了。
+&lt;code&gt;burpsuite&lt;/code&gt;
+&lt;a href="https://portswigger.net/burp/releases"&gt;Burp Suite Release Notes&lt;/a&gt;在这里下载，要选专业版，jar包
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1733139655640_0.png"&gt;
+把所有的文件放到一起。burpsuite的jar包下载完成后要重命名为&lt;code&gt;burpsuite_pro.jar&lt;/code&gt;
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1733140387165_0.png"&gt;&lt;/p&gt;
+&lt;h2 id="正文开始"&gt;正文开始&lt;/h2&gt;
+&lt;h3 id="生成启动脚本"&gt;生成启动脚本&lt;/h3&gt;
+&lt;p&gt;运行&lt;code&gt;BurpLoaderKeygen.jar&lt;/code&gt;
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1733140279637_0.png"&gt;
+运行后你会发现下面这个神奇的窗口，点击run你会发现，burpsuite神奇的启动了。
+&lt;img alt="image.png" loading="lazy" src="https://ziwindlu.github.io/images/image_1733140480387_0.png"&gt;
+看到那长长的一串了么，复制下来，扔到shell脚本里去。下次执行shell脚本就可以啦。&lt;/p&gt;
+&lt;h3 id="生成桌面图标"&gt;生成桌面图标&lt;/h3&gt;
+&lt;p&gt;编辑&lt;code&gt;burp.application&lt;/code&gt;写入以下内容&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;[&lt;/span&gt;Desktop Entry&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;Name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;burp
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;Type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;Application
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;Exec&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/path/to/Burp_Suite_Pro_v2024.10.3/burp.sh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;Exec后的脚本要有执行权限，必须写绝对目录
+最后把这个文件扔到&lt;code&gt;/usr/share/applications&lt;/code&gt;中就可以了。
+你的桌面上就会有一个burp了。
+添加图标：去网上找一下burp的图标，下载下来。
+编辑上面的&lt;code&gt;burp.application&lt;/code&gt;，在最后一行加上&lt;code&gt;Icon=/path/to/burp/icon&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;</description></item></channel></rss>

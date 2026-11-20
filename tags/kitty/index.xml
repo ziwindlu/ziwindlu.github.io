@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>kitty on ziwindlu 的博客</title><link>https://ziwindlu.github.io/tags/kitty/</link><description>Recent content in kitty on ziwindlu 的博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Tue, 12 Nov 2024 00:00:00 +0800</lastBuildDate><atom:link href="https://ziwindlu.github.io/tags/kitty/index.xml" rel="self" type="application/rss+xml"/><item><title>kitty+shell集成打造强劲的ssh工具</title><link>https://ziwindlu.github.io/posts/kitty-shell-ssh/</link><pubDate>Tue, 12 Nov 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/kitty-shell-ssh/</guid><description>&lt;h2 id="引子"&gt;引子&lt;/h2&gt;
+&lt;p&gt;不想额外下载一个软件来进行ssh管理。俺发现俺现在使用的终端，其附带的功能完全可以打造一个ssh工具。
+本文通过ssh+kitty实现了以下功能
+便捷的ssh连接 快速复制一个ssh链接
+文件上传下载 无需拖拽，纯命令上传下载
+属于你自己的终端环境 多用户协作下无敌的爽感&lt;/p&gt;
+&lt;h2 id="便捷的连接"&gt;便捷的连接&lt;/h2&gt;
+&lt;p&gt;在kitty中连接ssh需要使用&lt;code&gt;kitten ssh username@host&lt;/code&gt;
+可以在&lt;code&gt;.bashrc&lt;/code&gt;中添加&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ssh&lt;span class="o"&gt;(){&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="nv"&gt;$TERM&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;xterm-kitty&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;kitten ssh &lt;span class="nv"&gt;$*&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;else&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;command&lt;/span&gt; ssh &lt;span class="nv"&gt;$*&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="ssh配置"&gt;ssh配置&lt;/h3&gt;
+&lt;p&gt;是不是厌倦了每次都输入&lt;code&gt;ssh username@host&lt;/code&gt;，你是时候使用ssh配置了
+用户的ssh配置在&lt;code&gt;~/.ssh/config&lt;/code&gt;
+示例配置&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 这样会让配置文件显得更有调理&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Include ~/.ssh/config.d/*.conf
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Host home_pc
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;HostName 192.168.0.100
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;User root
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Port &lt;span class="m"&gt;22&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;IdentityFile ~/.ssh/id_ed25519
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这样就可以使用&lt;code&gt;ssh home_pc&lt;/code&gt;愉快的连接了&lt;/p&gt;
+&lt;h3 id="复制当前ssh和当前环境变量"&gt;复制当前ssh和当前环境变量&lt;/h3&gt;
+&lt;p&gt;需要打开shell集成&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code class="language-conf" data-lang="conf"&gt;# lunch --cwd=current 会复制当前的环境变量，如果添加了ssh集成，
+map kitty_mod+shift+enter launch --cwd=current
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;用法&lt;code&gt;alt+shift+enter&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="文件传输"&gt;文件传输&lt;/h2&gt;
+&lt;p&gt;在kitty中使用&lt;code&gt;kitten transfer&lt;/code&gt;可以进行下载或上传文件
+由于命令过于长，俺在bashrc中定义了一个方法，如果传入的第一个文件不存在则认为是上传，存在则是下载&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# kitty upload file&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;kcp&lt;span class="o"&gt;(){&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; -e &lt;span class="nv"&gt;$1&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 本地不存在有该文件则认为是从本地下载到远程&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;kitten transfer &lt;span class="nv"&gt;$*&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;else&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 本地存在该文件则认为是从远程上传到本地&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;kitten transfer --direction&lt;span class="o"&gt;=&lt;/span&gt;upload &lt;span class="nv"&gt;$*&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;用法：
+&lt;code&gt;kcp file1 file2&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="打造属于你自己的的终端环境"&gt;打造属于你自己的的终端环境&lt;/h2&gt;
+&lt;p&gt;通过kitty配置，为每一个连接到的ssh服务器配置自己熟悉的alias、软件、环境变量。
+配置kitty
+编辑&lt;code&gt;~/.config/kitty/ssh.conf&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 主机名&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;hostname ka
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# zsh&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;env &lt;span class="nv"&gt;ZDOTDIR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$HOME&lt;/span&gt;/.kitty
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;env &lt;span class="nv"&gt;remote_home&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$HOME&lt;/span&gt;/.kitty
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;copy --dest .kitty/.zshrc .zshrc
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;copy --dest .kitty/.bashrc .bashrc_kitty_remote
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# vim&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;env &lt;span class="nv"&gt;VIMINIT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;source&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;.kitty/.vimrc&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;copy --dest .kitty/.vimrc .vimrc_kitty_remote
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;配置了这个配置文件后，当连接到主机ka时，kitty会自动复制当前主机的zshrc、bashrc和vimrc到主机ka上。而且不会破坏其原有的配置。&lt;/p&gt;
+&lt;h2 id="其他方便的配置"&gt;其他方便的配置&lt;/h2&gt;
+&lt;h3 id="edit-in-kitty-alias"&gt;edit-in-kitty alias&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# kitty edit file&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;kvim &lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;kitten edit-in-kitty &lt;span class="nv"&gt;$@&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;skvim&lt;span class="o"&gt;(){&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;local&lt;/span&gt; &lt;span class="nv"&gt;file&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; ! -e &lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="nv"&gt;$file&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;错误: 文件 &lt;/span&gt;&lt;span class="nv"&gt;$file&lt;/span&gt;&lt;span class="s2"&gt; 不存在。&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;local&lt;/span&gt; original_permissions
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;original_permissions&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;stat -c &lt;span class="s2"&gt;&amp;#34;%a&amp;#34;&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="nv"&gt;$file&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo chmod &lt;span class="m"&gt;777&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="nv"&gt;$file&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;kitten edit-in-kitty &lt;span class="nv"&gt;$file&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo chmod &lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="nv"&gt;$original_permissions&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="nv"&gt;$file&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;kvi &lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;kitten edit-in-kitty &lt;span class="nv"&gt;$@&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="参考"&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://sw.kovidgoyal.net/kitty/"&gt;kitty&lt;/a&gt;&lt;/p&gt;</description></item><item><title>kitty</title><link>https://ziwindlu.github.io/posts/kitty/</link><pubDate>Wed, 10 Apr 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/kitty/</guid><description>&lt;h2 id="引子"&gt;引子&lt;/h2&gt;
+&lt;p&gt;一直以来都在使用xfce4的终端，偶然发现了tmux，才有了换终端的想法
+经过一系列对比，最后选择了kitty
+为什么选择kitty:
+高度定制化
+gpu渲染
+linux,mac双端使用
+shell集成
+本文记录了一些kitty的配置、快捷键、使用方法、插件。
+下面的快捷键大部分只是将&lt;code&gt;ctrl+shift&lt;/code&gt;替换为了&lt;code&gt;alt&lt;/code&gt;，使用&lt;code&gt;~&lt;/code&gt;来代表相同项
+配置在conf或config代码块中
+功能太多暂时探索这么多&lt;/p&gt;
+&lt;h2 id="快捷键"&gt;快捷键&lt;/h2&gt;
+&lt;h3 id="经常用到的"&gt;经常用到的&lt;/h3&gt;
+&lt;p&gt;复制粘贴&lt;code&gt;c-s-c&lt;/code&gt;,&lt;code&gt;c-s-v&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="屏幕滚动"&gt;屏幕滚动&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;orgin shortcut&lt;/th&gt;
+&lt;th&gt;my shortcut&lt;/th&gt;
+&lt;th&gt;action&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;~&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;mod+up&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;向上一行&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;~&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;mod+down&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;向下一行&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mod+page_up&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;mod+u&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;向上一页&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mod+page_down&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;mod+d&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;向下一页&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mod+home&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;mod+shift+u&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;移动到顶端&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mod+end&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;mod+shift+d&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;移动到结尾&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;~&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;mod+z&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;到上一个命令输入的地方&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;~&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;mod+x&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;到下一个要输入命令的地方&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mod+h&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;mod+shift+h&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;使用less浏览历史(已经使用alias vimhis代替)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;~&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;mod+g&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;使用less浏览上一个命令的输出&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="tab相关"&gt;tab相关&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;shortcut&lt;/th&gt;
+&lt;th&gt;action&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mod-t&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;新建tab&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mod+q&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;关闭tab&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mod-right/left&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;移动tab&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;c-s-,/.&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;将tab往前往后移动&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mod+shift-t&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;命名tab&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mod+0-9&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;跳转到对应的tab&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="window相关"&gt;window相关&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;shortcut&lt;/th&gt;
+&lt;th&gt;action&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mod+enter&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;新建一个窗口&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mod+shift+enter&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;新建一个窗口并复制环境变量&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mod+w&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;关闭窗口&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mod+r&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;调整窗口大小(比较反人类)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mod+[/]&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;窗口间移动(emmm,勉强能用)已经调整为hjkl&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mod+h/l/j/k&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;窗口移动like i3&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mod+n&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;切换布局，kitty默认将所有布局都开启了详情请见&lt;code&gt;kitty layouts&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mod+shift+up/down/left/right&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;调整窗口大小&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mod+s&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;可视化交换窗口&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="自定义配置"&gt;自定义配置&lt;/h3&gt;
+&lt;h4 id="鼠标右键选中命令输出"&gt;鼠标右键选中命令输出&lt;/h4&gt;
+&lt;pre tabindex="0"&gt;&lt;code class="language-conf" data-lang="conf"&gt;mouse_map right press ungrabbed mouse_select_command_output
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="shell集成"&gt;shell集成&lt;/h2&gt;
+&lt;h3 id="打开shell集成"&gt;打开shell集成&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code class="language-conf" data-lang="conf"&gt;shell_integration enabled
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="特性以及用法"&gt;特性以及用法&lt;/h3&gt;
+&lt;p&gt;在pager中打开最后一个命令的输出 &lt;code&gt;mod+g&lt;/code&gt;
+跳转到上一个或下一个命令输入的地方 &lt;code&gt;mod+z,mod+x&lt;/code&gt;
+在pager中打开鼠标停留处的命令输出 &lt;code&gt;ctrl+shift+right_click&lt;/code&gt;
+新窗口复制当前窗口的环境变量 &lt;code&gt;mod+enter&lt;/code&gt;
+在kitty中编辑文件&lt;code&gt;edit-in-kitty&lt;/code&gt;将远程的文件copy到本地使用本地的编辑器进行编辑&lt;/p&gt;
+&lt;h3 id="在子shell或docker中使用shell集成"&gt;在子shell或docker中使用shell集成&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;kitten run-shell
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="插件"&gt;插件&lt;/h2&gt;
+&lt;p&gt;这里仅介绍了一些俺感兴趣的插件，和一些以后可能用到的插件&lt;/p&gt;
+&lt;h3 id="远程编辑"&gt;远程编辑&lt;/h3&gt;
+&lt;p&gt;在本地编辑器编辑远程文件,再也不用给服务器配置&lt;code&gt;.vimrc&lt;/code&gt;辣
+&lt;code&gt;kitten edit-in-kitty file&lt;/code&gt;运行这个命令后kitty会自动下载kitten二进制文件&lt;/p&gt;</description></item></channel></rss>

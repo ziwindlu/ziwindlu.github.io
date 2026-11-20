@@ -1,0 +1,213 @@
+<!doctype html><html lang=zh dir=auto data-theme=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>跳过芋道文档知识星球认证tampermonkey | ziwindlu 的博客</title><meta name=keywords content="js,tampermonkey"><meta name=description content="引子
+看文档时，每次都弹框不让看。在刷新页面时偶然发现了，文档是先加载出来，然后对已有的文档进行覆盖，然后弹窗。俺第一开始想到的是对文档进行爬取，直接访问robots.txt发现没有访问到，于是俺就放弃了爬取，转而使用油猴脚本进行跳过。经过多次尝试最终完成跳过脚本，方案3为最终解。
+
+声明： 本文内容仅供学习，无不良引导，如有侵权请我请联系删除
+
+方案1:轮询修改body类，移除弹框
+恢复文档(阻止修改)
+查看源码发现js对.content-wrapper进行了覆盖
+
+只需在这个js加载前将ccontent-wrapper的类名改为其他的
+移除弹窗
+俺发现了这两个坏蛋dom节点
+
+这俩dom节点俺决定直接循环移除
+代码编写
+修改某类的类名
+// 获取所有具有类名为 '.abc' 的元素
+const elements = document.querySelectorAll('.abc');
+// 遍历每个元素并修改类名
+elements.forEach(element => {
+element.classList.remove('abc');  // 移除旧的类名
+element.classList.add('bcd');     // 添加新的类名
+});
+移除dom节点
+// 获取节点
+const elements = document.querySelectorAll(&#34;.className&#34;);
+// 遍历移除
+elements.forEach(element => element.remove());
+循环调用
+let timerId; // 用于存储 setTimeout 返回的定时器 ID
+function startLoop() {
+// 执行您想要循环执行的操作
+console.log(&#34;Loop iteration&#34;);
+// 检查满足结束条件的条件
+if (/* 满足结束条件 */) {
+console.log(&#34;Loop ended&#34;);
+return; // 结束循环
+}
+// 设置下一次循环调用的延迟时间
+timerId = setTimeout(startLoop, 1000);
+}
+// 开始循环调用
+startLoop();
+问题和不足
+修改了主要内容的类后，无法进行滚动
+俺没有找到一个合适的条件去终止循环调用
+需要考虑的东西:
+修改类名的时机
+跳转后的修改类名
+判断弹窗已被关闭的条件，弹窗在js加载后会有延迟才能弹出
+跳转后的弹窗关闭
+方案2：模拟已校验用户，劫持校验请求
+校验源码查看
+
+
+
+c()是获取token，查看是否有其值的方法
+校验的大概步骤是
+先调用/zsxq/auth-callback这个接口来重置当前token，重置完成后，获取当前token，判断是否存在存在，没有token会重置主页内容，弹窗。有token会继续调用/zsxq/auth接口进一步鉴权，接口会返回true或false。鉴权失败刷新页面并删除token。
+最简单的方法是，开局设置一个token,随便设置，让他去校验，我们劫持/zsxq/auth这个方法让其永远返回true，就结束了
+代码
+ajax劫持库ajaxHooker-油猴中文网
+设置拦截器
+ajaxHooker.filter([
+// 这些东西要按照实际来设置，俺直接拷贝的参考文档
+{type: 'xhr', url: 'www.example.com', method: 'GET', async: true},
+{url: /^http/},
+]);
+拦截代码编写
+ajaxHooker.hook(request => {
+// 这个还是要进行细粒度控制滴
+if (request.url === 'xxx') {
+request.response = res => {
+console.log(res);
+// 返回改成true
+res.responseText += 'test';
+};
+}
+});
+异步请求写法
+ajaxHooker.hook(async request => {
+request.data = await modifyData(request.data);
+request.response = async res => {
+res.responseText = await modifyResponse(res.responseText);
+};
+});
+问题
+理想很美好，可是俺尝试了多次无果，发现压根没有请求出去emmm
+方案3：模拟已校验用户，劫持导致请求失效的方法
+通过方案2的失败，俺决定另辟蹊径，劫持某些方法。俺手动塞进去一个token进去的时候,token会被校验，然后页面被刷新，于是俺决定从此出发，劫持刷新页面的函数，发送get请求的函数，删除cookie的函数。这样他就不会进行请求，更不会删除token和刷新页面了。这样还避免了被跟踪，一举两得
+代码
+这代码可以直接粘到油猴中使用
+(function() {
+const randomString = Math.random().toString(36).substring(2);
+document.cookie = &#34;88974ed8-6aff-48ab-a7d1-4af5ffea88bb=&#34; + randomString;
+$.get= null;
+Cookies.remove = null;
+location.reload = null;
+})();
+总结
+暂时没有发现问题，用起来非常舒服
+简单暴力，非常优美"><meta name=author content="ziwindlu"><link rel=canonical href=https://ziwindlu.github.io/posts/zsxq-auth-bypass-userscript/><link crossorigin=anonymous href=/assets/css/stylesheet.95ae6e9689bd0037456375629f411acbf8ed76e0e9a7599900ad281f9526dee6.css integrity="sha256-la5ulom9ADdFY3Vin0Eay/jtduDpp1mZAK0oH5Um3uY=" rel="preload stylesheet" as=style><link rel=icon href=https://ziwindlu.github.io/favicon.svg><link rel=icon type=image/png sizes=16x16 href=https://ziwindlu.github.io/favicon.svg><link rel=icon type=image/png sizes=32x32 href=https://ziwindlu.github.io/favicon.svg><link rel=apple-touch-icon href=https://ziwindlu.github.io/favicon.svg><link rel=mask-icon href=https://ziwindlu.github.io/favicon.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=zh href=https://ziwindlu.github.io/posts/zsxq-auth-bypass-userscript/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51);color-scheme:dark}.list{background:var(--theme)}.toc{background:var(--entry)}}</style></noscript><script>localStorage.getItem("pref-theme")==="dark"?document.querySelector("html").dataset.theme="dark":localStorage.getItem("pref-theme")==="light"?document.querySelector("html").dataset.theme="light":window.matchMedia("(prefers-color-scheme: dark)").matches?document.querySelector("html").dataset.theme="dark":document.querySelector("html").dataset.theme="light"</script><meta property="og:url" content="https://ziwindlu.github.io/posts/zsxq-auth-bypass-userscript/"><meta property="og:site_name" content="ziwindlu 的博客"><meta property="og:title" content="跳过芋道文档知识星球认证tampermonkey"><meta property="og:description" content="引子 看文档时，每次都弹框不让看。在刷新页面时偶然发现了，文档是先加载出来，然后对已有的文档进行覆盖，然后弹窗。俺第一开始想到的是对文档进行爬取，直接访问robots.txt发现没有访问到，于是俺就放弃了爬取，转而使用油猴脚本进行跳过。经过多次尝试最终完成跳过脚本，方案3为最终解。
+声明： 本文内容仅供学习，无不良引导，如有侵权请我请联系删除
+方案1:轮询修改body类，移除弹框 恢复文档(阻止修改) 查看源码发现js对.content-wrapper进行了覆盖 只需在这个js加载前将ccontent-wrapper的类名改为其他的
+移除弹窗 俺发现了这两个坏蛋dom节点 这俩dom节点俺决定直接循环移除
+代码编写 修改某类的类名
+// 获取所有具有类名为 '.abc' 的元素 const elements = document.querySelectorAll('.abc'); // 遍历每个元素并修改类名 elements.forEach(element => { element.classList.remove('abc'); // 移除旧的类名 element.classList.add('bcd'); // 添加新的类名 }); 移除dom节点
+// 获取节点 const elements = document.querySelectorAll(&#34;.className&#34;); // 遍历移除 elements.forEach(element => element.remove()); 循环调用
+let timerId; // 用于存储 setTimeout 返回的定时器 ID function startLoop() { // 执行您想要循环执行的操作 console.log(&#34;Loop iteration&#34;); // 检查满足结束条件的条件 if (/* 满足结束条件 */) { console.log(&#34;Loop ended&#34;); return; // 结束循环 } // 设置下一次循环调用的延迟时间 timerId = setTimeout(startLoop, 1000); } // 开始循环调用 startLoop(); 问题和不足 修改了主要内容的类后，无法进行滚动 俺没有找到一个合适的条件去终止循环调用 需要考虑的东西: 修改类名的时机 跳转后的修改类名 判断弹窗已被关闭的条件，弹窗在js加载后会有延迟才能弹出 跳转后的弹窗关闭
+方案2：模拟已校验用户，劫持校验请求 校验源码查看 c()是获取token，查看是否有其值的方法 校验的大概步骤是 先调用/zsxq/auth-callback这个接口来重置当前token，重置完成后，获取当前token，判断是否存在存在，没有token会重置主页内容，弹窗。有token会继续调用/zsxq/auth接口进一步鉴权，接口会返回true或false。鉴权失败刷新页面并删除token。 最简单的方法是，开局设置一个token,随便设置，让他去校验，我们劫持/zsxq/auth这个方法让其永远返回true，就结束了
+代码 ajax劫持库ajaxHooker-油猴中文网 设置拦截器
+ajaxHooker.filter([ // 这些东西要按照实际来设置，俺直接拷贝的参考文档 {type: 'xhr', url: 'www.example.com', method: 'GET', async: true}, {url: /^http/}, ]); 拦截代码编写
+ajaxHooker.hook(request => { // 这个还是要进行细粒度控制滴 if (request.url === 'xxx') { request.response = res => { console.log(res); // 返回改成true res.responseText += 'test'; }; } }); 异步请求写法
+ajaxHooker.hook(async request => { request.data = await modifyData(request.data); request.response = async res => { res.responseText = await modifyResponse(res.responseText); }; }); 问题 理想很美好，可是俺尝试了多次无果，发现压根没有请求出去emmm
+方案3：模拟已校验用户，劫持导致请求失效的方法 通过方案2的失败，俺决定另辟蹊径，劫持某些方法。俺手动塞进去一个token进去的时候,token会被校验，然后页面被刷新，于是俺决定从此出发，劫持刷新页面的函数，发送get请求的函数，删除cookie的函数。这样他就不会进行请求，更不会删除token和刷新页面了。这样还避免了被跟踪，一举两得
+代码 这代码可以直接粘到油猴中使用
+(function() { const randomString = Math.random().toString(36).substring(2); document.cookie = &#34;88974ed8-6aff-48ab-a7d1-4af5ffea88bb=&#34; + randomString; $.get= null; Cookies.remove = null; location.reload = null; })(); 总结 暂时没有发现问题，用起来非常舒服 简单暴力，非常优美"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2024-08-16T00:00:00+08:00"><meta property="article:modified_time" content="2024-08-16T00:00:00+08:00"><meta property="article:tag" content="js"><meta property="article:tag" content="tampermonkey"><meta name=twitter:card content="summary"><meta name=twitter:title content="跳过芋道文档知识星球认证tampermonkey"><meta name=twitter:description content="引子 看文档时，每次都弹框不让看。在刷新页面时偶然发现了，文档是先加载出来，然后对已有的文档进行覆盖，然后弹窗。俺第一开始想到的是对文档进行爬取，直接访问robots.txt发现没有访问到，于是俺就放弃了爬取，转而使用油猴脚本进行跳过。经过多次尝试最终完成跳过脚本，方案3为最终解。
+声明： 本文内容仅供学习，无不良引导，如有侵权请我请联系删除
+方案1:轮询修改body类，移除弹框 恢复文档(阻止修改) 查看源码发现js对.content-wrapper进行了覆盖 只需在这个js加载前将ccontent-wrapper的类名改为其他的
+移除弹窗 俺发现了这两个坏蛋dom节点 这俩dom节点俺决定直接循环移除
+代码编写 修改某类的类名
+// 获取所有具有类名为 '.abc' 的元素 const elements = document.querySelectorAll('.abc'); // 遍历每个元素并修改类名 elements.forEach(element => { element.classList.remove('abc'); // 移除旧的类名 element.classList.add('bcd'); // 添加新的类名 }); 移除dom节点
+// 获取节点 const elements = document.querySelectorAll(&#34;.className&#34;); // 遍历移除 elements.forEach(element => element.remove()); 循环调用
+let timerId; // 用于存储 setTimeout 返回的定时器 ID function startLoop() { // 执行您想要循环执行的操作 console.log(&#34;Loop iteration&#34;); // 检查满足结束条件的条件 if (/* 满足结束条件 */) { console.log(&#34;Loop ended&#34;); return; // 结束循环 } // 设置下一次循环调用的延迟时间 timerId = setTimeout(startLoop, 1000); } // 开始循环调用 startLoop(); 问题和不足 修改了主要内容的类后，无法进行滚动 俺没有找到一个合适的条件去终止循环调用 需要考虑的东西: 修改类名的时机 跳转后的修改类名 判断弹窗已被关闭的条件，弹窗在js加载后会有延迟才能弹出 跳转后的弹窗关闭
+方案2：模拟已校验用户，劫持校验请求 校验源码查看 c()是获取token，查看是否有其值的方法 校验的大概步骤是 先调用/zsxq/auth-callback这个接口来重置当前token，重置完成后，获取当前token，判断是否存在存在，没有token会重置主页内容，弹窗。有token会继续调用/zsxq/auth接口进一步鉴权，接口会返回true或false。鉴权失败刷新页面并删除token。 最简单的方法是，开局设置一个token,随便设置，让他去校验，我们劫持/zsxq/auth这个方法让其永远返回true，就结束了
+代码 ajax劫持库ajaxHooker-油猴中文网 设置拦截器
+ajaxHooker.filter([ // 这些东西要按照实际来设置，俺直接拷贝的参考文档 {type: 'xhr', url: 'www.example.com', method: 'GET', async: true}, {url: /^http/}, ]); 拦截代码编写
+ajaxHooker.hook(request => { // 这个还是要进行细粒度控制滴 if (request.url === 'xxx') { request.response = res => { console.log(res); // 返回改成true res.responseText += 'test'; }; } }); 异步请求写法
+ajaxHooker.hook(async request => { request.data = await modifyData(request.data); request.response = async res => { res.responseText = await modifyResponse(res.responseText); }; }); 问题 理想很美好，可是俺尝试了多次无果，发现压根没有请求出去emmm
+方案3：模拟已校验用户，劫持导致请求失效的方法 通过方案2的失败，俺决定另辟蹊径，劫持某些方法。俺手动塞进去一个token进去的时候,token会被校验，然后页面被刷新，于是俺决定从此出发，劫持刷新页面的函数，发送get请求的函数，删除cookie的函数。这样他就不会进行请求，更不会删除token和刷新页面了。这样还避免了被跟踪，一举两得
+代码 这代码可以直接粘到油猴中使用
+(function() { const randomString = Math.random().toString(36).substring(2); document.cookie = &#34;88974ed8-6aff-48ab-a7d1-4af5ffea88bb=&#34; + randomString; $.get= null; Cookies.remove = null; location.reload = null; })(); 总结 暂时没有发现问题，用起来非常舒服 简单暴力，非常优美"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"文章","item":"https://ziwindlu.github.io/posts/"},{"@type":"ListItem","position":2,"name":"跳过芋道文档知识星球认证tampermonkey","item":"https://ziwindlu.github.io/posts/zsxq-auth-bypass-userscript/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"跳过芋道文档知识星球认证tampermonkey","name":"跳过芋道文档知识星球认证tampermonkey","description":"引子 看文档时，每次都弹框不让看。在刷新页面时偶然发现了，文档是先加载出来，然后对已有的文档进行覆盖，然后弹窗。俺第一开始想到的是对文档进行爬取，直接访问robots.txt发现没有访问到，于是俺就放弃了爬取，转而使用油猴脚本进行跳过。经过多次尝试最终完成跳过脚本，方案3为最终解。\n声明： 本文内容仅供学习，无不良引导，如有侵权请我请联系删除\n方案1:轮询修改body类，移除弹框 恢复文档(阻止修改) 查看源码发现js对.content-wrapper进行了覆盖 只需在这个js加载前将ccontent-wrapper的类名改为其他的\n移除弹窗 俺发现了这两个坏蛋dom节点 这俩dom节点俺决定直接循环移除\n代码编写 修改某类的类名\n// 获取所有具有类名为 \u0026#39;.abc\u0026#39; 的元素 const elements = document.querySelectorAll(\u0026#39;.abc\u0026#39;); // 遍历每个元素并修改类名 elements.forEach(element =\u0026gt; { element.classList.remove(\u0026#39;abc\u0026#39;); // 移除旧的类名 element.classList.add(\u0026#39;bcd\u0026#39;); // 添加新的类名 }); 移除dom节点\n// 获取节点 const elements = document.querySelectorAll(\u0026#34;.className\u0026#34;); // 遍历移除 elements.forEach(element =\u0026gt; element.remove()); 循环调用\nlet timerId; // 用于存储 setTimeout 返回的定时器 ID function startLoop() { // 执行您想要循环执行的操作 console.log(\u0026#34;Loop iteration\u0026#34;); // 检查满足结束条件的条件 if (/* 满足结束条件 */) { console.log(\u0026#34;Loop ended\u0026#34;); return; // 结束循环 } // 设置下一次循环调用的延迟时间 timerId = setTimeout(startLoop, 1000); } // 开始循环调用 startLoop(); 问题和不足 修改了主要内容的类后，无法进行滚动 俺没有找到一个合适的条件去终止循环调用 需要考虑的东西: 修改类名的时机 跳转后的修改类名 判断弹窗已被关闭的条件，弹窗在js加载后会有延迟才能弹出 跳转后的弹窗关闭\n方案2：模拟已校验用户，劫持校验请求 校验源码查看 c()是获取token，查看是否有其值的方法 校验的大概步骤是 先调用/zsxq/auth-callback这个接口来重置当前token，重置完成后，获取当前token，判断是否存在存在，没有token会重置主页内容，弹窗。有token会继续调用/zsxq/auth接口进一步鉴权，接口会返回true或false。鉴权失败刷新页面并删除token。 最简单的方法是，开局设置一个token,随便设置，让他去校验，我们劫持/zsxq/auth这个方法让其永远返回true，就结束了\n代码 ajax劫持库ajaxHooker-油猴中文网 设置拦截器\najaxHooker.filter([ // 这些东西要按照实际来设置，俺直接拷贝的参考文档 {type: \u0026#39;xhr\u0026#39;, url: \u0026#39;www.example.com\u0026#39;, method: \u0026#39;GET\u0026#39;, async: true}, {url: /^http/}, ]); 拦截代码编写\najaxHooker.hook(request =\u0026gt; { // 这个还是要进行细粒度控制滴 if (request.url === \u0026#39;xxx\u0026#39;) { request.response = res =\u0026gt; { console.log(res); // 返回改成true res.responseText += \u0026#39;test\u0026#39;; }; } }); 异步请求写法\najaxHooker.hook(async request =\u0026gt; { request.data = await modifyData(request.data); request.response = async res =\u0026gt; { res.responseText = await modifyResponse(res.responseText); }; }); 问题 理想很美好，可是俺尝试了多次无果，发现压根没有请求出去emmm\n方案3：模拟已校验用户，劫持导致请求失效的方法 通过方案2的失败，俺决定另辟蹊径，劫持某些方法。俺手动塞进去一个token进去的时候,token会被校验，然后页面被刷新，于是俺决定从此出发，劫持刷新页面的函数，发送get请求的函数，删除cookie的函数。这样他就不会进行请求，更不会删除token和刷新页面了。这样还避免了被跟踪，一举两得\n代码 这代码可以直接粘到油猴中使用\n(function() { const randomString = Math.random().toString(36).substring(2); document.cookie = \u0026#34;88974ed8-6aff-48ab-a7d1-4af5ffea88bb=\u0026#34; + randomString; $.get= null; Cookies.remove = null; location.reload = null; })(); 总结 暂时没有发现问题，用起来非常舒服 简单暴力，非常优美\n","keywords":["js","tampermonkey"],"articleBody":"引子 看文档时，每次都弹框不让看。在刷新页面时偶然发现了，文档是先加载出来，然后对已有的文档进行覆盖，然后弹窗。俺第一开始想到的是对文档进行爬取，直接访问robots.txt发现没有访问到，于是俺就放弃了爬取，转而使用油猴脚本进行跳过。经过多次尝试最终完成跳过脚本，方案3为最终解。\n声明： 本文内容仅供学习，无不良引导，如有侵权请我请联系删除\n方案1:轮询修改body类，移除弹框 恢复文档(阻止修改) 查看源码发现js对.content-wrapper进行了覆盖 只需在这个js加载前将ccontent-wrapper的类名改为其他的\n移除弹窗 俺发现了这两个坏蛋dom节点 这俩dom节点俺决定直接循环移除\n代码编写 修改某类的类名\n// 获取所有具有类名为 '.abc' 的元素 const elements = document.querySelectorAll('.abc'); // 遍历每个元素并修改类名 elements.forEach(element =\u003e { element.classList.remove('abc'); // 移除旧的类名 element.classList.add('bcd'); // 添加新的类名 }); 移除dom节点\n// 获取节点 const elements = document.querySelectorAll(\".className\"); // 遍历移除 elements.forEach(element =\u003e element.remove()); 循环调用\nlet timerId; // 用于存储 setTimeout 返回的定时器 ID function startLoop() { // 执行您想要循环执行的操作 console.log(\"Loop iteration\"); // 检查满足结束条件的条件 if (/* 满足结束条件 */) { console.log(\"Loop ended\"); return; // 结束循环 } // 设置下一次循环调用的延迟时间 timerId = setTimeout(startLoop, 1000); } // 开始循环调用 startLoop(); 问题和不足 修改了主要内容的类后，无法进行滚动 俺没有找到一个合适的条件去终止循环调用 需要考虑的东西: 修改类名的时机 跳转后的修改类名 判断弹窗已被关闭的条件，弹窗在js加载后会有延迟才能弹出 跳转后的弹窗关闭\n方案2：模拟已校验用户，劫持校验请求 校验源码查看 c()是获取token，查看是否有其值的方法 校验的大概步骤是 先调用/zsxq/auth-callback这个接口来重置当前token，重置完成后，获取当前token，判断是否存在存在，没有token会重置主页内容，弹窗。有token会继续调用/zsxq/auth接口进一步鉴权，接口会返回true或false。鉴权失败刷新页面并删除token。 最简单的方法是，开局设置一个token,随便设置，让他去校验，我们劫持/zsxq/auth这个方法让其永远返回true，就结束了\n代码 ajax劫持库ajaxHooker-油猴中文网 设置拦截器\najaxHooker.filter([ // 这些东西要按照实际来设置，俺直接拷贝的参考文档 {type: 'xhr', url: 'www.example.com', method: 'GET', async: true}, {url: /^http/}, ]); 拦截代码编写\najaxHooker.hook(request =\u003e { // 这个还是要进行细粒度控制滴 if (request.url === 'xxx') { request.response = res =\u003e { console.log(res); // 返回改成true res.responseText += 'test'; }; } }); 异步请求写法\najaxHooker.hook(async request =\u003e { request.data = await modifyData(request.data); request.response = async res =\u003e { res.responseText = await modifyResponse(res.responseText); }; }); 问题 理想很美好，可是俺尝试了多次无果，发现压根没有请求出去emmm\n方案3：模拟已校验用户，劫持导致请求失效的方法 通过方案2的失败，俺决定另辟蹊径，劫持某些方法。俺手动塞进去一个token进去的时候,token会被校验，然后页面被刷新，于是俺决定从此出发，劫持刷新页面的函数，发送get请求的函数，删除cookie的函数。这样他就不会进行请求，更不会删除token和刷新页面了。这样还避免了被跟踪，一举两得\n代码 这代码可以直接粘到油猴中使用\n(function() { const randomString = Math.random().toString(36).substring(2); document.cookie = \"88974ed8-6aff-48ab-a7d1-4af5ffea88bb=\" + randomString; $.get= null; Cookies.remove = null; location.reload = null; })(); 总结 暂时没有发现问题，用起来非常舒服 简单暴力，非常优美\n参考 ajax劫持库ajaxHooker-油猴中文网 消息队列（RabbitMQ） | yudao-cloud 开发指南\n","wordCount":"195","inLanguage":"zh","datePublished":"2024-08-16T00:00:00+08:00","dateModified":"2024-08-16T00:00:00+08:00","author":{"@type":"Person","name":"ziwindlu"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://ziwindlu.github.io/posts/zsxq-auth-bypass-userscript/"},"publisher":{"@type":"Organization","name":"ziwindlu 的博客","logo":{"@type":"ImageObject","url":"https://ziwindlu.github.io/favicon.svg"}}}</script></head><body id=top><header class=header><nav class=header-nav><div class=logo><a href=https://ziwindlu.github.io/ accesskey=h title="ziwindlu 的博客 (Alt + H)">ziwindlu 的博客</a><div class=logo-switches><button id=theme-toggle class=theme-toggle accesskey=t title="(Alt + T)" aria-label="Toggle theme">
+<svg class="moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+<svg class="sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu class=menu><li><a href=https://ziwindlu.github.io/ title=首页><span>首页</span></a></li><li><a href=https://ziwindlu.github.io/posts/ title=文章><span>文章</span></a></li><li><a href=https://ziwindlu.github.io/tags/ title=标签><span>标签</span></a></li><li><a href=https://ziwindlu.github.io/search/ title=搜索><span>搜索</span></a></li><li><a href=https://ziwindlu.github.io/about/ title=关于><span>关于</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><h1 class="post-title entry-hint-parent">跳过芋道文档知识星球认证tampermonkey</h1><div class=post-meta><span title=2024-08-16T00:00:00+08:00>2024-08-16</span>&nbsp;·&nbsp;<span>1 分钟</span>&nbsp;·&nbsp;<span>ziwindlu</span>&nbsp;·&nbsp;<span class=post-source>源笔记：<code>04-Solutions/跳过芋道文档知识星球认证tampermonkey.md</code></span></div></header><details class=toc><summary accesskey=c title="(Alt + C)"><span class=title>目录</span></summary><div class=inner><ul><li><a href=#%e5%bc%95%e5%ad%90 aria-label=引子>引子</a></li><li><a href=#%e6%96%b9%e6%a1%881%e8%bd%ae%e8%af%a2%e4%bf%ae%e6%94%b9body%e7%b1%bb%e7%a7%bb%e9%99%a4%e5%bc%b9%e6%a1%86 aria-label=方案1:轮询修改body类，移除弹框>方案1:轮询修改body类，移除弹框</a><ul><li><a href=#%e6%81%a2%e5%a4%8d%e6%96%87%e6%a1%a3%e9%98%bb%e6%ad%a2%e4%bf%ae%e6%94%b9 aria-label=恢复文档(阻止修改)>恢复文档(阻止修改)</a></li><li><a href=#%e7%a7%bb%e9%99%a4%e5%bc%b9%e7%aa%97 aria-label=移除弹窗>移除弹窗</a></li><li><a href=#%e4%bb%a3%e7%a0%81%e7%bc%96%e5%86%99 aria-label=代码编写>代码编写</a></li><li><a href=#%e9%97%ae%e9%a2%98%e5%92%8c%e4%b8%8d%e8%b6%b3 aria-label=问题和不足>问题和不足</a></li></ul></li><li><a href=#%e6%96%b9%e6%a1%882%e6%a8%a1%e6%8b%9f%e5%b7%b2%e6%a0%a1%e9%aa%8c%e7%94%a8%e6%88%b7%e5%8a%ab%e6%8c%81%e6%a0%a1%e9%aa%8c%e8%af%b7%e6%b1%82 aria-label=方案2：模拟已校验用户，劫持校验请求>方案2：模拟已校验用户，劫持校验请求</a><ul><li><a href=#%e6%a0%a1%e9%aa%8c%e6%ba%90%e7%a0%81%e6%9f%a5%e7%9c%8b aria-label=校验源码查看>校验源码查看</a></li><li><a href=#%e4%bb%a3%e7%a0%81 aria-label=代码>代码</a></li><li><a href=#%e9%97%ae%e9%a2%98 aria-label=问题>问题</a></li></ul></li><li><a href=#%e6%96%b9%e6%a1%883%e6%a8%a1%e6%8b%9f%e5%b7%b2%e6%a0%a1%e9%aa%8c%e7%94%a8%e6%88%b7%e5%8a%ab%e6%8c%81%e5%af%bc%e8%87%b4%e8%af%b7%e6%b1%82%e5%a4%b1%e6%95%88%e7%9a%84%e6%96%b9%e6%b3%95 aria-label=方案3：模拟已校验用户，劫持导致请求失效的方法>方案3：模拟已校验用户，劫持导致请求失效的方法</a><ul><li><a href=#%e4%bb%a3%e7%a0%81-1 aria-label=代码>代码</a></li><li><a href=#%e6%80%bb%e7%bb%93 aria-label=总结>总结</a></li></ul></li><li><a href=#%e5%8f%82%e8%80%83 aria-label=参考>参考</a></li></ul></div></details><div class="post-content md-content"><h2 id=引子>引子<a hidden class=anchor aria-hidden=true href=#引子>#</a></h2><p>看文档时，每次都弹框不让看。在刷新页面时偶然发现了，文档是先加载出来，然后对已有的文档进行覆盖，然后弹窗。俺第一开始想到的是对文档进行爬取，直接访问<code>robots.txt</code>发现没有访问到，于是俺就放弃了爬取，转而使用油猴脚本进行跳过。经过多次尝试最终完成跳过脚本，方案3为最终解。</p><blockquote><p>声明： 本文内容仅供学习，无不良引导，如有侵权请我请联系删除</p></blockquote><h2 id=方案1轮询修改body类移除弹框>方案1:轮询修改body类，移除弹框<a hidden class=anchor aria-hidden=true href=#方案1轮询修改body类移除弹框>#</a></h2><h3 id=恢复文档阻止修改>恢复文档(阻止修改)<a hidden class=anchor aria-hidden=true href=#恢复文档阻止修改>#</a></h3><p>查看源码发现js对.content-wrapper进行了覆盖
+<img alt=image.png loading=lazy src=/images/image_1714118251025_0.png>
+只需在这个js加载前将ccontent-wrapper的类名改为其他的</p><h3 id=移除弹窗>移除弹窗<a hidden class=anchor aria-hidden=true href=#移除弹窗>#</a></h3><p>俺发现了这两个坏蛋dom节点
+<img alt=image.png loading=lazy src=/images/image_1714118809941_0.png>
+这俩dom节点俺决定直接循环移除</p><h3 id=代码编写>代码编写<a hidden class=anchor aria-hidden=true href=#代码编写>#</a></h3><p>修改某类的类名</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-js data-lang=js><span class=line><span class=cl><span class=c1>// 获取所有具有类名为 &#39;.abc&#39; 的元素
+</span></span></span><span class=line><span class=cl><span class=kr>const</span> <span class=nx>elements</span> <span class=o>=</span> <span class=nb>document</span><span class=p>.</span><span class=nx>querySelectorAll</span><span class=p>(</span><span class=s1>&#39;.abc&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=c1>// 遍历每个元素并修改类名
+</span></span></span><span class=line><span class=cl><span class=nx>elements</span><span class=p>.</span><span class=nx>forEach</span><span class=p>(</span><span class=nx>element</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl><span class=nx>element</span><span class=p>.</span><span class=nx>classList</span><span class=p>.</span><span class=nx>remove</span><span class=p>(</span><span class=s1>&#39;abc&#39;</span><span class=p>);</span>  <span class=c1>// 移除旧的类名
+</span></span></span><span class=line><span class=cl><span class=nx>element</span><span class=p>.</span><span class=nx>classList</span><span class=p>.</span><span class=nx>add</span><span class=p>(</span><span class=s1>&#39;bcd&#39;</span><span class=p>);</span>     <span class=c1>// 添加新的类名
+</span></span></span><span class=line><span class=cl><span class=p>});</span>
+</span></span></code></pre></div><p>移除dom节点</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-js data-lang=js><span class=line><span class=cl><span class=c1>// 获取节点
+</span></span></span><span class=line><span class=cl><span class=kr>const</span> <span class=nx>elements</span> <span class=o>=</span> <span class=nb>document</span><span class=p>.</span><span class=nx>querySelectorAll</span><span class=p>(</span><span class=s2>&#34;.className&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=c1>// 遍历移除
+</span></span></span><span class=line><span class=cl><span class=nx>elements</span><span class=p>.</span><span class=nx>forEach</span><span class=p>(</span><span class=nx>element</span> <span class=p>=&gt;</span> <span class=nx>element</span><span class=p>.</span><span class=nx>remove</span><span class=p>());</span>
+</span></span></code></pre></div><p>循环调用</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-jsx data-lang=jsx><span class=line><span class=cl><span class=kd>let</span> <span class=nx>timerId</span><span class=p>;</span> <span class=c1>// 用于存储 setTimeout 返回的定时器 ID
+</span></span></span><span class=line><span class=cl><span class=kd>function</span> <span class=nx>startLoop</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl><span class=c1>// 执行您想要循环执行的操作
+</span></span></span><span class=line><span class=cl><span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=s2>&#34;Loop iteration&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=c1>// 检查满足结束条件的条件
+</span></span></span><span class=line><span class=cl><span class=k>if</span> <span class=p>(</span><span class=cm>/* 满足结束条件 */</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl><span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=s2>&#34;Loop ended&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=k>return</span><span class=p>;</span> <span class=c1>// 结束循环
+</span></span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=c1>// 设置下一次循环调用的延迟时间
+</span></span></span><span class=line><span class=cl><span class=nx>timerId</span> <span class=o>=</span> <span class=nx>setTimeout</span><span class=p>(</span><span class=nx>startLoop</span><span class=p>,</span> <span class=mi>1000</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=c1>// 开始循环调用
+</span></span></span><span class=line><span class=cl><span class=nx>startLoop</span><span class=p>();</span>
+</span></span></code></pre></div><h3 id=问题和不足>问题和不足<a hidden class=anchor aria-hidden=true href=#问题和不足>#</a></h3><p>修改了主要内容的类后，无法进行滚动
+俺没有找到一个合适的条件去终止循环调用
+需要考虑的东西:
+修改类名的时机
+跳转后的修改类名
+判断弹窗已被关闭的条件，弹窗在js加载后会有延迟才能弹出
+跳转后的弹窗关闭</p><h2 id=方案2模拟已校验用户劫持校验请求>方案2：模拟已校验用户，劫持校验请求<a hidden class=anchor aria-hidden=true href=#方案2模拟已校验用户劫持校验请求>#</a></h2><h3 id=校验源码查看>校验源码查看<a hidden class=anchor aria-hidden=true href=#校验源码查看>#</a></h3><p><img alt=image.png loading=lazy src=/images/image_1714267705999_0.png>
+<img alt=image.png loading=lazy src=/images/image_1714266938914_0.png>
+<img alt=image.png loading=lazy src=/images/image_1714266970337_0.png>
+<code>c()</code>是获取token，查看是否有其值的方法
+校验的大概步骤是
+先调用<code>/zsxq/auth-callback</code>这个接口来重置当前token，重置完成后，获取当前token，判断是否存在存在，没有token会重置主页内容，弹窗。有token会继续调用<code>/zsxq/auth</code>接口进一步鉴权，接口会返回true或false。鉴权失败刷新页面并删除token。
+最简单的方法是，开局设置一个token,随便设置，让他去校验，我们劫持<code>/zsxq/auth</code>这个方法让其永远返回true，就结束了</p><h3 id=代码>代码<a hidden class=anchor aria-hidden=true href=#代码>#</a></h3><p><a href=https://bbs.tampermonkey.net.cn/thread-3284-1-1.html>ajax劫持库ajaxHooker-油猴中文网</a>
+设置拦截器</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-js data-lang=js><span class=line><span class=cl><span class=nx>ajaxHooker</span><span class=p>.</span><span class=nx>filter</span><span class=p>([</span>
+</span></span><span class=line><span class=cl><span class=c1>// 这些东西要按照实际来设置，俺直接拷贝的参考文档
+</span></span></span><span class=line><span class=cl><span class=p>{</span><span class=nx>type</span><span class=o>:</span> <span class=s1>&#39;xhr&#39;</span><span class=p>,</span> <span class=nx>url</span><span class=o>:</span> <span class=s1>&#39;www.example.com&#39;</span><span class=p>,</span> <span class=nx>method</span><span class=o>:</span> <span class=s1>&#39;GET&#39;</span><span class=p>,</span> <span class=kr>async</span><span class=o>:</span> <span class=kc>true</span><span class=p>},</span>
+</span></span><span class=line><span class=cl><span class=p>{</span><span class=nx>url</span><span class=o>:</span> <span class=sr>/^http/</span><span class=p>},</span>
+</span></span><span class=line><span class=cl><span class=p>]);</span>
+</span></span></code></pre></div><p>拦截代码编写</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-js data-lang=js><span class=line><span class=cl><span class=nx>ajaxHooker</span><span class=p>.</span><span class=nx>hook</span><span class=p>(</span><span class=nx>request</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl><span class=c1>// 这个还是要进行细粒度控制滴
+</span></span></span><span class=line><span class=cl><span class=k>if</span> <span class=p>(</span><span class=nx>request</span><span class=p>.</span><span class=nx>url</span> <span class=o>===</span> <span class=s1>&#39;xxx&#39;</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl><span class=nx>request</span><span class=p>.</span><span class=nx>response</span> <span class=o>=</span> <span class=nx>res</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl><span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=nx>res</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=c1>// 返回改成true
+</span></span></span><span class=line><span class=cl><span class=nx>res</span><span class=p>.</span><span class=nx>responseText</span> <span class=o>+=</span> <span class=s1>&#39;test&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>};</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>});</span>
+</span></span></code></pre></div><p>异步请求写法</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-jsx data-lang=jsx><span class=line><span class=cl><span class=nx>ajaxHooker</span><span class=p>.</span><span class=nx>hook</span><span class=p>(</span><span class=kr>async</span> <span class=nx>request</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl><span class=nx>request</span><span class=p>.</span><span class=nx>data</span> <span class=o>=</span> <span class=kr>await</span> <span class=nx>modifyData</span><span class=p>(</span><span class=nx>request</span><span class=p>.</span><span class=nx>data</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=nx>request</span><span class=p>.</span><span class=nx>response</span> <span class=o>=</span> <span class=kr>async</span> <span class=nx>res</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl><span class=nx>res</span><span class=p>.</span><span class=nx>responseText</span> <span class=o>=</span> <span class=kr>await</span> <span class=nx>modifyResponse</span><span class=p>(</span><span class=nx>res</span><span class=p>.</span><span class=nx>responseText</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>};</span>
+</span></span><span class=line><span class=cl><span class=p>});</span>
+</span></span></code></pre></div><h3 id=问题>问题<a hidden class=anchor aria-hidden=true href=#问题>#</a></h3><p>理想很美好，可是俺尝试了多次无果，发现压根没有请求出去emmm</p><h2 id=方案3模拟已校验用户劫持导致请求失效的方法>方案3：模拟已校验用户，劫持导致请求失效的方法<a hidden class=anchor aria-hidden=true href=#方案3模拟已校验用户劫持导致请求失效的方法>#</a></h2><p>通过方案2的失败，俺决定另辟蹊径，劫持某些方法。俺手动塞进去一个token进去的时候,token会被校验，然后页面被刷新，于是俺决定从此出发，劫持刷新页面的函数，发送get请求的函数，删除cookie的函数。这样他就不会进行请求，更不会删除token和刷新页面了。这样还避免了被跟踪，一举两得</p><h3 id=代码-1>代码<a hidden class=anchor aria-hidden=true href=#代码-1>#</a></h3><p>这代码可以直接粘到油猴中使用</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-jsx data-lang=jsx><span class=line><span class=cl><span class=p>(</span><span class=kd>function</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl><span class=kr>const</span> <span class=nx>randomString</span> <span class=o>=</span> <span class=nb>Math</span><span class=p>.</span><span class=nx>random</span><span class=p>().</span><span class=nx>toString</span><span class=p>(</span><span class=mi>36</span><span class=p>).</span><span class=nx>substring</span><span class=p>(</span><span class=mi>2</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=nb>document</span><span class=p>.</span><span class=nx>cookie</span> <span class=o>=</span> <span class=s2>&#34;88974ed8-6aff-48ab-a7d1-4af5ffea88bb=&#34;</span> <span class=o>+</span> <span class=nx>randomString</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nx>$</span><span class=p>.</span><span class=nx>get</span><span class=o>=</span> <span class=kc>null</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nx>Cookies</span><span class=p>.</span><span class=nx>remove</span> <span class=o>=</span> <span class=kc>null</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nx>location</span><span class=p>.</span><span class=nx>reload</span> <span class=o>=</span> <span class=kc>null</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>})();</span>
+</span></span></code></pre></div><h3 id=总结>总结<a hidden class=anchor aria-hidden=true href=#总结>#</a></h3><p>暂时没有发现问题，用起来非常舒服
+简单暴力，非常优美</p><h2 id=参考>参考<a hidden class=anchor aria-hidden=true href=#参考>#</a></h2><p><a href=https://bbs.tampermonkey.net.cn/thread-3284-1-1.html>ajax劫持库ajaxHooker-油猴中文网</a>
+<a href=https://cloud.iocoder.cn/message-queue/rabbitmq/#_2-1-message-%E6%B6%88%E6%81%AF>消息队列（RabbitMQ） | yudao-cloud 开发指南</a></p></div><footer class=post-footer><ul class=post-tags><li><a href=https://ziwindlu.github.io/tags/js/>js</a></li><li><a href=https://ziwindlu.github.io/tags/tampermonkey/>tampermonkey</a></li></ul><nav class=paginav><a class=prev href=https://ziwindlu.github.io/posts/vim-save-macro/><span class=title>« 上一页</span>
+<span>vim保存录制宏</span>
+</a><a class=next href=https://ziwindlu.github.io/posts/anki-python-add-notes/><span class=title>下一页 »</span>
+<span>anki使用python添加笔记</span></a></nav></footer></article></main><footer class=footer><span>&copy; 2026 <a href=https://ziwindlu.github.io/>ziwindlu 的博客</a></span> ·
+<span>Powered by
+<a href="https://gohugo.io/?utm_source=papermod" rel=noopener target=_blank>Hugo</a> &
+<a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top id=top-link class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey=g><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up"><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg>
+</a><script>let menu=document.getElementById("menu");if(menu){const e=localStorage.getItem("menu-scroll-position");e&&(menu.scrollLeft=parseInt(e,10));let t;menu.addEventListener("scroll",function(){clearTimeout(t),t=setTimeout(function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)},150)},{passive:!0})}document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var n=this.getAttribute("href").substr(1);const t=document.querySelector(`[id='${decodeURIComponent(n)}']`);window.matchMedia("(prefers-reduced-motion: reduce)").matches?t.scrollIntoView():t.scrollIntoView({behavior:"smooth"}),t.tabIndex<0&&!t.hasAttribute("tabindex")&&t.setAttribute("tabindex","-1"),t.focus({preventScroll:!0}),n==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${n}`)})})</script><script>var toplink=document.getElementById("top-link"),scrollTicking=!1;window.addEventListener("scroll",function(){if(scrollTicking)return;scrollTicking=!0,requestAnimationFrame(function(){const e=window.innerHeight,t=document.body.scrollTop>e||document.documentElement.scrollTop>e;toplink.classList.toggle("hidden",!t),scrollTicking=!1})},{passive:!0})</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{const e=document.querySelector("html");e.dataset.theme==="dark"?(e.dataset.theme="light",localStorage.setItem("pref-theme","light")):(e.dataset.theme="dark",localStorage.setItem("pref-theme","dark"))})</script><script>document.querySelectorAll("pre > code").forEach(e=>{const n=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="复制";function s(){t.innerHTML="已复制！",setTimeout(()=>{t.innerHTML="复制"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),s();return}const n=document.createRange();n.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(n);try{document.execCommand("copy"),s()}catch{}o.removeRange(n)}),n.classList.contains("highlight")?n.appendChild(t):n.parentNode.firstChild==n||(e.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?e.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(t):e.parentNode.appendChild(t))})</script></body></html>

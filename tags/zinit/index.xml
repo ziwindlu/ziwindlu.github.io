@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>zinit on ziwindlu 的博客</title><link>https://ziwindlu.github.io/tags/zinit/</link><description>Recent content in zinit on ziwindlu 的博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Sat, 30 Nov 2024 00:00:00 +0800</lastBuildDate><atom:link href="https://ziwindlu.github.io/tags/zinit/index.xml" rel="self" type="application/rss+xml"/><item><title>zinit高效的zsh插件管理器</title><link>https://ziwindlu.github.io/posts/zinit-zsh-plugin-manager/</link><pubDate>Sat, 30 Nov 2024 00:00:00 +0800</pubDate><guid>https://ziwindlu.github.io/posts/zinit-zsh-plugin-manager/</guid><description>&lt;h2 id="引子"&gt;引子&lt;/h2&gt;
+&lt;p&gt;心血来潮，更新一下自己的zshrc，之前写的zinit看不懂了。再去重温一下zinit的文档。记录一下以便备忘。本文会重点介绍常用的插件加载方式。也会推荐一些插件
+为什么使用zinit？更快，方便管理。&lt;/p&gt;
+&lt;h2 id="安装zinit"&gt;安装zinit&lt;/h2&gt;
+&lt;p&gt;俺比较喜欢手动安装，将下面这些放入你的zshrc，source一下zshrc他就会安装啦。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;ZINIT_HOME&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;XDG_DATA_HOME&lt;/span&gt;&lt;span class="k"&gt;:-&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;HOME&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="p"&gt;/.local/share&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;/zinit/zinit.git&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;[&lt;/span&gt; ! -d &lt;span class="nv"&gt;$ZINIT_HOME&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; mkdir -p &lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;dirname &lt;span class="nv"&gt;$ZINIT_HOME&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;[&lt;/span&gt; ! -d &lt;span class="nv"&gt;$ZINIT_HOME&lt;/span&gt;/.git &lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; git clone https://github.com/zdharma-continuum/zinit.git &lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="nv"&gt;$ZINIT_HOME&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;source&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;ZINIT_HOME&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;/zinit.zsh&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="插件加载"&gt;插件加载&lt;/h2&gt;
+&lt;h3 id="简单的加载loadlight"&gt;简单的加载load/light&lt;/h3&gt;
+&lt;p&gt;这些插件加载完成后会放到&lt;code&gt;$ZINIT_HOME/plugins&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;zinit load zdharma-continuum/history-search-multi-word
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;load和light的区别：
+light更快，load慢些。load加载的插件可以跟踪也可以卸载，而light不可以&lt;/p&gt;
+&lt;h3 id="文件加载snippet含oh-my-zsh和prezto插件加载"&gt;文件加载snippet，含oh-my-zsh和Prezto插件加载&lt;/h3&gt;
+&lt;p&gt;这些插件加载完成后会放到&lt;code&gt;$ZINIT_HOME/snippets&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 单个文件&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;zinit snippet &lt;span class="s1"&gt;&amp;#39;https://github.com/robbyrussell/oh-my-zsh/raw/master/plugins/git/git.plugin.zsh&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 对于 Oh My Zsh 和 Prezto，您以使用 OMZ:: 和 PZT:: 简写&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;zinit snippet OMZ::plugins/git/git.plugin.zsh
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;zinit snippet PZT::modules/helper/init.zsh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="使用svn"&gt;使用svn&lt;/h3&gt;
+&lt;p&gt;如果你的插件不是在github中，而是在svn中。那么你可以添加svn关键字&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;zinit ice svn
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;zinit snippet PZT::modules/docker
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;ice是为下面的zinit命令添加参数&lt;/p&gt;
+&lt;h3 id="更多的参数ice"&gt;更多的参数ice&lt;/h3&gt;
+&lt;p&gt;如上面的svn
+更多的ice参数请参考wiki&lt;/p&gt;
+&lt;h3 id="作为程序asprograme"&gt;作为程序as&amp;quot;programe&amp;quot;&lt;/h3&gt;
+&lt;p&gt;有时候插件以命令的形式存在，这时我们需要使用as&amp;quot;programe&amp;quot;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;zinit ice as&lt;span class="s2"&gt;&amp;#34;program&amp;#34;&lt;/span&gt; cp&lt;span class="s2"&gt;&amp;#34;httpstat.sh -&amp;gt; httpstat&amp;#34;&lt;/span&gt; pick&lt;span class="s2"&gt;&amp;#34;httpstat&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;zinit light b4b4r07/httpstat
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;对于上面的解释:
+&lt;code&gt;cp&amp;quot;httpstat.sh -&amp;gt; httpstat&amp;quot;&lt;/code&gt;将克隆过后的&lt;code&gt;httpstat.sh&lt;/code&gt;复制为&lt;code&gt;httpstat&lt;/code&gt;
+pick&amp;quot;httpstat&amp;quot;为&lt;code&gt;httpstat&lt;/code&gt;设置执行权限&lt;/p&gt;
+&lt;h3 id="turbo模式常用"&gt;Turbo模式(常用)&lt;/h3&gt;
+&lt;p&gt;使用wait选项，可以使插件延迟加载&lt;code&gt;!0&lt;/code&gt;意味着将以接近于0s的延迟后加载&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;zinit ice wait&lt;span class="s1"&gt;&amp;#39;!0&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;zinit load halfo/lambda-mod-zsh-theme
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;俺的很多配置文件也是抄的，想了解更多语法请参考wiki&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="插件推荐"&gt;插件推荐&lt;/h2&gt;
+&lt;p&gt;更详细的用法请参考官方文档&lt;/p&gt;
+&lt;h3 id="命令补全"&gt;命令补全&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;zsh-users/zsh-autosuggestions&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="命令高亮"&gt;命令高亮&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;zdharma-continuum/fast-syntax-highlighting&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="sudo"&gt;sudo&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;OMZP::sudo&lt;/code&gt;
+按两次esc就会在当前行开头补上sudo&lt;/p&gt;
+&lt;h3 id="vi-mode"&gt;vi-mode&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;jeffreytse/zsh-vi-mode&lt;/code&gt;
+&lt;strong&gt;配置&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 让kj作为esc&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;ZVM_VI_INSERT_ESCAPE_BINDKEY&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;kj
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;使用方法&lt;/strong&gt;
+normal模式下&lt;code&gt;vv&lt;/code&gt;进入vim编辑当前命令&lt;/p&gt;
+&lt;h3 id="zoxide"&gt;zoxide&lt;/h3&gt;
+&lt;p&gt;模糊cd，他会记住你cd过的目录
+&lt;code&gt;ajeetdsouza/zoxide&lt;/code&gt;
+使用方法&lt;code&gt;z x x&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="fzf"&gt;fzf&lt;/h3&gt;
+&lt;p&gt;模糊搜索
+&lt;code&gt;junegunn/fzf&lt;/code&gt;
+&lt;strong&gt;配置&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 触发键改为\&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;FZF_COMPLETION_TRIGGER&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;\&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# fzf窗口高度变为当前窗口的40%&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;FZF_TMUX_HEIGHT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;40%&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="fzf-tab"&gt;fzf-tab&lt;/h3&gt;
+&lt;p&gt;对fzf的增强，支持命令搜索、参数搜索等
+&lt;code&gt;Aloxaf/fzf-tab&lt;/code&gt;
+&lt;strong&gt;配置&lt;/strong&gt;&lt;/p&gt;</description></item></channel></rss>
