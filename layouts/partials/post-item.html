@@ -1,0 +1,12 @@
+<article class="post-item">
+  <h3 class="post-item-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+  <div class="post-meta">
+    <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+    {{ with .Params.tags }}
+      <span class="tags">
+        {{ range . }}<a class="tag" href="{{ printf "tags/%s/" (urlize .) | relURL }}">{{ . }}</a>{{ end }}
+      </span>
+    {{ end }}
+  </div>
+  {{ with .Summary }}<p class="post-summary">{{ . | plainify | truncate 100 }}</p>{{ end }}
+</article>

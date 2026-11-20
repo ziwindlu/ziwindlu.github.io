@@ -1,0 +1,13 @@
+# 构建产物
+/public/
+/resources/
+.hugo_build.lock
+
+# 本地预览服务的日志与 PID
+/.preview/
+
+# 文章源包（换源重建用，不提交）
+/content-in/
+
+# 系统杂物
+.DS_Store

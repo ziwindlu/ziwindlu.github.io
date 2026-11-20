@@ -1,0 +1,72 @@
+# Hugo 站点配置 —— ziwindlu.github.io（GitHub Pages 用户站点）
+# 框架：Hugo v0.168.0 (extended)，主题模板内置在本仓库 layouts/ 下，无外部主题、无 submodule。
+baseURL = "https://ziwindlu.github.io/"
+title = "ziwindlu 的博客"
+locale = "zh-CN"
+defaultContentLanguage = "zh"
+timeZone = "Asia/Shanghai"
+enableRobotsTXT = true
+summaryLength = 120
+# 生成 .html 之外的目录式 URL：/posts/<slug>/
+uglyURLs = false
+capitalizeListTitles = false
+enableGitInfo = false
+
+[pagination]
+  pagerSize = 20
+
+[params]
+  author = "ziwindlu"
+  description = "lzf 的技术笔记：Python / Linux / Shell / 数据库 / 折腾记录"
+  # 首页最多列出多少篇最新文章
+  homePostLimit = 12
+  # 页脚
+  footer = "本站文章来自个人 Obsidian 笔记，保留所有权利。"
+  # 是否在文章页展示源笔记路径（便于和 Obsidian 原文对照）
+  showSource = true
+
+[taxonomies]
+  tag = "tags"
+
+[markup]
+  [markup.goldmark.renderer]
+    # 允许正文里的原始 HTML（Obsidian 笔记里偶尔有 <br> / <details> 等）
+    unsafe = true
+  [markup.goldmark.parser]
+    autoHeadingID = true
+    [markup.goldmark.parser.attribute]
+      block = true
+      title = true
+  [markup.highlight]
+    # 服务端高亮，不依赖前端 JS
+    style = "github"
+    noClasses = false
+    lineNos = false
+    tabWidth = 4
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 3
+    ordered = false
+
+[outputs]
+  home = ["HTML", "RSS"]
+  section = ["HTML", "RSS"]
+  taxonomy = ["HTML", "RSS"]
+
+[menus]
+  [[menus.main]]
+    name = "首页"
+    pageRef = "/"
+    weight = 10
+  [[menus.main]]
+    name = "文章"
+    pageRef = "/posts"
+    weight = 20
+  [[menus.main]]
+    name = "标签"
+    pageRef = "/tags"
+    weight = 30
+  [[menus.main]]
+    name = "关于"
+    pageRef = "/about"
+    weight = 40
