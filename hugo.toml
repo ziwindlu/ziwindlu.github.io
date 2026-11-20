@@ -56,7 +56,7 @@ enableGitInfo = false
 [menus]
   [[menus.main]]
     name = "首页"
-    pageRef = "/"
+    url = "/"
     weight = 10
   [[menus.main]]
     name = "文章"
